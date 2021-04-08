@@ -62,7 +62,6 @@ class SQLite {
         try {
             Statement st = connection.createStatement();
             String query = "select * from v_news_dual where sum > 2 order by sum desc";
-            Common.console("[avandy@mrprogre ~]$ select * from v_news_dual");
             ResultSet rs = st.executeQuery(query);
             while (rs.next()) {
                 String word = rs.getString("TITLE");

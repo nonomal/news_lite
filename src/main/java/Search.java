@@ -23,6 +23,7 @@ public class Search {
     //Main search
     public static void mainSearch() {
         if (!isSearchNow.get()) {
+            Common.console("[avandy@mrprogre ~]$ main search started");
             Main.LOGGER.log(Level.INFO, "Main search started");
             //выборка актуальных источников перед поиском из БД
             SQLite.selectSources();
@@ -166,6 +167,7 @@ public class Search {
     //Search by keywords
     public static void keywordsSearch() {
         if (!isSearchNow.get()) {
+            Common.console("[avandy@mrprogre ~]$ keywords search started");
             Main.LOGGER.log(Level.INFO, "Keywords search started");
             //выборка актуальных источников перед поиском из БД
             SQLite.selectSources();
