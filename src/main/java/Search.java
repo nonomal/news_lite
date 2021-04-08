@@ -19,6 +19,7 @@ public class Search {
     static String today = dtf.format(now);
     static SimpleDateFormat date_format = new SimpleDateFormat("dd.MM.yyyy HH:mm");
 
+    // Оставляет только буквы
     private static String delNoLetter(String s) {
         StringBuilder sb = new StringBuilder();
         for (int i = 0; i < s.length(); i++) {
