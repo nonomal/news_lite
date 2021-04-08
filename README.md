@@ -8,7 +8,7 @@ Program features:
 - sending the search result to e-mail (+ the ability to choose to automatically send results after each search)
 - export of search results to Excel
 - additional search by keywords. Words can be deleted, and new ones added instead (no restrictions)
-- analysis of word usage in news headlines using Oracle database (you need to connect to Oracle database with your username, password and host)
+- analysis of word usage in news headlines using SQLite database
 - using checkboxes, you can choose where to search for a keyword: in the title or in the link to the news
 - display program log in linux terminal style
 - the program keeps a log and also saves checkbox statuses, email address, keywords in the combobox and search interval
