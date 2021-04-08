@@ -1,4 +1,5 @@
 import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
@@ -43,10 +44,12 @@ public class Search {
             Gui.sendEmailBtn.setIcon(Gui.send);
             new Thread(Common::fill).start();
             try {
+                // начало транзакции
                 PreparedStatement st = SQLite.connection.prepareStatement("insert into news_dual(title) values (?)");
                 String q_begin = "BEGIN TRANSACTION";
                 Statement st_begin = SQLite.connection.createStatement();
                 st_begin.executeUpdate(q_begin);
+
                 for (Common.smi_number = 0; Common.smi_number < Common.smi_link.size(); Common.smi_number++) {
                     try {
                         try {
@@ -88,7 +91,6 @@ public class Search {
                                     // SQLite
                                     String[] subStr = message.getTitle().split(" ");
                                     for (String s : subStr) {
-                                        //System.out.println(delNoLetter(s).toLowerCase());
                                         if (s.length() > 3) {
                                             assert st != null;
                                             st.setString(1, Common.delNoLetter(s).toLowerCase());
@@ -114,9 +116,15 @@ public class Search {
                 Gui.searchBtnTop.setVisible(true);
                 Gui.stopBtnTop.setVisible(false);
 
+                // коммитим транзакцию
                 String q_commit = "COMMIT";
                 Statement st_commit = SQLite.connection.createStatement();
                 st_commit.executeUpdate(q_commit);
+                // удаляем все пустые строки
+                String q_del = "delete from news_dual where title = ''";
+                Statement st_del = SQLite.connection.createStatement();
+                st_del.executeUpdate(q_del);
+                // Заполняем таблицу анализа
                 SQLite.selectSqlite();
                 //Search time
                 Gui.timeEnd = System.currentTimeMillis();
@@ -204,8 +212,7 @@ public class Search {
 
                                                 // SQLite
                                                 String[] subStr = message.getTitle().split(" ");
-                                                for (String s : subStr) {
-                                                    //System.out.println(delNoLetter(s).toLowerCase());
+                                                for (String s: subStr) {
                                                     if (s.length() > 3) {
                                                         assert st != null;
                                                         st.setString(1, Common.delNoLetter(s).toLowerCase());
@@ -236,6 +243,9 @@ public class Search {
                 String q_commit = "COMMIT";
                 Statement st_commit = SQLite.connection.createStatement();
                 st_commit.executeUpdate(q_commit);
+                String q_del = "delete from news_dual where title = ''";
+                Statement st_del = SQLite.connection.createStatement();
+                st_del.executeUpdate(q_del);
                 SQLite.selectSqlite();
 
                 //Search time
@@ -252,6 +262,13 @@ public class Search {
 
                 Main.LOGGER.log(Level.INFO, "Keywords search finished");
             } catch (Exception e) {
+                try {
+                String q_commit = "ROLLBACK";
+                Statement st_commit = SQLite.connection.createStatement();
+                st_commit.executeUpdate(q_commit);
+                } catch (SQLException sql) {
+                    sql.printStackTrace();
+                }
                 e.printStackTrace();
                 isStop.set(true);
             }

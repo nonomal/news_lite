@@ -4,6 +4,8 @@ import java.awt.event.*;
 import java.io.*;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.Date;
 import java.util.Objects;
 import java.util.Timer;
@@ -281,6 +283,13 @@ public class Gui extends JFrame {
             } catch (Exception t) {
                 Common.console("[avandy@mrprogre ~]$ there is no threads to stop");
             }
+            try {
+                String q_commit = "ROLLBACK";
+                Statement st_commit = SQLite.connection.createStatement();
+                st_commit.executeUpdate(q_commit);
+            } catch (SQLException sql) {
+                sql.printStackTrace();
+            }
         });
         getContentPane().add(stopBtnTop);
 
@@ -309,6 +318,13 @@ public class Gui extends JFrame {
                 Search.isSearchNow.set(false);
             } catch (Exception t) {
                 Common.console("[avandy@mrprogre ~]$ there is no threads to stop");
+            }
+            try {
+                String q_commit = "ROLLBACK";
+                Statement st_commit = SQLite.connection.createStatement();
+                st_commit.executeUpdate(q_commit);
+            } catch (SQLException sql) {
+                sql.printStackTrace();
             }
         });
         getContentPane().add(stopBtnBottom);
