@@ -354,4 +354,14 @@ public class Common {
         Files.move(temp, input, StandardCopyOption.REPLACE_EXISTING);
     }
 
+    // Оставляет только буквы
+    static String delNoLetter(String s) {
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < s.length(); i++) {
+            if (Character.isLetter(s.charAt(i)))
+                sb.append(s.charAt(i));
+        }
+        return sb.toString();
+    }
+
 }

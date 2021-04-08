@@ -19,16 +19,6 @@ public class Search {
     static String today = dtf.format(now);
     static SimpleDateFormat date_format = new SimpleDateFormat("dd.MM.yyyy HH:mm");
 
-    // Оставляет только буквы
-    private static String delNoLetter(String s) {
-        StringBuilder sb = new StringBuilder();
-        for (int i = 0; i < s.length(); i++) {
-            if (Character.isLetter(s.charAt(i)))
-                sb.append(s.charAt(i));
-        }
-        return sb.toString();
-    }
-
     //Main search
     public static void mainSearch() {
         if (!isSearchNow.get()) {
@@ -101,7 +91,7 @@ public class Search {
                                         //System.out.println(delNoLetter(s).toLowerCase());
                                         if (s.length() > 3) {
                                             assert st != null;
-                                            st.setString(1, delNoLetter(s).toLowerCase());
+                                            st.setString(1, Common.delNoLetter(s).toLowerCase());
                                             st.executeUpdate();
                                         }
                                     }
@@ -139,6 +129,8 @@ public class Search {
                 if (Gui.autoSendMessage.getState() && (Gui.model.getRowCount() > 0)) {
                     Gui.sendEmailBtn.doClick();
                 }
+
+                Main.LOGGER.log(Level.INFO, "Main search finished");
             } catch (Exception e) {
                 e.printStackTrace();
                 isStop.set(true);
@@ -216,7 +208,7 @@ public class Search {
                                                     //System.out.println(delNoLetter(s).toLowerCase());
                                                     if (s.length() > 3) {
                                                         assert st != null;
-                                                        st.setString(1, delNoLetter(s).toLowerCase());
+                                                        st.setString(1, Common.delNoLetter(s).toLowerCase());
                                                         st.executeUpdate();
                                                     }
                                                 }
@@ -257,6 +249,8 @@ public class Search {
                 if (Gui.autoSendMessage.getState() && (Gui.model.getRowCount() > 0)) {
                     Gui.sendEmailBtn.doClick();
                 }
+
+                Main.LOGGER.log(Level.INFO, "Keywords search finished");
             } catch (Exception e) {
                 e.printStackTrace();
                 isStop.set(true);
