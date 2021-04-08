@@ -75,6 +75,17 @@ public class Search {
                                                     message.getLink()
                                             };
                                             Gui.model.addRow(row);
+
+                                            // SQLite
+                                            String[] subStr = message.getTitle().split(" ");
+                                            for (String s : subStr) {
+                                                if (s.length() > 3) {
+                                                    assert st != null;
+                                                    st.setString(1, Common.delNoLetter(s).toLowerCase());
+                                                    st.executeUpdate();
+                                                }
+                                            }
+
                                         } else if (!Gui.todayOrNotChbx.getState()) {
                                             Common.concatText(message.toString());
                                             Object[] row = new Object[]{
@@ -85,19 +96,18 @@ public class Search {
                                                     message.getLink()
                                             };
                                             Gui.model.addRow(row);
+
+                                            // SQLite
+                                            String[] subStr = message.getTitle().split(" ");
+                                            for (String s : subStr) {
+                                                if (s.length() > 3) {
+                                                    assert st != null;
+                                                    st.setString(1, Common.delNoLetter(s).toLowerCase());
+                                                    st.executeUpdate();
+                                                }
+                                            }
                                         }
                                     }
-
-                                    // SQLite
-                                    String[] subStr = message.getTitle().split(" ");
-                                    for (String s : subStr) {
-                                        if (s.length() > 3) {
-                                            assert st != null;
-                                            st.setString(1, Common.delNoLetter(s).toLowerCase());
-                                            st.executeUpdate();
-                                        }
-                                    }
-
                                 }
                                 if (isStop.get()) return;
                             }
@@ -140,6 +150,13 @@ public class Search {
 
                 Main.LOGGER.log(Level.INFO, "Main search finished");
             } catch (Exception e) {
+                try {
+                    String q_commit = "ROLLBACK";
+                    Statement st_commit = SQLite.connection.createStatement();
+                    st_commit.executeUpdate(q_commit);
+                } catch (SQLException sql) {
+                    sql.printStackTrace();
+                }
                 e.printStackTrace();
                 isStop.set(true);
             }
@@ -199,6 +216,16 @@ public class Search {
                                                         message.getLink()
                                                 };
                                                 Gui.model.addRow(row);
+
+                                                // SQLite
+                                                String[] subStr = message.getTitle().split(" ");
+                                                for (String s: subStr) {
+                                                    if (s.length() > 3) {
+                                                        assert st != null;
+                                                        st.setString(1, Common.delNoLetter(s).toLowerCase());
+                                                        st.executeUpdate();
+                                                    }
+                                                }
                                             } else if (!Gui.todayOrNotChbx.getState()) {
                                                 Common.concatText(message.toString());
                                                 Object[] row = new Object[]{
