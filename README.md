@@ -17,4 +17,4 @@ Program features:
 - dialog window for adding a new source to the database
 - the ability to view the folder with program files, logs and news sources
 
-![Image alt](https://github.com/mrprogre/news_founder/blob/master/GUI.gif)
+![Image alt](https://)
