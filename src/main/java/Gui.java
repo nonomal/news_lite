@@ -850,6 +850,15 @@ public class Gui extends JFrame {
         queryTableBox.setBounds(631, 424, 161, 26);
         getContentPane().add(queryTableBox);
 
+        //label
+        connect_to_bd_label = new JLabel("<html><p style=\"color:#bfbfbf\">Connected to SQLite for word frequency analysis</p></html>");
+        connect_to_bd_label.setHorizontalAlignment(SwingConstants.LEFT);
+        connect_to_bd_label.setForeground(new Color(247, 255, 58));
+        connect_to_bd_label.setFont(new Font("Tahoma", Font.PLAIN, 11));
+        connect_to_bd_label.setBackground(new Color(240, 255, 240));
+        connect_to_bd_label.setBounds(670, 8, 130, 26);
+        getContentPane().add(connect_to_bd_label);
+
         setVisible(true);
     }
 }
