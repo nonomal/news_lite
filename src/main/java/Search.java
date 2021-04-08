@@ -49,19 +49,13 @@ public class Search {
             Gui.stopBtnTop.setVisible(true);
             isSearchFinished = new AtomicBoolean(false);
             Common.statusLabel(isSearchFinished, "Searching");
-
-
             Gui.sendEmailBtn.setIcon(Gui.send);
             new Thread(Common::fill).start();
             try {
-
                 PreparedStatement st = SQLite.connection.prepareStatement("insert into news_dual(title) values (?)");
                 String q_begin = "BEGIN TRANSACTION";
                 Statement st_begin = SQLite.connection.createStatement();
                 st_begin.executeUpdate(q_begin);
-
-
-
                 for (Common.smi_number = 0; Common.smi_number < Common.smi_link.size(); Common.smi_number++) {
                     try {
                         try {
@@ -100,15 +94,16 @@ public class Search {
                                         }
                                     }
 
-                                        String[] subStr = message.getTitle().split(" ");
-                                        for (String s : subStr) {
-                                            //System.out.println(delNoLetter(s).toLowerCase());
-                                            if (s.length() > 3) {
-                                                assert st != null;
-                                                st.setString(1, delNoLetter(s).toLowerCase());
-                                                st.executeUpdate();
-                                            }
+                                    // SQLite
+                                    String[] subStr = message.getTitle().split(" ");
+                                    for (String s : subStr) {
+                                        //System.out.println(delNoLetter(s).toLowerCase());
+                                        if (s.length() > 3) {
+                                            assert st != null;
+                                            st.setString(1, delNoLetter(s).toLowerCase());
+                                            st.executeUpdate();
                                         }
+                                    }
 
                                 }
                                 if (isStop.get()) return;
@@ -128,14 +123,11 @@ public class Search {
                 Gui.searchBtnTop.setVisible(true);
                 Gui.stopBtnTop.setVisible(false);
 
-
-                if (SQLite.isConnectionToSQLite) {
-                    String q_commit = "COMMIT";
-                    Statement st_commit = SQLite.connection.createStatement();
-                    st_commit.executeUpdate(q_commit);
-                    SQLite.selectSqlite();
-                    SQLite.deleteTitles();
-                }
+                String q_commit = "COMMIT";
+                Statement st_commit = SQLite.connection.createStatement();
+                st_commit.executeUpdate(q_commit);
+                SQLite.selectSqlite();
+                SQLite.deleteTitles();
 
                 //Search time
                 Gui.timeEnd = System.currentTimeMillis();
@@ -175,10 +167,13 @@ public class Search {
             Gui.stopBtnBottom.setVisible(true);
             isSearchFinished = new AtomicBoolean(false);
             Common.statusLabel(isSearchFinished, "Searching");
-            PreparedStatement st = null;
             Gui.sendEmailBtn.setIcon(Gui.send);
             new Thread(Common::fill).start();
             try {
+                PreparedStatement st = SQLite.connection.prepareStatement("insert into news_dual(title) values (?)");
+                String q_begin = "BEGIN TRANSACTION";
+                Statement st_begin = SQLite.connection.createStatement();
+                st_begin.executeUpdate(q_begin);
                 for (Common.smi_number = 0; Common.smi_number < Common.smi_link.size(); Common.smi_number++) {
                     try {
                         try {
@@ -215,6 +210,17 @@ public class Search {
                                                         message.getLink()
                                                 };
                                                 Gui.model.addRow(row);
+
+                                                // SQLite
+                                                String[] subStr = message.getTitle().split(" ");
+                                                for (String s : subStr) {
+                                                    //System.out.println(delNoLetter(s).toLowerCase());
+                                                    if (s.length() > 3) {
+                                                        assert st != null;
+                                                        st.setString(1, delNoLetter(s).toLowerCase());
+                                                        st.executeUpdate();
+                                                    }
+                                                }
                                             }
                                         }
                                     }
@@ -235,6 +241,12 @@ public class Search {
                 Gui.search_animation.setText("total news: ");
                 Gui.searchBtnBottom.setVisible(true);
                 Gui.stopBtnBottom.setVisible(false);
+
+                String q_commit = "COMMIT";
+                Statement st_commit = SQLite.connection.createStatement();
+                st_commit.executeUpdate(q_commit);
+                SQLite.selectSqlite();
+                SQLite.deleteTitles();
 
                 //Search time
                 Gui.timeEnd = System.currentTimeMillis();
