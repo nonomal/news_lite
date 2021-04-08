@@ -128,8 +128,6 @@ public class Search {
                 Statement st_commit = SQLite.connection.createStatement();
                 st_commit.executeUpdate(q_commit);
                 SQLite.selectSqlite();
-                SQLite.deleteTitles();
-
                 //Search time
                 Gui.timeEnd = System.currentTimeMillis();
                 searchTime = (Gui.timeEnd - Gui.timeStart) / 1000;
@@ -247,7 +245,6 @@ public class Search {
                 Statement st_commit = SQLite.connection.createStatement();
                 st_commit.executeUpdate(q_commit);
                 SQLite.selectSqlite();
-                SQLite.deleteTitles();
 
                 //Search time
                 Gui.timeEnd = System.currentTimeMillis();

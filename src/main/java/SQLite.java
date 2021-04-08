@@ -70,6 +70,7 @@ class SQLite {
                 String[] row2 = new String[]{String.valueOf(sum), word};
                 Gui.model_for_analysis.addRow(row2);
             }
+            SQLite.deleteTitles();
         } catch (Exception e) {
             e.printStackTrace();
         }
