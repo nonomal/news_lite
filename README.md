@@ -16,5 +16,6 @@ Program features:
 - the ability to open SQLite to add new sources or remove unneeded sources from the database
 - dialog window for adding a new source to the database
 - the ability to view the folder with program files, logs and news sources
+- the ability to exclude unnecessary words from the analysis table
 
 ![Image alt](https://github.com/mrprogre/news_lite/blob/master/GUI.gif)
