@@ -27,20 +27,30 @@ class SQLite {
         }
     }
 
+    // создание таблиц
     static void createTables() {
         try {
             String query = "CREATE TABLE IF NOT EXISTS rss_list(id number, source text, link text)";
             Statement st = connection.createStatement();
             st.executeUpdate(query);
+            st.close();
 
             String sqlCreateTable = "CREATE TABLE IF NOT EXISTS news_dual(title varchar2(4000))";
             Statement stCreateTable = connection.createStatement();
             stCreateTable.executeUpdate(sqlCreateTable);
+            stCreateTable.close();
+
+            // слова, которые исключаются при анализе частоты употребления слов в новостях
+            String sqlExclude = "CREATE TABLE IF NOT EXISTS exclude(word varchar2(69))";
+            Statement stExclude = connection.createStatement();
+            stExclude.executeUpdate(sqlExclude);
+            stExclude.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
 
+    // создание представиления
     static void createView() {
         try {
             Statement st = connection.createStatement();
@@ -52,6 +62,7 @@ class SQLite {
                     "         group by title\n" +
                     "         order by sum desc) q";
             st.executeUpdate(sql);
+            st.close();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -61,7 +72,7 @@ class SQLite {
     static void selectSqlite() {
         try {
             Statement st = connection.createStatement();
-            String query = "select * from v_news_dual where sum > 2 order by sum desc";
+            String query = "select * from v_news_dual where sum > 2 and title not in (select word from exclude) order by sum desc";
             ResultSet rs = st.executeQuery(query);
             while (rs.next()) {
                 String word = rs.getString("TITLE");
@@ -70,6 +81,8 @@ class SQLite {
                 Gui.model_for_analysis.addRow(row2);
             }
             SQLite.deleteTitles();
+            rs.close();
+            st.close();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -81,6 +94,7 @@ class SQLite {
             Statement st = connection.createStatement();
             String query = "delete from news_dual";
             st.executeUpdate(query);
+            st.close();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -123,6 +137,9 @@ class SQLite {
                 String q_commit = "COMMIT";
                 Statement st_commit = SQLite.connection.createStatement();
                 st_commit.executeUpdate(q_commit);
+
+                st_begin.close();
+                st_commit.close();
             } catch (SQLException t) {
                 t.printStackTrace();
             }
@@ -145,6 +162,8 @@ class SQLite {
                     Common.smi_source.add(source);
                     Common.smi_link.add(link);
                 }
+                rs.close();
+                st.close();
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -158,6 +177,7 @@ class SQLite {
                 Statement st = connection.createStatement();
                 String query = "DELETE FROM rss_list";
                 st.executeUpdate(query);
+                st.close();
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -176,6 +196,8 @@ class SQLite {
                 while (rs.next()) {
                     max_id_in_source = rs.getInt("ID");
                 }
+                rs.close();
+                max_id_st.close();
                 new_id = max_id_in_source + 1;
 
                 // Диалоговое окно добавления источника новостей в базу данных
@@ -193,6 +215,7 @@ class SQLite {
                     String query = "INSERT INTO rss_list(id, source, link) " + "VALUES (" + new_id + ", '" + source_name.getText() + "', '" + rss_link.getText() + "')";
                     Statement st = connection.createStatement();
                     st.executeUpdate(query);
+                    st.close();
 
                     // запись в файл sources.txt
                     try (OutputStreamWriter writer = new OutputStreamWriter(
@@ -224,6 +247,7 @@ class SQLite {
                 String query = "DELETE FROM rss_list WHERE source = '" + p_source + "'";
                 Statement del_st = connection.createStatement();
                 del_st.executeUpdate(query);
+                del_st.close();
             } catch (Exception e) {
                 Common.console("[avandy@mrprogre ~]$ " + e.getMessage());
             }
