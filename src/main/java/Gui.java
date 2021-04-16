@@ -209,9 +209,9 @@ public class Gui extends JFrame {
         // Label for table for analysis
         JLabel table2_label = new JLabel();
         table2_label.setFont(new Font("Tahoma", Font.PLAIN, 11));
-        table2_label.setText("word frequency:");
+        table2_label.setText("word frequency: matches more than 2");
         table2_label.setForeground(new Color(247, 255, 58));
-        table2_label.setBounds(11, 345, 88, 14);
+        table2_label.setBounds(11, 345, 190, 14);
         getContentPane().add(table2_label);
 
         //Table for analysis
