@@ -57,9 +57,9 @@ public class Main {
 
     public static void main(String[] args) {
         LOGGER.log(Level.INFO, "Application started");
-        SQLite.open();
         new Gui();
         Common.getSettingsFromFile();
+        SQLite.open();
         Gui.newsIntervalCbox.setEnabled(Gui.todayOrNotChbx.getState());
     }
 }
