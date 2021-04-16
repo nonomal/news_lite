@@ -222,9 +222,16 @@ public class Gui extends JFrame {
         String[] columns_for_analysis = {"total", "words"};
         model_for_analysis = new DefaultTableModel(new Object[][]{}, columns_for_analysis) {
             final boolean[] column_for_analysis = new boolean[]{false, false};
-
             public boolean isCellEditable(int row, int column) {
                 return column_for_analysis[column];
+            }
+
+            // Сортировка
+            final Class[] types_unique = {Integer.class, String.class};
+
+            @Override
+            public Class getColumnClass(int columnIndex) {
+                return this.types_unique[columnIndex];
             }
         };
         table_for_analysis = new JTable(model_for_analysis);
@@ -762,7 +769,7 @@ public class Gui extends JFrame {
         sqliteBtn.setFocusable(false);
         sqliteBtn.setContentAreaFilled(true);
         sqliteBtn.setBorderPainted(false);
-        sqliteBtn.setBackground(new Color(248, 206, 165));
+        sqliteBtn.setBackground(new Color(244, 181, 181));
         sqliteBtn.setBounds(693, 430, 14, 14);
         getContentPane().add(sqliteBtn);
         sqliteBtn.addActionListener(e -> {
@@ -784,14 +791,14 @@ public class Gui extends JFrame {
             // наведение мышки на кнопку
             @Override
             public void mouseEntered(MouseEvent e) {
-                sqliteBtn.setBackground(new Color(222, 114, 7));
+                sqliteBtn.setBackground(new Color(255, 50, 50));
                 lblLogSourceSqlite.setText("sqlite");
             }
 
             @Override
             // убрали мышку с кнопки
             public void mouseExited(MouseEvent e) {
-                sqliteBtn.setBackground(new Color(248, 206, 165));
+                sqliteBtn.setBackground(new Color(244, 181, 181));
                 lblLogSourceSqlite.setText("");
             }
         });
@@ -801,7 +808,7 @@ public class Gui extends JFrame {
         logBtn.setContentAreaFilled(true);
         logBtn.setBorderPainted(false);
         logBtn.setFocusable(false);
-        logBtn.setBackground(new Color(255, 214, 214));
+        logBtn.setBackground(new Color(248, 206, 165));
         logBtn.setBounds(674, 430, 14, 14);
         getContentPane().add(logBtn);
         logBtn.addActionListener(e -> new Dialogs("logDlg"));
@@ -809,13 +816,13 @@ public class Gui extends JFrame {
             // наведение мышки на кнопку
             @Override
             public void mouseEntered(MouseEvent e) {
-                logBtn.setBackground(new Color(254, 73, 73));
+                logBtn.setBackground(new Color(222, 114, 7));
                 lblLogSourceSqlite.setText("log");
             }
             @Override
             // убрали мышку с кнопки
             public void mouseExited(MouseEvent e) {
-                logBtn.setBackground(new Color(255, 214, 214));
+                logBtn.setBackground(new Color(248, 206, 165));
                 lblLogSourceSqlite.setText("");
             }
         });

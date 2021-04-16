@@ -123,6 +123,7 @@ public class Search {
                 isSearchFinished.set(true);
                 Gui.progressBar.setValue(100);
                 Gui.table.setAutoCreateRowSorter(true);
+                Gui.table_for_analysis.setAutoCreateRowSorter(true);
                 Gui.search_animation.setText("total news: ");
                 Gui.searchBtnTop.setVisible(true);
                 Gui.stopBtnTop.setVisible(false);
@@ -265,6 +266,7 @@ public class Search {
                 isSearchFinished.set(true);
                 Gui.progressBar.setValue(100);
                 Gui.table.setAutoCreateRowSorter(true);
+                Gui.table_for_analysis.setAutoCreateRowSorter(true);
                 Gui.search_animation.setText("total news: ");
                 Gui.searchBtnBottom.setVisible(true);
                 Gui.stopBtnBottom.setVisible(false);

@@ -50,7 +50,7 @@ class SQLite {
         }
     }
 
-    // создание представиления
+    // создание представления
     static void createView() {
         try {
             Statement st = connection.createStatement();
@@ -72,12 +72,12 @@ class SQLite {
     static void selectSqlite() {
         try {
             Statement st = connection.createStatement();
-            String query = "select * from v_news_dual where sum > 2 and title not in (select word from exclude) order by sum desc";
+            String query = "select SUM, TITLE from v_news_dual where sum > 2 and title not in (select word from exclude) order by sum desc";
             ResultSet rs = st.executeQuery(query);
             while (rs.next()) {
                 String word = rs.getString("TITLE");
                 int sum = rs.getInt("SUM");
-                String[] row2 = new String[]{String.valueOf(sum), word};
+                Object[] row2 = new Object[]{sum, word};
                 Gui.model_for_analysis.addRow(row2);
             }
             SQLite.deleteTitles();
