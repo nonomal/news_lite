@@ -21,7 +21,7 @@ class SQLite {
             SQLite.deleteFromSources();
             SQLite.initialInsertSources();
             SQLite.selectSources();
-            Thread.sleep(1000);
+            Thread.sleep(1000L);
             Gui.connect_to_bd_label.setText("<html><p style=\"color:#a4f5a4\">Connected to SQLite for word frequency analysis</p></html>");
         } catch (Exception e) {
             e.printStackTrace();
