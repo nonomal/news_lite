@@ -18,4 +18,4 @@ Program features:
 - the ability to view the folder with program files, logs and news sources
 - the ability to exclude unnecessary words from the analysis table
 
-![Image alt](https://github.com/mrprogre/news_lite/blob/master/GUI.gif)
+![Image alt](https://github.com/mrprogre/news_lite/blob/master/GUI2.gif)
