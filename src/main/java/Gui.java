@@ -285,12 +285,12 @@ public class Gui extends JFrame {
                 Search.isSearchFinished.set(true);
                 Search.isStop.set(true);
                 search_animation.setText("Stopped");
-                Common.console("[avandy@mrprogre ~]$ search stopped");
+                Common.console("status: search stopped");
                 searchBtnTop.setVisible(true);
                 stopBtnTop.setVisible(false);
                 Search.isSearchNow.set(false);
             } catch (Exception t) {
-                Common.console("[avandy@mrprogre ~]$ there is no threads to stop");
+                Common.console("status: there is no threads to stop");
             }
             try {
                 String q_commit = "ROLLBACK";
@@ -321,12 +321,12 @@ public class Gui extends JFrame {
                 Search.isSearchFinished.set(true);
                 Search.isStop.set(true);
                 search_animation.setText("Stopped");
-                Common.console("[avandy@mrprogre ~]$ search stopped");
+                Common.console("status: search stopped");
                 searchBtnBottom.setVisible(true);
                 stopBtnBottom.setVisible(false);
                 Search.isSearchNow.set(false);
             } catch (Exception t) {
-                Common.console("[avandy@mrprogre ~]$ there is no threads to stop");
+                Common.console("status: there is no threads to stop");
             }
             try {
                 String q_commit = "ROLLBACK";
@@ -348,7 +348,7 @@ public class Gui extends JFrame {
         clearBtnTop.addActionListener(e -> {
             try {
                 if (model.getRowCount() == 0) {
-                    Common.console("[avandy@mrprogre ~]$ no data to clear");
+                    Common.console("status: no data to clear");
                     return;
                 }
                 //table.setAutoCreateRowSorter(false);
@@ -360,7 +360,7 @@ public class Gui extends JFrame {
                 model_for_analysis.setRowCount(0);
                 q = 0;
                 labelSum.setText("" + q);
-                Common.console("[avandy@mrprogre ~]$ clear");
+                Common.console("status: clear");
             } catch (Exception t) {
                 Common.console(t.getMessage());
                 t.printStackTrace();
@@ -475,7 +475,7 @@ public class Gui extends JFrame {
         sendEmailBtn.setBounds(760, 364, 32, 23);
         sendEmailBtn.addActionListener(e -> {
             if (model.getRowCount() > 0 && sendEmailTo.getText().contains("@")) {
-                Common.console("[avandy@mrprogre ~]$ sending e-mail");
+                Common.console("status: sending e-mail");
                 send_to = sendEmailTo.getText();
                 Common.isSending.set(false);
                 Common.statusLabel(Common.isSending, "sending");
@@ -521,9 +521,9 @@ public class Gui extends JFrame {
         exportBtn.addActionListener(e -> {
             if (model.getRowCount() != 0) {
                 new Thread(ExportToExcel::export_from_RSS_to_excel).start();
-                Common.console("[avandy@mrprogre ~]$ export");
+                Common.console("status: export");
             } else {
-                Common.console("[avandy@mrprogre ~]$ there is no data to export");
+                Common.console("status: there is no data to export");
             }
         });
         getContentPane().add(exportBtn);

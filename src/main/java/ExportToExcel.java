@@ -110,10 +110,10 @@ public class ExportToExcel {
                 }
                 new_excel.write();
                 new_excel.close();
-                Common.console("[avandy@mrprogre ~]$ export is done");
-            } else Common.console("[avandy@mrprogre ~]$ export canceled");
+                Common.console("status: export is done");
+            } else Common.console("status: export canceled");
         } catch (WriteException | IOException e) {
-            Common.console("[avandy@mrprogre ~]$ export exception.. please try again!");
+            Common.console("status: export exception.. please try again!");
         }
     }
 }

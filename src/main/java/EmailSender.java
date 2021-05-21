@@ -48,7 +48,7 @@ public class EmailSender {
 
             //Send message
             Transport.send(message);
-            Common.console("[avandy@mrprogre ~]$ e-mail sent successfully");
+            Common.console("status: e-mail sent successfully");
             Gui.progressBar.setValue(100);
             Common.isSending.set(true);
             Main.LOGGER.log(Level.INFO, "Email has been sent");
@@ -56,7 +56,7 @@ public class EmailSender {
             Gui.sendEmailBtn.setIcon(Gui.send3);
         } catch (MessagingException mex) {
             mex.printStackTrace();
-            Common.console("[avandy@mrprogre ~]$ e-mail wasn't send");
+            Common.console("status: e-mail wasn't send");
             Gui.progressBar.setValue(100);
             Gui.search_animation.setText("not send");
             Common.isSending.set(true);

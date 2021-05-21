@@ -230,10 +230,10 @@ class SQLite {
                         ex.printStackTrace();
                     }
 
-                    Common.console("[avandy@mrprogre ~]$ source added");
+                    Common.console("status: source added");
                     Main.LOGGER.log(Level.INFO, "New source added");
                 } else {
-                    Common.console("[avandy@mrprogre ~]$ adding source canceled");
+                    Common.console("status: adding source canceled");
                 }
 
             } catch (Exception e) {
@@ -256,17 +256,17 @@ class SQLite {
                 try (OutputStreamWriter writer = new OutputStreamWriter(
                         new FileOutputStream(Main.excludedPath, true),
                         StandardCharsets.UTF_8)) {
-                    String text = "insert into exclude values ('" + pWord + "');\n";
-                    writer.write(text);
+                    //String text = "insert into exclude values ('" + pWord + "');\n";
+                    writer.write(pWord+"\n");
                     writer.flush();
                 } catch (IOException ex) {
                     ex.printStackTrace();
                 }
-                Common.console("[avandy@mrprogre ~]$ word \"" + pWord + "\" excluded from analysis");
+                Common.console("status: word \"" + pWord + "\" excluded from analysis");
                 Main.LOGGER.log(Level.INFO, "New word excluded from analysis");
             } catch (Exception e) {
                 e.printStackTrace();
-                Common.console("[avandy@mrprogre ~]$ " + e.getMessage());
+                Common.console("status: " + e.getMessage());
             }
         }
     }
@@ -280,7 +280,7 @@ class SQLite {
                 del_st.executeUpdate(query);
                 del_st.close();
             } catch (Exception e) {
-                Common.console("[avandy@mrprogre ~]$ " + e.getMessage());
+                Common.console("status: " + e.getMessage());
             }
         }
     }

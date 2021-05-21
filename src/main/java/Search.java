@@ -23,7 +23,7 @@ public class Search {
     //Main search
     public static void mainSearch() {
         if (!isSearchNow.get()) {
-            Common.console("[avandy@mrprogre ~]$ main search started");
+            Common.console("status: main search started");
             Main.LOGGER.log(Level.INFO, "Main search started");
             //выборка актуальных источников перед поиском из БД
             SQLite.selectSources();
@@ -116,7 +116,7 @@ public class Search {
                             Gui.labelInfo.setText("RssList: " + (char) 34 + Common.smi_link.get(Common.smi_number) + (char) 34 + " is not available");
                         }
                     } catch (Exception e) {
-                        Common.console("[avandy@mrprogre ~]$ to many news.. please restart the application!");
+                        Common.console("status: to many news.. please restart the application!");
                         isStop.set(true);
                     }
                 }
@@ -142,7 +142,7 @@ public class Search {
                 Gui.timeEnd = System.currentTimeMillis();
                 searchTime = (Gui.timeEnd - Gui.timeStart) / 1000;
                 DecimalFormat f = new DecimalFormat("##.00");
-                Common.console("[avandy@mrprogre ~]$ search completed in " + f.format(searchTime) + " s.");
+                Common.console("status: search completed in " + f.format(searchTime) + " s.");
                 isSearchNow.set(false);
 
                 //auto send after search
@@ -168,7 +168,7 @@ public class Search {
     //Search by keywords
     public static void keywordsSearch() {
         if (!isSearchNow.get()) {
-            Common.console("[avandy@mrprogre ~]$ keywords search started");
+            Common.console("status: keywords search started");
             Main.LOGGER.log(Level.INFO, "Keywords search started");
             //выборка актуальных источников перед поиском из БД
             SQLite.selectSources();
@@ -259,7 +259,7 @@ public class Search {
                             Gui.labelInfo.setText("RssList: " + (char) 34 + Common.smi_link.get(Common.smi_number) + (char) 34 + " is not available");
                         }
                     } catch (Exception e) {
-                        Common.console("[avandy@mrprogre ~]$ to many news.. Please restart the application!");
+                        Common.console("status: to many news.. Please restart the application!");
                         isStop.set(true);
                     }
                 }
@@ -283,7 +283,7 @@ public class Search {
                 Gui.timeEnd = System.currentTimeMillis();
                 searchTime = (Gui.timeEnd - Gui.timeStart) / 1000;
                 DecimalFormat f = new DecimalFormat("##.00");
-                Common.console("[avandy@mrprogre ~]$ search completed in " + f.format(searchTime) + " s.");
+                Common.console("status: search completed in " + f.format(searchTime) + " s.");
                 isSearchNow.set(false);
 
                 //auto send after search
