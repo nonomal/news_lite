@@ -9,6 +9,7 @@ public class Main {
     static String settingsPath = directoryPath + "config.txt";
     static String logPath = directoryPath + "log.txt";
     static String sourcesPath = directoryPath + "sources.txt";
+    static String excludedPath = directoryPath + "excluded.txt";
     public static final Logger LOGGER = Logger.getLogger("");
 
     // создание директории, файла настроек, лога
@@ -52,6 +53,15 @@ public class Main {
             //SQLite.deleteFromSources();
             SQLite.initialInsertSources();
             SQLite.selectSources();
+        }
+
+        // создание первоначального файла исключенных из анализа слов
+        File excludedIsExists = new File(excludedPath);
+        if (!excludedIsExists.exists()) {
+            Common.copyFiles(Main.class.getResource("excluded.txt"), excludedPath);
+            //SQLite.deleteFromSources();
+            //SQLite.initialInsertSources();
+            //SQLite.selectSources();
         }
     }
 

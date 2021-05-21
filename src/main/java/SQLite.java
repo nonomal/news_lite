@@ -254,9 +254,9 @@ class SQLite {
 
                 // запись в файл sources.txt
                 try (OutputStreamWriter writer = new OutputStreamWriter(
-                        new FileOutputStream(Main.sourcesPath, true),
+                        new FileOutputStream(Main.excludedPath, true),
                         StandardCharsets.UTF_8)) {
-                    String text = "\ninsert into exclude values ('" + pWord + "');";
+                    String text = "insert into exclude values ('" + pWord + "');\n";
                     writer.write(text);
                     writer.flush();
                 } catch (IOException ex) {
