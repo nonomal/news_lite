@@ -7,6 +7,7 @@ Program features:
 - search news by keyword
 - sending the search result to e-mail (+ the ability to choose to automatically send results after each search)
 - export of search results to Excel
+- following the link with a double click opens the news page
 - additional search by keywords. Words can be deleted, and new ones added instead (no restrictions)
 - analysis of word usage in news headlines using SQLite database
 - using checkboxes, you can choose where to search for a keyword: in the title or in the link to the news
