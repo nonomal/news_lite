@@ -22,6 +22,7 @@ public class Common {
     public static int smi_number = 0;
     static ArrayList<String> smi_link = new ArrayList<>();
     static ArrayList<String> smi_source = new ArrayList<>();
+    static ArrayList<String> excludedWords = new ArrayList<>();
 
     // формирование теста письма
     public static void concatText(String p_in) {
@@ -310,6 +311,14 @@ public class Common {
                 Dialogs.textAreaForDialogs.setText(allTab.toString());
             } catch (IOException e) {
                 e.printStackTrace();
+            }
+        } else if (p_file.equals("excl")) {
+            SQLite.selectSources();
+            int i = 1;
+            for (String s: Common.excludedWords) {
+                Object[] row = new Object[]{i, s};
+                Dialogs.model.addRow(row);
+                i++;
             }
         }
 

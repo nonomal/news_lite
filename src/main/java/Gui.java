@@ -61,6 +61,7 @@ public class Gui extends JFrame {
     static JButton sendEmailBtn;
     static JButton smiBtn;
     static JButton logBtn;
+    static JButton exclBtn;
     static JToggleButton connect_to_bd_button;
     static Checkbox todayOrNotChbx;
     static Checkbox searchInTitleCbx;
@@ -211,7 +212,7 @@ public class Gui extends JFrame {
         table2_label.setFont(new Font("Tahoma", Font.PLAIN, 11));
         table2_label.setText("word frequency: matches more than 2");
         table2_label.setForeground(new Color(247, 255, 58));
-        table2_label.setBounds(11, 345, 190, 14);
+        table2_label.setBounds(11, 343, 190, 14);
         getContentPane().add(table2_label);
 
         //Table for analysis
@@ -714,6 +715,25 @@ public class Gui extends JFrame {
         lblLogSourceSqlite.setFont(new Font("Arial", Font.PLAIN, 11));
         lblLogSourceSqlite.setBounds(730, 430, 60, 14);
         getContentPane().add(lblLogSourceSqlite);
+
+        // Диалоговое окно со списком исключенных слов из анализа
+        exclBtn = new JButton();
+        //exclBtn.setText("excluded words");
+        exclBtn.setFocusable(false);
+        exclBtn.setContentAreaFilled(true);
+        exclBtn.setBorderPainted(false);
+        exclBtn.setBackground(Color.BLACK);
+        exclBtn.setBounds(296, 343, 14, 14);
+        getContentPane().add(exclBtn);
+        exclBtn.addActionListener((e) -> new Dialogs("exclDlg"));
+        //label
+        JLabel excludedLabel = new JLabel("excluded list:");
+        excludedLabel.setHorizontalAlignment(SwingConstants.LEFT);
+        excludedLabel.setForeground(new Color(247, 255, 58));
+        excludedLabel.setFont(new Font("Tahoma", Font.PLAIN, 11));
+        excludedLabel.setBackground(new Color(240, 255, 240));
+        excludedLabel.setBounds(231, 337, 130, 26);
+        getContentPane().add(excludedLabel);
 
         // Диалоговое окно со списком источников
         smiBtn = new JButton();

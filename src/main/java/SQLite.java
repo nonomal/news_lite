@@ -152,6 +152,7 @@ class SQLite {
     static void selectSources() {
         Common.smi_source.clear();
         Common.smi_link.clear();
+        Common.excludedWords.clear();
         if (isConnectionToSQLite) {
             try {
                 Statement st = connection.createStatement();
@@ -163,6 +164,19 @@ class SQLite {
                     String link = rs.getString("link");
                     Common.smi_source.add(source);
                     Common.smi_link.add(link);
+                }
+                rs.close();
+                st.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            try {
+                Statement st = connection.createStatement();
+                String query = "SELECT word FROM exclude";
+                ResultSet rs = st.executeQuery(query);
+                while (rs.next()) {
+                    String word = rs.getString("word");
+                    Common.excludedWords.add(word);
                 }
                 rs.close();
                 st.close();
@@ -243,7 +257,7 @@ class SQLite {
     }
 
     // вставка нового слова для исключения из анализа частоты употребления слов
-    static void insertNewExcludedWord(String pWord){
+    static void insertNewExcludedWord(String pWord) {
         if (isConnectionToSQLite) {
             try {
                 //запись в БД
@@ -257,7 +271,7 @@ class SQLite {
                         new FileOutputStream(Main.excludedPath, true),
                         StandardCharsets.UTF_8)) {
                     //String text = "insert into exclude values ('" + pWord + "');\n";
-                    writer.write(pWord+"\n");
+                    writer.write(pWord + "\n");
                     writer.flush();
                 } catch (IOException ex) {
                     ex.printStackTrace();

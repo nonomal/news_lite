@@ -60,19 +60,24 @@ class ButtonColumn extends AbstractCellEditor implements TableCellRenderer, Tabl
         try {
             int row_with_source = table.getSelectedRow();
             int row_with_exlude_word = Gui.table_for_analysis.getSelectedRow();
+            int del_row_with_exlude_word = Dialogs.table.getSelectedRow();
 
             // определяем активное окно
             Window window = javax.swing.FocusManager.getCurrentManager().getActiveWindow();
             int activeWindow = 0;
-            if (window.toString().startsWith("Gui")) {
+            if (window.toString().contains("Avandy")) {
                 activeWindow = 1;
             }
-            if (window.toString().startsWith("Dialog")) {
+            if (window.toString().contains("Sources")) {
                 activeWindow = 2;
             }
+            if (window.toString().contains("Excluded")) {
+                activeWindow = 3;
+            }
 
-            // окно таблицы с анализом частоты слов на основной панели
+            // окно таблицы с анализом частоты слов на основной панели (добавляем в базу)
             if (activeWindow == 1 && row_with_exlude_word != -1) {
+                System.out.println(1);
                 row_with_exlude_word = Gui.table_for_analysis.convertRowIndexToModel(row_with_exlude_word);
                 String source = (String) Gui.model_for_analysis.getValueAt(row_with_exlude_word, 1);
                 //System.out.println(source);
@@ -85,6 +90,7 @@ class ButtonColumn extends AbstractCellEditor implements TableCellRenderer, Tabl
 
             // окно источников RSS
             if (activeWindow == 2 && row_with_source != -1) {
+                System.out.println(2);
                 row_with_source = table.convertRowIndexToModel(row_with_source);
                 String source = (String) Dialogs.model.getValueAt(row_with_source, 1);
                 System.out.println(source);
@@ -94,6 +100,20 @@ class ButtonColumn extends AbstractCellEditor implements TableCellRenderer, Tabl
                 Common.delLine(source);
                 // удаление из базы данных
                 SQLite.deleteSource(source);
+            }
+
+            // окно с исключенными из анализа слов (удаляем из базы)
+            if (activeWindow == 3 && del_row_with_exlude_word != -1) {
+                System.out.println(3);
+                del_row_with_exlude_word = Dialogs.table.convertRowIndexToModel(del_row_with_exlude_word);
+                String source = (String) Dialogs.model.getValueAt(del_row_with_exlude_word, 1);
+                System.out.println(source);
+
+                // удаление из диалогового окна
+                Dialogs.model.removeRow(del_row_with_exlude_word);
+
+                // добавление в базу данных и файл excluded.txt
+                //SQLite.insertNewExcludedWord(source);
             }
         } catch (IOException io) {
             io.printStackTrace();
