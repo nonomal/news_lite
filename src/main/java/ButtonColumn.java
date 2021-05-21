@@ -75,13 +75,11 @@ class ButtonColumn extends AbstractCellEditor implements TableCellRenderer, Tabl
             if (activeWindow == 1 && row_with_exlude_word != -1) {
                 row_with_exlude_word = Gui.table_for_analysis.convertRowIndexToModel(row_with_exlude_word);
                 String source = (String) Gui.model_for_analysis.getValueAt(row_with_exlude_word, 1);
-                System.out.println(source);
+                //System.out.println(source);
 
                 // удаление из диалогового окна
                 Gui.model_for_analysis.removeRow(row_with_exlude_word);
-                // добавление в файл sources.txt
-                //Common.delLine(source);
-                // добавление в базу данных
+                // добавление в базу данных и файл excluded.txt
                 SQLite.insertNewExcludedWord(source);
             }
 
