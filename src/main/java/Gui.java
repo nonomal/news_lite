@@ -219,15 +219,15 @@ public class Gui extends JFrame {
         scroll_for_analysis.setBounds(10, 360, 300, 120);
         getContentPane().add(scroll_for_analysis);
 
-        String[] columns_for_analysis = {"total", "words"};
+        String[] columns_for_analysis = {"total", "words", "del"};
         model_for_analysis = new DefaultTableModel(new Object[][]{}, columns_for_analysis) {
-            final boolean[] column_for_analysis = new boolean[]{false, false};
+            final boolean[] column_for_analysis = new boolean[]{false, false, true};
             public boolean isCellEditable(int row, int column) {
                 return column_for_analysis[column];
             }
 
             // Сортировка
-            final Class[] types_unique = {Integer.class, String.class};
+            final Class[] types_unique = {Integer.class, String.class, Button.class};
 
             @Override
             public Class getColumnClass(int columnIndex) {
@@ -242,6 +242,7 @@ public class Gui extends JFrame {
         renderer_for_analysis.setHorizontalAlignment(JLabel.CENTER);
         table_for_analysis.getColumnModel().getColumn(0).setCellRenderer(renderer_for_analysis);
         table_for_analysis.getColumnModel().getColumn(1).setCellRenderer(renderer_for_analysis);
+        table_for_analysis.getColumn("del").setCellRenderer(new ButtonColumn(table_for_analysis, 2));
         table_for_analysis.setRowHeight(20);
         table_for_analysis.setColumnSelectionAllowed(true);
         table_for_analysis.setCellSelectionEnabled(true);
@@ -249,6 +250,7 @@ public class Gui extends JFrame {
         table_for_analysis.setFont(new Font("SansSerif", Font.PLAIN, 13));
         table_for_analysis.getColumnModel().getColumn(0).setPreferredWidth(80);
         table_for_analysis.getColumnModel().getColumn(1).setPreferredWidth(140);
+        table_for_analysis.getColumnModel().getColumn(2).setPreferredWidth(30);
         // Colors
         table_for_analysis.setForeground(Color.black);
         table_for_analysis.setSelectionForeground(new Color(26, 79, 164));

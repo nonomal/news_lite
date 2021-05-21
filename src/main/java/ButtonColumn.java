@@ -58,15 +58,40 @@ class ButtonColumn extends AbstractCellEditor implements TableCellRenderer, Tabl
     public void actionPerformed(ActionEvent e) {
         fireEditingStopped();
         try {
-            int row = table.getSelectedRow();
-            // для корректного определения строки после сортировки
-            if (row != -1) {
-                row = table.convertRowIndexToModel(row);
-                String source = (String) Dialogs.model.getValueAt(row, 1);
+            int row_with_source = table.getSelectedRow();
+            int row_with_exlude_word = Gui.table_for_analysis.getSelectedRow();
+
+            // определяем активное окно
+            Window window = javax.swing.FocusManager.getCurrentManager().getActiveWindow();
+            int activeWindow = 0;
+            if (window.toString().startsWith("Gui")) {
+                activeWindow = 1;
+            }
+            if (window.toString().startsWith("Dialog")) {
+                activeWindow = 2;
+            }
+
+            // окно таблицы с анализом частоты слов на основной панели
+            if (activeWindow == 1 && row_with_exlude_word != -1) {
+                row_with_exlude_word = Gui.table_for_analysis.convertRowIndexToModel(row_with_exlude_word);
+                String source = (String) Gui.model_for_analysis.getValueAt(row_with_exlude_word, 1);
                 System.out.println(source);
 
                 // удаление из диалогового окна
-                Dialogs.model.removeRow(row);
+                Gui.model_for_analysis.removeRow(row_with_exlude_word);
+                // добавление в файл sources.txt
+                //Common.delLine(source);
+                // добавление в базу данных
+                SQLite.insertNewExcludedWord(source);
+            }
+
+            // окно источников RSS
+            if (activeWindow == 2 && row_with_source != -1) {
+                row_with_source = table.convertRowIndexToModel(row_with_source);
+                String source = (String) Dialogs.model.getValueAt(row_with_source, 1);
+                System.out.println(source);
+                // удаление из диалогового окна
+                Dialogs.model.removeRow(row_with_source);
                 // удаление из файла sources.txt
                 Common.delLine(source);
                 // удаление из базы данных
@@ -77,4 +102,5 @@ class ButtonColumn extends AbstractCellEditor implements TableCellRenderer, Tabl
         }
 
     }
+
 }

@@ -242,6 +242,35 @@ class SQLite {
         }
     }
 
+    // вставка нового слова для исключения из анализа частоты употребления слов
+    static void insertNewExcludedWord(String pWord){
+        if (isConnectionToSQLite) {
+            try {
+                //запись в БД
+                String query = "INSERT INTO exclude(word) " + "VALUES ('" + pWord + "')";
+                Statement st = connection.createStatement();
+                st.executeUpdate(query);
+                st.close();
+
+                // запись в файл sources.txt
+                try (OutputStreamWriter writer = new OutputStreamWriter(
+                        new FileOutputStream(Main.sourcesPath, true),
+                        StandardCharsets.UTF_8)) {
+                    String text = "\ninsert into exclude values ('" + pWord + "');";
+                    writer.write(text);
+                    writer.flush();
+                } catch (IOException ex) {
+                    ex.printStackTrace();
+                }
+                Common.console("[avandy@mrprogre ~]$ word excluded from analysis");
+                Main.LOGGER.log(Level.INFO, "New word excluded from analysis");
+            } catch (Exception e) {
+                e.printStackTrace();
+                Common.console("[avandy@mrprogre ~]$ " + e.getMessage());
+            }
+        }
+    }
+
     // удаление источника
     static void deleteSource(String p_source) {
         if (isConnectionToSQLite) {
