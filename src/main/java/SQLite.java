@@ -262,7 +262,7 @@ class SQLite {
                 } catch (IOException ex) {
                     ex.printStackTrace();
                 }
-                Common.console("[avandy@mrprogre ~]$ word excluded from analysis");
+                Common.console("[avandy@mrprogre ~]$ word \"" + pWord + "\" excluded from analysis");
                 Main.LOGGER.log(Level.INFO, "New word excluded from analysis");
             } catch (Exception e) {
                 e.printStackTrace();
