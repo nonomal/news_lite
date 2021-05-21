@@ -462,7 +462,7 @@ public class Gui extends JFrame {
         lblSendToEmail.setText("send to:");
         lblSendToEmail.setForeground(new Color(247, 255, 58));
         lblSendToEmail.setFont(new Font("Tahoma", Font.PLAIN, 11));
-        lblSendToEmail.setBounds(631, 345, 83, 14);
+        lblSendToEmail.setBounds(631, 342, 83, 14);
         getContentPane().add(lblSendToEmail);
 
         //Send e-mail addNewSource
@@ -597,7 +597,7 @@ public class Gui extends JFrame {
         lblConsole.setText("console:");
         lblConsole.setForeground(new Color(247, 255, 58));
         lblConsole.setFont(new Font("Tahoma", Font.PLAIN, 11));
-        lblConsole.setBounds(321, 345, 83, 14);
+        lblConsole.setBounds(321, 342, 83, 14);
         getContentPane().add(lblConsole);
 
         // Clear console
@@ -631,7 +631,7 @@ public class Gui extends JFrame {
         progressBar.setBorderPainted(false);
         progressBar.setForeground(new Color(10, 255, 41));
         progressBar.setBackground(new Color(1, 1, 1));
-        progressBar.setBounds(365, 351, 255, 4);
+        progressBar.setBounds(365, 348, 255, 4);
         getContentPane().add(progressBar);
 
         // Today or not
@@ -722,10 +722,23 @@ public class Gui extends JFrame {
         exclBtn.setFocusable(false);
         exclBtn.setContentAreaFilled(true);
         exclBtn.setBorderPainted(false);
-        exclBtn.setBackground(Color.BLACK);
+        exclBtn.setBackground(new Color(206, 232, 206));
         exclBtn.setBounds(296, 343, 14, 14);
         getContentPane().add(exclBtn);
         exclBtn.addActionListener((e) -> new Dialogs("exclDlg"));
+        exclBtn.addMouseListener(new MouseAdapter() {
+            // наведение мышки на кнопку
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                exclBtn.setBackground(new Color(101, 163, 101));
+            }
+
+            @Override
+            // убрали мышку с кнопки
+            public void mouseExited(MouseEvent e) {
+                exclBtn.setBackground(new Color(206, 232, 206));
+            }
+        });
         //label
         JLabel excludedLabel = new JLabel("excluded list:");
         excludedLabel.setHorizontalAlignment(SwingConstants.LEFT);
