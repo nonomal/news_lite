@@ -341,8 +341,8 @@ public class Common {
     }
 
     // Удаление строки с источником новостей из файла sources.txt
-    static void delLine(String s) throws IOException {
-        Path input = Paths.get(Main.sourcesPath);
+    static void delLine(String s, String pPath) throws IOException {
+        Path input = Paths.get(pPath);
         Path temp = Files.createTempFile("temp", ".txt");
         Stream<String> lines = Files.lines(input);
         try (BufferedWriter writer = Files.newBufferedWriter(temp)) {

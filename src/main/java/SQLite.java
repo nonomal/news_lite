@@ -299,6 +299,20 @@ class SQLite {
         }
     }
 
+    // удаление слова исключенного из поиска
+    static void deleteExcluded(String p_source) {
+        if (isConnectionToSQLite) {
+            try {
+                String query = "DELETE FROM exclude WHERE word = '" + p_source + "'";
+                Statement del_st = connection.createStatement();
+                del_st.executeUpdate(query);
+                del_st.close();
+            } catch (Exception e) {
+                Common.console("status: " + e.getMessage());
+            }
+        }
+    }
+
     // закрытие соединения с SQLite
     static void closeSQLiteConnection() {
         try {
