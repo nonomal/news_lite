@@ -12,7 +12,7 @@ public class Main {
     static String excludedPath = directoryPath + "excluded.txt";
     public static final Logger LOGGER = Logger.getLogger("");
 
-    // создание директории, файла настроек, лога
+    // создание директорий и файлов
     static {
         File directory = new File(directoryPath);
         File fav_file = new File(settingsPath);

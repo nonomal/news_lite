@@ -8,6 +8,7 @@ import java.util.logging.Level;
 class SQLite {
     static Connection connection;
     static boolean isConnectionToSQLite;
+    static int wordFreqMatches = 2;
 
     // Открытие соединения с базой данных
     static void open() {
@@ -74,7 +75,7 @@ class SQLite {
     static void selectSqlite() {
         try {
             Statement st = connection.createStatement();
-            String query = "select SUM, TITLE from v_news_dual where sum > 2 and title not in (select word from exclude) order by SUM desc";
+            String query = "select SUM, TITLE from v_news_dual where sum > " + wordFreqMatches + " and title not in (select word from exclude) order by SUM desc";
             ResultSet rs = st.executeQuery(query);
             while (rs.next()) {
                 String word = rs.getString("TITLE");
