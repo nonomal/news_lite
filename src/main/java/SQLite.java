@@ -21,7 +21,7 @@ class SQLite {
             Main.LOGGER.log(Level.INFO, "Connected");
             SQLite.deleteFromSources();
             SQLite.initialInsertSources();
-            SQLite.selectSources();
+            SQLite.selectSources("smi");
             Thread.sleep(1000L);
             Gui.connect_to_bd_label.setText("<html><p style=\"color:#a4f5a4\">Connected to SQLite for word frequency analysis</p></html>");
         } catch (Exception e) {
@@ -150,40 +150,46 @@ class SQLite {
     }
 
     // запись данных по актуальным источникам из базы в массивы для поиска
-    static void selectSources() {
-        Common.smi_source.clear();
-        Common.smi_link.clear();
-        Common.excludedWords.clear();
+    static void selectSources(String pDialog) {
         if (isConnectionToSQLite) {
-            try {
-                Statement st = connection.createStatement();
-                String query = "SELECT id, source, link FROM rss_list ORDER BY id";
-                ResultSet rs = st.executeQuery(query);
-                while (rs.next()) {
-                    //int id = rs.getInt("id");
-                    String source = rs.getString("source");
-                    String link = rs.getString("link");
-                    Common.smi_source.add(source);
-                    Common.smi_link.add(link);
+            if (pDialog.equals("smi")) {
+                //sources
+                Common.smi_source.clear();
+                Common.smi_link.clear();
+                try {
+                    Statement st = connection.createStatement();
+                    String query = "SELECT id, source, link FROM rss_list ORDER BY id";
+                    ResultSet rs = st.executeQuery(query);
+                    while (rs.next()) {
+                        //int id = rs.getInt("id");
+                        String source = rs.getString("source");
+                        String link = rs.getString("link");
+                        Common.smi_source.add(source);
+                        Common.smi_link.add(link);
+                    }
+                    rs.close();
+                    st.close();
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
-                rs.close();
-                st.close();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            try {
-                Statement st = connection.createStatement();
-                String query = "SELECT word FROM exclude";
-                ResultSet rs = st.executeQuery(query);
-                while (rs.next()) {
-                    String word = rs.getString("word");
-                    Common.excludedWords.add(word);
+            } else if (pDialog.equals("excl")){
+                //excluded words
+                Common.excludedWords.clear();
+                try {
+                    Statement st = connection.createStatement();
+                    String query = "SELECT word FROM exclude";
+                    ResultSet rs = st.executeQuery(query);
+                    while (rs.next()) {
+                        String word = rs.getString("word");
+                        Common.excludedWords.add(word);
+                    }
+                    rs.close();
+                    st.close();
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
-                rs.close();
-                st.close();
-            } catch (Exception e) {
-                e.printStackTrace();
             }
+
         }
     }
 

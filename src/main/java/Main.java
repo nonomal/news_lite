@@ -52,7 +52,7 @@ public class Main {
             Common.copyFiles(Main.class.getResource("sources.txt"), sourcesPath);
             //SQLite.deleteFromSources();
             SQLite.initialInsertSources();
-            SQLite.selectSources();
+            SQLite.selectSources("smi");
         }
 
         // создание первоначального файла исключенных из анализа слов

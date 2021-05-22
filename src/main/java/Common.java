@@ -290,7 +290,7 @@ public class Common {
     // Заполнение диалоговых окон лога и СМИ
     static void showDialog(String p_file) {
         if (p_file.equals("smi")) {
-            SQLite.selectSources();
+            SQLite.selectSources("smi");
             int i = 1;
             for (String s: Common.smi_source) {
                 Object[] row = new Object[]{i, s};
@@ -313,7 +313,7 @@ public class Common {
                 e.printStackTrace();
             }
         } else if (p_file.equals("excl")) {
-            SQLite.selectSources();
+            SQLite.selectSources("excl");
             int i = 1;
             for (String s: Common.excludedWords) {
                 Object[] row = new Object[]{i, s};

@@ -26,7 +26,7 @@ public class Search {
             Common.console("status: main search started");
             Main.LOGGER.log(Level.INFO, "Main search started");
             //выборка актуальных источников перед поиском из БД
-            SQLite.selectSources();
+            SQLite.selectSources("smi");
             isSearchNow.set(true);
             Gui.timeStart = System.currentTimeMillis();
             Common.text = "";
@@ -171,7 +171,7 @@ public class Search {
             Common.console("status: keywords search started");
             Main.LOGGER.log(Level.INFO, "Keywords search started");
             //выборка актуальных источников перед поиском из БД
-            SQLite.selectSources();
+            SQLite.selectSources("smi");
             isSearchNow.set(true);
             Gui.timeStart = System.currentTimeMillis();
             Common.text = "";
