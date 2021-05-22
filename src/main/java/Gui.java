@@ -722,7 +722,7 @@ public class Gui extends JFrame {
         exclBtn.setFocusable(false);
         exclBtn.setContentAreaFilled(true);
         exclBtn.setBorderPainted(false);
-        exclBtn.setBackground(new Color(206, 232, 206));
+        exclBtn.setBackground(new Color(30, 27, 27));
         exclBtn.setBounds(296, 343, 14, 14);
         getContentPane().add(exclBtn);
         exclBtn.addActionListener((e) -> new Dialogs("exclDlg"));
@@ -730,13 +730,13 @@ public class Gui extends JFrame {
             // наведение мышки на кнопку
             @Override
             public void mouseEntered(MouseEvent e) {
-                exclBtn.setBackground(new Color(101, 163, 101));
+                exclBtn.setBackground(new Color(128, 128, 128));
             }
 
             @Override
             // убрали мышку с кнопки
             public void mouseExited(MouseEvent e) {
-                exclBtn.setBackground(new Color(206, 232, 206));
+                exclBtn.setBackground(new Color(30, 27, 27));
             }
         });
         //label
