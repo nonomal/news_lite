@@ -266,14 +266,14 @@ public class Gui extends JFrame {
         textField.setBounds(87, 9, 99, 21);
         getContentPane().add(textField);
 
-        //com.news.Search addNewSource
+        //Search addNewSource
         searchBtnTop = new JButton("");
         searchBtnTop.setIcon(search_ico);
         searchBtnTop.setBackground(new Color(154, 237, 196));
         searchBtnTop.setFont(new Font("Tahoma", Font.BOLD, 10));
         searchBtnTop.setBounds(453, 8, 32, 23);
         getContentPane().add(searchBtnTop);
-        // com.news.Search by Enter
+        // Search by Enter
         getRootPane().setDefaultButton(searchBtnTop);
         searchBtnTop.requestFocus();
         searchBtnTop.doClick();
@@ -359,7 +359,7 @@ public class Gui extends JFrame {
                 Common.text = "";
                 labelInfo.setText("");
                 Search.j = 1;
-                //if (com.news.Main.isConnected) com.news.Main.delete();
+                //if (Main.isConnected) Main.delete();
                 model.setRowCount(0);
                 model_for_analysis.setRowCount(0);
                 q = 0;
@@ -436,8 +436,8 @@ public class Gui extends JFrame {
             }
         });
 
-        // com.news.Search in title
-        searchInTitleCbx = new Checkbox("com.news.Search in title", true);
+        // Search in title
+        searchInTitleCbx = new Checkbox("Search in title", true);
         searchInTitleCbx.setForeground(new Color(255, 227, 163));
         searchInTitleCbx.setFocusable(false);
         searchInTitleCbx.setFont(new Font("Serif", Font.BOLD, 12));
@@ -445,8 +445,8 @@ public class Gui extends JFrame {
         getContentPane().add(searchInTitleCbx);
         searchInTitleCbx.addItemListener(e -> isSelTitle = searchInTitleCbx.getState());
 
-        // com.news.Search in link
-        searchInLinkCbx = new Checkbox("com.news.Search in link", false);
+        // Search in link
+        searchInLinkCbx = new Checkbox("Search in link", false);
         searchInLinkCbx.setForeground(new Color(255, 227, 163));
         searchInLinkCbx.setFocusable(false);
         searchInLinkCbx.setFont(new Font("Serif", Font.BOLD, 12));
@@ -801,9 +801,9 @@ public class Gui extends JFrame {
             }
         });
 
-        //com.news.SQLite
+        //SQLite
         JButton sqliteBtn = new JButton();
-        sqliteBtn.setToolTipText("press CTRL+v in com.news.SQLite to open the database");
+        sqliteBtn.setToolTipText("press CTRL+v in SQLite to open the database");
         sqliteBtn.setFocusable(false);
         sqliteBtn.setContentAreaFilled(true);
         sqliteBtn.setBorderPainted(false);
@@ -811,7 +811,7 @@ public class Gui extends JFrame {
         sqliteBtn.setBounds(693, 430, 14, 14);
         getContentPane().add(sqliteBtn);
         sqliteBtn.addActionListener(e -> {
-            // запуск com.news.SQLite
+            // запуск SQLite
             if (Desktop.isDesktopSupported() && Desktop.getDesktop().isSupported(Desktop.Action.OPEN)) {
                 //Desktop.getDesktop().open(new File("src\\res\\sqlite3.exe"));
                 try {
@@ -821,7 +821,7 @@ public class Gui extends JFrame {
                 }
             }
 
-            // копируем адрес базы в com.news.SQLite в системный буфер для быстрого доступа
+            // копируем адрес базы в SQLite в системный буфер для быстрого доступа
             String pathToBase = ".open C:/Users/Public/Documents/News/news.db"; //delete from rss_list where id = 0; select * from rss_list;
             Toolkit.getDefaultToolkit().getSystemClipboard().setContents(new StringSelection(pathToBase), null);
         });

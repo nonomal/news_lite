@@ -22,11 +22,11 @@ public class Search {
     static String today = dtf.format(now);
     static SimpleDateFormat date_format = new SimpleDateFormat("dd.MM.yyyy HH:mm");
 
-    //com.news.Main search
+    //Main search
     public static void mainSearch() {
         if (!isSearchNow.get()) {
             Common.console("status: main search started");
-            Main.LOGGER.log(Level.INFO, "com.news.Main search started");
+            Main.LOGGER.log(Level.INFO, "Main search started");
             //выборка актуальных источников перед поиском из БД
             SQLite.selectSources("smi");
             isSearchNow.set(true);
@@ -79,7 +79,7 @@ public class Search {
                                             };
                                             Gui.model.addRow(row);
 
-                                            // com.news.SQLite
+                                            //SQLite
                                             String[] subStr = message.getTitle().split(" ");
                                             for (String s : subStr) {
                                                 if (s.length() > 3) {
@@ -100,7 +100,7 @@ public class Search {
                                             };
                                             Gui.model.addRow(row);
 
-                                            // com.news.SQLite
+                                            // SQLite
                                             String[] subStr = message.getTitle().split(" ");
                                             for (String s : subStr) {
                                                 if (s.length() > 3) {
@@ -140,7 +140,7 @@ public class Search {
                 st_del.executeUpdate(q_del);
                 // Заполняем таблицу анализа
                 SQLite.selectSqlite();
-                //com.news.Search time
+                //Search time
                 Gui.timeEnd = System.currentTimeMillis();
                 searchTime = (Gui.timeEnd - Gui.timeStart) / 1000;
                 DecimalFormat f = new DecimalFormat("##.00");
@@ -152,7 +152,7 @@ public class Search {
                     Gui.sendEmailBtn.doClick();
                 }
 
-                Main.LOGGER.log(Level.INFO, "com.news.Main search finished");
+                Main.LOGGER.log(Level.INFO, "Main search finished");
             } catch (Exception e) {
                 try {
                     String q_commit = "ROLLBACK";
@@ -167,7 +167,7 @@ public class Search {
         }
     }
 
-    //com.news.Search by keywords
+    //Search by keywords
     public static void keywordsSearch() {
         if (!isSearchNow.get()) {
             Common.console("status: keywords search started");
@@ -222,7 +222,7 @@ public class Search {
                                                 };
                                                 Gui.model.addRow(row);
 
-                                                // com.news.SQLite
+                                                //SQLite
                                                 String[] subStr = message.getTitle().split(" ");
                                                 for (String s: subStr) {
                                                     if (s.length() > 3) {
@@ -242,7 +242,7 @@ public class Search {
                                                 };
                                                 Gui.model.addRow(row);
 
-                                                // com.news.SQLite
+                                                //SQLite
                                                 String[] subStr = message.getTitle().split(" ");
                                                 for (String s: subStr) {
                                                     if (s.length() > 3) {
@@ -281,7 +281,7 @@ public class Search {
                 st_del.executeUpdate(q_del);
                 SQLite.selectSqlite();
 
-                //com.news.Search time
+                //Search time
                 Gui.timeEnd = System.currentTimeMillis();
                 searchTime = (Gui.timeEnd - Gui.timeStart) / 1000;
                 DecimalFormat f = new DecimalFormat("##.00");

@@ -20,7 +20,7 @@ public class Common {
     static AtomicBoolean isSending = new AtomicBoolean(true);
     static ArrayList<String> keywordsList = new ArrayList<>();
     static String text = "";
-    //данные из com.news.SQLite
+    //данные из SQLite
     public static int smi_number = 0;
     static ArrayList<String> smi_link = new ArrayList<>();
     static ArrayList<String> smi_source = new ArrayList<>();
@@ -129,7 +129,7 @@ public class Common {
         Files.move(temp, input, StandardCopyOption.REPLACE_EXISTING);
     }
 
-    // com.news.Search animation
+    // Search animation
     public static void statusLabel(AtomicBoolean p_isSending, String p_text) {
         Thread thr = new Thread(() -> {
             for (smi_number = 0; smi_number < smi_link.size(); ) {

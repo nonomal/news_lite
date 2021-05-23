@@ -322,7 +322,7 @@ class SQLite {
         }
     }
 
-    // закрытие соединения с com.news.SQLite
+    // закрытие соединения с SQLite
     static void closeSQLiteConnection() {
         try {
             if (isConnectionToSQLite) connection.close();

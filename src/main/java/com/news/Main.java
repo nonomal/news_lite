@@ -40,7 +40,7 @@ public class Main {
             e.printStackTrace();
         }
 
-        // создание файлов com.news.SQLite
+        // создание файлов SQLite
         File sqliteIsExists = new File(directoryPath + "sqlite3.exe");
         if (!sqliteIsExists.exists()) {
             Common.copyFiles(Main.class.getResource("sqlite3.exe"), directoryPath + "sqlite3.exe");
@@ -52,7 +52,6 @@ public class Main {
         File sourcesIsExists = new File(sourcesPath);
         if (!sourcesIsExists.exists()) {
             Common.copyFiles(Main.class.getResource("sources.txt"), sourcesPath);
-            //com.news.SQLite.deleteFromSources();
             SQLite.initialInsertSources();
             SQLite.selectSources("smi");
         }
@@ -61,9 +60,6 @@ public class Main {
         File excludedIsExists = new File(excludedPath);
         if (!excludedIsExists.exists()) {
             Common.copyFiles(Main.class.getResource("excluded.txt"), excludedPath);
-            //com.news.SQLite.deleteFromSources();
-            //com.news.SQLite.initialInsertSources();
-            //com.news.SQLite.selectSources();
         }
     }
 
