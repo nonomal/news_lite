@@ -1,3 +1,5 @@
+package com.news;
+
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -46,7 +48,7 @@ class FeedMessage {
             this.pubDate = newDateFormat.format(date);
         } catch (Exception e) {
             System.out.println(e.getMessage());
-            //this.pubDate = Search.today;
+            //this.pubDate = com.news.Search.today;
         }
     }
 

@@ -1,3 +1,5 @@
+package com.news;
+
 import javax.swing.*;
 import java.io.*;
 import java.nio.charset.StandardCharsets;
@@ -320,7 +322,7 @@ class SQLite {
         }
     }
 
-    // закрытие соединения с SQLite
+    // закрытие соединения с com.news.SQLite
     static void closeSQLiteConnection() {
         try {
             if (isConnectionToSQLite) connection.close();

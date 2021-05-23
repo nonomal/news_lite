@@ -1,3 +1,5 @@
+package com.news;
+
 import java.util.TimerTask;
 
 class MyTimerTask extends TimerTask {

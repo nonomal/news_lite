@@ -1,3 +1,5 @@
+package com.news;
+
 import javax.swing.*;
 import java.awt.*;
 import java.io.*;
@@ -18,7 +20,7 @@ public class Common {
     static AtomicBoolean isSending = new AtomicBoolean(true);
     static ArrayList<String> keywordsList = new ArrayList<>();
     static String text = "";
-    //данные из SQLite
+    //данные из com.news.SQLite
     public static int smi_number = 0;
     static ArrayList<String> smi_link = new ArrayList<>();
     static ArrayList<String> smi_source = new ArrayList<>();
@@ -127,7 +129,7 @@ public class Common {
         Files.move(temp, input, StandardCopyOption.REPLACE_EXISTING);
     }
 
-    // Search animation
+    // com.news.Search animation
     public static void statusLabel(AtomicBoolean p_isSending, String p_text) {
         Thread thr = new Thread(() -> {
             for (smi_number = 0; smi_number < smi_link.size(); ) {

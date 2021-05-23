@@ -1,3 +1,5 @@
+package com.news;
+
 import java.awt.*;
 import java.awt.datatransfer.StringSelection;
 import java.awt.event.*;
@@ -25,16 +27,16 @@ public class Gui extends JFrame {
     static String rss = "rss.news.api";
     static String send_to;
     static String[] intervals = {"1 min", "5 min", "15 min", "30 min", "45 min", "1 hour", "2 hours", "4 hours", "8 hours", "12 hours", "24 hours", "48 hours"};
-    static ImageIcon logo_ico = new ImageIcon(Toolkit.getDefaultToolkit().createImage(Gui.class.getResource("icons/logo.png")));
-    static ImageIcon send = new ImageIcon(Toolkit.getDefaultToolkit().createImage(Gui.class.getResource("icons/send.png")));
-    static ImageIcon send2 = new ImageIcon(Toolkit.getDefaultToolkit().createImage(Gui.class.getResource("icons/send2.png")));
-    static ImageIcon send3 = new ImageIcon(Toolkit.getDefaultToolkit().createImage(Gui.class.getResource("icons/send3.png")));
-    static ImageIcon search_ico = new ImageIcon(Toolkit.getDefaultToolkit().createImage(Gui.class.getResource("icons/search.png")));
-    static ImageIcon stop_ico = new ImageIcon(Toolkit.getDefaultToolkit().createImage(Gui.class.getResource("icons/stop.png")));
-    static ImageIcon clear_ico = new ImageIcon(Toolkit.getDefaultToolkit().createImage(Gui.class.getResource("icons/clear.png")));
-    static ImageIcon excel_ico = new ImageIcon(Toolkit.getDefaultToolkit().createImage(Gui.class.getResource("icons/excel.png")));
-    static ImageIcon create_ico = new ImageIcon(Toolkit.getDefaultToolkit().createImage(Gui.class.getResource("icons/create.png")));
-    static ImageIcon delete_ico = new ImageIcon(Toolkit.getDefaultToolkit().createImage(Gui.class.getResource("icons/delete.png")));
+    static ImageIcon logo_ico = new ImageIcon(Toolkit.getDefaultToolkit().createImage(Gui.class.getResource("/icons/logo.png")));
+    static ImageIcon send = new ImageIcon(Toolkit.getDefaultToolkit().createImage(Gui.class.getResource("/icons/send.png")));
+    static ImageIcon send2 = new ImageIcon(Toolkit.getDefaultToolkit().createImage(Gui.class.getResource("/icons/send2.png")));
+    static ImageIcon send3 = new ImageIcon(Toolkit.getDefaultToolkit().createImage(Gui.class.getResource("/icons/send3.png")));
+    static ImageIcon search_ico = new ImageIcon(Toolkit.getDefaultToolkit().createImage(Gui.class.getResource("/icons/search.png")));
+    static ImageIcon stop_ico = new ImageIcon(Toolkit.getDefaultToolkit().createImage(Gui.class.getResource("/icons/stop.png")));
+    static ImageIcon clear_ico = new ImageIcon(Toolkit.getDefaultToolkit().createImage(Gui.class.getResource("/icons/clear.png")));
+    static ImageIcon excel_ico = new ImageIcon(Toolkit.getDefaultToolkit().createImage(Gui.class.getResource("/icons/excel.png")));
+    static ImageIcon create_ico = new ImageIcon(Toolkit.getDefaultToolkit().createImage(Gui.class.getResource("/icons/create.png")));
+    static ImageIcon delete_ico = new ImageIcon(Toolkit.getDefaultToolkit().createImage(Gui.class.getResource("/icons/delete.png")));
     static JScrollPane scrollPane;
     static JTable table;
     static JTable table_for_analysis;
@@ -264,14 +266,14 @@ public class Gui extends JFrame {
         textField.setBounds(87, 9, 99, 21);
         getContentPane().add(textField);
 
-        //Search addNewSource
+        //com.news.Search addNewSource
         searchBtnTop = new JButton("");
         searchBtnTop.setIcon(search_ico);
         searchBtnTop.setBackground(new Color(154, 237, 196));
         searchBtnTop.setFont(new Font("Tahoma", Font.BOLD, 10));
         searchBtnTop.setBounds(453, 8, 32, 23);
         getContentPane().add(searchBtnTop);
-        // Search by Enter
+        // com.news.Search by Enter
         getRootPane().setDefaultButton(searchBtnTop);
         searchBtnTop.requestFocus();
         searchBtnTop.doClick();
@@ -357,7 +359,7 @@ public class Gui extends JFrame {
                 Common.text = "";
                 labelInfo.setText("");
                 Search.j = 1;
-                //if (Main.isConnected) Main.delete();
+                //if (com.news.Main.isConnected) com.news.Main.delete();
                 model.setRowCount(0);
                 model_for_analysis.setRowCount(0);
                 q = 0;
@@ -434,8 +436,8 @@ public class Gui extends JFrame {
             }
         });
 
-        // Search in title
-        searchInTitleCbx = new Checkbox("Search in title", true);
+        // com.news.Search in title
+        searchInTitleCbx = new Checkbox("com.news.Search in title", true);
         searchInTitleCbx.setForeground(new Color(255, 227, 163));
         searchInTitleCbx.setFocusable(false);
         searchInTitleCbx.setFont(new Font("Serif", Font.BOLD, 12));
@@ -443,8 +445,8 @@ public class Gui extends JFrame {
         getContentPane().add(searchInTitleCbx);
         searchInTitleCbx.addItemListener(e -> isSelTitle = searchInTitleCbx.getState());
 
-        // Search in link
-        searchInLinkCbx = new Checkbox("Search in link", false);
+        // com.news.Search in link
+        searchInLinkCbx = new Checkbox("com.news.Search in link", false);
         searchInLinkCbx.setForeground(new Color(255, 227, 163));
         searchInLinkCbx.setFocusable(false);
         searchInLinkCbx.setFont(new Font("Serif", Font.BOLD, 12));
@@ -799,9 +801,9 @@ public class Gui extends JFrame {
             }
         });
 
-        //SQLite
+        //com.news.SQLite
         JButton sqliteBtn = new JButton();
-        sqliteBtn.setToolTipText("press CTRL+v in SQLite to open the database");
+        sqliteBtn.setToolTipText("press CTRL+v in com.news.SQLite to open the database");
         sqliteBtn.setFocusable(false);
         sqliteBtn.setContentAreaFilled(true);
         sqliteBtn.setBorderPainted(false);
@@ -809,7 +811,7 @@ public class Gui extends JFrame {
         sqliteBtn.setBounds(693, 430, 14, 14);
         getContentPane().add(sqliteBtn);
         sqliteBtn.addActionListener(e -> {
-            // запуск SQLite
+            // запуск com.news.SQLite
             if (Desktop.isDesktopSupported() && Desktop.getDesktop().isSupported(Desktop.Action.OPEN)) {
                 //Desktop.getDesktop().open(new File("src\\res\\sqlite3.exe"));
                 try {
@@ -819,7 +821,7 @@ public class Gui extends JFrame {
                 }
             }
 
-            // копируем адрес базы в SQLite в системный буфер для быстрого доступа
+            // копируем адрес базы в com.news.SQLite в системный буфер для быстрого доступа
             String pathToBase = ".open C:/Users/Public/Documents/News/news.db"; //delete from rss_list where id = 0; select * from rss_list;
             Toolkit.getDefaultToolkit().getSystemClipboard().setContents(new StringSelection(pathToBase), null);
         });

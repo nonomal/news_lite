@@ -14,7 +14,7 @@ INSERT INTO rss_list(id, source, link) VALUES (12, 'BBC', 'http://feeds.bbci.co.
 INSERT INTO rss_list(id, source, link) VALUES (13, 'Поплулярная механика', 'https://www.popmech.ru/out/public-all.xml');
 INSERT INTO rss_list(id, source, link) VALUES (14, 'Наука и жизнь', 'https://www.nkj.ru/rss/');
 INSERT INTO rss_list(id, source, link) VALUES (15, 'RT', 'https://russian.rt.com/rss');
-INSERT INTO rss_list(id, source, link) VALUES (16, 'C-Main', 'https://cnews.ru/inc/rss/news.xml');
+INSERT INTO rss_list(id, source, link) VALUES (16, 'C-com.news.Main', 'https://cnews.ru/inc/rss/news.xml');
 INSERT INTO rss_list(id, source, link) VALUES (17, 'Правительство РФ', 'http://government.ru/all/rss/');
 INSERT INTO rss_list(id, source, link) VALUES (18, 'Госдума РФ', 'http://duma.gov.ru/news/feed/');
 INSERT INTO rss_list(id, source, link) VALUES (19, 'Российская газета', 'https://rg.ru/tema/ekonomika/rss.xml');

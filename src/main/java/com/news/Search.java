@@ -1,3 +1,5 @@
+package com.news;
+
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -20,11 +22,11 @@ public class Search {
     static String today = dtf.format(now);
     static SimpleDateFormat date_format = new SimpleDateFormat("dd.MM.yyyy HH:mm");
 
-    //Main search
+    //com.news.Main search
     public static void mainSearch() {
         if (!isSearchNow.get()) {
             Common.console("status: main search started");
-            Main.LOGGER.log(Level.INFO, "Main search started");
+            Main.LOGGER.log(Level.INFO, "com.news.Main search started");
             //выборка актуальных источников перед поиском из БД
             SQLite.selectSources("smi");
             isSearchNow.set(true);
@@ -77,7 +79,7 @@ public class Search {
                                             };
                                             Gui.model.addRow(row);
 
-                                            // SQLite
+                                            // com.news.SQLite
                                             String[] subStr = message.getTitle().split(" ");
                                             for (String s : subStr) {
                                                 if (s.length() > 3) {
@@ -98,7 +100,7 @@ public class Search {
                                             };
                                             Gui.model.addRow(row);
 
-                                            // SQLite
+                                            // com.news.SQLite
                                             String[] subStr = message.getTitle().split(" ");
                                             for (String s : subStr) {
                                                 if (s.length() > 3) {
@@ -138,7 +140,7 @@ public class Search {
                 st_del.executeUpdate(q_del);
                 // Заполняем таблицу анализа
                 SQLite.selectSqlite();
-                //Search time
+                //com.news.Search time
                 Gui.timeEnd = System.currentTimeMillis();
                 searchTime = (Gui.timeEnd - Gui.timeStart) / 1000;
                 DecimalFormat f = new DecimalFormat("##.00");
@@ -150,7 +152,7 @@ public class Search {
                     Gui.sendEmailBtn.doClick();
                 }
 
-                Main.LOGGER.log(Level.INFO, "Main search finished");
+                Main.LOGGER.log(Level.INFO, "com.news.Main search finished");
             } catch (Exception e) {
                 try {
                     String q_commit = "ROLLBACK";
@@ -165,7 +167,7 @@ public class Search {
         }
     }
 
-    //Search by keywords
+    //com.news.Search by keywords
     public static void keywordsSearch() {
         if (!isSearchNow.get()) {
             Common.console("status: keywords search started");
@@ -220,7 +222,7 @@ public class Search {
                                                 };
                                                 Gui.model.addRow(row);
 
-                                                // SQLite
+                                                // com.news.SQLite
                                                 String[] subStr = message.getTitle().split(" ");
                                                 for (String s: subStr) {
                                                     if (s.length() > 3) {
@@ -240,7 +242,7 @@ public class Search {
                                                 };
                                                 Gui.model.addRow(row);
 
-                                                // SQLite
+                                                // com.news.SQLite
                                                 String[] subStr = message.getTitle().split(" ");
                                                 for (String s: subStr) {
                                                     if (s.length() > 3) {
@@ -279,7 +281,7 @@ public class Search {
                 st_del.executeUpdate(q_del);
                 SQLite.selectSqlite();
 
-                //Search time
+                //com.news.Search time
                 Gui.timeEnd = System.currentTimeMillis();
                 searchTime = (Gui.timeEnd - Gui.timeStart) / 1000;
                 DecimalFormat f = new DecimalFormat("##.00");
