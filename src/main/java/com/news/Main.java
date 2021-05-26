@@ -43,15 +43,15 @@ public class Main {
         // создание файлов SQLite
         File sqliteIsExists = new File(directoryPath + "sqlite3.exe");
         if (!sqliteIsExists.exists()) {
-            Common.copyFiles(Main.class.getResource("sqlite3.exe"), directoryPath + "sqlite3.exe");
-            Common.copyFiles(Main.class.getResource("sqlite3.dll"), directoryPath + "sqlite3.dll");
-            Common.copyFiles(Main.class.getResource("sqlite3.def"), directoryPath + "sqlite3.def");
+            Common.copyFiles(Main.class.getResource("/sqlite3.exe"), directoryPath + "sqlite3.exe");
+            Common.copyFiles(Main.class.getResource("/sqlite3.dll"), directoryPath + "sqlite3.dll");
+            Common.copyFiles(Main.class.getResource("/sqlite3.def"), directoryPath + "sqlite3.def");
         }
 
         // создание первоначального файла источников новостей
         File sourcesIsExists = new File(sourcesPath);
         if (!sourcesIsExists.exists()) {
-            Common.copyFiles(Main.class.getResource("sources.txt"), sourcesPath);
+            Common.copyFiles(Main.class.getResource("/sources.txt"), sourcesPath);
             SQLite.initialInsertSources();
             SQLite.selectSources("smi");
         }
@@ -59,7 +59,7 @@ public class Main {
         // создание первоначального файла исключенных из анализа слов
         File excludedIsExists = new File(excludedPath);
         if (!excludedIsExists.exists()) {
-            Common.copyFiles(Main.class.getResource("excluded.txt"), excludedPath);
+            Common.copyFiles(Main.class.getResource("/excluded.txt"), excludedPath);
         }
     }
 
