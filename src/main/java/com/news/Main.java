@@ -63,11 +63,16 @@ public class Main {
         }
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         LOGGER.log(Level.INFO, "Application started");
         new Gui();
         Common.getSettingsFromFile();
         SQLite.open();
         Gui.newsIntervalCbox.setEnabled(Gui.todayOrNotChbx.getState());
+
+        // проверка подключения к интернету
+        if (!InternetAvailabilityChecker.isInternetAvailable()) {
+            Common.console("status: no internet connection");
+        }
     }
 }
