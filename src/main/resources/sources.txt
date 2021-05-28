@@ -34,4 +34,4 @@ INSERT INTO rss_list(id, source, link) VALUES (32, 'ММВБ', 'https://www.moex
 INSERT INTO rss_list(id, source, link) VALUES (33, 'Esquire', 'https://esquire.ru/out/feedburner.xml');
 INSERT INTO rss_list(id, source, link) VALUES (34, 'GQ', 'https://www.gq.ru/feed/all-content/rss');
 INSERT INTO rss_list(id, source, link) VALUES (35, 'N+1', 'https://nplus1.ru/rss');
-INSERT INTO rss_list(id, source, link) VALUES (36, 'Smartlab', 'https://smart-lab.ru/news/rss/');
+INSERT INTO rss_list(id, source, link) VALUES (36, 'SmartLab', 'https://smart-lab.ru/news/rss/');

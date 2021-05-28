@@ -1,7 +1,7 @@
 # news_founder
 com.news.Search for all news in popular RssList:
 
-Forbes, Yandex, Mail.ru, Lenta, Izvestiya, Vesti, Garant, Life, RBK, Gazeta.ru, Vedomosti, BBC, Poplulyarnaya mekhanika, Nauka i zhizn', RT, C-com.news.Main, Pravitel'stvo RF, Gosduma RF, Rossiyskaya gazeta, Rosteh, Kommersant, Expert, Nasa, Yandex.Kosmos, Astronews, Google, Finam, Aton, MMVB, Esquire, GQ, N+1
+Forbes, Yandex, Mail.ru, Lenta, Izvestiya, Vesti, Garant, Life, RBK, Gazeta.ru, Vedomosti, BBC, Poplulyarnaya mekhanika, Nauka i zhizn', RT, C-com.news.Main, Pravitel'stvo RF, Gosduma RF, Rossiyskaya gazeta, Rosteh, Kommersant, Expert, Nasa, Yandex.Kosmos, Astronews, Google, Finam, Aton, MMVB, Esquire, GQ, N+1, SmartLab
 
 Program features:
 - keyword search
