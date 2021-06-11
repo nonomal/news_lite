@@ -45,6 +45,11 @@ class SQLite {
             stCreateTable.executeUpdate(sqlCreateTable);
             stCreateTable.close();
 
+            String sqlCreateTable256 = "CREATE TABLE IF NOT EXISTS title256(title varchar2(4000))";
+            Statement stCreateTable256 = connection.createStatement();
+            stCreateTable256.executeUpdate(sqlCreateTable256);
+            stCreateTable256.close();
+
             // слова, которые исключаются при анализе частоты употребления слов в новостях
             String sqlExclude = "CREATE TABLE IF NOT EXISTS exclude(word varchar2(69))";
             Statement stExclude = connection.createStatement();
@@ -174,7 +179,7 @@ class SQLite {
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-            } else if (pDialog.equals("excl")){
+            } else if (pDialog.equals("excl")) {
                 //excluded words
                 Common.excludedWords.clear();
                 try {
@@ -291,6 +296,18 @@ class SQLite {
                 e.printStackTrace();
                 Common.console("status: " + e.getMessage());
             }
+        }
+    }
+
+    // вставка кода по заголовку для отсеивания ранее обнаруженных новостей
+    static void insertTitleIn256(String pTitle) {
+        try {
+            String query256 = "INSERT INTO title256(title) VALUES ('" + pTitle + "')";
+            Statement st256 = connection.createStatement();
+            st256.executeUpdate(query256);
+            st256.close();
+        } catch (SQLException t) {
+            t.printStackTrace();
         }
     }
 

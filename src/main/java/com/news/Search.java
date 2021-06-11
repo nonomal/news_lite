@@ -1,5 +1,6 @@
 package com.news;
 
+import java.security.MessageDigest;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -21,6 +22,24 @@ public class Search {
     static LocalDateTime now = LocalDateTime.now();
     static String today = dtf.format(now);
     static SimpleDateFormat date_format = new SimpleDateFormat("dd.MM.yyyy HH:mm");
+
+    public static String sha256(String base) {
+        try{
+            MessageDigest digest = MessageDigest.getInstance("SHA-256");
+            byte[] hash = digest.digest(base.getBytes("UTF-8"));
+            StringBuffer hexString = new StringBuffer();
+
+            for (int i = 0; i < hash.length; i++) {
+                String hex = Integer.toHexString(0xff & hash[i]);
+                if(hex.length() == 1) hexString.append('0');
+                hexString.append(hex);
+            }
+
+            return hexString.toString();
+        } catch(Exception ex){
+            throw new RuntimeException(ex);
+        }
+    }
 
     //Main search
     public static void mainSearch() {
@@ -88,6 +107,7 @@ public class Search {
                                                     st.executeUpdate();
                                                 }
                                             }
+                                            SQLite.insertTitleIn256(sha256(message.getTitle()));
 
                                         } else if (!Gui.todayOrNotChbx.getState()) {
                                             Common.concatText(message.toString());
@@ -109,6 +129,7 @@ public class Search {
                                                     st.executeUpdate();
                                                 }
                                             }
+                                            SQLite.insertTitleIn256(sha256(message.getTitle()));
                                         }
                                     }
                                 }
@@ -231,6 +252,7 @@ public class Search {
                                                         st.executeUpdate();
                                                     }
                                                 }
+                                                SQLite.insertTitleIn256(sha256(message.getTitle()));
                                             } else if (!Gui.todayOrNotChbx.getState()) {
                                                 Common.concatText(message.toString());
                                                 Object[] row = new Object[]{
@@ -251,6 +273,7 @@ public class Search {
                                                         st.executeUpdate();
                                                     }
                                                 }
+                                                SQLite.insertTitleIn256(sha256(message.getTitle()));
                                             }
                                         }
                                     }
