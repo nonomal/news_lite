@@ -301,14 +301,39 @@ class SQLite {
 
     // вставка кода по заголовку для отсеивания ранее обнаруженных новостей
     static void insertTitleIn256(String pTitle) {
-        try {
-            String query256 = "INSERT INTO title256(title) VALUES ('" + pTitle + "')";
-            Statement st256 = connection.createStatement();
-            st256.executeUpdate(query256);
-            st256.close();
-        } catch (SQLException t) {
-            t.printStackTrace();
+        if (isConnectionToSQLite) {
+            try {
+                String query256 = "INSERT INTO title256(title) VALUES ('" + pTitle + "')";
+                Statement st256 = connection.createStatement();
+                st256.executeUpdate(query256);
+                st256.close();
+            } catch (SQLException t) {
+                t.printStackTrace();
+            }
         }
+    }
+
+    // отсеивание заголовков
+    static boolean isTitleExists(String pString256) {
+        int isExists = 0;
+        if (isConnectionToSQLite) {
+                try {
+                    Statement st = connection.createStatement();
+                    String query = "SELECT max(1) FROM title256 where exists (select title from title256 t where t.title = '"+ pString256 +"')";
+                    ResultSet rs = st.executeQuery(query);
+
+                    while (rs.next()) {
+                        isExists = rs.getInt(1);
+                        System.out.println(isExists);
+                    }
+                    rs.close();
+                    st.close();
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        return isExists == 1;
     }
 
     // удаление источника
