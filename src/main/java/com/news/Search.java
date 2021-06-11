@@ -1,6 +1,5 @@
 package com.news;
 
-import java.security.MessageDigest;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -64,7 +63,9 @@ public class Search {
                                 j++;
                                 if (message.toString().toLowerCase().contains(Gui.find_word) && message.getTitle().length() > 15) {
                                     //отсеиваем новости, которые уже были найдены ранее
-                                    if (Gui.isOnlyLastNews && SQLite.isTitleExists(Common.sha256(message.getTitle()))) continue;
+                                    if (SQLite.isTitleExists(Common.sha256(message.getTitle()))) {
+                                        continue;
+                                    }
 
                                     //Data for a table
                                     if (message.getPubDate() != null) {
@@ -120,6 +121,7 @@ public class Search {
                                 }
                                 if (isStop.get()) return;
                             }
+                            if (!Gui.isOnlyLastNews) SQLite.deleteFrom256();
                         } catch (Exception no_rss) {
                             Gui.labelInfo.setText("RssList: " + (char) 34 + Common.smi_link.get(Common.smi_number) + (char) 34 + " is not available");
                         }
@@ -212,8 +214,9 @@ public class Search {
                                 for (String it : Common.getKeywordsFromFile()) {
                                     if (message.toString().toLowerCase().contains(it.toLowerCase()) && message.getTitle().length() > 15) {
                                         // отсеиваем новости которые были обнаружены ранее
-                                        if (Gui.isOnlyLastNews && SQLite.isTitleExists(Common.sha256(message.getTitle()))) continue;
-
+                                        if (SQLite.isTitleExists(Common.sha256(message.getTitle()))) {
+                                            continue;
+                                        }
                                         //Data for a table
                                         if (message.getPubDate() != null) {
                                             Date docDate = date_format.parse(message.getPubDate());
@@ -268,6 +271,7 @@ public class Search {
                                 }
                                 if (isStop.get()) return;
                             }
+                            if (!Gui.isOnlyLastNews) SQLite.deleteFrom256();
                         } catch (Exception no_rss) {
                             Gui.labelInfo.setText("RssList: " + (char) 34 + Common.smi_link.get(Common.smi_number) + (char) 34 + " is not available");
                         }

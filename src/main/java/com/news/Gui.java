@@ -931,7 +931,6 @@ public class Gui extends JFrame {
         getContentPane().add(filterNewsChbx);
         filterNewsChbx.addItemListener(e -> {
             isOnlyLastNews = filterNewsChbx.getState();
-            System.out.println(isOnlyLastNews);
             if (!isOnlyLastNews){
                 SQLite.deleteFrom256();
             }
