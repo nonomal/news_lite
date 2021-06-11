@@ -45,7 +45,7 @@ class SQLite {
             stCreateTable.executeUpdate(sqlCreateTable);
             stCreateTable.close();
 
-            String sqlCreateTable256 = "CREATE TABLE IF NOT EXISTS title256(title varchar2(4000))";
+            String sqlCreateTable256 = "CREATE TABLE IF NOT EXISTS titles256(title varchar2(4000))";
             Statement stCreateTable256 = connection.createStatement();
             stCreateTable256.executeUpdate(sqlCreateTable256);
             stCreateTable256.close();
@@ -98,11 +98,11 @@ class SQLite {
         }
     }
 
-    // Delete from news_dual
+    // Delete from news_dual and titles256
     static void deleteTitles() {
         try {
             Statement st = connection.createStatement();
-            String query = "delete from news_dual";
+            String query = "delete from news_dual; delete from titles256;";
             st.executeUpdate(query);
             st.close();
         } catch (Exception e) {
@@ -303,7 +303,7 @@ class SQLite {
     static void insertTitleIn256(String pTitle) {
         if (isConnectionToSQLite) {
             try {
-                String query256 = "INSERT INTO title256(title) VALUES ('" + pTitle + "')";
+                String query256 = "INSERT INTO titles256(title) VALUES ('" + pTitle + "')";
                 Statement st256 = connection.createStatement();
                 st256.executeUpdate(query256);
                 st256.close();
@@ -319,12 +319,11 @@ class SQLite {
         if (isConnectionToSQLite) {
                 try {
                     Statement st = connection.createStatement();
-                    String query = "SELECT max(1) FROM title256 where exists (select title from title256 t where t.title = '"+ pString256 +"')";
+                    String query = "SELECT max(1) FROM titles256 where exists (select title from titles256 t where t.title = '"+ pString256 +"')";
                     ResultSet rs = st.executeQuery(query);
 
                     while (rs.next()) {
                         isExists = rs.getInt(1);
-                        System.out.println(isExists);
                     }
                     rs.close();
                     st.close();
