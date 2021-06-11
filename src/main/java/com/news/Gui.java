@@ -23,6 +23,7 @@ public class Gui extends JFrame {
     static double timeEnd;
     static boolean isSelTitle = true;
     static boolean isSelLink = true;
+    static boolean isOnlyLastNews = false;
     static String find_word = "";
     static String rss = "rss.news.api";
     static String send_to;
@@ -71,6 +72,7 @@ public class Gui extends JFrame {
     static Checkbox autoUpdateNewsTop;
     static Checkbox autoUpdateNewsBottom;
     static Checkbox autoSendMessage;
+    static Checkbox filterNewsChbx;
     static JProgressBar progressBar;
     static Timer timer;
     static TimerTask timerTask;
@@ -716,7 +718,7 @@ public class Gui extends JFrame {
         lblLogSourceSqlite = new JLabel();
         lblLogSourceSqlite.setForeground(Color.WHITE);
         lblLogSourceSqlite.setFont(new Font("Arial", Font.PLAIN, 11));
-        lblLogSourceSqlite.setBounds(730, 430, 60, 14);
+        lblLogSourceSqlite.setBounds(730, 426, 60, 14);
         getContentPane().add(lblLogSourceSqlite);
 
         // Диалоговое окно со списком исключенных слов из анализа
@@ -757,7 +759,7 @@ public class Gui extends JFrame {
         smiBtn.setContentAreaFilled(true);
         smiBtn.setBorderPainted(false);
         smiBtn.setFocusable(false);
-        smiBtn.setBounds(636, 430, 14, 14);
+        smiBtn.setBounds(636, 426, 14, 14);
         smiBtn.setBackground(new Color(221, 255, 221));
         getContentPane().add(smiBtn);
         smiBtn.addActionListener((e) -> new Dialogs("smiDlg"));
@@ -782,7 +784,7 @@ public class Gui extends JFrame {
         addNewSource.setContentAreaFilled(true);
         addNewSource.setBorderPainted(false);
         addNewSource.setBackground(new Color(243, 229, 255));
-        addNewSource.setBounds(655, 430, 14, 14);
+        addNewSource.setBounds(655, 426, 14, 14);
         getContentPane().add(addNewSource);
         addNewSource.addActionListener(e -> SQLite.insertNewSource());
         addNewSource.addMouseListener(new MouseAdapter() {
@@ -808,7 +810,7 @@ public class Gui extends JFrame {
         sqliteBtn.setContentAreaFilled(true);
         sqliteBtn.setBorderPainted(false);
         sqliteBtn.setBackground(new Color(244, 181, 181));
-        sqliteBtn.setBounds(693, 430, 14, 14);
+        sqliteBtn.setBounds(693, 426, 14, 14);
         getContentPane().add(sqliteBtn);
         sqliteBtn.addActionListener(e -> {
             // запуск SQLite
@@ -847,7 +849,7 @@ public class Gui extends JFrame {
         logBtn.setBorderPainted(false);
         logBtn.setFocusable(false);
         logBtn.setBackground(new Color(248, 206, 165));
-        logBtn.setBounds(674, 430, 14, 14);
+        logBtn.setBounds(674, 426, 14, 14);
         getContentPane().add(logBtn);
         logBtn.addActionListener(e -> new Dialogs("logDlg"));
         logBtn.addMouseListener(new MouseAdapter() {
@@ -871,7 +873,7 @@ public class Gui extends JFrame {
         settingsDirectoryBtn.setContentAreaFilled(true);
         settingsDirectoryBtn.setBorderPainted(false);
         settingsDirectoryBtn.setBackground(new Color(219, 229, 252));
-        settingsDirectoryBtn.setBounds(712, 430, 14, 14);
+        settingsDirectoryBtn.setBounds(712, 426, 14, 14);
         getContentPane().add(settingsDirectoryBtn);
         settingsDirectoryBtn.addActionListener(e -> {
             if (Desktop.isDesktopSupported() && Desktop.getDesktop().isSupported(Desktop.Action.OPEN)) {
@@ -908,7 +910,7 @@ public class Gui extends JFrame {
         // Border different bottoms
         Box queryTableBox = Box.createVerticalBox();
         queryTableBox.setBorder(new BevelBorder(BevelBorder.RAISED, null, null, null, null));
-        queryTableBox.setBounds(631, 424, 161, 26);
+        queryTableBox.setBounds(631, 420, 161, 26);
         getContentPane().add(queryTableBox);
 
         //label
@@ -919,6 +921,27 @@ public class Gui extends JFrame {
         connect_to_bd_label.setBackground(new Color(240, 255, 240));
         connect_to_bd_label.setBounds(670, 8, 130, 26);
         getContentPane().add(connect_to_bd_label);
+
+        // latest news
+        filterNewsChbx = new Checkbox("only the latest news");
+        filterNewsChbx.setState(false);
+        filterNewsChbx.setForeground(Color.WHITE);
+        filterNewsChbx.setFont(new Font("Arial", Font.PLAIN, 11));
+        filterNewsChbx.setBounds(636, 457, 135, 20);
+        getContentPane().add(filterNewsChbx);
+        filterNewsChbx.addItemListener(e -> {
+            isOnlyLastNews = filterNewsChbx.getState();
+            System.out.println(isOnlyLastNews);
+            if (!isOnlyLastNews){
+                SQLite.deleteFrom256();
+            }
+        });
+
+        // border
+        Box latestNewsBorder = Box.createVerticalBox();
+        latestNewsBorder.setBorder(new BevelBorder(BevelBorder.RAISED, null, null, null, null));
+        latestNewsBorder.setBounds(631, 454, 161, 26);
+        getContentPane().add(latestNewsBorder);
 
         setVisible(true);
     }

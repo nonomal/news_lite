@@ -98,11 +98,23 @@ class SQLite {
         }
     }
 
-    // Delete from news_dual and titles256
+    // Delete from news_dual
     static void deleteTitles() {
         try {
             Statement st = connection.createStatement();
-            String query = "delete from news_dual; delete from titles256;";
+            String query = "delete from news_dual";
+            st.executeUpdate(query);
+            st.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    // Delete from titles256
+    static void deleteFrom256() {
+        try {
+            Statement st = connection.createStatement();
+            String query = "delete from titles256";
             st.executeUpdate(query);
             st.close();
         } catch (Exception e) {

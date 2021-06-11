@@ -64,7 +64,7 @@ public class Search {
                                 j++;
                                 if (message.toString().toLowerCase().contains(Gui.find_word) && message.getTitle().length() > 15) {
                                     //отсеиваем новости, которые уже были найдены ранее
-                                    if (SQLite.isTitleExists(Common.sha256(message.getTitle()))) continue;
+                                    if (Gui.isOnlyLastNews && SQLite.isTitleExists(Common.sha256(message.getTitle()))) continue;
 
                                     //Data for a table
                                     if (message.getPubDate() != null) {
@@ -212,7 +212,7 @@ public class Search {
                                 for (String it : Common.getKeywordsFromFile()) {
                                     if (message.toString().toLowerCase().contains(it.toLowerCase()) && message.getTitle().length() > 15) {
                                         // отсеиваем новости которые были обнаружены ранее
-                                        if (SQLite.isTitleExists(Common.sha256(message.getTitle()))) continue;
+                                        if (Gui.isOnlyLastNews && SQLite.isTitleExists(Common.sha256(message.getTitle()))) continue;
 
                                         //Data for a table
                                         if (message.getPubDate() != null) {
