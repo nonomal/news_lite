@@ -321,9 +321,9 @@ public class Search {
                 Main.LOGGER.log(Level.INFO, "Keywords search finished");
             } catch (Exception e) {
                 try {
-                String q_commit = "ROLLBACK";
-                Statement st_commit = SQLite.connection.createStatement();
-                st_commit.executeUpdate(q_commit);
+                    String q_commit = "ROLLBACK";
+                    Statement st_commit = SQLite.connection.createStatement();
+                    st_commit.executeUpdate(q_commit);
                 } catch (SQLException sql) {
                     sql.printStackTrace();
                 }
