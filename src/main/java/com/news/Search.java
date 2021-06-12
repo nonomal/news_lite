@@ -92,7 +92,7 @@ public class Search {
                                         assert content != null;
 
                                         if (Gui.todayOrNotChbx.getState() && (date_diff != 0)) {
-                                            Common.concatText(message.toString());
+                                            Common.concatText(entry.getTitle() + "\n"+ content.getValue().trim()+ "\n"+ entry.getLink() + "\n" + entry.getPublishedDate());
                                             Object[] row = new Object[]{
                                                     Gui.q,
                                                     Common.smi_source.get(Common.smi_number),
@@ -115,7 +115,7 @@ public class Search {
                                             SQLite.insertTitleIn256(Common.sha256(entry.getTitle() + entry.getPublishedDate()));
 
                                         } else if (!Gui.todayOrNotChbx.getState()) {
-                                            Common.concatText(message.toString());
+                                            Common.concatText(entry.getTitle() + "\n"+ content.getValue().trim()+ "\n"+ entry.getLink() + "\n" + entry.getPublishedDate());
                                             Object[] row = new Object[]{
                                                     Gui.q,
                                                     Common.smi_source.get(Common.smi_number),
@@ -250,7 +250,7 @@ public class Search {
                                             assert content != null;
 
                                             if (Gui.todayOrNotChbx.getState() && (date_diff != 0)) {
-                                                Common.concatText(message.toString());
+                                                Common.concatText(entry.getTitle() + "\n"+ content.getValue().trim()+ "\n"+ entry.getLink() + "\n" + entry.getPublishedDate());
 
                                                 Object[] row = new Object[]{
                                                         Gui.q,
@@ -273,7 +273,7 @@ public class Search {
                                                 }
                                                 SQLite.insertTitleIn256(Common.sha256(entry.getTitle() + entry.getPublishedDate()));
                                             } else if (!Gui.todayOrNotChbx.getState()) {
-                                                Common.concatText(message.toString());
+                                                Common.concatText(entry.getTitle() + "\n"+ content.getValue().trim()+ "\n"+ entry.getLink() + "\n" + entry.getPublishedDate());
 
                                                 Object[] row = new Object[]{
                                                         Gui.q,
@@ -352,5 +352,4 @@ public class Search {
             }
         }
     }
-
 }

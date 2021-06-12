@@ -14,6 +14,7 @@ public class SyndParser {
         return new SyndFeedInput().build(new XmlReader(new URL(url)));
     }
 
+
 //    public void printRSSContent(SyndFeed feed) {
 //
 //        for (Object object : feed.getEntries()) {
