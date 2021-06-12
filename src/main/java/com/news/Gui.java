@@ -151,7 +151,7 @@ public class Gui extends JFrame {
                 int rowIndex = rowAtPoint(p);
                 int colIndex = 3;
                 try {
-                    tip = getValueAt(rowIndex, colIndex).toString();
+                    tip = (String) getValueAt(rowIndex, colIndex);
                 } catch (RuntimeException ignored) {
                 }
                 return tip;
