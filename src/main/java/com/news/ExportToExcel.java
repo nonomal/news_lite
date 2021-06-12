@@ -31,9 +31,10 @@ public class ExportToExcel {
                 page.setColumnView(0, 10);
                 page.setColumnView(1, 16);
                 page.setColumnView(2, 100);
-                page.setColumnView(3, 20);
-                page.setColumnView(4, 120);
-                page.setRowView(0, 400);
+                page.setColumnView(3, 200);
+                page.setColumnView(4, 30);
+                page.setColumnView(5, 120);
+                page.setRowView(0, 600);
 
                 //no bold
                 WritableFont wf = new WritableFont(WritableFont.ARIAL, 11,
@@ -88,7 +89,7 @@ public class ExportToExcel {
                 wcf_date.setVerticalAlignment(jxl.format.VerticalAlignment.CENTRE);
                 wcf_date.setAlignment(Alignment.CENTRE);
 
-                String[] headers = {"Number", "Source", "Title", "Date", "Link"};
+                String[] headers = {"Number", "Source", "Title", "Describe", "Date", "Link"};
                 for (int s = 0; s < headers.length; s++) {
                     Label x = new Label(s, 0, headers[s], wcf_centre_bold);
                     page.addCell(x);
@@ -98,16 +99,18 @@ public class ExportToExcel {
                     jxl.write.Number y1 = new jxl.write.Number(0, z + 1, Integer.parseInt(Gui.model.getValueAt(z, 0).toString()), wcf_centre_no_bold); //num
                     Label y2 = new Label(1, z + 1, Gui.model.getValueAt(z, 1).toString(), wcf_centre_no_bold); //Source
                     Label y3 = new Label(2, z + 1, Gui.model.getValueAt(z, 2).toString(), wcf); //Title
-                    Label y4 = new Label(3, z + 1, Gui.model.getValueAt(z, 3).toString(), wcf_date); //Date
+                    Label y4 = new Label(3, z + 1, Gui.model.getValueAt(z, 3).toString(), wcf); //Describe
+                    Label y5 = new Label(4, z + 1, Gui.model.getValueAt(z, 4).toString(), wcf_date); //Date
                     //Link
-                    Label y5 = new Label(4, z + 1, Gui.model.getValueAt(z, 4).toString(), wcf_link);
-                    WritableHyperlink hl = new WritableHyperlink(4, z + 1, new URL(Gui.model.getValueAt(z, 4).toString()));
+                    Label y6 = new Label(5, z + 1, Gui.model.getValueAt(z, 5).toString(), wcf_link);
+                    WritableHyperlink hl = new WritableHyperlink(5, z + 1, new URL(Gui.model.getValueAt(z, 5).toString()));
                     page.addHyperlink(hl);
                     page.addCell(y1);
                     page.addCell(y2);
                     page.addCell(y3);
                     page.addCell(y4);
                     page.addCell(y5);
+                    page.addCell(y6);
                     page.setRowView(z + 1, 600);
                 }
                 new_excel.write();

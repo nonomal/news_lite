@@ -97,7 +97,7 @@ public class Search {
                                                     Gui.q,
                                                     Common.smi_source.get(Common.smi_number),
                                                     entry.getTitle(),
-                                                    content.getValue(),
+                                                    content.getValue().trim(),
                                                     entry.getPublishedDate(),
                                                     entry.getLink()
                                             };
@@ -120,7 +120,7 @@ public class Search {
                                                     Gui.q,
                                                     Common.smi_source.get(Common.smi_number),
                                                     entry.getTitle(),
-                                                    content.getValue(),
+                                                    content.getValue().trim(),
                                                     entry.getPublishedDate(),
                                                     entry.getLink()
                                             };
@@ -256,7 +256,7 @@ public class Search {
                                                         Gui.q,
                                                         Common.smi_source.get(Common.smi_number),
                                                         entry.getTitle(),
-                                                        content.getValue(),
+                                                        content.getValue().trim(),
                                                         entry.getPublishedDate(),
                                                         entry.getLink()
                                                 };
@@ -279,7 +279,7 @@ public class Search {
                                                         Gui.q,
                                                         Common.smi_source.get(Common.smi_number),
                                                         entry.getTitle(),
-                                                        content.getValue(),
+                                                        content.getValue().trim(),
                                                         entry.getPublishedDate(),
                                                         entry.getLink()
                                                 };
