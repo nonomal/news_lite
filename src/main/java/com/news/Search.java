@@ -169,7 +169,6 @@ public class Search {
                     Gui.sendEmailBtn.doClick();
                 }
 
-                System.out.println(SQLite.archiveNewsCount());
                 Common.console("info: number of news items in the archive = " + SQLite.archiveNewsCount());
                 Main.LOGGER.log(Level.INFO, "Main search finished");
             } catch (Exception e) {
