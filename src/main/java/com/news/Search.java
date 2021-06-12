@@ -1,5 +1,9 @@
 package com.news;
 
+import com.sun.syndication.feed.synd.SyndContent;
+import com.sun.syndication.feed.synd.SyndEntry;
+import com.sun.syndication.feed.synd.SyndFeed;
+
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -56,45 +60,51 @@ public class Search {
                 for (Common.smi_number = 0; Common.smi_number < Common.smi_link.size(); Common.smi_number++) {
                     try {
                         try {
-                            RssFeedParser parser = new RssFeedParser(Common.smi_link.get(Common.smi_number));
+                            SyndParser parser = new SyndParser();
                             if (isStop.get()) return;
-                            Feed feed = parser.readFeed();
-                            for (FeedMessage message : feed.getMessages()) {
+                            SyndFeed feed = parser.parseFeed(Common.smi_link.get(Common.smi_number));
+                            for (Object message : feed.getEntries()) {
+                                SyndEntry entry = (SyndEntry) message;
                                 j++;
-                                if (message.toString().toLowerCase().contains(Gui.find_word) && message.getTitle().length() > 15) {
+                                if (message.toString().toLowerCase().contains(Gui.find_word) && entry.getTitle().length() > 15) {
                                     //отсеиваем новости, которые уже были найдены ранее
-                                    if (SQLite.isTitleExists(Common.sha256(message.getTitle() + message.getPubDate()))) {
+                                    if (SQLite.isTitleExists(Common.sha256(entry.getTitle() + entry.getPublishedDate()))) {
                                         continue;
                                     }
 
                                     //Data for a table
-                                    if (message.getPubDate() != null) {
-                                        Date docDate = date_format.parse(message.getPubDate());
+                                    if (entry.getPublishedDate() != null) {
+                                        Date docDate = entry.getPublishedDate();
                                         Date curent_date = new Date();
                                         int date_diff = Common.compareDatesOnly(curent_date, docDate);
 
                                         // вставка в архив всех новостей
                                         try {
-                                            if (!SQLite.isTitleInArchiveExists(message.getTitle() + message.getPubDate())) {
-                                                SQLite.insertAllTitles(message.getTitle(), message.getPubDate());
+                                            if (!SQLite.isTitleInArchiveExists(entry.getTitle() + entry.getPublishedDate())) {
+                                                SQLite.insertAllTitles(entry.getTitle(), entry.getPublishedDate().toString());
                                             }
                                         } catch (Exception s) {
-                                            //System.out.println(s.getMessage());
+                                            System.out.println(s.getMessage());
                                         }
+
+                                        // ключевое в новости по заголовку
+                                        SyndContent content = entry.getDescription();
+                                        assert content != null;
 
                                         if (Gui.todayOrNotChbx.getState() && (date_diff != 0)) {
                                             Common.concatText(message.toString());
                                             Object[] row = new Object[]{
                                                     Gui.q,
                                                     Common.smi_source.get(Common.smi_number),
-                                                    message.getTitle(),
-                                                    message.getPubDate(),
-                                                    message.getLink()
+                                                    entry.getTitle(),
+                                                    content.getValue(),
+                                                    entry.getPublishedDate(),
+                                                    entry.getLink()
                                             };
                                             Gui.model.addRow(row);
 
                                             //SQLite
-                                            String[] subStr = message.getTitle().split(" ");
+                                            String[] subStr = entry.getTitle().split(" ");
                                             for (String s : subStr) {
                                                 if (s.length() > 3) {
                                                     assert st != null;
@@ -102,21 +112,22 @@ public class Search {
                                                     st.executeUpdate();
                                                 }
                                             }
-                                            SQLite.insertTitleIn256(Common.sha256(message.getTitle() + message.getPubDate()));
+                                            SQLite.insertTitleIn256(Common.sha256(entry.getTitle() + entry.getPublishedDate()));
 
                                         } else if (!Gui.todayOrNotChbx.getState()) {
                                             Common.concatText(message.toString());
                                             Object[] row = new Object[]{
                                                     Gui.q,
                                                     Common.smi_source.get(Common.smi_number),
-                                                    message.getTitle(),
-                                                    message.getPubDate(),
-                                                    message.getLink()
+                                                    entry.getTitle(),
+                                                    content.getValue(),
+                                                    entry.getPublishedDate(),
+                                                    entry.getLink()
                                             };
                                             Gui.model.addRow(row);
 
                                             // SQLite
-                                            String[] subStr = message.getTitle().split(" ");
+                                            String[] subStr = entry.getTitle().split(" ");
                                             for (String s : subStr) {
                                                 if (s.length() > 3) {
                                                     assert st != null;
@@ -124,7 +135,7 @@ public class Search {
                                                     st.executeUpdate();
                                                 }
                                             }
-                                            SQLite.insertTitleIn256(Common.sha256(message.getTitle() + message.getPubDate()));
+                                            SQLite.insertTitleIn256(Common.sha256(entry.getTitle() + entry.getPublishedDate()));
                                         }
                                     }
                                 }
@@ -216,36 +227,43 @@ public class Search {
                 for (Common.smi_number = 0; Common.smi_number < Common.smi_link.size(); Common.smi_number++) {
                     try {
                         try {
-                            RssFeedParser parser = new RssFeedParser(Common.smi_link.get(Common.smi_number));
+                            SyndParser parser = new SyndParser();
                             if (isStop.get()) return;
-                            Feed feed = parser.readFeed();
-                            for (FeedMessage message : feed.getMessages()) {
+                            SyndFeed feed = parser.parseFeed(Common.smi_link.get(Common.smi_number));
+                            for (Object message : feed.getEntries()) {
+                                SyndEntry entry = (SyndEntry) message;
                                 j++;
                                 for (String it : Common.getKeywordsFromFile()) {
-                                    if (message.toString().toLowerCase().contains(it.toLowerCase()) && message.getTitle().length() > 15) {
+                                    if (message.toString().toLowerCase().contains(it.toLowerCase()) && entry.getTitle().length() > 15) {
                                         // отсеиваем новости которые были обнаружены ранее
-                                        if (SQLite.isTitleExists(Common.sha256(message.getTitle() + message.getPubDate()))) {
+                                        if (SQLite.isTitleExists(Common.sha256(entry.getTitle() + entry.getPublishedDate()))) {
                                             continue;
                                         }
                                         //Data for a table
-                                        if (message.getPubDate() != null) {
-                                            Date docDate = date_format.parse(message.getPubDate());
+                                        if (entry.getPublishedDate() != null) {
+                                            Date docDate = entry.getPublishedDate();
                                             Date curent_date = new Date();
                                             int date_diff = Common.compareDatesOnly(curent_date, docDate);
 
+                                            // ключевое в новости по заголовку
+                                            SyndContent content = entry.getDescription();
+                                            assert content != null;
+
                                             if (Gui.todayOrNotChbx.getState() && (date_diff != 0)) {
                                                 Common.concatText(message.toString());
+
                                                 Object[] row = new Object[]{
                                                         Gui.q,
                                                         Common.smi_source.get(Common.smi_number),
-                                                        message.getTitle(),
-                                                        message.getPubDate(),
-                                                        message.getLink()
+                                                        entry.getTitle(),
+                                                        content.getValue(),
+                                                        entry.getPublishedDate(),
+                                                        entry.getLink()
                                                 };
                                                 Gui.model.addRow(row);
 
                                                 //SQLite
-                                                String[] subStr = message.getTitle().split(" ");
+                                                String[] subStr = entry.getTitle().split(" ");
                                                 for (String s: subStr) {
                                                     if (s.length() > 3) {
                                                         assert st != null;
@@ -253,20 +271,22 @@ public class Search {
                                                         st.executeUpdate();
                                                     }
                                                 }
-                                                SQLite.insertTitleIn256(Common.sha256(message.getTitle() + message.getPubDate()));
+                                                SQLite.insertTitleIn256(Common.sha256(entry.getTitle() + entry.getPublishedDate()));
                                             } else if (!Gui.todayOrNotChbx.getState()) {
                                                 Common.concatText(message.toString());
+
                                                 Object[] row = new Object[]{
                                                         Gui.q,
                                                         Common.smi_source.get(Common.smi_number),
-                                                        message.getTitle(),
-                                                        message.getPubDate(),
-                                                        message.getLink()
+                                                        entry.getTitle(),
+                                                        content.getValue(),
+                                                        entry.getPublishedDate(),
+                                                        entry.getLink()
                                                 };
                                                 Gui.model.addRow(row);
 
                                                 //SQLite
-                                                String[] subStr = message.getTitle().split(" ");
+                                                String[] subStr = entry.getTitle().split(" ");
                                                 for (String s: subStr) {
                                                     if (s.length() > 3) {
                                                         assert st != null;
@@ -274,7 +294,7 @@ public class Search {
                                                         st.executeUpdate();
                                                     }
                                                 }
-                                                SQLite.insertTitleIn256(Common.sha256(message.getTitle() + message.getPubDate()));
+                                                SQLite.insertTitleIn256(Common.sha256(entry.getTitle() + entry.getPublishedDate()));
                                             }
                                         }
                                     }
@@ -332,4 +352,5 @@ public class Search {
             }
         }
     }
+
 }
