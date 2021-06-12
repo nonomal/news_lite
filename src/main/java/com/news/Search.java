@@ -63,7 +63,7 @@ public class Search {
                                 j++;
                                 if (message.toString().toLowerCase().contains(Gui.find_word) && message.getTitle().length() > 15) {
                                     //отсеиваем новости, которые уже были найдены ранее
-                                    if (SQLite.isTitleExists(Common.sha256(message.getTitle()))) {
+                                    if (SQLite.isTitleExists(Common.sha256(message.getTitle() + message.getPubDate()))) {
                                         continue;
                                     }
 
@@ -72,6 +72,15 @@ public class Search {
                                         Date docDate = date_format.parse(message.getPubDate());
                                         Date curent_date = new Date();
                                         int date_diff = Common.compareDatesOnly(curent_date, docDate);
+
+                                        // вставка в архив всех новостей
+                                        try {
+                                            if (!SQLite.isTitleInArchiveExists(message.getTitle() + message.getPubDate())) {
+                                                SQLite.insertAllTitles(message.getTitle(), message.getPubDate());
+                                            }
+                                        } catch (Exception s) {
+                                            //System.out.println(s.getMessage());
+                                        }
 
                                         if (Gui.todayOrNotChbx.getState() && (date_diff != 0)) {
                                             Common.concatText(message.toString());
@@ -93,7 +102,7 @@ public class Search {
                                                     st.executeUpdate();
                                                 }
                                             }
-                                            SQLite.insertTitleIn256(Common.sha256(message.getTitle()));
+                                            SQLite.insertTitleIn256(Common.sha256(message.getTitle() + message.getPubDate()));
 
                                         } else if (!Gui.todayOrNotChbx.getState()) {
                                             Common.concatText(message.toString());
@@ -115,7 +124,7 @@ public class Search {
                                                     st.executeUpdate();
                                                 }
                                             }
-                                            SQLite.insertTitleIn256(Common.sha256(message.getTitle()));
+                                            SQLite.insertTitleIn256(Common.sha256(message.getTitle() + message.getPubDate()));
                                         }
                                     }
                                 }
@@ -214,7 +223,7 @@ public class Search {
                                 for (String it : Common.getKeywordsFromFile()) {
                                     if (message.toString().toLowerCase().contains(it.toLowerCase()) && message.getTitle().length() > 15) {
                                         // отсеиваем новости которые были обнаружены ранее
-                                        if (SQLite.isTitleExists(Common.sha256(message.getTitle()))) {
+                                        if (SQLite.isTitleExists(Common.sha256(message.getTitle() + message.getPubDate()))) {
                                             continue;
                                         }
                                         //Data for a table
@@ -243,7 +252,7 @@ public class Search {
                                                         st.executeUpdate();
                                                     }
                                                 }
-                                                SQLite.insertTitleIn256(Common.sha256(message.getTitle()));
+                                                SQLite.insertTitleIn256(Common.sha256(message.getTitle() + message.getPubDate()));
                                             } else if (!Gui.todayOrNotChbx.getState()) {
                                                 Common.concatText(message.toString());
                                                 Object[] row = new Object[]{
@@ -264,7 +273,7 @@ public class Search {
                                                         st.executeUpdate();
                                                     }
                                                 }
-                                                SQLite.insertTitleIn256(Common.sha256(message.getTitle()));
+                                                SQLite.insertTitleIn256(Common.sha256(message.getTitle() + message.getPubDate()));
                                             }
                                         }
                                     }

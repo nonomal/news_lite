@@ -4,6 +4,7 @@ import javax.swing.*;
 import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.sql.*;
+import java.util.Date;
 import java.util.ArrayList;
 import java.util.logging.Level;
 
@@ -45,10 +46,17 @@ class SQLite {
             stCreateTable.executeUpdate(sqlCreateTable);
             stCreateTable.close();
 
+            //titles256
             String sqlCreateTable256 = "CREATE TABLE IF NOT EXISTS titles256(title varchar2(4000))";
             Statement stCreateTable256 = connection.createStatement();
             stCreateTable256.executeUpdate(sqlCreateTable256);
             stCreateTable256.close();
+
+            //all_news
+            String sqlCreateAllNews = "CREATE TABLE IF NOT EXISTS all_news(title varchar2(4000), news_date varchar2(4000))";
+            Statement sqlCreateAllNewsSt = connection.createStatement();
+            sqlCreateAllNewsSt.executeUpdate(sqlCreateAllNews);
+            sqlCreateAllNewsSt.close();
 
             // слова, которые исключаются при анализе частоты употребления слов в новостях
             String sqlExclude = "CREATE TABLE IF NOT EXISTS exclude(word varchar2(69))";
@@ -325,6 +333,19 @@ class SQLite {
         }
     }
 
+    // сохранение всех заголовков
+    static void insertAllTitles(String pTitle, String pDate) {
+        if (isConnectionToSQLite) {
+            try {
+                String q = "INSERT INTO all_news(title, news_date) VALUES ('" + pTitle + "', '" + pDate + "')";
+                Statement st = connection.createStatement();
+                st.executeUpdate(q);
+                st.close();
+            } catch (SQLException ignored) {
+            }
+        }
+    }
+
     // отсеивание заголовков
     static boolean isTitleExists(String pString256) {
         int isExists = 0;
@@ -344,6 +365,26 @@ class SQLite {
                     e.printStackTrace();
                 }
             }
+        return isExists == 1;
+    }
+
+    // вставка только новых заголовков в архив всех новостей
+    static boolean isTitleInArchiveExists(String pString256) {
+        int isExists = 0;
+        if (isConnectionToSQLite) {
+            try {
+                Statement st = connection.createStatement();
+                String query = "SELECT max(1) FROM all_news where exists (select title||news_date from all_news t where t.title||t.news_date = '"+ pString256 +"')";
+                ResultSet rs = st.executeQuery(query);
+
+                while (rs.next()) {
+                    isExists = rs.getInt(1);
+                }
+                rs.close();
+                st.close();
+            } catch (Exception ignored) {
+            }
+        }
         return isExists == 1;
     }
 

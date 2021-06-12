@@ -47,7 +47,7 @@ class FeedMessage {
             Date date = oldDateFormat.parse(pubDate);
             this.pubDate = newDateFormat.format(date);
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            //System.out.println(e.getMessage());
             //this.pubDate = Search.today;
         }
     }
