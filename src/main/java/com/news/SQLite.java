@@ -4,7 +4,6 @@ import javax.swing.*;
 import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.sql.*;
-import java.util.Date;
 import java.util.ArrayList;
 import java.util.logging.Level;
 
@@ -386,6 +385,26 @@ class SQLite {
             }
         }
         return isExists == 1;
+    }
+
+    // новостей в архиве всего
+    static int archiveNewsCount() {
+        int countNews = 0;
+        if (isConnectionToSQLite) {
+            try {
+                Statement st = connection.createStatement();
+                String query = "SELECT count(*) FROM all_news";
+                ResultSet rs = st.executeQuery(query);
+
+                while (rs.next()) {
+                    countNews = rs.getInt(1);
+                }
+                rs.close();
+                st.close();
+            } catch (Exception ignored) {
+            }
+        }
+        return countNews;
     }
 
     // удаление источника
