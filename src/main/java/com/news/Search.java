@@ -11,6 +11,7 @@ import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.logging.Level;
@@ -25,6 +26,8 @@ public class Search {
     static LocalDateTime now = LocalDateTime.now();
     static String today = dtf.format(now);
     static SimpleDateFormat date_format = new SimpleDateFormat("dd.MM.yyyy HH:mm");
+    static ArrayList<String> dataForEmail = new ArrayList<>();
+    static int newsCount = 0;
 
     //Main search
     public static void mainSearch() {
@@ -40,8 +43,8 @@ public class Search {
             Search.j = 1;
             Gui.model.setRowCount(0);
             Gui.model_for_analysis.setRowCount(0);
-            Gui.q = 0;
-            Gui.labelSum.setText("" + Gui.q);
+            newsCount = 0;
+            Gui.labelSum.setText("" + newsCount);
             Search.isStop.set(false);
             Gui.find_word = Gui.textField.getText().toLowerCase();
             Gui.searchBtnTop.setVisible(false);
@@ -90,16 +93,25 @@ public class Search {
                                         // ключевое в новости по заголовку
                                         SyndContent content = entry.getDescription();
                                         assert content != null;
+                                        String smi_source = Common.smi_source.get(Common.smi_number);
+                                        String newsDescribe  = content.getValue().trim().replace("<p>", "").replace("</p>", "");
+                                        String title = entry.getTitle();
+                                        Date pubDate = entry.getPublishedDate();
+                                        String link = entry.getLink();
 
                                         if (Gui.todayOrNotChbx.getState() && (date_diff != 0)) {
-                                            Common.concatText(entry.getTitle() + "\n"+ content.getValue().trim()+ "\n"+ entry.getLink() + "\n" + entry.getPublishedDate());
+                                            newsCount++;
+                                            Gui.labelSum.setText(String.valueOf(newsCount));
+                                            dataForEmail.add(newsCount + ") " + title + "\n"+ link + "\n"+ newsDescribe + "\nИсточник: " +
+                                                    smi_source + "\nДата публикации: " + pubDate);
+
                                             Object[] row = new Object[]{
-                                                    Gui.q,
-                                                    Common.smi_source.get(Common.smi_number),
-                                                    entry.getTitle(),
-                                                    content.getValue().trim(),
-                                                    entry.getPublishedDate(),
-                                                    entry.getLink()
+                                                    newsCount,
+                                                    smi_source,
+                                                    title,
+                                                    newsDescribe,
+                                                    pubDate,
+                                                    link
                                             };
                                             Gui.model.addRow(row);
 
@@ -115,14 +127,18 @@ public class Search {
                                             SQLite.insertTitleIn256(Common.sha256(entry.getTitle() + entry.getPublishedDate()));
 
                                         } else if (!Gui.todayOrNotChbx.getState()) {
-                                            Common.concatText(entry.getTitle() + "\n"+ content.getValue().trim()+ "\n"+ entry.getLink() + "\n" + entry.getPublishedDate());
+                                            newsCount++;
+                                            Gui.labelSum.setText(String.valueOf(newsCount));
+                                            dataForEmail.add(newsCount + ") " + title + "\n"+ link + "\n"+ newsDescribe + "\nИсточник: " +
+                                                    smi_source + "\nДата публикации: " + pubDate);
+
                                             Object[] row = new Object[]{
-                                                    Gui.q,
-                                                    Common.smi_source.get(Common.smi_number),
-                                                    entry.getTitle(),
-                                                    content.getValue().trim(),
-                                                    entry.getPublishedDate(),
-                                                    entry.getLink()
+                                                    newsCount,
+                                                    smi_source,
+                                                    title,
+                                                    newsDescribe,
+                                                    pubDate,
+                                                    link
                                             };
                                             Gui.model.addRow(row);
 
@@ -210,8 +226,8 @@ public class Search {
             Search.j = 1;
             Gui.model.setRowCount(0);
             Gui.model_for_analysis.setRowCount(0);
-            Gui.q = 0;
-            Gui.labelSum.setText("" + Gui.q);
+            newsCount = 0;
+            Gui.labelSum.setText("" + newsCount);
             Search.isStop.set(false);
             Gui.searchBtnBottom.setVisible(false);
             Gui.stopBtnBottom.setVisible(true);
@@ -248,17 +264,25 @@ public class Search {
                                             // ключевое в новости по заголовку
                                             SyndContent content = entry.getDescription();
                                             assert content != null;
+                                            String smi_source = Common.smi_source.get(Common.smi_number);
+                                            String newsDescribe  = content.getValue().trim().replace("<p>", "").replace("</p>", "");
+                                            String title = entry.getTitle();
+                                            Date pubDate = entry.getPublishedDate();
+                                            String link = entry.getLink();
 
                                             if (Gui.todayOrNotChbx.getState() && (date_diff != 0)) {
-                                                Common.concatText(entry.getTitle() + "\n"+ content.getValue().trim()+ "\n"+ entry.getLink() + "\n" + entry.getPublishedDate());
+                                                newsCount++;
+                                                Gui.labelSum.setText(String.valueOf(newsCount));
+                                                dataForEmail.add(newsCount + ") " + title + "\n"+ link + "\n"+ newsDescribe + "\nИсточник: " +
+                                                        smi_source + "\nДата публикации: " + pubDate);
 
                                                 Object[] row = new Object[]{
-                                                        Gui.q,
-                                                        Common.smi_source.get(Common.smi_number),
-                                                        entry.getTitle(),
-                                                        content.getValue().trim(),
-                                                        entry.getPublishedDate(),
-                                                        entry.getLink()
+                                                        newsCount,
+                                                        smi_source,
+                                                        title,
+                                                        newsDescribe,
+                                                        pubDate,
+                                                        link
                                                 };
                                                 Gui.model.addRow(row);
 
@@ -273,15 +297,18 @@ public class Search {
                                                 }
                                                 SQLite.insertTitleIn256(Common.sha256(entry.getTitle() + entry.getPublishedDate()));
                                             } else if (!Gui.todayOrNotChbx.getState()) {
-                                                Common.concatText(entry.getTitle() + "\n"+ content.getValue().trim()+ "\n"+ entry.getLink() + "\n" + entry.getPublishedDate());
+                                                newsCount++;
+                                                Gui.labelSum.setText(String.valueOf(newsCount));
+                                                dataForEmail.add(newsCount + ") " + title + "\n"+ link + "\n"+ newsDescribe + "\nИсточник: " +
+                                                        smi_source + "\nДата публикации: " + pubDate);
 
                                                 Object[] row = new Object[]{
-                                                        Gui.q,
-                                                        Common.smi_source.get(Common.smi_number),
-                                                        entry.getTitle(),
-                                                        content.getValue().trim(),
-                                                        entry.getPublishedDate(),
-                                                        entry.getLink()
+                                                        newsCount,
+                                                        smi_source,
+                                                        title,
+                                                        newsDescribe,
+                                                        pubDate,
+                                                        link
                                                 };
                                                 Gui.model.addRow(row);
 

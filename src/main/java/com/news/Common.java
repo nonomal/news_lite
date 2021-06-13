@@ -27,13 +27,6 @@ public class Common {
     static ArrayList<String> smi_source = new ArrayList<>();
     static ArrayList<String> excludedWords = new ArrayList<>();
 
-    // формирование теста письма
-    public static void concatText(String p_in) {
-        text += (Gui.q + 1) + ") " + p_in + "\nИсточник: " + smi_source.get(smi_number) + "\n" + "\n";
-        Gui.q++;
-        Gui.labelSum.setText(String.valueOf(Gui.q));
-    }
-
     // Запись конфигураций приложения
     static void writeToConfig(String p_word, String p_type) {
         try (OutputStreamWriter writer = new OutputStreamWriter(new FileOutputStream(Main.settingsPath, true), StandardCharsets.UTF_8)) {
@@ -292,36 +285,42 @@ public class Common {
 
     // Заполнение диалоговых окон лога и СМИ
     static void showDialog(String p_file) {
-        if (p_file.equals("smi")) {
-            SQLite.selectSources("smi");
-            int i = 1;
-            for (String s: Common.smi_source) {
-                Object[] row = new Object[]{i, s};
-                Dialogs.model.addRow(row);
-                i++;
-            }
-        } else if (p_file.equals("log")) {
-            String path = Main.logPath;
-
-            try (BufferedReader reader = new BufferedReader(
-                    new InputStreamReader(new FileInputStream(path), StandardCharsets.UTF_8))) {
-                String line;
-                StringBuilder allTab = new StringBuilder();
-
-                while ((line = reader.readLine()) != null) {
-                    allTab.append(line).append("\n");
+        switch (p_file) {
+            case "smi": {
+                SQLite.selectSources("smi");
+                int i = 1;
+                for (String s : Common.smi_source) {
+                    Object[] row = new Object[]{i, s};
+                    Dialogs.model.addRow(row);
+                    i++;
                 }
-                Dialogs.textAreaForDialogs.setText(allTab.toString());
-            } catch (IOException e) {
-                e.printStackTrace();
+                break;
             }
-        } else if (p_file.equals("excl")) {
-            SQLite.selectSources("excl");
-            int i = 1;
-            for (String s: Common.excludedWords) {
-                Object[] row = new Object[]{i, s};
-                Dialogs.model.addRow(row);
-                i++;
+            case "log":
+                String path = Main.logPath;
+
+                try (BufferedReader reader = new BufferedReader(
+                        new InputStreamReader(new FileInputStream(path), StandardCharsets.UTF_8))) {
+                    String line;
+                    StringBuilder allTab = new StringBuilder();
+
+                    while ((line = reader.readLine()) != null) {
+                        allTab.append(line).append("\n");
+                    }
+                    Dialogs.textAreaForDialogs.setText(allTab.toString());
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                break;
+            case "excl": {
+                SQLite.selectSources("excl");
+                int i = 1;
+                for (String s : Common.excludedWords) {
+                    Object[] row = new Object[]{i, s};
+                    Dialogs.model.addRow(row);
+                    i++;
+                }
+                break;
             }
         }
 
@@ -380,12 +379,12 @@ public class Common {
     public static String sha256(String base) {
         try{
             MessageDigest digest = MessageDigest.getInstance("SHA-256");
-            byte[] hash = digest.digest(base.getBytes("UTF-8"));
-            StringBuffer hexString = new StringBuffer();
+            byte[] hash = digest.digest(base.getBytes(StandardCharsets.UTF_8));
+            StringBuilder hexString = new StringBuilder();
 
-            for (int i = 0; i < hash.length; i++) {
-                String hex = Integer.toHexString(0xff & hash[i]);
-                if(hex.length() == 1) hexString.append('0');
+            for (byte b : hash) {
+                String hex = Integer.toHexString(0xff & b);
+                if (hex.length() == 1) hexString.append('0');
                 hexString.append(hex);
             }
 

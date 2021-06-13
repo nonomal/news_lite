@@ -1,6 +1,7 @@
 package com.news;
 
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.Properties;
 import java.util.logging.Level;
 import javax.mail.Message;
@@ -67,6 +68,14 @@ public class EmailSender {
     }
 
     public static void sendMessage() {
-        send_from_mail_ru(Common.text);
+        //send_from_mail_ru(Common.text);
+
+        StringBuilder text = new StringBuilder();
+        for (String s : Search.dataForEmail)
+        {
+            text.append(s).append("\n\n");
+        }
+
+        send_from_mail_ru(text.toString());
     }
 }
