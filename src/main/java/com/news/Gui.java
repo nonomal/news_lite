@@ -12,6 +12,7 @@ import java.util.Date;
 import java.util.Objects;
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.logging.Level;
 import javax.swing.*;
 import javax.swing.border.BevelBorder;
@@ -75,6 +76,7 @@ public class Gui extends JFrame {
     static JProgressBar progressBar;
     static Timer timer;
     static TimerTask timerTask;
+    static AtomicBoolean wasClickInTableForAnalysis = new AtomicBoolean(false);
 
     public Gui() {
         setResizable(false);
@@ -273,6 +275,7 @@ public class Gui extends JFrame {
                         //Gui.textField.getText().toLowerCase();
                         Gui.textField.setText((String) table_for_analysis.getModel().getValueAt(row, 1));
                         searchBtnTop.doClick();
+                        wasClickInTableForAnalysis.set(true);
                     }
                 }
 
@@ -345,15 +348,12 @@ public class Gui extends JFrame {
                 searchBtnBottom.setVisible(true);
                 stopBtnBottom.setVisible(false);
                 Search.isSearchNow.set(false);
-            } catch (Exception t) {
-                Common.console("status: there is no threads to stop");
-            }
-            try {
+
                 String q_commit = "ROLLBACK";
                 Statement st_commit = SQLite.connection.createStatement();
                 st_commit.executeUpdate(q_commit);
-            } catch (SQLException sql) {
-                sql.printStackTrace();
+            } catch (Exception t) {
+                Common.console("status: there is no threads to stop");
             }
         });
         getContentPane().add(stopBtnBottom);

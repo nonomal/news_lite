@@ -42,7 +42,7 @@ public class Search {
             Gui.labelInfo.setText("");
             Search.j = 1;
             Gui.model.setRowCount(0);
-            Gui.model_for_analysis.setRowCount(0);
+            if (!Gui.wasClickInTableForAnalysis.get()) Gui.model_for_analysis.setRowCount(0);
             newsCount = 0;
             Gui.labelSum.setText("" + newsCount);
             Search.isStop.set(false);
@@ -198,13 +198,14 @@ public class Search {
                 Statement st_del = SQLite.connection.createStatement();
                 st_del.executeUpdate(q_del);
                 // Заполняем таблицу анализа
-                SQLite.selectSqlite();
+                if (!Gui.wasClickInTableForAnalysis.get()) SQLite.selectSqlite();
                 //Search time
                 Gui.timeEnd = System.currentTimeMillis();
                 searchTime = (Gui.timeEnd - Gui.timeStart) / 1000;
                 DecimalFormat f = new DecimalFormat("##.00");
                 Common.console("status: search completed in " + f.format(searchTime) + " s.");
                 isSearchNow.set(false);
+                Gui.wasClickInTableForAnalysis.set(false);
 
                 //auto send after search
                 if (Gui.autoSendMessage.getState() && (Gui.model.getRowCount() > 0)) {
