@@ -263,6 +263,23 @@ public class Gui extends JFrame {
         table_for_analysis.setSelectionBackground(new Color(255, 255, 160));
         scroll_for_analysis.setViewportView(table_for_analysis);
 
+        // запуск поиска по слову из таблицы анализа
+        table_for_analysis.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                if (e.getClickCount() == 2) {
+                    int row = table_for_analysis.convertRowIndexToModel(table_for_analysis.rowAtPoint(new Point(e.getX(), e.getY())));
+                    int col = table_for_analysis.columnAtPoint(new Point(e.getX(), e.getY()));
+                    if (col == 1) {
+                        //Gui.textField.getText().toLowerCase();
+                        Gui.textField.setText((String) table_for_analysis.getModel().getValueAt(row, 1));
+                        searchBtnTop.doClick();
+                    }
+                }
+
+            }
+        });
+
         //Keyword field
         textField = new TextField(find_word);
         textField.setBounds(87, 9, 99, 21);

@@ -13,6 +13,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Locale;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.logging.Level;
 
@@ -30,7 +31,7 @@ public class Search {
     static int newsCount = 0;
 
     //Main search
-    public static void mainSearch() {
+    public static void mainSearch (){
         if (!isSearchNow.get()) {
             Common.console("status: main search started");
             Main.LOGGER.log(Level.INFO, "Main search started");
