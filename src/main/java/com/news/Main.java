@@ -67,8 +67,8 @@ public class Main {
         LOGGER.log(Level.INFO, "Application started");
         new Gui();
         Common.getSettingsFromFile();
-        SQLite.open();
         Gui.newsIntervalCbox.setEnabled(Gui.todayOrNotChbx.getState());
+        SQLite.open();
 
         // проверка подключения к интернету
         if (!InternetAvailabilityChecker.isInternetAvailable()) {
