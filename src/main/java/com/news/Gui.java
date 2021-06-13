@@ -189,7 +189,7 @@ public class Gui extends JFrame {
                 if (e.getClickCount() == 2) {
                     int row = table.convertRowIndexToModel(table.rowAtPoint(new Point(e.getX(), e.getY()))); // при сортировке строк оставляет верные данные
                     int col = table.columnAtPoint(new Point(e.getX(), e.getY()));
-                    if (col == 1|| col == 2|| col == 4) {
+                    if (col == 2|| col == 4) {
                         String url = (String) table.getModel().getValueAt(row, 4);
                         URI uri = null;
                         try {

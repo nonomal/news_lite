@@ -95,24 +95,30 @@ public class Search {
                                         assert content != null;
                                         String smi_source = Common.smi_source.get(Common.smi_number);
                                         String title = entry.getTitle();
-                                        String newsDescribe  = content.getValue().trim().replace("<p>", "").replace("</p>", "");
+                                        String newsDescribe  = content.getValue()
+                                                .trim()
+                                                .replace("<p>", "")
+                                                .replace("</p>", "")
+                                                .replace("<br />", "");
                                         if (newsDescribe.contains("<img")
                                                 ||newsDescribe.contains("href")
                                                 ||newsDescribe.contains("<div")
                                                 ||newsDescribe.contains("&#34")
                                                 ||newsDescribe.contains("<p lang")
+                                                ||newsDescribe.contains("&quot")
                                                 ||newsDescribe.contains("<span")
                                                 ||newsDescribe.contains("<ol")
                                                 ||newsDescribe.equals("")
                                         ) newsDescribe = title;
                                         Date pubDate = entry.getPublishedDate();
+                                        String dateToEmail = date_format.format(pubDate);
                                         String link = entry.getLink();
 
                                         if (Gui.todayOrNotChbx.getState() && (date_diff != 0)) {
                                             newsCount++;
                                             Gui.labelSum.setText(String.valueOf(newsCount));
-                                            dataForEmail.add(newsCount + ") " + title + "\n"+ link + "\n"+ newsDescribe + "\nИсточник: " +
-                                                    smi_source + "\nДата публикации: " + pubDate);
+                                            dataForEmail.add(newsCount + ") " + title + "\n"+ link + "\n"+ newsDescribe + "\n" +
+                                                    smi_source + " - " + dateToEmail);
 
                                             Object[] row = new Object[]{
                                                     newsCount,
@@ -138,8 +144,8 @@ public class Search {
                                         } else if (!Gui.todayOrNotChbx.getState()) {
                                             newsCount++;
                                             Gui.labelSum.setText(String.valueOf(newsCount));
-                                            dataForEmail.add(newsCount + ") " + title + "\n"+ link + "\n"+ newsDescribe + "\nИсточник: " +
-                                                    smi_source + "\nДата публикации: " + pubDate);
+                                            dataForEmail.add(newsCount + ") " + title + "\n"+ link + "\n"+ newsDescribe + "\n" +
+                                                    smi_source + " - " + dateToEmail);
 
                                             Object[] row = new Object[]{
                                                     newsCount,
@@ -275,24 +281,30 @@ public class Search {
                                             assert content != null;
                                             String smi_source = Common.smi_source.get(Common.smi_number);
                                             String title = entry.getTitle();
-                                            String newsDescribe  = content.getValue().trim().replace("<p>", "").replace("</p>", "");
+                                            String newsDescribe  = content.getValue()
+                                                    .trim()
+                                                    .replace("<p>", "")
+                                                    .replace("</p>", "")
+                                                    .replace("<br />", "");
                                             if (newsDescribe.contains("<img")
                                                     ||newsDescribe.contains("href")
                                                     ||newsDescribe.contains("<div")
                                                     ||newsDescribe.contains("&#34")
                                                     ||newsDescribe.contains("<p lang")
+                                                    ||newsDescribe.contains("&quot")
                                                     ||newsDescribe.contains("<span")
                                                     ||newsDescribe.contains("<ol")
                                                     ||newsDescribe.equals("")
                                             ) newsDescribe = title;
                                             Date pubDate = entry.getPublishedDate();
+                                            String dateToEmail = date_format.format(pubDate);
                                             String link = entry.getLink();
 
                                             if (Gui.todayOrNotChbx.getState() && (date_diff != 0)) {
                                                 newsCount++;
                                                 Gui.labelSum.setText(String.valueOf(newsCount));
-                                                dataForEmail.add(newsCount + ") " + title + "\n"+ link + "\n"+ newsDescribe + "\nИсточник: " +
-                                                        smi_source + "\nДата публикации: " + pubDate);
+                                                dataForEmail.add(newsCount + ") " + title + "\n"+ link + "\n"+ newsDescribe + "\n" +
+                                                        smi_source + " - " + dateToEmail);
 
                                                 Object[] row = new Object[]{
                                                         newsCount,
@@ -317,8 +329,8 @@ public class Search {
                                             } else if (!Gui.todayOrNotChbx.getState()) {
                                                 newsCount++;
                                                 Gui.labelSum.setText(String.valueOf(newsCount));
-                                                dataForEmail.add(newsCount + ") " + title + "\n"+ link + "\n"+ newsDescribe + "\nИсточник: " +
-                                                        smi_source + "\nДата публикации: " + pubDate);
+                                                dataForEmail.add(newsCount + ") " + title + "\n"+ link + "\n"+ newsDescribe + "\n" +
+                                                        smi_source + " - " + dateToEmail);
 
                                                 Object[] row = new Object[]{
                                                         newsCount,
