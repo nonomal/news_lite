@@ -94,8 +94,17 @@ public class Search {
                                         SyndContent content = entry.getDescription();
                                         assert content != null;
                                         String smi_source = Common.smi_source.get(Common.smi_number);
-                                        String newsDescribe  = content.getValue().trim().replace("<p>", "").replace("</p>", "");
                                         String title = entry.getTitle();
+                                        String newsDescribe  = content.getValue().trim().replace("<p>", "").replace("</p>", "");
+                                        if (newsDescribe.contains("<img")
+                                                ||newsDescribe.contains("href")
+                                                ||newsDescribe.contains("<div")
+                                                ||newsDescribe.contains("&#34")
+                                                ||newsDescribe.contains("<p lang")
+                                                ||newsDescribe.contains("<span")
+                                                ||newsDescribe.contains("<ol")
+                                                ||newsDescribe.equals("")
+                                        ) newsDescribe = title;
                                         Date pubDate = entry.getPublishedDate();
                                         String link = entry.getLink();
 
@@ -265,8 +274,17 @@ public class Search {
                                             SyndContent content = entry.getDescription();
                                             assert content != null;
                                             String smi_source = Common.smi_source.get(Common.smi_number);
-                                            String newsDescribe  = content.getValue().trim().replace("<p>", "").replace("</p>", "");
                                             String title = entry.getTitle();
+                                            String newsDescribe  = content.getValue().trim().replace("<p>", "").replace("</p>", "");
+                                            if (newsDescribe.contains("<img")
+                                                    ||newsDescribe.contains("href")
+                                                    ||newsDescribe.contains("<div")
+                                                    ||newsDescribe.contains("&#34")
+                                                    ||newsDescribe.contains("<p lang")
+                                                    ||newsDescribe.contains("<span")
+                                                    ||newsDescribe.contains("<ol")
+                                                    ||newsDescribe.equals("")
+                                            ) newsDescribe = title;
                                             Date pubDate = entry.getPublishedDate();
                                             String link = entry.getLink();
 
