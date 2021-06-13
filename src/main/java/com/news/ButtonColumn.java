@@ -62,7 +62,7 @@ class ButtonColumn extends AbstractCellEditor implements TableCellRenderer, Tabl
         try {
             int row_with_source = table.getSelectedRow();
             int row_with_exlude_word = Gui.table_for_analysis.getSelectedRow();
-            int del_row_with_exlude_word = Dialogs.table.getSelectedRow();
+            int del_row_with_exlude_word = 0;
 
             // определяем активное окно
             Window window = javax.swing.FocusManager.getCurrentManager().getActiveWindow();
@@ -75,6 +75,7 @@ class ButtonColumn extends AbstractCellEditor implements TableCellRenderer, Tabl
             }
             if (window.toString().contains("Excluded")) {
                 activeWindow = 3;
+                del_row_with_exlude_word = Dialogs.table.getSelectedRow();
             }
 
             // окно таблицы с анализом частоты слов на основной панели (добавляем в базу)
