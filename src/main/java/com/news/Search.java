@@ -118,7 +118,7 @@ public class Search {
                                                     newsCount,
                                                     smi_source,
                                                     title,
-                                                    newsDescribe,
+                                                    //newsDescribe,
                                                     pubDate,
                                                     link
                                             };
@@ -145,7 +145,7 @@ public class Search {
                                                     newsCount,
                                                     smi_source,
                                                     title,
-                                                    newsDescribe,
+                                                    //newsDescribe,
                                                     pubDate,
                                                     link
                                             };
@@ -298,7 +298,7 @@ public class Search {
                                                         newsCount,
                                                         smi_source,
                                                         title,
-                                                        newsDescribe,
+                                                        //newsDescribe,
                                                         pubDate,
                                                         link
                                                 };
@@ -324,7 +324,7 @@ public class Search {
                                                         newsCount,
                                                         smi_source,
                                                         title,
-                                                        newsDescribe,
+                                                        //newsDescribe,
                                                         pubDate,
                                                         link
                                                 };

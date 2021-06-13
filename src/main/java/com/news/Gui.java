@@ -124,11 +124,11 @@ public class Gui extends JFrame {
         scrollPane = new JScrollPane();
         scrollPane.setBounds(10, 40, 781, 300);
         getContentPane().add(scrollPane);
-        Object[] columns = {"Num", "Source", "Title (double click to open the link)", "Describe", "Date", "Link"};
+        Object[] columns = {"Num", "Source", "Title (double click to open the link)", "Date", "Link"};
         model = new DefaultTableModel(new Object[][]{
         }, columns) {
             final boolean[] columnEditables = new boolean[]{
-                    false, false, false, false, false, false
+                    false, false, false, false, false
             };
 
             public boolean isCellEditable(int row, int column) {
@@ -136,7 +136,7 @@ public class Gui extends JFrame {
             }
 
             // Сортировка
-            final Class[] types_unique = {Integer.class, String.class, String.class, String.class, Date.class, String.class};
+            final Class[] types_unique = {Integer.class, String.class, String.class, Date.class, String.class};
 
             @Override
             public Class getColumnClass(int columnIndex) {
@@ -149,7 +149,7 @@ public class Gui extends JFrame {
                 String tip = null;
                 java.awt.Point p = e.getPoint();
                 int rowIndex = rowAtPoint(p);
-                int colIndex = 3;
+                int colIndex = 2;
                 try {
                     tip = (String) getValueAt(rowIndex, colIndex);
                 } catch (RuntimeException ignored) {
@@ -166,7 +166,7 @@ public class Gui extends JFrame {
         rss = rss + "007"; // :))
         table.getColumnModel().getColumn(0).setCellRenderer(Renderer);
         //table.getColumnModel().getColumn(1).setCellRenderer(Renderer);
-        table.getColumnModel().getColumn(4).setCellRenderer(Renderer);
+        //table.getColumnModel().getColumn(4).setCellRenderer(Renderer);
         table.setRowHeight(20);
         table.setColumnSelectionAllowed(true);
         table.setCellSelectionEnabled(true);
@@ -174,10 +174,9 @@ public class Gui extends JFrame {
         table.setFont(new Font("SansSerif", Font.PLAIN, 13));
         table.getColumnModel().getColumn(0).setMaxWidth(40);
         table.getColumnModel().getColumn(1).setPreferredWidth(50);
-        table.getColumnModel().getColumn(2).setPreferredWidth(430);
-        table.getColumnModel().getColumn(3).setPreferredWidth(100);
+        table.getColumnModel().getColumn(2).setPreferredWidth(500);
+        table.getColumnModel().getColumn(3).setPreferredWidth(45);
         table.getColumnModel().getColumn(4).setPreferredWidth(5);
-        table.getColumnModel().getColumn(5).setPreferredWidth(5);
         // Colors
         table.setForeground(Color.black);
         table.setSelectionForeground(new Color(26, 79, 164));
@@ -190,8 +189,8 @@ public class Gui extends JFrame {
                 if (e.getClickCount() == 2) {
                     int row = table.convertRowIndexToModel(table.rowAtPoint(new Point(e.getX(), e.getY()))); // при сортировке строк оставляет верные данные
                     int col = table.columnAtPoint(new Point(e.getX(), e.getY()));
-                    if (col == 2|| col == 3|| col == 5) {
-                        String url = (String) table.getModel().getValueAt(row, 5);
+                    if (col == 1|| col == 2|| col == 4) {
+                        String url = (String) table.getModel().getValueAt(row, 4);
                         URI uri = null;
                         try {
                             uri = new URI(url);
@@ -296,15 +295,13 @@ public class Gui extends JFrame {
                 searchBtnTop.setVisible(true);
                 stopBtnTop.setVisible(false);
                 Search.isSearchNow.set(false);
-            } catch (Exception t) {
-                Common.console("status: there is no threads to stop");
-            }
-            try {
+
                 String q_commit = "ROLLBACK";
                 Statement st_commit = SQLite.connection.createStatement();
                 st_commit.executeUpdate(q_commit);
-            } catch (SQLException sql) {
-                sql.printStackTrace();
+
+            } catch (Exception t) {
+                Common.console("status: there is no threads to stop");
             }
         });
         getContentPane().add(stopBtnTop);
