@@ -65,7 +65,6 @@ public class Gui extends JFrame {
     static JButton smiBtn;
     static JButton logBtn;
     static JButton exclBtn;
-    static JToggleButton connect_to_bd_button;
     static Checkbox todayOrNotChbx;
     static Checkbox searchInTitleCbx;
     static Checkbox searchInLinkCbx;
