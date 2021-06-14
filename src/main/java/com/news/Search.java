@@ -3,7 +3,12 @@ package com.news;
 import com.sun.syndication.feed.synd.SyndContent;
 import com.sun.syndication.feed.synd.SyndEntry;
 import com.sun.syndication.feed.synd.SyndFeed;
+import com.sun.syndication.io.FeedException;
+import com.sun.syndication.io.SyndFeedInput;
+import com.sun.syndication.io.XmlReader;
 
+import java.io.IOException;
+import java.net.URL;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -60,16 +65,40 @@ public class Search {
                 Statement st_begin = SQLite.connection.createStatement();
                 st_begin.executeUpdate(q_begin);
 
+                SyndParser parser = new SyndParser();
                 for (Common.smi_number = 0; Common.smi_number < Common.smi_link.size(); Common.smi_number++) {
                     try {
                         try {
-                            SyndParser parser = new SyndParser();
                             if (isStop.get()) return;
                             SyndFeed feed = parser.parseFeed(Common.smi_link.get(Common.smi_number));
                             for (Object message : feed.getEntries()) {
-                                SyndEntry entry = (SyndEntry) message;
                                 j++;
-                                if (message.toString().toLowerCase().contains(Gui.find_word) && entry.getTitle().length() > 15) {
+                                SyndEntry entry = (SyndEntry) message;
+                                SyndContent content = entry.getDescription();
+                                assert content != null;
+                                String smi_source = Common.smi_source.get(Common.smi_number);
+                                String title = entry.getTitle();
+                                String newsDescribe  = content.getValue()
+                                        .trim()
+                                        .replace("<p>", "")
+                                        .replace("</p>", "")
+                                        .replace("<br />", "");
+                                if (newsDescribe.contains("<img")
+                                        ||newsDescribe.contains("href")
+                                        ||newsDescribe.contains("<div")
+                                        ||newsDescribe.contains("&#34")
+                                        ||newsDescribe.contains("<p lang")
+                                        ||newsDescribe.contains("&quot")
+                                        ||newsDescribe.contains("<span")
+                                        ||newsDescribe.contains("<ol")
+                                        ||newsDescribe.equals("")
+                                ) newsDescribe = title;
+                                Date pubDate = entry.getPublishedDate();
+                                String dateToEmail = date_format.format(pubDate);
+                                String link = entry.getLink();
+
+                                //if (message.toString().toLowerCase().contains(Gui.find_word) && entry.getTitle().length() > 15) { // искать слово по всей странице
+                                if (entry.getTitle().toLowerCase().contains(Gui.find_word) && entry.getTitle().length() > 15) {
                                     //отсеиваем новости, которые уже были найдены ранее
                                     if (SQLite.isTitleExists(Common.sha256(entry.getTitle() + entry.getPublishedDate()))) {
                                         continue;
@@ -89,30 +118,6 @@ public class Search {
                                         } catch (Exception s) {
                                             System.out.println(s.getMessage());
                                         }
-
-                                        // ключевое в новости по заголовку
-                                        SyndContent content = entry.getDescription();
-                                        assert content != null;
-                                        String smi_source = Common.smi_source.get(Common.smi_number);
-                                        String title = entry.getTitle();
-                                        String newsDescribe  = content.getValue()
-                                                .trim()
-                                                .replace("<p>", "")
-                                                .replace("</p>", "")
-                                                .replace("<br />", "");
-                                        if (newsDescribe.contains("<img")
-                                                ||newsDescribe.contains("href")
-                                                ||newsDescribe.contains("<div")
-                                                ||newsDescribe.contains("&#34")
-                                                ||newsDescribe.contains("<p lang")
-                                                ||newsDescribe.contains("&quot")
-                                                ||newsDescribe.contains("<span")
-                                                ||newsDescribe.contains("<ol")
-                                                ||newsDescribe.equals("")
-                                        ) newsDescribe = title;
-                                        Date pubDate = entry.getPublishedDate();
-                                        String dateToEmail = date_format.format(pubDate);
-                                        String link = entry.getLink();
 
                                         if (Gui.todayOrNotChbx.getState() && (date_diff != 0)) {
                                             newsCount++;
@@ -256,17 +261,43 @@ public class Search {
                 String q_begin = "BEGIN TRANSACTION";
                 Statement st_begin = SQLite.connection.createStatement();
                 st_begin.executeUpdate(q_begin);
+
+                SyndParser parser = new SyndParser();
                 for (Common.smi_number = 0; Common.smi_number < Common.smi_link.size(); Common.smi_number++) {
                     try {
                         try {
-                            SyndParser parser = new SyndParser();
                             if (isStop.get()) return;
                             SyndFeed feed = parser.parseFeed(Common.smi_link.get(Common.smi_number));
                             for (Object message : feed.getEntries()) {
-                                SyndEntry entry = (SyndEntry) message;
                                 j++;
+                                SyndEntry entry = (SyndEntry) message;
+
+                                SyndContent content = entry.getDescription();
+                                assert content != null;
+                                String smi_source = Common.smi_source.get(Common.smi_number);
+                                String title = entry.getTitle();
+                                String newsDescribe  = content.getValue()
+                                        .trim()
+                                        .replace("<p>", "")
+                                        .replace("</p>", "")
+                                        .replace("<br />", "");
+                                if (newsDescribe.contains("<img")
+                                        ||newsDescribe.contains("href")
+                                        ||newsDescribe.contains("<div")
+                                        ||newsDescribe.contains("&#34")
+                                        ||newsDescribe.contains("<p lang")
+                                        ||newsDescribe.contains("&quot")
+                                        ||newsDescribe.contains("<span")
+                                        ||newsDescribe.contains("<ol")
+                                        ||newsDescribe.equals("")
+                                ) newsDescribe = title;
+                                Date pubDate = entry.getPublishedDate();
+                                String dateToEmail = date_format.format(pubDate);
+                                String link = entry.getLink();
+
                                 for (String it : Common.getKeywordsFromFile()) {
-                                    if (message.toString().toLowerCase().contains(it.toLowerCase()) && entry.getTitle().length() > 15) {
+                                    //if (message.toString().toLowerCase().contains(it.toLowerCase()) && entry.getTitle().length() > 15) {
+                                    if (entry.getTitle().toLowerCase().contains(it.toLowerCase()) && entry.getTitle().length() > 15) {
                                         // отсеиваем новости которые были обнаружены ранее
                                         if (SQLite.isTitleExists(Common.sha256(entry.getTitle() + entry.getPublishedDate()))) {
                                             continue;
@@ -276,30 +307,6 @@ public class Search {
                                             Date docDate = entry.getPublishedDate();
                                             Date curent_date = new Date();
                                             int date_diff = Common.compareDatesOnly(curent_date, docDate);
-
-                                            // ключевое в новости по заголовку
-                                            SyndContent content = entry.getDescription();
-                                            assert content != null;
-                                            String smi_source = Common.smi_source.get(Common.smi_number);
-                                            String title = entry.getTitle();
-                                            String newsDescribe  = content.getValue()
-                                                    .trim()
-                                                    .replace("<p>", "")
-                                                    .replace("</p>", "")
-                                                    .replace("<br />", "");
-                                            if (newsDescribe.contains("<img")
-                                                    ||newsDescribe.contains("href")
-                                                    ||newsDescribe.contains("<div")
-                                                    ||newsDescribe.contains("&#34")
-                                                    ||newsDescribe.contains("<p lang")
-                                                    ||newsDescribe.contains("&quot")
-                                                    ||newsDescribe.contains("<span")
-                                                    ||newsDescribe.contains("<ol")
-                                                    ||newsDescribe.equals("")
-                                            ) newsDescribe = title;
-                                            Date pubDate = entry.getPublishedDate();
-                                            String dateToEmail = date_format.format(pubDate);
-                                            String link = entry.getLink();
 
                                             if (Gui.todayOrNotChbx.getState() && (date_diff != 0)) {
                                                 newsCount++;
