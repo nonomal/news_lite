@@ -25,7 +25,8 @@ public class Common {
     public static int smi_number = 0;
     static ArrayList<String> smi_link = new ArrayList<>();
     static ArrayList<String> smi_source = new ArrayList<>();
-    static ArrayList<Integer> smi_is_active = new ArrayList<>();
+    static ArrayList<Boolean> smi_is_active = new ArrayList<>();
+
     static ArrayList<String> excludedWords = new ArrayList<>();
 
     // Запись конфигураций приложения

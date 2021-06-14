@@ -44,7 +44,7 @@ public class Dialogs extends JDialog implements KeyListener {
                     }
 
                     // Сортировка
-                    final Class[] types_unique = {Integer.class, String.class, String.class, Button.class};
+                    final Class[] types_unique = {Integer.class, String.class, Boolean.class, Button.class};
 
                     @Override
                     public Class getColumnClass(int columnIndex) {
@@ -52,6 +52,7 @@ public class Dialogs extends JDialog implements KeyListener {
                     }
                 };
                 table = new JTable(model);
+                table.getColumnModel().getColumn(2).setCellEditor(new CheckBoxEditor(new JCheckBox()));
                 table.getColumn("Del").setCellRenderer(new ButtonColumn(table, 3));
                 table.setAutoCreateRowSorter(true);
                 DefaultTableCellRenderer renderer = new DefaultTableCellRenderer();

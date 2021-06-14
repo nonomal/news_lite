@@ -153,22 +153,11 @@ class SQLite {
         String[] init_inserts = getSources();
         if (isConnectionToSQLite) {
             try {
-                String q_begin = "BEGIN TRANSACTION";
-                Statement st_begin = SQLite.connection.createStatement();
-                st_begin.executeUpdate(q_begin);
-
                 Statement st_insert = connection.createStatement();
                 for (String s : init_inserts) {
                     st_insert.executeUpdate(s);
                 }
                 st_insert.close();
-
-                String q_commit = "COMMIT";
-                Statement st_commit = SQLite.connection.createStatement();
-                st_commit.executeUpdate(q_commit);
-
-                st_begin.close();
-                st_commit.close();
             } catch (SQLException t) {
                 t.printStackTrace();
             }
@@ -229,7 +218,7 @@ class SQLite {
                             //int id = rs.getInt("id");
                             String source = rs.getString("source");
                             String link = rs.getString("link");
-                            int isActive = rs.getInt("is_active");
+                            boolean isActive = rs.getBoolean("is_active");
 
                             Common.smi_source.add(source);
                             Common.smi_link.add(link);
@@ -458,6 +447,20 @@ class SQLite {
                 del_st.close();
             } catch (Exception e) {
                 Common.console("status: " + e.getMessage());
+            }
+        }
+    }
+
+    // обновление статуса чекбокса is_active для ресурсов SELECT id, source, link FROM rss_list where is_active = 1  ORDER BY id
+    static void updateIsActiveStatus(boolean pBoolean, int pId) {
+        if (isConnectionToSQLite) {
+            try {
+                Statement st = connection.createStatement();
+                String query = "UPDATE rss_list SET is_active = " + pBoolean + " where id = " + pId;
+                st.executeUpdate(query);
+                st.close();
+            } catch (Exception e) {
+                e.printStackTrace();
             }
         }
     }
