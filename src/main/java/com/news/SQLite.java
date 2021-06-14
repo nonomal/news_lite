@@ -1,10 +1,7 @@
 package com.news;
 
 import javax.swing.*;
-import java.io.*;
-import java.nio.charset.StandardCharsets;
 import java.sql.*;
-import java.util.ArrayList;
 import java.util.logging.Level;
 
 class SQLite {
@@ -33,57 +30,57 @@ class SQLite {
     }
 
     // создание таблиц
-    static void createTables() {
-        try {
-            String query = "CREATE TABLE IF NOT EXISTS rss_list(id number, source text, link text, is_active number)";
-            Statement st = connection.createStatement();
-            st.executeUpdate(query);
-            st.close();
-
-            String sqlCreateTable = "CREATE TABLE IF NOT EXISTS news_dual(title varchar2(4000))";
-            Statement stCreateTable = connection.createStatement();
-            stCreateTable.executeUpdate(sqlCreateTable);
-            stCreateTable.close();
-
-            //titles256
-            String sqlCreateTable256 = "CREATE TABLE IF NOT EXISTS titles256(title varchar2(4000))";
-            Statement stCreateTable256 = connection.createStatement();
-            stCreateTable256.executeUpdate(sqlCreateTable256);
-            stCreateTable256.close();
-
-            //all_news
-            String sqlCreateAllNews = "CREATE TABLE IF NOT EXISTS all_news(title varchar2(4000), news_date varchar2(4000))";
-            Statement sqlCreateAllNewsSt = connection.createStatement();
-            sqlCreateAllNewsSt.executeUpdate(sqlCreateAllNews);
-            sqlCreateAllNewsSt.close();
-
-            // слова, которые исключаются при анализе частоты употребления слов в новостях
-            String sqlExclude = "CREATE TABLE IF NOT EXISTS exclude(word varchar2(69))";
-            Statement stExclude = connection.createStatement();
-            stExclude.executeUpdate(sqlExclude);
-            stExclude.close();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
+//    static void createTables() {
+//        try {
+//            String query = "CREATE TABLE IF NOT EXISTS rss_list(id number, source text, link text, is_active number)";
+//            Statement st = connection.createStatement();
+//            st.executeUpdate(query);
+//            st.close();
+//
+//            String sqlCreateTable = "CREATE TABLE IF NOT EXISTS news_dual(title varchar2(4000))";
+//            Statement stCreateTable = connection.createStatement();
+//            stCreateTable.executeUpdate(sqlCreateTable);
+//            stCreateTable.close();
+//
+//            //titles256
+//            String sqlCreateTable256 = "CREATE TABLE IF NOT EXISTS titles256(title varchar2(4000))";
+//            Statement stCreateTable256 = connection.createStatement();
+//            stCreateTable256.executeUpdate(sqlCreateTable256);
+//            stCreateTable256.close();
+//
+//            //all_news
+//            String sqlCreateAllNews = "CREATE TABLE IF NOT EXISTS all_news(title varchar2(4000), news_date varchar2(4000))";
+//            Statement sqlCreateAllNewsSt = connection.createStatement();
+//            sqlCreateAllNewsSt.executeUpdate(sqlCreateAllNews);
+//            sqlCreateAllNewsSt.close();
+//
+//            // слова, которые исключаются при анализе частоты употребления слов в новостях
+//            String sqlExclude = "CREATE TABLE IF NOT EXISTS exclude(word varchar2(69))";
+//            Statement stExclude = connection.createStatement();
+//            stExclude.executeUpdate(sqlExclude);
+//            stExclude.close();
+//        } catch (SQLException e) {
+//            e.printStackTrace();
+//        }
+//    }
 
     // создание представления
-    static void createView() {
-        try {
-            Statement st = connection.createStatement();
-            String sql = "CREATE VIEW IF NOT EXISTS v_news_dual as\n" +
-                    "select q.\"TITLE\",q.\"SUM\"\n" +
-                    "  from (select title,\n" +
-                    "               count(title) sum\n" +
-                    "          from news_dual\n" +
-                    "         group by title\n" +
-                    "         order by sum desc) q";
-            st.executeUpdate(sql);
-            st.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
+//    static void createView() {
+//        try {
+//            Statement st = connection.createStatement();
+//            String sql = "CREATE VIEW IF NOT EXISTS v_news_dual as\n" +
+//                    "select q.\"TITLE\",q.\"SUM\"\n" +
+//                    "  from (select title,\n" +
+//                    "               count(title) sum\n" +
+//                    "          from news_dual\n" +
+//                    "         group by title\n" +
+//                    "         order by sum desc) q";
+//            st.executeUpdate(sql);
+//            st.close();
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//    }
 
     //Select
     static void selectSqlite() {
@@ -130,39 +127,39 @@ class SQLite {
     }
 
     // Считывание источников из файла sources.txt
-    static String[] getSources() {
-        ArrayList<String> lines = new ArrayList<>();
-        String[] listOfSources = null;
-
-        try (BufferedReader reader = new BufferedReader(
-                new InputStreamReader(new FileInputStream(Main.sourcesPath), StandardCharsets.UTF_8))) {
-            String line;
-
-            while ((line = reader.readLine()) != null) {
-                lines.add(line);
-            }
-            listOfSources = lines.toArray(new String[0]);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return listOfSources;
-    }
+//    static String[] getSources() {
+//        ArrayList<String> lines = new ArrayList<>();
+//        String[] listOfSources = null;
+//
+//        try (BufferedReader reader = new BufferedReader(
+//                new InputStreamReader(new FileInputStream(Main.sourcesPath), StandardCharsets.UTF_8))) {
+//            String line;
+//
+//            while ((line = reader.readLine()) != null) {
+//                lines.add(line);
+//            }
+//            listOfSources = lines.toArray(new String[0]);
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//        return listOfSources;
+//    }
 
     // заполнение БД источниками новостей из файла sources.txt
-    static void initialInsertSources() {
-        String[] init_inserts = getSources();
-        if (isConnectionToSQLite) {
-            try {
-                Statement st_insert = connection.createStatement();
-                for (String s : init_inserts) {
-                    st_insert.executeUpdate(s);
-                }
-                st_insert.close();
-            } catch (SQLException t) {
-                t.printStackTrace();
-            }
-        }
-    }
+//    static void initialInsertSources() {
+//        String[] init_inserts = getSources();
+//        if (isConnectionToSQLite) {
+//            try {
+//                Statement st_insert = connection.createStatement();
+//                for (String s : init_inserts) {
+//                    st_insert.executeUpdate(s);
+//                }
+//                st_insert.close();
+//            } catch (SQLException t) {
+//                t.printStackTrace();
+//            }
+//        }
+//    }
 
     // запись данных по актуальным источникам из базы в массивы для поиска
     static void selectSources(String pDialog) {
@@ -236,18 +233,18 @@ class SQLite {
     }
 
     //очистка списка источников новостей
-    static void deleteFromSources() {
-        if (isConnectionToSQLite) {
-            try {
-                Statement st = connection.createStatement();
-                String query = "DELETE FROM rss_list";
-                st.executeUpdate(query);
-                st.close();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-    }
+//    static void deleteFromSources() {
+//        if (isConnectionToSQLite) {
+//            try {
+//                Statement st = connection.createStatement();
+//                String query = "DELETE FROM rss_list";
+//                st.executeUpdate(query);
+//                st.close();
+//            } catch (Exception e) {
+//                e.printStackTrace();
+//            }
+//        }
+//    }
 
     // вставка нового источника
     static void insertNewSource() {
@@ -283,15 +280,15 @@ class SQLite {
                     st.close();
 
                     // запись в файл sources.txt
-                    try (OutputStreamWriter writer = new OutputStreamWriter(
-                            new FileOutputStream(Main.sourcesPath, true),
-                            StandardCharsets.UTF_8)) {
-                        String text = "\nINSERT INTO rss_list(id, source, link) VALUES (" + new_id + ", '" + source_name.getText() + "', '" + rss_link.getText() + "');";
-                        writer.write(text);
-                        writer.flush();
-                    } catch (IOException ex) {
-                        ex.printStackTrace();
-                    }
+//                    try (OutputStreamWriter writer = new OutputStreamWriter(
+//                            new FileOutputStream(Main.sourcesPath, true),
+//                            StandardCharsets.UTF_8)) {
+//                        String text = "\nINSERT INTO rss_list(id, source, link) VALUES (" + new_id + ", '" + source_name.getText() + "', '" + rss_link.getText() + "');";
+//                        writer.write(text);
+//                        writer.flush();
+//                    } catch (IOException ex) {
+//                        ex.printStackTrace();
+//                    }
 
                     Common.console("status: source added");
                     Main.LOGGER.log(Level.INFO, "New source added");
@@ -316,15 +313,15 @@ class SQLite {
                 st.close();
 
                 // запись в файл sources.txt
-                try (OutputStreamWriter writer = new OutputStreamWriter(
-                        new FileOutputStream(Main.excludedPath, true),
-                        StandardCharsets.UTF_8)) {
-                    //String text = "insert into exclude values ('" + pWord + "');\n";
-                    writer.write(pWord + "\n");
-                    writer.flush();
-                } catch (IOException ex) {
-                    ex.printStackTrace();
-                }
+//                try (OutputStreamWriter writer = new OutputStreamWriter(
+//                        new FileOutputStream(Main.excludedPath, true),
+//                        StandardCharsets.UTF_8)) {
+//                    //String text = "insert into exclude values ('" + pWord + "');\n";
+//                    writer.write(pWord + "\n");
+//                    writer.flush();
+//                } catch (IOException ex) {
+//                    ex.printStackTrace();
+//                }
                 Common.console("status: word \"" + pWord + "\" excluded from analysis");
                 Main.LOGGER.log(Level.INFO, "New word excluded from analysis");
             } catch (Exception e) {

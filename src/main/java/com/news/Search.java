@@ -276,8 +276,14 @@ public class Search {
                 Gui.table.setAutoCreateRowSorter(true);
                 Gui.table_for_analysis.setAutoCreateRowSorter(true);
                 Gui.search_animation.setText("total news: ");
-                Gui.searchBtnTop.setVisible(true);
-                Gui.stopBtnTop.setVisible(false);
+
+                if (pSearchType.equals("word")) {
+                    Gui.searchBtnTop.setVisible(true);
+                    Gui.stopBtnTop.setVisible(false);
+                } else if (pSearchType.equals("words")) {
+                    Gui.searchBtnBottom.setVisible(true);
+                    Gui.stopBtnBottom.setVisible(false);
+                }
 
                 // коммитим транзакцию
                 String q_commit = "COMMIT";

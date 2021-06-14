@@ -10,8 +10,8 @@ public class Main {
     static String directoryPath = "C:\\Users\\Public\\Documents\\News\\";
     static String settingsPath = directoryPath + "config.txt";
     static String logPath = directoryPath + "log.txt";
-    static String sourcesPath = directoryPath + "sources.txt";
-    static String excludedPath = directoryPath + "excluded.txt";
+    //static String sourcesPath = directoryPath + "sources.txt";
+    //static String excludedPath = directoryPath + "excluded.txt";
     public static final Logger LOGGER = Logger.getLogger("");
 
     // создание директорий и файлов
@@ -51,18 +51,18 @@ public class Main {
         }
 
         // создание первоначального файла источников новостей
-        File sourcesIsExists = new File(sourcesPath);
-        if (!sourcesIsExists.exists()) {
-            Common.copyFiles(Main.class.getResource("/sources.txt"), sourcesPath);
-            SQLite.initialInsertSources();
-            SQLite.selectSources("smi");
-        }
+//        File sourcesIsExists = new File(sourcesPath);
+//        if (!sourcesIsExists.exists()) {
+//            Common.copyFiles(Main.class.getResource("/sources.txt"), sourcesPath);
+//            SQLite.initialInsertSources();
+//            SQLite.selectSources("smi");
+//        }
 
         // создание первоначального файла исключенных из анализа слов
-        File excludedIsExists = new File(excludedPath);
-        if (!excludedIsExists.exists()) {
-            Common.copyFiles(Main.class.getResource("/excluded.txt"), excludedPath);
-        }
+//        File excludedIsExists = new File(excludedPath);
+//        if (!excludedIsExists.exists()) {
+//            Common.copyFiles(Main.class.getResource("/excluded.txt"), excludedPath);
+//        }
     }
 
     public static void main(String[] args) throws IOException {
