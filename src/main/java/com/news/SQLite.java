@@ -178,45 +178,69 @@ class SQLite {
     // запись данных по актуальным источникам из базы в массивы для поиска
     static void selectSources(String pDialog) {
         if (isConnectionToSQLite) {
-            if (pDialog.equals("smi")) {
-                //sources
-                Common.smi_source.clear();
-                Common.smi_link.clear();
-                try {
-                    Statement st = connection.createStatement();
-                    String query = "SELECT id, source, link, is_active FROM rss_list ORDER BY id";
-                    ResultSet rs = st.executeQuery(query);
-                    while (rs.next()) {
-                        //int id = rs.getInt("id");
-                        String source = rs.getString("source");
-                        String link = rs.getString("link");
-                        int isActive = rs.getInt("is_active");
+            switch (pDialog) {
+                case "smi":
+                    //sources
+                    Common.smi_source.clear();
+                    Common.smi_link.clear();
+                    try {
+                        Statement st = connection.createStatement();
+                        String query = "SELECT id, source, link FROM rss_list where is_active = 1  ORDER BY id";
+                        ResultSet rs = st.executeQuery(query);
+                        while (rs.next()) {
+                            //int id = rs.getInt("id");
+                            String source = rs.getString("source");
+                            String link = rs.getString("link");
+                            Common.smi_source.add(source);
+                            Common.smi_link.add(link);
+                        }
+                        rs.close();
+                        st.close();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                    break;
+                case "excl":
+                    //excluded words
+                    Common.excludedWords.clear();
+                    try {
+                        Statement st = connection.createStatement();
+                        String query = "SELECT word FROM exclude";
+                        ResultSet rs = st.executeQuery(query);
+                        while (rs.next()) {
+                            String word = rs.getString("word");
+                            Common.excludedWords.add(word);
+                        }
+                        rs.close();
+                        st.close();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                    break;
+                case "active_smi":
+                    Common.smi_source.clear();
+                    Common.smi_link.clear();
+                    Common.smi_is_active.clear();
+                    try {
+                        Statement st = connection.createStatement();
+                        String query = "SELECT id, source, link, is_active FROM rss_list ORDER BY id";
+                        ResultSet rs = st.executeQuery(query);
+                        while (rs.next()) {
+                            //int id = rs.getInt("id");
+                            String source = rs.getString("source");
+                            String link = rs.getString("link");
+                            int isActive = rs.getInt("is_active");
 
-                        Common.smi_source.add(source);
-                        Common.smi_link.add(link);
-                        Common.smi_is_active.add(isActive);
+                            Common.smi_source.add(source);
+                            Common.smi_link.add(link);
+                            Common.smi_is_active.add(isActive);
+                        }
+                        rs.close();
+                        st.close();
+                    } catch (Exception e) {
+                        e.printStackTrace();
                     }
-                    rs.close();
-                    st.close();
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            } else if (pDialog.equals("excl")) {
-                //excluded words
-                Common.excludedWords.clear();
-                try {
-                    Statement st = connection.createStatement();
-                    String query = "SELECT word FROM exclude";
-                    ResultSet rs = st.executeQuery(query);
-                    while (rs.next()) {
-                        String word = rs.getString("word");
-                        Common.excludedWords.add(word);
-                    }
-                    rs.close();
-                    st.close();
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
+                    break;
             }
 
         }
@@ -352,21 +376,21 @@ class SQLite {
     static boolean isTitleExists(String pString256) {
         int isExists = 0;
         if (isConnectionToSQLite) {
-                try {
-                    Statement st = connection.createStatement();
-                    String query = "SELECT max(1) FROM titles256 where exists (select title from titles256 t where t.title = '"+ pString256 +"')";
-                    ResultSet rs = st.executeQuery(query);
+            try {
+                Statement st = connection.createStatement();
+                String query = "SELECT max(1) FROM titles256 where exists (select title from titles256 t where t.title = '" + pString256 + "')";
+                ResultSet rs = st.executeQuery(query);
 
-                    while (rs.next()) {
-                        isExists = rs.getInt(1);
-                    }
-                    rs.close();
-                    st.close();
-
-                } catch (Exception e) {
-                    e.printStackTrace();
+                while (rs.next()) {
+                    isExists = rs.getInt(1);
                 }
+                rs.close();
+                st.close();
+
+            } catch (Exception e) {
+                e.printStackTrace();
             }
+        }
         return isExists == 1;
     }
 
@@ -376,7 +400,7 @@ class SQLite {
         if (isConnectionToSQLite) {
             try {
                 Statement st = connection.createStatement();
-                String query = "SELECT max(1) FROM all_news where exists (select title||news_date from all_news t where t.title||t.news_date = '"+ pString256 +"')";
+                String query = "SELECT max(1) FROM all_news where exists (select title||news_date from all_news t where t.title||t.news_date = '" + pString256 + "')";
                 ResultSet rs = st.executeQuery(query);
 
                 while (rs.next()) {

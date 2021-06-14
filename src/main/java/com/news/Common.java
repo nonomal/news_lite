@@ -288,7 +288,7 @@ public class Common {
     static void showDialog(String p_file) {
         switch (p_file) {
             case "smi": {
-                SQLite.selectSources("smi");
+                SQLite.selectSources("active_smi");
                 int i = 1;
                 for (String s : Common.smi_source) {
                     Object[] row = new Object[]{i, s, Common.smi_is_active.get(i - 1)};
