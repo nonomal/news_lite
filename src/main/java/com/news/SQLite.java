@@ -452,11 +452,11 @@ class SQLite {
     }
 
     // обновление статуса чекбокса is_active для ресурсов SELECT id, source, link FROM rss_list where is_active = 1  ORDER BY id
-    static void updateIsActiveStatus(boolean pBoolean, int pId) {
+    static void updateIsActiveStatus(boolean pBoolean, String pSource) {
         if (isConnectionToSQLite) {
             try {
                 Statement st = connection.createStatement();
-                String query = "UPDATE rss_list SET is_active = " + pBoolean + " where id = " + pId;
+                String query = "UPDATE rss_list SET is_active = " + pBoolean + " where source = '" + pSource + "'";
                 st.executeUpdate(query);
                 st.close();
             } catch (Exception e) {
