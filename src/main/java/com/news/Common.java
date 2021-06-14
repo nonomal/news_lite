@@ -20,7 +20,7 @@ import java.util.stream.Stream;
 public class Common {
     static AtomicBoolean isSending = new AtomicBoolean(true);
     static ArrayList<String> keywordsList = new ArrayList<>();
-    static String text = "";
+    //static String text = "";
     //данные из SQLite
     public static int smi_number = 0;
     static ArrayList<String> smi_link = new ArrayList<>();

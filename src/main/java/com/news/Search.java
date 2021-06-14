@@ -5,6 +5,7 @@ import com.sun.syndication.feed.synd.SyndEntry;
 import com.sun.syndication.feed.synd.SyndFeed;
 
 import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
@@ -37,7 +38,7 @@ public class Search {
             SQLite.selectSources("smi");
             isSearchNow.set(true);
             Gui.timeStart = System.currentTimeMillis();
-            Common.text = "";
+            //Common.text = "";
             Gui.labelInfo.setText("");
             Search.j = 1;
             Gui.model.setRowCount(0);
@@ -46,8 +47,15 @@ public class Search {
             Gui.labelSum.setText("" + newsCount);
             Search.isStop.set(false);
             Gui.find_word = Gui.textField.getText().toLowerCase();
+
+            if (pSearchType.equals("word")) {
             Gui.searchBtnTop.setVisible(false);
             Gui.stopBtnTop.setVisible(true);
+            } else if (pSearchType.equals("words")) {
+                Gui.searchBtnBottom.setVisible(false);
+                Gui.stopBtnBottom.setVisible(true);
+            }
+
             isSearchFinished = new AtomicBoolean(false);
             Common.statusLabel(isSearchFinished, "Searching");
             Gui.sendEmailBtn.setIcon(Gui.send);
@@ -289,9 +297,16 @@ public class Search {
                     Gui.sendEmailBtn.doClick();
                 }
 
-                Common.console("info: number of news items in the archive = " + SQLite.archiveNewsCount());
+                if (pSearchType.equals("word")) Common.console("info: number of news items in the archive = " + SQLite.archiveNewsCount());
                 Main.LOGGER.log(Level.INFO, "search finished");
             } catch (Exception e) {
+                try {
+                String q_begin = "ROLLBACK";
+                Statement st_begin = SQLite.connection.createStatement();
+                st_begin.executeUpdate(q_begin);
+                } catch (SQLException sql) {
+                    sql.printStackTrace();
+                }
                 e.printStackTrace();
                 isStop.set(true);
             }

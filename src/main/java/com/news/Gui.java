@@ -6,6 +6,8 @@ import java.awt.event.*;
 import java.io.*;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.Date;
 import java.util.Objects;
 import java.util.Timer;
@@ -323,6 +325,13 @@ public class Gui extends JFrame {
                 searchBtnTop.setVisible(true);
                 stopBtnTop.setVisible(false);
                 Search.isSearchNow.set(false);
+                try {
+                    String q_begin = "ROLLBACK";
+                    Statement st_begin = SQLite.connection.createStatement();
+                    st_begin.executeUpdate(q_begin);
+                } catch (SQLException sql) {
+                    sql.printStackTrace();
+                }
             } catch (Exception t) {
                 Common.console("status: there is no threads to stop");
             }
@@ -343,6 +352,13 @@ public class Gui extends JFrame {
                 searchBtnBottom.setVisible(true);
                 stopBtnBottom.setVisible(false);
                 Search.isSearchNow.set(false);
+                try {
+                    String q_begin = "ROLLBACK";
+                    Statement st_begin = SQLite.connection.createStatement();
+                    st_begin.executeUpdate(q_begin);
+                } catch (SQLException sql) {
+                    sql.printStackTrace();
+                }
             } catch (Exception t) {
                 Common.console("status: there is no threads to stop");
             }
@@ -363,7 +379,7 @@ public class Gui extends JFrame {
                     return;
                 }
                 //table.setAutoCreateRowSorter(false);
-                Common.text = "";
+                //Common.text = "";
                 labelInfo.setText("");
                 Search.j = 1;
                 //if (Main.isConnected) Main.delete();
