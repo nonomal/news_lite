@@ -166,8 +166,6 @@ public class Gui extends JFrame {
         Renderer.setHorizontalAlignment(JLabel.CENTER);
         rss = rss + "007"; // :))
         table.getColumnModel().getColumn(0).setCellRenderer(Renderer);
-        //table.getColumnModel().getColumn(1).setCellRenderer(Renderer);
-        //table.getColumnModel().getColumn(4).setCellRenderer(Renderer);
         table.setRowHeight(20);
         table.setColumnSelectionAllowed(true);
         table.setCellSelectionEnabled(true);
@@ -378,11 +376,8 @@ public class Gui extends JFrame {
                     Common.console("status: no data to clear");
                     return;
                 }
-                //table.setAutoCreateRowSorter(false);
-                //Common.text = "";
                 labelInfo.setText("");
                 Search.j = 1;
-                //if (Main.isConnected) Main.delete();
                 model.setRowCount(0);
                 model_for_analysis.setRowCount(0);
                 q = 0;

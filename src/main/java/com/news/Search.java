@@ -100,8 +100,7 @@ public class Search {
                                 String link = entry.getLink();
 
                                 if (pSearchType.equals("word")) {
-                                    //if (message.toString().toLowerCase().contains(Gui.find_word) && entry.getTitle().length() > 15) { // искать слово по всей странице
-                                    if (entry.getTitle().toLowerCase().contains(Gui.find_word) && entry.getTitle().length() > 15) {
+                                    if (entry.getTitle().toLowerCase().contains(Gui.find_word.toLowerCase()) && entry.getTitle().length() > 15) {
 
                                         //отсеиваем новости, которые уже были найдены ранее
                                         if (SQLite.isTitleExists(Common.sha256(entry.getTitle() + entry.getPublishedDate()))) {
@@ -181,7 +180,6 @@ public class Search {
                                     }
                                 } else if (pSearchType.equals("words")) {
                                     for (String it : Common.getKeywordsFromFile()) {
-                                        //if (message.toString().toLowerCase().contains(it.toLowerCase()) && entry.getTitle().length() > 15) {
                                         if (entry.getTitle().toLowerCase().contains(it.toLowerCase()) && entry.getTitle().length() > 15) {
 
                                             // отсеиваем новости которые были обнаружены ранее
@@ -231,7 +229,6 @@ public class Search {
                                                             newsCount,
                                                             smi_source,
                                                             title,
-                                                            //newsDescribe,
                                                             pubDate,
                                                             link
                                                     };

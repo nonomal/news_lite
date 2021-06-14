@@ -8,7 +8,6 @@ class MyTimerTask extends TimerTask {
         if (Gui.autoUpdateNewsTop.getState()) {
             Search.mainSearch("word");
         } else if (Gui.autoUpdateNewsBottom.getState()) {
-            //Search.keywordsSearch();
             Search.mainSearch("words");
         }
     }

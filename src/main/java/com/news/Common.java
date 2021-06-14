@@ -20,13 +20,10 @@ import java.util.stream.Stream;
 public class Common {
     static AtomicBoolean isSending = new AtomicBoolean(true);
     static ArrayList<String> keywordsList = new ArrayList<>();
-    //static String text = "";
-    //данные из SQLite
     public static int smi_number = 0;
     static ArrayList<String> smi_link = new ArrayList<>();
     static ArrayList<String> smi_source = new ArrayList<>();
     static ArrayList<Boolean> smi_is_active = new ArrayList<>();
-
     static ArrayList<String> excludedWords = new ArrayList<>();
 
     // Запись конфигураций приложения
@@ -343,29 +340,6 @@ public class Common {
         } catch (Exception e) {
             e.printStackTrace();
         }
-    }
-
-    // Удаление строки с источником новостей из файла sources.txt
-    static void delLine(String s, String pPath) throws IOException {
-        Path input = Paths.get(pPath);
-        Path temp = Files.createTempFile("temp", ".txt");
-        Stream<String> lines = Files.lines(input);
-        try (BufferedWriter writer = Files.newBufferedWriter(temp)) {
-            lines
-                    .filter(line -> {
-                        assert s != null;
-                        return !line.contains(s);
-                    })
-                    .forEach(line -> {
-                        try {
-                            writer.write(line);
-                            writer.newLine();
-                        } catch (IOException e) {
-                            throw new RuntimeException(e);
-                        }
-                    });
-        }
-        Files.move(temp, input, StandardCopyOption.REPLACE_EXISTING);
     }
 
     // Оставляет только буквы
