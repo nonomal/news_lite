@@ -34,7 +34,7 @@ public class Dialogs extends JDialog implements KeyListener {
                 this.setTitle("Sources");
                 this.setLocationRelativeTo(Gui.smiBtn);
                 final JScrollPane scrollPane = new JScrollPane();
-                Object[] columns = {"Num", "Source", "Is active", "Del"};
+                Object[] columns = {"Num", "Source", "Use it?", "Del"};
                 model = new DefaultTableModel(new Object[][]{
                 }, columns) {
                     final boolean[] columnEditables = new boolean[]{false, false, true, true};
@@ -65,7 +65,8 @@ public class Dialogs extends JDialog implements KeyListener {
                 header.setFont(new Font("Tahoma", Font.BOLD, 13));
                 table.getColumnModel().getColumn(0).setCellRenderer(renderer);
                 table.getColumnModel().getColumn(0).setMaxWidth(40);
-                table.getColumnModel().getColumn(3).setMaxWidth(40);
+                table.getColumnModel().getColumn(2).setMaxWidth(60);
+                table.getColumnModel().getColumn(3).setMaxWidth(30);
                 table.setForeground(Color.black);
                 table.setSelectionForeground(new Color(26, 79, 164));
                 table.setSelectionBackground(new Color(255, 255, 160));
