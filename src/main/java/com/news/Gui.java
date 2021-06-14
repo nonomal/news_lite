@@ -6,8 +6,6 @@ import java.awt.event.*;
 import java.io.*;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.Date;
 import java.util.Objects;
 import java.util.Timer;
@@ -298,7 +296,18 @@ public class Gui extends JFrame {
         getRootPane().setDefaultButton(searchBtnTop);
         searchBtnTop.requestFocus();
         searchBtnTop.doClick();
-        searchBtnTop.addActionListener(e -> new Thread(Search::mainSearch).start());
+        //searchBtnTop.addActionListener(e -> new Thread(Search::mainSearch).start());
+        searchBtnTop.addActionListener(e -> new Thread(() -> Search.mainSearch("word")).start());
+
+        //Bottom search by keywords
+        searchBtnBottom = new JButton("");
+        searchBtnBottom.setIcon(search_ico);
+        searchBtnBottom.setFont(new Font("Tahoma", Font.BOLD, 10));
+        searchBtnBottom.setBackground(new Color(154, 237, 196));
+        searchBtnBottom.setBounds(546, 490, 32, 23);
+        //searchBtnBottom.addActionListener(e -> new Thread(Search::keywordsSearch).start());
+        searchBtnBottom.addActionListener(e -> new Thread(() -> Search.mainSearch("words")).start());
+        getContentPane().add(searchBtnBottom);
 
         //Stop addNewSource
         stopBtnTop = new JButton("");
@@ -314,25 +323,11 @@ public class Gui extends JFrame {
                 searchBtnTop.setVisible(true);
                 stopBtnTop.setVisible(false);
                 Search.isSearchNow.set(false);
-
-                String q_commit = "ROLLBACK";
-                Statement st_commit = SQLite.connection.createStatement();
-                st_commit.executeUpdate(q_commit);
-
             } catch (Exception t) {
                 Common.console("status: there is no threads to stop");
             }
         });
         getContentPane().add(stopBtnTop);
-
-        //Bottom search by keywords
-        searchBtnBottom = new JButton("");
-        searchBtnBottom.setIcon(search_ico);
-        searchBtnBottom.setFont(new Font("Tahoma", Font.BOLD, 10));
-        searchBtnBottom.setBackground(new Color(154, 237, 196));
-        searchBtnBottom.setBounds(546, 490, 32, 23);
-        searchBtnBottom.addActionListener(e -> new Thread(Search::keywordsSearch).start());
-        getContentPane().add(searchBtnBottom);
 
         //Stop addNewSource (bottom)
         stopBtnBottom = new JButton("");
@@ -348,10 +343,6 @@ public class Gui extends JFrame {
                 searchBtnBottom.setVisible(true);
                 stopBtnBottom.setVisible(false);
                 Search.isSearchNow.set(false);
-
-                String q_commit = "ROLLBACK";
-                Statement st_commit = SQLite.connection.createStatement();
-                st_commit.executeUpdate(q_commit);
             } catch (Exception t) {
                 Common.console("status: there is no threads to stop");
             }

@@ -6,9 +6,10 @@ class MyTimerTask extends TimerTask {
     @Override
     public void run() {
         if (Gui.autoUpdateNewsTop.getState()) {
-            Search.mainSearch();
+            Search.mainSearch("word");
         } else if (Gui.autoUpdateNewsBottom.getState()) {
-            Search.keywordsSearch();
+            //Search.keywordsSearch();
+            Search.mainSearch("words");
         }
     }
 }
