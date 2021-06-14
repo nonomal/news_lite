@@ -167,7 +167,7 @@ class SQLite {
                 if (result == JOptionPane.YES_OPTION) {
 
                     //запись в БД
-                    String query = "INSERT INTO rss_list(id, source, link) " + "VALUES (" + new_id + ", '" + source_name.getText() + "', '" + rss_link.getText() + "')";
+                    String query = "INSERT INTO rss_list(id, source, link, is_active) " + "VALUES (" + new_id + ", '" + source_name.getText() + "', '" + rss_link.getText() + "', " + 1 +")";
                     Statement st = connection.createStatement();
                     st.executeUpdate(query);
                     st.close();
