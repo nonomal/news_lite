@@ -115,13 +115,13 @@ public class Search {
                                             int date_diff = Common.compareDatesOnly(curent_date, docDate);
 
                                             // вставка в архив всех новостей
-                                            try {
-                                                if (!SQLite.isTitleInArchiveExists(entry.getTitle() + entry.getPublishedDate())) {
-                                                    SQLite.insertAllTitles(entry.getTitle(), entry.getPublishedDate().toString());
-                                                }
-                                            } catch (Exception s) {
-                                                System.out.println(s.getMessage());
-                                            }
+//                                            try {
+//                                                if (!SQLite.isTitleInArchiveExists(entry.getTitle() + entry.getPublishedDate())) {
+//                                                    SQLite.insertAllTitles(entry.getTitle(), entry.getPublishedDate().toString());
+//                                                }
+//                                            } catch (Exception s) {
+//                                                System.out.println(s.getMessage());
+//                                            }
 
                                             if (Gui.todayOrNotChbx.getState() && (date_diff != 0)) {
                                                 newsCount++;

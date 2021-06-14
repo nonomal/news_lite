@@ -17,13 +17,13 @@ class SQLite {
         try {
             Class.forName("org.sqlite.JDBC");
             connection = DriverManager.getConnection("jdbc:sqlite:" + Main.directoryPath + "news.db");
-            createTables();
-            createView();
+            //createTables();
+            //createView();
             isConnectionToSQLite = true;
             Main.LOGGER.log(Level.INFO, "Connected");
-            SQLite.deleteFromSources();
-            SQLite.initialInsertSources();
-            SQLite.selectSources("smi");
+            //SQLite.deleteFromSources();
+            //SQLite.initialInsertSources();
+            //SQLite.selectSources("smi");
             Thread.sleep(1000L);
             Gui.connect_to_bd_label.setText("<html><p style=\"color:#a4f5a4\">Connected to SQLite for word frequency analysis</p></html>");
         } catch (Exception e) {

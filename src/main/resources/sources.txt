@@ -30,7 +30,7 @@ INSERT INTO rss_list(id, source, link, is_active) VALUES (28, 'Google', 'https:/
 INSERT INTO rss_list(id, source, link, is_active) VALUES (29, 'Финам', 'https://www.finam.ru/analysis/conews/rsspoint', 1);
 INSERT INTO rss_list(id, source, link, is_active) VALUES (30, 'Финам', 'https://www.finam.ru/international/advanced/rsspoint', 1);
 INSERT INTO rss_list(id, source, link, is_active) VALUES (31, 'Атон', 'https://www.agroinvestor.ru/feed/public-agronews.xml', 1);
-INSERT INTO rss_list(id, source, link, is_active) VALUES (32, 'ММВБ', 'https://www.moex.com/export/news.aspx?cat=100', 0);
+INSERT INTO rss_list(id, source, link, is_active) VALUES (32, 'ММВБ', 'https://www.moex.com/export/news.aspx?cat=100', 1);
 INSERT INTO rss_list(id, source, link, is_active) VALUES (33, 'Esquire', 'https://esquire.ru/out/feedburner.xml', 1);
 INSERT INTO rss_list(id, source, link, is_active) VALUES (34, 'GQ', 'https://www.gq.ru/feed/all-content/rss', 1);
 INSERT INTO rss_list(id, source, link, is_active) VALUES (35, 'N+1', 'https://nplus1.ru/rss', 1);

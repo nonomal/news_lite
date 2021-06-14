@@ -46,6 +46,8 @@ public class Main {
             Common.copyFiles(Main.class.getResource("/sqlite3.exe"), directoryPath + "sqlite3.exe");
             Common.copyFiles(Main.class.getResource("/sqlite3.dll"), directoryPath + "sqlite3.dll");
             Common.copyFiles(Main.class.getResource("/sqlite3.def"), directoryPath + "sqlite3.def");
+            Common.copyFiles(Main.class.getResource("/news.db"), directoryPath + "news.db");
+
         }
 
         // создание первоначального файла источников новостей
