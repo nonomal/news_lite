@@ -25,6 +25,7 @@ public class Common {
     public static int smi_number = 0;
     static ArrayList<String> smi_link = new ArrayList<>();
     static ArrayList<String> smi_source = new ArrayList<>();
+    static ArrayList<Integer> smi_is_active = new ArrayList<>();
     static ArrayList<String> excludedWords = new ArrayList<>();
 
     // Запись конфигураций приложения
@@ -290,10 +291,11 @@ public class Common {
                 SQLite.selectSources("smi");
                 int i = 1;
                 for (String s : Common.smi_source) {
-                    Object[] row = new Object[]{i, s};
+                    Object[] row = new Object[]{i, s, Common.smi_is_active.get(i - 1)};
                     Dialogs.model.addRow(row);
                     i++;
                 }
+
                 break;
             }
             case "log":

@@ -34,17 +34,17 @@ public class Dialogs extends JDialog implements KeyListener {
                 this.setTitle("Sources");
                 this.setLocationRelativeTo(Gui.smiBtn);
                 final JScrollPane scrollPane = new JScrollPane();
-                Object[] columns = {"Num", "Source", "Del"};
+                Object[] columns = {"Num", "Source", "Is active", "Del"};
                 model = new DefaultTableModel(new Object[][]{
                 }, columns) {
-                    final boolean[] columnEditables = new boolean[]{false, false, true};
+                    final boolean[] columnEditables = new boolean[]{false, false, true, true};
 
                     public boolean isCellEditable(int row, int column) {
                         return columnEditables[column];
                     }
 
                     // Сортировка
-                    final Class[] types_unique = {Integer.class, String.class, Button.class};
+                    final Class[] types_unique = {Integer.class, String.class, String.class, Button.class};
 
                     @Override
                     public Class getColumnClass(int columnIndex) {
@@ -52,7 +52,7 @@ public class Dialogs extends JDialog implements KeyListener {
                     }
                 };
                 table = new JTable(model);
-                table.getColumn("Del").setCellRenderer(new ButtonColumn(table, 2));
+                table.getColumn("Del").setCellRenderer(new ButtonColumn(table, 3));
                 table.setAutoCreateRowSorter(true);
                 DefaultTableCellRenderer renderer = new DefaultTableCellRenderer();
                 renderer.setHorizontalAlignment(JLabel.CENTER);
@@ -64,7 +64,7 @@ public class Dialogs extends JDialog implements KeyListener {
                 header.setFont(new Font("Tahoma", Font.BOLD, 13));
                 table.getColumnModel().getColumn(0).setCellRenderer(renderer);
                 table.getColumnModel().getColumn(0).setMaxWidth(40);
-                table.getColumnModel().getColumn(2).setMaxWidth(40);
+                table.getColumnModel().getColumn(3).setMaxWidth(40);
                 table.setForeground(Color.black);
                 table.setSelectionForeground(new Color(26, 79, 164));
                 table.setSelectionBackground(new Color(255, 255, 160));

@@ -35,7 +35,7 @@ class SQLite {
     // создание таблиц
     static void createTables() {
         try {
-            String query = "CREATE TABLE IF NOT EXISTS rss_list(id number, source text, link text)";
+            String query = "CREATE TABLE IF NOT EXISTS rss_list(id number, source text, link text, is_active number)";
             Statement st = connection.createStatement();
             st.executeUpdate(query);
             st.close();
@@ -184,14 +184,17 @@ class SQLite {
                 Common.smi_link.clear();
                 try {
                     Statement st = connection.createStatement();
-                    String query = "SELECT id, source, link FROM rss_list ORDER BY id";
+                    String query = "SELECT id, source, link, is_active FROM rss_list ORDER BY id";
                     ResultSet rs = st.executeQuery(query);
                     while (rs.next()) {
                         //int id = rs.getInt("id");
                         String source = rs.getString("source");
                         String link = rs.getString("link");
+                        int isActive = rs.getInt("is_active");
+
                         Common.smi_source.add(source);
                         Common.smi_link.add(link);
+                        Common.smi_is_active.add(isActive);
                     }
                     rs.close();
                     st.close();
