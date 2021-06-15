@@ -24,11 +24,16 @@ class SQLite {
         }
     }
 
-    //Select
+    // Заполняем таблицу анализа
     static void selectSqlite() {
         try {
             Statement st = connection.createStatement();
-            String query = "select SUM, TITLE from v_news_dual where sum > " + wordFreqMatches + " and title not in (select word from exclude) order by SUM desc";
+            String query = "select SUM, TITLE from v_news_dual where sum > " +
+                    wordFreqMatches +
+                    " and title not in (select word from exclude)" +
+                    " and title not in (select present from verbs)" +
+                    " and title not in (select past from verbs)" +
+                    " order by SUM desc";
             ResultSet rs = st.executeQuery(query);
             while (rs.next()) {
                 String word = rs.getString("TITLE");
