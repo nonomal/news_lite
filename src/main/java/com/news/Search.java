@@ -32,6 +32,7 @@ public class Search {
     //Main search
     public static void mainSearch(String pSearchType) {
         if (!isSearchNow.get()) {
+            dataForEmail.clear();
             Common.console("status: search started");
             Main.LOGGER.log(Level.INFO, "search started");
             //выборка актуальных источников перед поиском из БД
@@ -114,13 +115,13 @@ public class Search {
                                             int date_diff = Common.compareDatesOnly(curent_date, docDate);
 
                                             // вставка в архив всех новостей
-                                            try {
-                                                if (!SQLite.isTitleInArchiveExists(entry.getTitle() + entry.getPublishedDate())) {
-                                                    SQLite.insertAllTitles(entry.getTitle(), entry.getPublishedDate().toString());
-                                                }
-                                            } catch (Exception s) {
-                                                System.out.println(s.getMessage());
-                                            }
+//                                            try {
+//                                                if (!SQLite.isTitleInArchiveExists(entry.getTitle() + entry.getPublishedDate())) {
+//                                                    SQLite.insertAllTitles(entry.getTitle(), entry.getPublishedDate().toString());
+//                                                }
+//                                            } catch (Exception s) {
+//                                                System.out.println(s.getMessage());
+//                                            }
 
                                             if (Gui.todayOrNotChbx.getState() && (date_diff != 0)) {
                                                 newsCount++;
@@ -300,7 +301,7 @@ public class Search {
                     Gui.sendEmailBtn.doClick();
                 }
 
-                if (pSearchType.equals("word")) Common.console("info: number of news items in the archive = " + SQLite.archiveNewsCount());
+                //if (pSearchType.equals("word")) Common.console("info: number of news items in the archive = " + SQLite.archiveNewsCount());
                 Main.LOGGER.log(Level.INFO, "search finished");
             } catch (Exception e) {
                 try {
