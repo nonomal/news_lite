@@ -257,26 +257,6 @@ class SQLite {
         return isExists == 1;
     }
 
-    // вставка только новых заголовков в архив всех новостей
-    static boolean isTitleInArchiveExists(String pString256) {
-        int isExists = 0;
-        if (isConnectionToSQLite) {
-            try {
-                Statement st = connection.createStatement();
-                String query = "SELECT max(1) FROM all_news where exists (select title||news_date from all_news t where t.title||t.news_date = '" + pString256 + "')";
-                ResultSet rs = st.executeQuery(query);
-
-                while (rs.next()) {
-                    isExists = rs.getInt(1);
-                }
-                rs.close();
-                st.close();
-            } catch (Exception ignored) {
-            }
-        }
-        return isExists == 1;
-    }
-
     // новостей в архиве всего
     static int archiveNewsCount() {
         int countNews = 0;
@@ -331,6 +311,20 @@ class SQLite {
             try {
                 Statement st = connection.createStatement();
                 String query = "UPDATE rss_list SET is_active = " + pBoolean + " where source = '" + pSource + "'";
+                st.executeUpdate(query);
+                st.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    // удаление дубликатов новостей
+    static void deleteDuplicates() {
+        if (isConnectionToSQLite) {
+            try {
+                Statement st = connection.createStatement();
+                String query = "DELETE FROM all_news WHERE rowid NOT IN (SELECT min(rowid) FROM all_news GROUP BY title, news_date)";
                 st.executeUpdate(query);
                 st.close();
             } catch (Exception e) {

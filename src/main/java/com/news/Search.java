@@ -114,14 +114,8 @@ public class Search {
                                             Date curent_date = new Date();
                                             int date_diff = Common.compareDatesOnly(curent_date, docDate);
 
-                                            // вставка в архив всех новостей
-//                                            try {
-//                                                if (!SQLite.isTitleInArchiveExists(entry.getTitle() + entry.getPublishedDate())) {
-//                                                    SQLite.insertAllTitles(entry.getTitle(), entry.getPublishedDate().toString());
-//                                                }
-//                                            } catch (Exception s) {
-//                                                System.out.println(s.getMessage());
-//                                            }
+                                            // вставка всех новостей в архив
+                                            SQLite.insertAllTitles(title, pubDate.toString());
 
                                             if (Gui.todayOrNotChbx.getState() && (date_diff != 0)) {
                                                 newsCount++;
@@ -133,7 +127,6 @@ public class Search {
                                                         newsCount,
                                                         smi_source,
                                                         title,
-                                                        //newsDescribe,
                                                         pubDate,
                                                         link
                                                 };
@@ -204,7 +197,6 @@ public class Search {
                                                             newsCount,
                                                             smi_source,
                                                             title,
-                                                            //newsDescribe,
                                                             pubDate,
                                                             link
                                                     };
@@ -301,7 +293,8 @@ public class Search {
                     Gui.sendEmailBtn.doClick();
                 }
 
-                //if (pSearchType.equals("word")) Common.console("info: number of news items in the archive = " + SQLite.archiveNewsCount());
+                SQLite.deleteDuplicates();
+                if (pSearchType.equals("word")) Common.console("info: number of news items in the archive = " + SQLite.archiveNewsCount());
                 Main.LOGGER.log(Level.INFO, "search finished");
             } catch (Exception e) {
                 try {
