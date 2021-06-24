@@ -986,11 +986,9 @@ public class Gui extends JFrame {
             trayIcon.addMouseListener(new MouseAdapter(){
                 @Override
                 public void mouseClicked (MouseEvent e){
-                    if ( SwingUtilities.isRightMouseButton( e )){
-                        trayIcon.setPopupMenu(trayMenu);
-                    }
-                    else if(SwingUtilities.isLeftMouseButton( e )){
-                        JOptionPane.showMessageDialog(null, "Нажата левая кнопка мыши", "Сообщение", JOptionPane.INFORMATION_MESSAGE);
+                    if (SwingUtilities.isLeftMouseButton(e)){
+                        setVisible(true);
+                        setExtendedState(JFrame.NORMAL);
                     }
                 }
             });
