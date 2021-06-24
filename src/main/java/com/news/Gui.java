@@ -175,7 +175,7 @@ public class Gui extends JFrame {
         table.getColumnModel().getColumn(1).setPreferredWidth(50);
         table.getColumnModel().getColumn(2).setPreferredWidth(500);
         table.getColumnModel().getColumn(3).setPreferredWidth(45);
-        table.getColumnModel().getColumn(4).setPreferredWidth(5);
+        table.getColumnModel().getColumn(4).setMaxWidth(10);
         // Colors
         table.setForeground(Color.black);
         table.setSelectionForeground(new Color(26, 79, 164));
