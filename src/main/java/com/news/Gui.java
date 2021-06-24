@@ -3,6 +3,7 @@ package com.news;
 import java.awt.*;
 import java.awt.datatransfer.StringSelection;
 import java.awt.event.*;
+import java.awt.image.BufferedImage;
 import java.io.*;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -14,6 +15,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.logging.Level;
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.border.BevelBorder;
 import javax.swing.table.*;
@@ -110,6 +112,13 @@ public class Gui extends JFrame {
                 Common.writeToConfig("checkLink", "checkbox");
 
                 if (SQLite.isConnectionToSQLite) SQLite.closeSQLiteConnection();
+            }
+
+            // для сворачивания в трей
+            @Override
+            public void windowIconified(WindowEvent arg0) {
+                setVisible(false);
+                System.out.println("trey");
             }
         });
 
@@ -958,6 +967,38 @@ public class Gui extends JFrame {
         latestNewsBorder.setBounds(631, 454, 161, 26);
         getContentPane().add(latestNewsBorder);
 
+
+        // Сворачивание приложения в трей
+        try {
+            BufferedImage Icon = ImageIO.read(new File("C:\\Users\\Avandy\\IdeaProjects\\News\\src\\main\\resources\\icons\\logo.png"));
+            final  TrayIcon trayIcon =  new TrayIcon(Icon, "Avandy News");
+            SystemTray systemTray = SystemTray.getSystemTray();
+            systemTray.add(trayIcon);
+
+            final PopupMenu trayMenu = new PopupMenu();
+            MenuItem item = new MenuItem("Развернуть");
+            item.addActionListener(e -> {
+                setVisible(true);
+                setExtendedState(JFrame.NORMAL);
+            });
+            trayMenu.add(item);
+
+            trayIcon.addMouseListener(new MouseAdapter(){
+                @Override
+                public void mouseClicked (MouseEvent e){
+                    if ( SwingUtilities.isRightMouseButton( e )){
+                        trayIcon.setPopupMenu(trayMenu);
+                    }
+                    else if(SwingUtilities.isLeftMouseButton( e )){
+                        JOptionPane.showMessageDialog(null, "Нажата левая кнопка мыши", "Сообщение", JOptionPane.INFORMATION_MESSAGE);
+                    }
+                }
+            });
+        } catch (IOException | AWTException e) {
+            e.printStackTrace();
+        }
+
         setVisible(true);
     }
+
 }
