@@ -113,12 +113,10 @@ public class Gui extends JFrame {
 
                 if (SQLite.isConnectionToSQLite) SQLite.closeSQLiteConnection();
             }
-
-            // для сворачивания в трей
+            // сворачивание в трей
             @Override
-            public void windowIconified(WindowEvent arg0) {
+            public void windowIconified(WindowEvent pEvent) {
                 setVisible(false);
-                System.out.println("trey");
             }
         });
 
@@ -967,28 +965,38 @@ public class Gui extends JFrame {
         latestNewsBorder.setBounds(631, 454, 161, 26);
         getContentPane().add(latestNewsBorder);
 
-
         // Сворачивание приложения в трей
         try {
-            BufferedImage Icon = ImageIO.read(new File("C:\\Users\\Avandy\\IdeaProjects\\News\\src\\main\\resources\\icons\\logo.png"));
-            final  TrayIcon trayIcon =  new TrayIcon(Icon, "Avandy News");
+            BufferedImage Icon = ImageIO.read(Objects.requireNonNull(Gui.class.getResourceAsStream("/icons/logo.png")));
+            final TrayIcon trayIcon =  new TrayIcon(Icon, "Avandy News");
             SystemTray systemTray = SystemTray.getSystemTray();
             systemTray.add(trayIcon);
 
             final PopupMenu trayMenu = new PopupMenu();
-            MenuItem item = new MenuItem("Развернуть");
-            item.addActionListener(e -> {
+            MenuItem itemShow = new MenuItem("Show");
+            itemShow.addActionListener(e -> {
                 setVisible(true);
                 setExtendedState(JFrame.NORMAL);
             });
-            trayMenu.add(item);
+            trayMenu.add(itemShow);
+
+            MenuItem itemClose = new MenuItem("Close");
+            itemClose.addActionListener(e -> System.exit(0));
+            trayMenu.add(itemClose);
 
             trayIcon.addMouseListener(new MouseAdapter(){
                 @Override
-                public void mouseClicked (MouseEvent e){
+                public void mouseClicked(MouseEvent e){
                     if (SwingUtilities.isLeftMouseButton(e)){
                         setVisible(true);
                         setExtendedState(JFrame.NORMAL);
+                    }
+                }
+
+                @Override
+                public void mouseReleased(MouseEvent e){
+                   if (SwingUtilities.isRightMouseButton(e)){
+                        trayIcon.setPopupMenu(trayMenu);
                     }
                 }
             });
