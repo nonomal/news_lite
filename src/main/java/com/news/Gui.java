@@ -110,6 +110,7 @@ public class Gui extends JFrame {
                 Common.writeToConfig("todayOrNotChbx", "checkbox");
                 Common.writeToConfig("checkTitle", "checkbox");
                 Common.writeToConfig("checkLink", "checkbox");
+                Common.writeToConfig("filterNewsChbx", "checkbox");
 
                 if (SQLite.isConnectionToSQLite) SQLite.closeSQLiteConnection();
             }

@@ -62,6 +62,9 @@ public class Common {
                         case "checkLink":
                             text = "checkbox:" + p_word + "," + Gui.searchInLinkCbx.getState() + "\n";
                             break;
+                        case "filterNewsChbx":
+                            text = "checkbox:" + p_word + "," + Gui.filterNewsChbx.getState() + "\n";
+                            break;
                     }
                     if (text != null) writer.write(text);
                     writer.flush();
@@ -220,6 +223,9 @@ public class Common {
                             break;
                         case "checkbox:checkLink":
                             Gui.searchInLinkCbx.setState(Boolean.parseBoolean(f[1]));
+                            break;
+                        case "checkbox:filterNewsChbx":
+                            Gui.filterNewsChbx.setState(Boolean.parseBoolean(f[1]));
                             break;
                     }
                 }
