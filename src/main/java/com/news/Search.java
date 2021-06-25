@@ -14,7 +14,6 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.concurrent.atomic.AtomicBoolean;
-import java.util.logging.Level;
 
 public class Search {
     static AtomicBoolean isStop = new AtomicBoolean(false);
@@ -34,7 +33,6 @@ public class Search {
         if (!isSearchNow.get()) {
             dataForEmail.clear();
             Common.console("status: search started");
-            Main.LOGGER.log(Level.INFO, "search started");
             //выборка актуальных источников перед поиском из БД
             SQLite.selectSources("smi");
             isSearchNow.set(true);
@@ -284,7 +282,7 @@ public class Search {
                 // Заполняем таблицу анализа
                 if (!Gui.wasClickInTableForAnalysis.get()) SQLite.selectSqlite();
 
-                //auto send after search
+                // Автоматическая отправка результатов
                 if (Gui.autoSendMessage.getState() && (Gui.model.getRowCount() > 0)) {
                     Gui.sendEmailBtn.doClick();
                 }
@@ -292,7 +290,6 @@ public class Search {
                 SQLite.deleteDuplicates();
                 Gui.wasClickInTableForAnalysis.set(false);
                 if (pSearchType.equals("word")) Common.console("info: number of news items in the archive = " + SQLite.archiveNewsCount());
-                Main.LOGGER.log(Level.INFO, "search finished");
             } catch (Exception e) {
                 try {
                 String q_begin = "ROLLBACK";
