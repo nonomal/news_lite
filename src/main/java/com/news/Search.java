@@ -152,7 +152,6 @@ public class Search {
                                                         newsCount,
                                                         smi_source,
                                                         title,
-                                                        //newsDescribe,
                                                         pubDate,
                                                         link
                                                 };
