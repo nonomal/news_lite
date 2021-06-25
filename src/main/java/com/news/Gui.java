@@ -21,16 +21,8 @@ import javax.swing.border.BevelBorder;
 import javax.swing.table.*;
 
 public class Gui extends JFrame {
-    static int q = 1;
-    static double timeStart;
-    static double timeEnd;
-    static boolean isSelTitle = true;
-    static boolean isSelLink = true;
-    static boolean isOnlyLastNews = false;
-    static String find_word = "";
-    static String rss = "rss.news.api";
-    static String send_to;
-    static String[] intervals = {"1 min", "5 min", "15 min", "30 min", "45 min", "1 hour", "2 hours", "4 hours", "8 hours", "12 hours", "24 hours", "48 hours"};
+    private final long autoStartTimer = 30000L; // 30 секунд
+    private static final String[] intervals = {"1 min", "5 min", "15 min", "30 min", "45 min", "1 hour", "2 hours", "4 hours", "8 hours", "12 hours", "24 hours", "48 hours"};
     static ImageIcon logo_ico = new ImageIcon(Toolkit.getDefaultToolkit().createImage(Gui.class.getResource("/icons/logo.png")));
     static ImageIcon send = new ImageIcon(Toolkit.getDefaultToolkit().createImage(Gui.class.getResource("/icons/send.png")));
     static ImageIcon send2 = new ImageIcon(Toolkit.getDefaultToolkit().createImage(Gui.class.getResource("/icons/send2.png")));
@@ -41,6 +33,15 @@ public class Gui extends JFrame {
     static ImageIcon excel_ico = new ImageIcon(Toolkit.getDefaultToolkit().createImage(Gui.class.getResource("/icons/excel.png")));
     static ImageIcon create_ico = new ImageIcon(Toolkit.getDefaultToolkit().createImage(Gui.class.getResource("/icons/create.png")));
     static ImageIcon delete_ico = new ImageIcon(Toolkit.getDefaultToolkit().createImage(Gui.class.getResource("/icons/delete.png")));
+    static int q = 1;
+    static double timeStart;
+    static double timeEnd;
+    static boolean isSelTitle = true;
+    static boolean isSelLink = true;
+    static boolean isOnlyLastNews = false;
+    static String find_word = "";
+    static String rss = "rss.news.api";
+    static String send_to;
     static JScrollPane scrollPane;
     static JTable table;
     static JTable table_for_analysis;
@@ -680,7 +681,7 @@ public class Gui extends JFrame {
         // запись интервалов в комбобокс
         Common.addIntervalsToCombobox(newsIntervalCbox, intervals);
 
-        // Автозапуск поиска каждые 60 секунд
+        // Автозапуск поиска по слову каждые 30 секунд
         autoUpdateNewsTop = new Checkbox("auto update");
         autoUpdateNewsTop.setState(false);
         autoUpdateNewsTop.setForeground(Color.WHITE);
@@ -691,7 +692,7 @@ public class Gui extends JFrame {
             if (autoUpdateNewsTop.getState()) {
                 timer = new Timer(true);
                 timerTask = new MyTimerTask();
-                timer.scheduleAtFixedRate(timerTask, 0, 60000L);
+                timer.scheduleAtFixedRate(timerTask, 0, autoStartTimer);
                 searchBtnTop.setVisible(false);
                 stopBtnTop.setVisible(true);
                 autoUpdateNewsBottom.setVisible(false);
@@ -704,7 +705,7 @@ public class Gui extends JFrame {
             }
         });
 
-        // Автозапуск поиска каждые 60 секунд
+        // Автозапуск поиска по словам каждые 30 секунд
         autoUpdateNewsBottom = new Checkbox("auto update");
         autoUpdateNewsBottom.setState(false);
         autoUpdateNewsBottom.setForeground(Color.WHITE);
@@ -715,7 +716,7 @@ public class Gui extends JFrame {
             if (autoUpdateNewsBottom.getState()) {
                 timer = new Timer(true);
                 timerTask = new MyTimerTask();
-                timer.scheduleAtFixedRate(timerTask, 0, 60000L);
+                timer.scheduleAtFixedRate(timerTask, 0, autoStartTimer);
                 searchBtnBottom.setVisible(false);
                 stopBtnBottom.setVisible(true);
                 autoUpdateNewsTop.setVisible(false);
