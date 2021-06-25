@@ -19,6 +19,7 @@ import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.border.BevelBorder;
 import javax.swing.table.*;
+import javax.swing.text.DefaultCaret;
 
 public class Gui extends JFrame {
     private final long autoStartTimer = 30000L; // 30 секунд
@@ -613,6 +614,10 @@ public class Gui extends JFrame {
 
         //Console - textarea
         animation_status = new JTextArea();
+        // авто скроллинг
+        DefaultCaret caret = (DefaultCaret) animation_status.getCaret();
+        caret.setUpdatePolicy(DefaultCaret.ALWAYS_UPDATE);
+        animation_status.setCaretPosition(animation_status.getDocument().getLength());
         animation_status.setAutoscrolls(true);
         animation_status.setLineWrap(true);
         animation_status.setEditable(false);
