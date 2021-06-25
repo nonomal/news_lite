@@ -161,10 +161,13 @@ public class Gui extends JFrame {
                 int rowIndex = rowAtPoint(p);
                 int colIndex = 2;
                 try {
-                    tip = (String) getValueAt(rowIndex, colIndex);
+                        tip = (String) getValueAt(rowIndex, colIndex);
                 } catch (RuntimeException ignored) {
                 }
-                return tip;
+                assert tip != null;
+                if (tip.length() > 79) {
+                    return tip;
+                } else return null;
             }
         };
         //headers
@@ -421,7 +424,7 @@ public class Gui extends JFrame {
         labelSign.setForeground(new Color(255, 160, 122));
         labelSign.setEnabled(false);
         labelSign.setFont(new Font("Tahoma", Font.BOLD, 11));
-        labelSign.setBounds(734, 529, 57, 14);
+        labelSign.setBounds(730, 525, 57, 14);
         getContentPane().add(labelSign);
         labelSign.addMouseListener(new MouseAdapter() {
             // наведение мышки на письмо
