@@ -161,11 +161,11 @@ public class Gui extends JFrame {
                 int rowIndex = rowAtPoint(p);
                 int colIndex = 2;
                 try {
-                        tip = (String) getValueAt(rowIndex, colIndex);
+                    tip = (String) getValueAt(rowIndex, colIndex);
                 } catch (RuntimeException ignored) {
                 }
                 assert tip != null;
-                if (tip.length() > 79) {
+                if (tip.length() > 80) {
                     return tip;
                 } else return null;
             }
