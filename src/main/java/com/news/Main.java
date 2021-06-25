@@ -54,6 +54,7 @@ public class Main {
         new Gui();
         Common.getSettingsFromFile();
         Gui.newsIntervalCbox.setEnabled(Gui.todayOrNotChbx.getState());
+        Gui.isOnlyLastNews = Gui.filterNewsChbx.getState();
         SQLite.open();
 
         // проверка подключения к интернету
