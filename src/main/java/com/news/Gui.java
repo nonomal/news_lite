@@ -46,7 +46,7 @@ public class Gui extends JFrame {
     static JTable table_for_analysis;
     static DefaultTableModel model;
     static DefaultTableModel model_for_analysis;
-    static TextField textField;
+    static TextField topKeyword;
     static TextField sendEmailTo;
     static TextField jtf_add_to_list;
     static TextField passwordField;
@@ -279,7 +279,7 @@ public class Gui extends JFrame {
                     int col = table_for_analysis.columnAtPoint(new Point(e.getX(), e.getY()));
                     if (col == 1) {
                         //Gui.textField.getText().toLowerCase();
-                        Gui.textField.setText((String) table_for_analysis.getModel().getValueAt(row, 1));
+                        Gui.topKeyword.setText((String) table_for_analysis.getModel().getValueAt(row, 1));
                         searchBtnTop.doClick();
                         wasClickInTableForAnalysis.set(true);
                     }
@@ -289,9 +289,9 @@ public class Gui extends JFrame {
         });
 
         //Keyword field
-        textField = new TextField(find_word);
-        textField.setBounds(87, 9, 99, 21);
-        getContentPane().add(textField);
+        topKeyword = new TextField(find_word);
+        topKeyword.setBounds(87, 9, 99, 21);
+        getContentPane().add(topKeyword);
 
         //Search addNewSource
         searchBtnTop = new JButton("");

@@ -47,7 +47,7 @@ public class Search {
             newsCount = 0;
             Gui.labelSum.setText("" + newsCount);
             Search.isStop.set(false);
-            Gui.find_word = Gui.textField.getText().toLowerCase();
+            Gui.find_word = Gui.topKeyword.getText().toLowerCase();
 
             if (pSearchType.equals("word")) {
             Gui.searchBtnTop.setVisible(false);
@@ -259,7 +259,6 @@ public class Search {
                 DecimalFormat f = new DecimalFormat("##.00");
                 Common.console("status: search completed in " + f.format(searchTime) + " s.");
                 isSearchNow.set(false);
-                Gui.wasClickInTableForAnalysis.set(false);
 
                 isSearchFinished.set(true);
                 Gui.progressBar.setValue(100);
@@ -294,6 +293,7 @@ public class Search {
                 }
 
                 SQLite.deleteDuplicates();
+                Gui.wasClickInTableForAnalysis.set(false);
                 if (pSearchType.equals("word")) Common.console("info: number of news items in the archive = " + SQLite.archiveNewsCount());
                 Main.LOGGER.log(Level.INFO, "search finished");
             } catch (Exception e) {
