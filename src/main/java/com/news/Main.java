@@ -14,14 +14,14 @@ public class Main {
 
     // создание директорий и файлов
     static {
-        File directory = new File(directoryPath);
-        File fav_file = new File(settingsPath);
-        File log_file = new File(logPath);
+        File mainDirectory = new File(directoryPath);
+        //File settingsFile = new File(settingsPath);
+        File logFile = new File(logPath);
 
         try {
-            if (!directory.exists()) directory.mkdirs();
-            if (!fav_file.exists()) fav_file.createNewFile();
-            if (!log_file.exists()) log_file.createNewFile();
+            if (!mainDirectory.exists()) mainDirectory.mkdirs();
+            //if (!settingsFile.exists()) settingsFile.createNewFile();
+            if (!logFile.exists()) logFile.createNewFile();
             // запись лога в файл
             Handler handler = new FileHandler(logPath, true);
             handler.setLevel(Level.ALL);
@@ -38,14 +38,26 @@ public class Main {
             e.printStackTrace();
         }
 
-        // создание файлов SQLite
-        File sqliteIsExists = new File(directoryPath + "sqlite3.exe");
-        if (!sqliteIsExists.exists()) {
+        // создание файлов программы
+        File sqliteExeIsExists = new File(directoryPath + "sqlite3.exe");
+        if (!sqliteExeIsExists.exists()) {
             Common.copyFiles(Main.class.getResource("/sqlite3.exe"), directoryPath + "sqlite3.exe");
+        }
+        File sqliteDllIsExists = new File(directoryPath + "sqlite3.dll");
+        if (!sqliteDllIsExists.exists()) {
             Common.copyFiles(Main.class.getResource("/sqlite3.dll"), directoryPath + "sqlite3.dll");
+        }
+        File sqliteDefIsExists = new File(directoryPath + "sqlite3.def");
+        if (!sqliteDefIsExists.exists()) {
             Common.copyFiles(Main.class.getResource("/sqlite3.def"), directoryPath + "sqlite3.def");
+        }
+        File dbIsExists = new File(directoryPath + "news.db");
+        if (!dbIsExists.exists()) {
             Common.copyFiles(Main.class.getResource("/news.db"), directoryPath + "news.db");
-
+        }
+        File configIsExists = new File(directoryPath + "config.txt");
+        if (!configIsExists.exists()) {
+            Common.copyFiles(Main.class.getResource("/config.txt"), directoryPath + "config.txt");
         }
     }
 
