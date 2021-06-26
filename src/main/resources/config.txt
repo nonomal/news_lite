@@ -1,0 +1,6 @@
+email,enter your email
+interval,8h
+checkbox:todayOrNotChbx,true
+checkbox:checkTitle,true
+checkbox:checkLink,false
+checkbox:filterNewsChbx,false
