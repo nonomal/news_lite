@@ -132,7 +132,7 @@ public class Gui extends JFrame {
             }
 
             // Сортировка
-            final Class[] types_unique = {Integer.class, String.class, String.class, Date.class, String.class};
+            final Class[] types_unique = {Integer.class, String.class, String.class, /*String.date*/ String.class, String.class};
 
             @Override
             public Class getColumnClass(int columnIndex) {

@@ -13,6 +13,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Locale;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 public class Search {
@@ -25,6 +26,7 @@ public class Search {
     static LocalDateTime now = LocalDateTime.now();
     static String today = dtf.format(now);
     static SimpleDateFormat date_format = new SimpleDateFormat("dd.MM.yyyy HH:mm");
+    static SimpleDateFormat dateFormatHoursFirst = new SimpleDateFormat("dd.MMM HH:mm", Locale.ENGLISH);
     static ArrayList<String> dataForEmail = new ArrayList<>();
     static int newsCount = 0;
 
@@ -124,7 +126,7 @@ public class Search {
                                                         newsCount,
                                                         smi_source,
                                                         title,
-                                                        pubDate,
+                                                        dateFormatHoursFirst.format(pubDate),
                                                         link
                                                 };
                                                 Gui.model.addRow(row);
@@ -150,7 +152,7 @@ public class Search {
                                                         newsCount,
                                                         smi_source,
                                                         title,
-                                                        pubDate,
+                                                        dateFormatHoursFirst.format(pubDate),
                                                         link
                                                 };
                                                 Gui.model.addRow(row);
@@ -192,7 +194,7 @@ public class Search {
                                                             newsCount,
                                                             smi_source,
                                                             title,
-                                                            pubDate,
+                                                            dateFormatHoursFirst.format(pubDate),
                                                             link
                                                     };
                                                     Gui.model.addRow(row);
@@ -217,7 +219,7 @@ public class Search {
                                                             newsCount,
                                                             smi_source,
                                                             title,
-                                                            pubDate,
+                                                            dateFormatHoursFirst.format(pubDate),
                                                             link
                                                     };
                                                     Gui.model.addRow(row);
