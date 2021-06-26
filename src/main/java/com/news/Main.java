@@ -15,12 +15,10 @@ public class Main {
     // создание директорий и файлов
     static {
         File mainDirectory = new File(directoryPath);
-        //File settingsFile = new File(settingsPath);
         File logFile = new File(logPath);
 
         try {
             if (!mainDirectory.exists()) mainDirectory.mkdirs();
-            //if (!settingsFile.exists()) settingsFile.createNewFile();
             if (!logFile.exists()) logFile.createNewFile();
             // запись лога в файл
             Handler handler = new FileHandler(logPath, true);

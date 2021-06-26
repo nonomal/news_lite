@@ -15,6 +15,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Objects;
 import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.logging.Level;
 import java.util.stream.Stream;
 
 public class Common {
@@ -233,6 +234,26 @@ public class Common {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    // сохранение состояния окна в config.txt
+    public static void saveState(){
+        // delete old values
+        try {
+            Common.delSettings("interval");
+            Common.delSettings("checkbox");
+            Common.delSettings("email");
+        } catch (IOException io) {
+            io.printStackTrace();
+            Main.LOGGER.log(Level.WARNING, io.getMessage());
+        }
+        // write new values
+        Common.writeToConfig(Gui.sendEmailTo.getText(), "email");
+        Common.writeToConfig(String.valueOf(Gui.newsIntervalCbox.getSelectedItem()), "interval");
+        Common.writeToConfig("todayOrNotChbx", "checkbox");
+        Common.writeToConfig("checkTitle", "checkbox");
+        Common.writeToConfig("checkLink", "checkbox");
+        Common.writeToConfig("filterNewsChbx", "checkbox");
     }
 
     // Считывание ключевых слов при добавлении/удалении в комбобоксе

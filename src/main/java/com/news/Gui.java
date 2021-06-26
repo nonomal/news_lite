@@ -94,26 +94,11 @@ public class Gui extends JFrame {
 
         //Action Listener for EXIT_ON_CLOSE
         addWindowListener(new WindowAdapter() {
+            // закрытие окна
             @Override
             public void windowClosing(WindowEvent e) {
                 Main.LOGGER.log(Level.INFO, "Application closed");
-                // delete old values
-                try {
-                    Common.delSettings("interval");
-                    Common.delSettings("checkbox");
-                    Common.delSettings("email");
-                } catch (IOException io) {
-                    io.printStackTrace();
-                    Main.LOGGER.log(Level.WARNING, io.getMessage());
-                }
-                // write new values
-                Common.writeToConfig(sendEmailTo.getText(), "email");
-                Common.writeToConfig(String.valueOf(newsIntervalCbox.getSelectedItem()), "interval");
-                Common.writeToConfig("todayOrNotChbx", "checkbox");
-                Common.writeToConfig("checkTitle", "checkbox");
-                Common.writeToConfig("checkLink", "checkbox");
-                Common.writeToConfig("filterNewsChbx", "checkbox");
-
+                Common.saveState();
                 if (SQLite.isConnectionToSQLite) SQLite.closeSQLiteConnection();
             }
             // сворачивание в трей
@@ -1016,5 +1001,4 @@ public class Gui extends JFrame {
 
         setVisible(true);
     }
-
 }
