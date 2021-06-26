@@ -3,6 +3,8 @@ package com.news;
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.logging.*;
 
 public class Main {
@@ -11,9 +13,14 @@ public class Main {
     static String settingsPath = directoryPath + "config.txt";
     static String logPath = directoryPath + "log.txt";
     public static final Logger LOGGER = Logger.getLogger("");
+    static Calendar minPubDate = Calendar.getInstance();
 
     // создание директорий и файлов
     static {
+        // Минимальная дата публикации новости 01.01.2021
+        minPubDate.set(Calendar.YEAR, 2021);
+        minPubDate.set(Calendar.DAY_OF_YEAR, 1);
+
         File mainDirectory = new File(directoryPath);
         File logFile = new File(logPath);
 
