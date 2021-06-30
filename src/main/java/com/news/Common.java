@@ -296,7 +296,10 @@ public class Common {
 
     // Сравнение дат для отображения новостей по интервалу (Gui.newsIntervalCbox)
     public static int compareDatesOnly(Date p_now, Date p_in) {
-        int minutes = Common.getInterval();
+        int minutes;
+        if (Main.isConsoleSearch.get()) minutes = Main.minutesIntervalForConsoleSearch;
+        else minutes = Common.getInterval();
+
         Calendar minus = Calendar.getInstance();
         minus.setTime(new Date());
         minus.add(Calendar.MINUTE, -minutes);

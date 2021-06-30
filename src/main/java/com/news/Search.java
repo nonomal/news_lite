@@ -3,6 +3,7 @@ package com.news;
 import com.sun.syndication.feed.synd.SyndContent;
 import com.sun.syndication.feed.synd.SyndEntry;
 import com.sun.syndication.feed.synd.SyndFeed;
+
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -52,8 +53,8 @@ public class Search {
             Gui.find_word = Gui.topKeyword.getText().toLowerCase();
 
             if (pSearchType.equals("word")) {
-            Gui.searchBtnTop.setVisible(false);
-            Gui.stopBtnTop.setVisible(true);
+                Gui.searchBtnTop.setVisible(false);
+                Gui.stopBtnTop.setVisible(true);
             } else if (pSearchType.equals("words")) {
                 Gui.searchBtnBottom.setVisible(false);
                 Gui.stopBtnBottom.setVisible(true);
@@ -110,7 +111,7 @@ public class Search {
                                     if (title.toLowerCase().contains(Gui.find_word.toLowerCase()) && title.length() > 15 && checkDate == 1) {
 
                                         //отсеиваем новости, которые уже были найдены ранее
-                                        if (SQLite.isTitleExists(Common.sha256(title + pubDate))) {
+                                        if (SQLite.isTitleExists(Common.sha256(title + pubDate)) && SQLite.isConnectionToSQLite) {
                                             continue;
                                         }
 
@@ -179,7 +180,7 @@ public class Search {
                                         if (title.toLowerCase().contains(it.toLowerCase()) && title.length() > 15 && checkDate == 1) {
 
                                             // отсеиваем новости которые были обнаружены ранее
-                                            if (SQLite.isTitleExists(Common.sha256(title + pubDate))) {
+                                            if (SQLite.isTitleExists(Common.sha256(title + pubDate)) && SQLite.isConnectionToSQLite) {
                                                 continue;
                                             }
 
@@ -243,7 +244,7 @@ public class Search {
                                 }
                                 if (isStop.get()) return;
                             }
-                            if (!Gui.isOnlyLastNews) SQLite.deleteFrom256();
+                            if (!Gui.isOnlyLastNews && SQLite.isConnectionToSQLite) SQLite.deleteFrom256();
                         } catch (Exception no_rss) {
                             Gui.labelInfo.setText("RssList: " + (char) 34 + Common.smi_link.get(Common.smi_number) + (char) 34 + " is not available");
                         }
@@ -293,17 +294,134 @@ public class Search {
 
                 SQLite.deleteDuplicates();
                 Gui.wasClickInTableForAnalysis.set(false);
-                if (pSearchType.equals("word")) Common.console("info: number of news items in the archive = " + SQLite.archiveNewsCount());
+                if (pSearchType.equals("word"))
+                    Common.console("info: number of news items in the archive = " + SQLite.archiveNewsCount());
             } catch (Exception e) {
                 try {
-                String q_begin = "ROLLBACK";
-                Statement st_begin = SQLite.connection.createStatement();
-                st_begin.executeUpdate(q_begin);
+                    String q_begin = "ROLLBACK";
+                    Statement st_begin = SQLite.connection.createStatement();
+                    st_begin.executeUpdate(q_begin);
                 } catch (SQLException sql) {
                     sql.printStackTrace();
                 }
                 e.printStackTrace();
                 isStop.set(true);
+            }
+        }
+    }
+
+    //Console search
+    public static void searchByConsole() {
+        if (!isSearchNow.get()) {
+            dataForEmail.clear();
+            SQLite.selectSources("smi");
+            isSearchNow.set(true);
+            Search.j = 1;
+            newsCount = 0;
+            isSearchFinished = new AtomicBoolean(false);
+
+            try {
+                // начало транзакции
+                String q_begin = "BEGIN TRANSACTION";
+                Statement st_begin = SQLite.connection.createStatement();
+                st_begin.executeUpdate(q_begin);
+
+                SyndParser parser = new SyndParser();
+                for (Common.smi_number = 0; Common.smi_number < Common.smi_link.size(); Common.smi_number++) {
+                    try {
+                        try {
+                            if (isStop.get()) return;
+                            SyndFeed feed = parser.parseFeed(Common.smi_link.get(Common.smi_number));
+                            for (Object message : feed.getEntries()) {
+                                j++;
+                                SyndEntry entry = (SyndEntry) message;
+                                SyndContent content = entry.getDescription();
+                                String smi_source = Common.smi_source.get(Common.smi_number);
+                                String title = entry.getTitle();
+                                assert content != null;
+                                String newsDescribe = content.getValue()
+                                        .trim()
+                                        .replace("<p>", "")
+                                        .replace("</p>", "")
+                                        .replace("<br />", "");
+                                if (newsDescribe.contains("<img")
+                                        || newsDescribe.contains("href")
+                                        || newsDescribe.contains("<div")
+                                        || newsDescribe.contains("&#34")
+                                        || newsDescribe.contains("<p lang")
+                                        || newsDescribe.contains("&quot")
+                                        || newsDescribe.contains("<span")
+                                        || newsDescribe.contains("<ol")
+                                        || newsDescribe.equals("")
+                                ) newsDescribe = title;
+                                Date pubDate = entry.getPublishedDate();
+                                String dateToEmail = date_format.format(pubDate);
+                                String link = entry.getLink();
+
+                                // отсеиваем новости ранее 01.01.2021
+                                if (pubDate.after(minDate)) checkDate = 1;
+                                else checkDate = 0;
+
+                                for (String it : Main.keywordsFromConsole) {
+                                    if (title.toLowerCase().contains(it.toLowerCase()) && title.length() > 15 && checkDate == 1) {
+
+                                        // отсеиваем новости которые были обнаружены ранее
+                                        if (SQLite.isTitleExists(Common.sha256(title + pubDate)) && SQLite.isConnectionToSQLite) {
+                                            continue;
+                                        }
+
+                                        //Data for a table
+                                        Date curentDate = new Date();
+                                        int date_diff = Common.compareDatesOnly(curentDate, pubDate);
+
+                                        if (date_diff != 0) { // если новость between Main.minutesIntervalForConsoleSearch and currentDate
+                                            newsCount++;
+                                            dataForEmail.add(newsCount + ") " + title + "\n" + link + "\n" + newsDescribe + "\n" +
+                                                    smi_source + " - " + dateToEmail);
+                                            /**/
+                                            System.out.println(newsCount + ") " + title);
+                                            /**/
+                                            SQLite.insertTitleIn256(Common.sha256(title + pubDate));
+                                        }
+                                    }
+                                }
+                            }
+                            // удалять новости, чтобы были вообще все, даже те, которые уже были обнаружены
+                            //SQLite.deleteFrom256();
+                        } catch (Exception ignored) {
+                        }
+                    } catch (Exception ignored) {
+                    }
+                }
+                isSearchNow.set(false);
+                isSearchFinished.set(true);
+
+                // коммитим транзакцию
+                String q_commit = "COMMIT";
+                Statement st_commit = SQLite.connection.createStatement();
+                st_commit.executeUpdate(q_commit);
+
+                // удаляем все пустые строки
+                String q_del = "delete from news_dual where title = ''";
+                Statement st_del = SQLite.connection.createStatement();
+                st_del.executeUpdate(q_del);
+
+                // Автоматическая отправка результатов
+//                if (Gui.autoSendMessage.getState() && (Gui.model.getRowCount() > 0)) {
+//                    Gui.sendEmailBtn.doClick();
+//                }
+                SQLite.deleteDuplicates();
+                Gui.wasClickInTableForAnalysis.set(false);
+
+            } catch (Exception e) {
+                try {
+                    String q_begin = "ROLLBACK";
+                    Statement st_begin = SQLite.connection.createStatement();
+                    st_begin.executeUpdate(q_begin);
+                } catch (SQLException sql) {
+                    sql.printStackTrace();
+                }
+                e.printStackTrace();
             }
         }
     }

@@ -3,8 +3,9 @@ package com.news;
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import java.util.Calendar;
-import java.util.Date;
+import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.logging.*;
 
 public class Main {
@@ -14,6 +15,10 @@ public class Main {
     static String logPath = directoryPath + "log.txt";
     public static final Logger LOGGER = Logger.getLogger("");
     static Calendar minPubDate = Calendar.getInstance();
+    // Console search
+    static String[] keywordsFromConsole;
+    static int minutesIntervalForConsoleSearch = 60;
+    static AtomicBoolean isConsoleSearch = new AtomicBoolean(false);
 
     // создание директорий и файлов
     static {
@@ -67,12 +72,23 @@ public class Main {
     }
 
     public static void main(String[] args) throws IOException {
-        LOGGER.log(Level.INFO, "Application started");
-        new Gui();
-        Common.getSettingsFromFile();
-        Gui.newsIntervalCbox.setEnabled(Gui.todayOrNotChbx.getState());
-        Gui.isOnlyLastNews = Gui.filterNewsChbx.getState();
-        SQLite.open();
+        keywordsFromConsole = new String[args.length];
+        if (args.length == 0 ) {
+            LOGGER.log(Level.INFO, "Application started");
+            new Gui();
+            Common.getSettingsFromFile();
+            Gui.newsIntervalCbox.setEnabled(Gui.todayOrNotChbx.getState());
+            Gui.isOnlyLastNews = Gui.filterNewsChbx.getState();
+            SQLite.openSQLiteConnection();
+        } else {
+            // Console search
+            isConsoleSearch.set(true);
+            SQLite.openSQLiteConnection();
+            System.arraycopy(args, 0, keywordsFromConsole, 0, args.length);
+            System.out.println(Arrays.toString(keywordsFromConsole));
+            Search.searchByConsole();
+            SQLite.closeSQLiteConnection();
+        }
 
         // проверка подключения к интернету
         if (!InternetAvailabilityChecker.isInternetAvailable()) {

@@ -10,14 +10,14 @@ class SQLite {
     static int wordFreqMatches = 2;
 
     // Открытие соединения с базой данных
-    static void open() {
+    static void openSQLiteConnection() {
         try {
             Class.forName("org.sqlite.JDBC");
             connection = DriverManager.getConnection("jdbc:sqlite:" + Main.directoryPath + "news.db");
             isConnectionToSQLite = true;
             Main.LOGGER.log(Level.INFO, "Connected");
             Thread.sleep(1000L);
-            Gui.connect_to_bd_label.setText("<html><p style=\"color:#a4f5a4\">Connected to SQLite for word frequency analysis</p></html>");
+            if (!Main.isConsoleSearch.get()) Gui.connect_to_bd_label.setText("<html><p style=\"color:#a4f5a4\">Connected to SQLite for word frequency analysis</p></html>");
         } catch (Exception e) {
             e.printStackTrace();
             Main.LOGGER.log(Level.WARNING, e.getMessage());
@@ -336,7 +336,10 @@ class SQLite {
     // закрытие соединения с SQLite
     static void closeSQLiteConnection() {
         try {
-            if (isConnectionToSQLite) connection.close();
+            if (isConnectionToSQLite) {
+                connection.close();
+                Main.LOGGER.log(Level.INFO, "Connection closed");
+            }
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }

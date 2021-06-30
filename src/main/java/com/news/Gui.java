@@ -97,6 +97,7 @@ public class Gui extends JFrame {
             // закрытие окна
             @Override
             public void windowClosing(WindowEvent e) {
+                SQLite.isConnectionToSQLite = false;
                 Main.LOGGER.log(Level.INFO, "Application closed");
                 Common.saveState();
                 if (SQLite.isConnectionToSQLite) SQLite.closeSQLiteConnection();
