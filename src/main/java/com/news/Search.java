@@ -12,6 +12,7 @@ import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.Locale;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -362,8 +363,9 @@ public class Search {
                                 else checkDate = 0;
 
                                 for (String it : Main.keywordsFromConsole) {
-                                    if (title.toLowerCase().contains(it.toLowerCase()) && title.length() > 15 && checkDate == 1) {
+                                    if (it.equals(Main.keywordsFromConsole[0]) || it.equals(Main.keywordsFromConsole[1])) continue;
 
+                                    if (title.toLowerCase().contains(it.toLowerCase()) && title.length() > 15 && checkDate == 1) {
                                         // отсеиваем новости которые были обнаружены ранее
                                         if (SQLite.isTitleExists(Common.sha256(title + pubDate)) && SQLite.isConnectionToSQLite) {
                                             continue;
@@ -407,7 +409,6 @@ public class Search {
                 // Автоматическая отправка результатов
                 if (dataForEmail.size() > 0) {
                     Common.isSending.set(false);
-                    System.out.println(111);
                     EmailSender.sendMessage();
                 }
                 SQLite.deleteDuplicates();

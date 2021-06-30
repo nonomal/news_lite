@@ -83,36 +83,36 @@ public class EmailSender {
     }
 
     public static void sendMailFromConsole(String text) {
-        Properties p = new Properties();
-        p.put("mail.smtp.host", "smtp.gmail.com");
-        p.put("mail.smtp.socketFactory.port", 465);
-        p.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
-        p.put("mail.smtp.auth", "true");
-        p.put("mail.smtp.port", 465);
-        String pass = Gui.rss + "007";
-
-        Session session = Session.getInstance(p, new javax.mail.Authenticator() {
-                    protected PasswordAuthentication getPasswordAuthentication() {
-                        return new PasswordAuthentication(from, pass);
-                    }
-                }
-        );
-
         try {
+            Properties p = new Properties();
+            p.put("mail.smtp.host", "smtp.gmail.com");
+            p.put("mail.smtp.socketFactory.port", 465);
+            p.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
+            p.put("mail.smtp.auth", "true");
+            p.put("mail.smtp.port", 465);
+
+            String pass = Gui.rss + "007";
+            Session session = Session.getInstance(p, new javax.mail.Authenticator() {
+                protected PasswordAuthentication getPasswordAuthentication() {
+                    return new PasswordAuthentication(from, pass);
+                }
+            });
+
             MimeMessage message = new MimeMessage(session);
             message.setFrom(new InternetAddress(from));
             message.addRecipient(Message.RecipientType.TO, new InternetAddress(Main.emailToFromConsole));
             message.setSubject(subject);
 
             //Mail body
-            System.out.println("text = " + text.length());
             message.setText(text);
+
+            System.out.println(Main.emailToFromConsole + " " + from + " " + pass + " text = " + text.length() + " message = " + message);
 
             //Send message
             Transport.send(message);
             Main.LOGGER.log(Level.INFO, "Email has been sent");
-        } catch (MessagingException mex) {
-            mex.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 }

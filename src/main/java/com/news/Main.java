@@ -16,10 +16,10 @@ public class Main {
     public static final Logger LOGGER = Logger.getLogger("");
     static Calendar minPubDate = Calendar.getInstance();
     // Console search
-    static String[] keywordsFromConsole;
-    static int minutesIntervalForConsoleSearch = 60;
     static AtomicBoolean isConsoleSearch = new AtomicBoolean(false);
-    static String emailToFromConsole = "rps_project@mail.ru";
+    static String emailToFromConsole; //= "rps_project@mail.ru"
+    static int minutesIntervalForConsoleSearch; //60
+    static String[] keywordsFromConsole;
 
     // создание директорий и файлов
     static {
@@ -72,7 +72,7 @@ public class Main {
         }
     }
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws IOException { //args1 = email, args2 = interval, args3 = keyword1,.., argsN = keywordN
         keywordsFromConsole = new String[args.length];
         if (args.length == 0 ) {
             LOGGER.log(Level.INFO, "Application started");
@@ -84,6 +84,8 @@ public class Main {
         } else {
             // Console search
             isConsoleSearch.set(true);
+            emailToFromConsole = args[0];
+            minutesIntervalForConsoleSearch = Integer.parseInt(args[1]);
             SQLite.openSQLiteConnection();
             System.arraycopy(args, 0, keywordsFromConsole, 0, args.length);
             System.out.println(Arrays.toString(keywordsFromConsole)); //***
