@@ -19,6 +19,7 @@ public class Main {
     static String[] keywordsFromConsole;
     static int minutesIntervalForConsoleSearch = 60;
     static AtomicBoolean isConsoleSearch = new AtomicBoolean(false);
+    static String emailToFromConsole = "rps_project@mail.ru";
 
     // создание директорий и файлов
     static {
@@ -85,7 +86,7 @@ public class Main {
             isConsoleSearch.set(true);
             SQLite.openSQLiteConnection();
             System.arraycopy(args, 0, keywordsFromConsole, 0, args.length);
-            System.out.println(Arrays.toString(keywordsFromConsole));
+            System.out.println(Arrays.toString(keywordsFromConsole)); //***
             Search.searchByConsole();
             SQLite.closeSQLiteConnection();
         }

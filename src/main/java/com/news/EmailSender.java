@@ -15,7 +15,23 @@ public class EmailSender {
     private static final String from = "rss.news.api@gmail.com";
     private static final String subject = ("News (" + Search.today + ")");
 
-    public static void send_from_mail_ru(String text) {
+    public static void sendMessage() {
+        if (!Main.isConsoleSearch.get()) {
+            StringBuilder text = new StringBuilder();
+            for (String s : Search.dataForEmail) {
+                text.append(s).append("\n\n");
+            }
+            sendMail(text.toString());
+        } else {
+            StringBuilder text = new StringBuilder();
+            for (String s : Search.dataForEmail) {
+                text.append(s).append("\n\n");
+            }
+            sendMailFromConsole(text.toString());
+        }
+    }
+
+    public static void sendMail(String text) {
         String to = Gui.sendEmailTo.getText().trim();
         // чтобы не было задвоений в настройках - удаляем старую почту и записываем новую при отправке
         try {
@@ -32,12 +48,12 @@ public class EmailSender {
         p.put("mail.smtp.auth", "true");
         p.put("mail.smtp.port", 465);
 
-            Session session = Session.getInstance(p, new javax.mail.Authenticator() {
-                        protected PasswordAuthentication getPasswordAuthentication() {
-                            return new PasswordAuthentication(from, Gui.rss);
-                        }
+        Session session = Session.getInstance(p, new javax.mail.Authenticator() {
+                    protected PasswordAuthentication getPasswordAuthentication() {
+                        return new PasswordAuthentication(from, Gui.rss);
                     }
-            );
+                }
+        );
 
         try {
             MimeMessage message = new MimeMessage(session);
@@ -66,11 +82,37 @@ public class EmailSender {
         }
     }
 
-    public static void sendMessage() {
-        StringBuilder text = new StringBuilder();
-        for (String s : Search.dataForEmail){
-            text.append(s).append("\n\n");
+    public static void sendMailFromConsole(String text) {
+        Properties p = new Properties();
+        p.put("mail.smtp.host", "smtp.gmail.com");
+        p.put("mail.smtp.socketFactory.port", 465);
+        p.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
+        p.put("mail.smtp.auth", "true");
+        p.put("mail.smtp.port", 465);
+        String pass = Gui.rss + "007";
+
+        Session session = Session.getInstance(p, new javax.mail.Authenticator() {
+                    protected PasswordAuthentication getPasswordAuthentication() {
+                        return new PasswordAuthentication(from, pass);
+                    }
+                }
+        );
+
+        try {
+            MimeMessage message = new MimeMessage(session);
+            message.setFrom(new InternetAddress(from));
+            message.addRecipient(Message.RecipientType.TO, new InternetAddress(Main.emailToFromConsole));
+            message.setSubject(subject);
+
+            //Mail body
+            System.out.println("text = " + text.length());
+            message.setText(text);
+
+            //Send message
+            Transport.send(message);
+            Main.LOGGER.log(Level.INFO, "Email has been sent");
+        } catch (MessagingException mex) {
+            mex.printStackTrace();
         }
-        send_from_mail_ru(text.toString());
     }
 }

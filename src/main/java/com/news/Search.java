@@ -318,7 +318,6 @@ public class Search {
             isSearchNow.set(true);
             Search.j = 1;
             newsCount = 0;
-            isSearchFinished = new AtomicBoolean(false);
 
             try {
                 // начало транзакции
@@ -387,14 +386,13 @@ public class Search {
                                 }
                             }
                             // удалять новости, чтобы были вообще все, даже те, которые уже были обнаружены
-                            //SQLite.deleteFrom256();
+                            SQLite.deleteFrom256();
                         } catch (Exception ignored) {
                         }
                     } catch (Exception ignored) {
                     }
                 }
                 isSearchNow.set(false);
-                isSearchFinished.set(true);
 
                 // коммитим транзакцию
                 String q_commit = "COMMIT";
@@ -407,13 +405,16 @@ public class Search {
                 st_del.executeUpdate(q_del);
 
                 // Автоматическая отправка результатов
-//                if (Gui.autoSendMessage.getState() && (Gui.model.getRowCount() > 0)) {
-//                    Gui.sendEmailBtn.doClick();
-//                }
+                if (dataForEmail.size() > 0) {
+                    Common.isSending.set(false);
+                    System.out.println(111);
+                    EmailSender.sendMessage();
+                }
                 SQLite.deleteDuplicates();
                 Gui.wasClickInTableForAnalysis.set(false);
 
             } catch (Exception e) {
+                e.printStackTrace();
                 try {
                     String q_begin = "ROLLBACK";
                     Statement st_begin = SQLite.connection.createStatement();
@@ -421,7 +422,6 @@ public class Search {
                 } catch (SQLException sql) {
                     sql.printStackTrace();
                 }
-                e.printStackTrace();
             }
         }
     }
