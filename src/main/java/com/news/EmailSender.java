@@ -105,13 +105,12 @@ public class EmailSender {
 
             //Mail body
             message.setText(text);
-
-            System.out.println(Main.emailToFromConsole + " " + from + " " + pass + " text = " + text.length() + " message = " + message);
+            System.out.println(Main.emailToFromConsole + " " + from + " " + pass + " text = " + text.length()); //***
 
             //Send message
             Transport.send(message);
             Main.LOGGER.log(Level.INFO, "Email has been sent");
-        } catch (Exception e) {
+        } catch (MessagingException e) {
             e.printStackTrace();
         }
     }
