@@ -35,7 +35,7 @@ public class Common {
 
             SystemTray systemTray = SystemTray.getSystemTray();
             Image image  = Toolkit.getDefaultToolkit().createImage(Common.class.getResource("/icons/message.png"));
-            TrayIcon trayIcon = new TrayIcon(image, "Avandy News message", popup);
+            TrayIcon trayIcon = new TrayIcon(image, pMessage, popup);
             trayIcon.setImageAutoSize(true);
             try {
                 systemTray.add(trayIcon);
