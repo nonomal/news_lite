@@ -32,7 +32,6 @@ public class Search {
     static Date minDate = Main.minPubDate.getTime();
     static int checkDate;
 
-
     //Main search
     public static void mainSearch(String pSearchType) {
         if (!isSearchNow.get()) {
@@ -46,7 +45,7 @@ public class Search {
             //Common.text = "";
             Gui.labelInfo.setText("");
             Search.j = 1;
-            Gui.model.setRowCount(0);
+            if (!Gui.guiInTray.get()) Gui.model.setRowCount(0);
             if (!Gui.wasClickInTableForAnalysis.get()) Gui.model_for_analysis.setRowCount(0);
             newsCount = 0;
             Gui.labelSum.setText("" + newsCount);

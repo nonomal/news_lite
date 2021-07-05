@@ -9,7 +9,6 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.Date;
 import java.util.Objects;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -109,6 +108,11 @@ public class Gui extends JFrame {
                 guiInTray.set(true);
                 setVisible(false);
             }
+            // разворачивание из трея
+            public void windowDeiconified(WindowEvent pEvent) {
+                guiInTray.set(false);
+            }
+
         });
 
         //Input keyword
