@@ -81,6 +81,7 @@ public class Gui extends JFrame {
     static Timer timer;
     static TimerTask timerTask;
     static AtomicBoolean wasClickInTableForAnalysis = new AtomicBoolean(false);
+    static AtomicBoolean guiInTray = new AtomicBoolean(false);
 
     public Gui() {
         setResizable(false);
@@ -105,6 +106,7 @@ public class Gui extends JFrame {
             // сворачивание в трей
             @Override
             public void windowIconified(WindowEvent pEvent) {
+                guiInTray.set(true);
                 setVisible(false);
             }
         });

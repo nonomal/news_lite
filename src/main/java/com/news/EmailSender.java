@@ -102,13 +102,11 @@ public class EmailSender {
             message.setFrom(new InternetAddress(from));
             message.addRecipient(Message.RecipientType.TO, new InternetAddress(Main.emailToFromConsole));
             message.setSubject(subject);
-
             //Mail body
             message.setText(text);
-            System.out.println(Main.emailToFromConsole + " " + from + " " + pass + " text = " + text.length()); //***
-
             //Send message
             Transport.send(message);
+
             Main.LOGGER.log(Level.INFO, "Email has been sent");
         } catch (MessagingException e) {
             e.printStackTrace();

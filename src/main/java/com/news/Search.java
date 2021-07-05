@@ -176,6 +176,7 @@ public class Search {
                                         }
                                     }
                                 } else if (pSearchType.equals("words")) {
+                                    int modelRowCount = Gui.model.getRowCount();
                                     for (String it : Common.getKeywordsFromFile()) {
                                         if (title.toLowerCase().contains(it.toLowerCase()) && title.length() > 15 && checkDate == 1) {
 
@@ -265,6 +266,10 @@ public class Search {
                 Gui.table.setAutoCreateRowSorter(true);
                 Gui.table_for_analysis.setAutoCreateRowSorter(true);
                 Gui.search_animation.setText("total news: ");
+
+                // итоги в трей
+                if (newsCount > 0 && Gui.guiInTray.get())
+                    Common.trayMessage("News found: " + newsCount);
 
                 if (pSearchType.equals("word")) {
                     Gui.searchBtnTop.setVisible(true);

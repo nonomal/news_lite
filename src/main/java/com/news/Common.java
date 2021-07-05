@@ -27,6 +27,28 @@ public class Common {
     static ArrayList<Boolean> smi_is_active = new ArrayList<>();
     static ArrayList<String> excludedWords = new ArrayList<>();
 
+    // Уведомление в трее
+    static void trayMessage(String pMessage){
+        if (SystemTray.isSupported()) {
+            PopupMenu popup = new PopupMenu();
+            MenuItem exitItem = new MenuItem("Close");
+
+            SystemTray systemTray = SystemTray.getSystemTray();
+            Image image  = Toolkit.getDefaultToolkit().createImage(Common.class.getResource("/icons/message.png"));
+            TrayIcon trayIcon = new TrayIcon(image, "Avandy News message", popup);
+            trayIcon.setImageAutoSize(true);
+            try {
+                systemTray.add(trayIcon);
+            } catch (AWTException e) {
+                e.printStackTrace();
+            }
+            trayIcon.displayMessage("Avandy News", pMessage, TrayIcon.MessageType.INFO);
+            //systemTray.remove(trayIcon);
+            exitItem.addActionListener(e -> systemTray.remove(trayIcon));
+            popup.add(exitItem);
+        }
+    }
+
     // Запись конфигураций приложения
     static void writeToConfig(String p_word, String p_type) {
         try (OutputStreamWriter writer = new OutputStreamWriter(new FileOutputStream(Main.settingsPath, true), StandardCharsets.UTF_8)) {
