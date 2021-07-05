@@ -306,10 +306,9 @@ public class Search {
                     String q_begin = "ROLLBACK";
                     Statement st_begin = SQLite.connection.createStatement();
                     st_begin.executeUpdate(q_begin);
-                } catch (SQLException sql) {
-                    sql.printStackTrace();
+                } catch (SQLException ignored) {
                 }
-                e.printStackTrace();
+                //e.printStackTrace();
                 isStop.set(true);
             }
         }

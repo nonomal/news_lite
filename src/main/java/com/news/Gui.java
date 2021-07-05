@@ -328,8 +328,7 @@ public class Gui extends JFrame {
                     String q_begin = "ROLLBACK";
                     Statement st_begin = SQLite.connection.createStatement();
                     st_begin.executeUpdate(q_begin);
-                } catch (SQLException sql) {
-                    sql.printStackTrace();
+                } catch (SQLException ignored) {
                 }
             } catch (Exception t) {
                 Common.console("status: there is no threads to stop");
@@ -355,8 +354,7 @@ public class Gui extends JFrame {
                     String q_begin = "ROLLBACK";
                     Statement st_begin = SQLite.connection.createStatement();
                     st_begin.executeUpdate(q_begin);
-                } catch (SQLException sql) {
-                    sql.printStackTrace();
+                } catch (SQLException ignored) {
                 }
             } catch (Exception t) {
                 Common.console("status: there is no threads to stop");
@@ -731,7 +729,11 @@ public class Gui extends JFrame {
                 stopBtnTop.setBounds(453, 8, 32, 23);
                 exportBtn.setBounds(492, 8, 32, 23);
                 clearBtnTop.setBounds(532, 8, 32, 23);
-                stopBtnTop.doClick();
+                try {
+                    stopBtnTop.doClick();
+                } catch (Exception ignored){
+
+                }
             }
         });
 
