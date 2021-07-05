@@ -100,8 +100,8 @@ public class Common {
     }
 
     // Запись интервалов в комбобокс
-    static void addIntervalsToCombobox(JComboBox<String> p_cbx_name, String[] p_items) {
-        for (String p_item : p_items) {
+    static void addIntervalsToCombobox(JComboBox<String> p_cbx_name) {
+        for (String p_item : Gui.intervals) {
             p_cbx_name.addItem(p_item);
         }
     }

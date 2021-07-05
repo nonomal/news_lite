@@ -22,7 +22,7 @@ import javax.swing.text.DefaultCaret;
 
 public class Gui extends JFrame {
     private final long autoStartTimer = 30000L; // 30 секунд
-    private static final String[] intervals = {"1 min", "5 min", "15 min", "30 min", "45 min", "1 hour", "2 hours", "4 hours", "8 hours", "12 hours", "24 hours", "48 hours"};
+    static final String[] intervals = {"1 min", "5 min", "15 min", "30 min", "45 min", "1 hour", "2 hours", "4 hours", "8 hours", "12 hours", "24 hours", "48 hours"};
     static ImageIcon logo_ico = new ImageIcon(Toolkit.getDefaultToolkit().createImage(Gui.class.getResource("/icons/logo.png")));
     static ImageIcon send = new ImageIcon(Toolkit.getDefaultToolkit().createImage(Gui.class.getResource("/icons/send.png")));
     static ImageIcon send2 = new ImageIcon(Toolkit.getDefaultToolkit().createImage(Gui.class.getResource("/icons/send2.png")));
@@ -112,7 +112,6 @@ public class Gui extends JFrame {
             public void windowDeiconified(WindowEvent pEvent) {
                 guiInTray.set(false);
             }
-
         });
 
         //Input keyword
@@ -677,7 +676,7 @@ public class Gui extends JFrame {
         newsIntervalCbox.setBounds(291, 10, 75, 20);
         getContentPane().add(newsIntervalCbox);
         // запись интервалов в комбобокс
-        Common.addIntervalsToCombobox(newsIntervalCbox, intervals);
+        Common.addIntervalsToCombobox(newsIntervalCbox);
 
         // Автозапуск поиска по слову каждые 30 секунд
         autoUpdateNewsTop = new Checkbox("auto update");
