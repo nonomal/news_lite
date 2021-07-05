@@ -5,10 +5,11 @@ import java.util.TimerTask;
 class MyTimerTask extends TimerTask {
     @Override
     public void run() {
+        Search search = new Search();
         if (Gui.autoUpdateNewsTop.getState()) {
-            Search.mainSearch("word");
+            search.mainSearch("word");
         } else if (Gui.autoUpdateNewsBottom.getState()) {
-            Search.mainSearch("words");
+            search.mainSearch("words");
         }
     }
 }

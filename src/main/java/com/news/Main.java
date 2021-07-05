@@ -90,7 +90,8 @@ public class Main {
             sqlite.openSQLiteConnection();
             System.arraycopy(args, 0, keywordsFromConsole, 0, args.length);
             System.out.println(Arrays.toString(keywordsFromConsole)); //***
-            Search.searchByConsole();
+            Search search = new Search();
+            search.searchByConsole();
             sqlite.closeSQLiteConnection();
         }
 

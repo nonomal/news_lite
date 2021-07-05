@@ -33,17 +33,16 @@ public class Search {
     static int checkDate;
 
     //Main search
-    public static void mainSearch(String pSearchType) {
+    void mainSearch(String pSearchType) {
         SQLite sqlite = new SQLite();
         if (!isSearchNow.get()) {
             int modelRowCount = Gui.model.getRowCount();
             dataForEmail.clear();
-            Common.console("status: search started");
+            if (!Gui.guiInTray.get()) Common.console("status: search started");
             //выборка актуальных источников перед поиском из БД
             sqlite.selectSources("smi");
             isSearchNow.set(true);
             Gui.timeStart = System.currentTimeMillis();
-            //Common.text = "";
             Gui.labelInfo.setText("");
             Search.j = 1;
             if (!Gui.guiInTray.get()) Gui.model.setRowCount(0);
@@ -260,7 +259,7 @@ public class Search {
                 Gui.timeEnd = System.currentTimeMillis();
                 searchTime = (Gui.timeEnd - Gui.timeStart) / 1000;
                 DecimalFormat f = new DecimalFormat("##.00");
-                Common.console("status: search completed in " + f.format(searchTime) + " s.");
+                if (!Gui.guiInTray.get()) Common.console("status: search completed in " + f.format(searchTime) + " s.");
                 isSearchNow.set(false);
 
                 isSearchFinished.set(true);
@@ -270,7 +269,7 @@ public class Search {
                 Gui.search_animation.setText("total news: ");
 
                 // итоги в трей
-                if (newsCount > modelRowCount && Gui.guiInTray.get())
+                if (newsCount != 0 && newsCount != modelRowCount && Gui.guiInTray.get())
                     Common.trayMessage("News found: " + newsCount);
 
                 if (pSearchType.equals("word")) {
@@ -319,7 +318,7 @@ public class Search {
     }
 
     //Console search
-    public static void searchByConsole() {
+    void searchByConsole() {
         SQLite sqlite = new SQLite();
         if (!isSearchNow.get()) {
             dataForEmail.clear();

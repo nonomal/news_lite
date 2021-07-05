@@ -22,6 +22,7 @@ import javax.swing.text.DefaultCaret;
 
 public class Gui extends JFrame {
     SQLite sqlite = new SQLite();
+    Search search = new Search();
     ExportToExcel exp = new ExportToExcel();
     private final long autoStartTimer = 30000L; // 30 секунд
     static final String[] intervals = {"1 min", "5 min", "15 min", "30 min", "45 min", "1 hour", "2 hours", "4 hours", "8 hours", "12 hours", "24 hours", "48 hours"};
@@ -303,7 +304,7 @@ public class Gui extends JFrame {
         searchBtnTop.requestFocus();
         searchBtnTop.doClick();
         //searchBtnTop.addActionListener(e -> new Thread(Search::mainSearch).start());
-        searchBtnTop.addActionListener(e -> new Thread(() -> Search.mainSearch("word")).start());
+        searchBtnTop.addActionListener(e -> new Thread(() -> search.mainSearch("word")).start());
 
         //Bottom search by keywords
         searchBtnBottom = new JButton("");
@@ -312,7 +313,7 @@ public class Gui extends JFrame {
         searchBtnBottom.setBackground(new Color(154, 237, 196));
         searchBtnBottom.setBounds(546, 490, 32, 23);
         //searchBtnBottom.addActionListener(e -> new Thread(Search::keywordsSearch).start());
-        searchBtnBottom.addActionListener(e -> new Thread(() -> Search.mainSearch("words")).start());
+        searchBtnBottom.addActionListener(e -> new Thread(() -> search.mainSearch("words")).start());
         getContentPane().add(searchBtnBottom);
 
         //Stop addNewSource
