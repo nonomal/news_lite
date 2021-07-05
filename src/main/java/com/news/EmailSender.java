@@ -15,7 +15,7 @@ public class EmailSender {
     private static final String from = "rss.news.api@gmail.com";
     private static final String subject = ("News (" + Search.today + ")");
 
-    public static void sendMessage() {
+    void sendMessage() {
         if (!Main.isConsoleSearch.get()) {
             StringBuilder text = new StringBuilder();
             for (String s : Search.dataForEmail) {
@@ -31,7 +31,7 @@ public class EmailSender {
         }
     }
 
-    public static void sendMail(String text) {
+    void sendMail(String text) {
         String to = Gui.sendEmailTo.getText().trim();
         // чтобы не было задвоений в настройках - удаляем старую почту и записываем новую при отправке
         try {

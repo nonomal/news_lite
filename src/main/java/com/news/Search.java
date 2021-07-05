@@ -417,7 +417,8 @@ public class Search {
                 // Автоматическая отправка результатов
                 if (dataForEmail.size() > 0) {
                     Common.isSending.set(false);
-                    EmailSender.sendMessage();
+                    EmailSender email = new EmailSender();
+                    email.sendMessage();
                 }
                 sqlite.deleteDuplicates();
                 Gui.wasClickInTableForAnalysis.set(false);

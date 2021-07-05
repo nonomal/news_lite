@@ -22,6 +22,7 @@ import javax.swing.text.DefaultCaret;
 
 public class Gui extends JFrame {
     SQLite sqlite = new SQLite();
+    ExportToExcel exp = new ExportToExcel();
     private final long autoStartTimer = 30000L; // 30 секунд
     static final String[] intervals = {"1 min", "5 min", "15 min", "30 min", "45 min", "1 hour", "2 hours", "4 hours", "8 hours", "12 hours", "24 hours", "48 hours"};
     static ImageIcon logo_ico = new ImageIcon(Toolkit.getDefaultToolkit().createImage(Gui.class.getResource("/icons/logo.png")));
@@ -98,10 +99,10 @@ public class Gui extends JFrame {
             // закрытие окна
             @Override
             public void windowClosing(WindowEvent e) {
-                sqlite.isConnectionToSQLite = false;
+                SQLite.isConnectionToSQLite = false;
                 Main.LOGGER.log(Level.INFO, "Application closed");
                 Common.saveState();
-                if (sqlite.isConnectionToSQLite) sqlite.closeSQLiteConnection();
+                if (SQLite.isConnectionToSQLite) sqlite.closeSQLiteConnection();
             }
             // сворачивание в трей
             @Override
@@ -330,7 +331,7 @@ public class Gui extends JFrame {
                 Search.isSearchNow.set(false);
                 try {
                     String q_begin = "ROLLBACK";
-                    Statement st_begin = sqlite.connection.createStatement();
+                    Statement st_begin = SQLite.connection.createStatement();
                     st_begin.executeUpdate(q_begin);
                 } catch (SQLException ignored) {
                 }
@@ -356,7 +357,7 @@ public class Gui extends JFrame {
                 Search.isSearchNow.set(false);
                 try {
                     String q_begin = "ROLLBACK";
-                    Statement st_begin = sqlite.connection.createStatement();
+                    Statement st_begin = SQLite.connection.createStatement();
                     st_begin.executeUpdate(q_begin);
                 } catch (SQLException ignored) {
                 }
@@ -505,7 +506,8 @@ public class Gui extends JFrame {
                 Common.isSending.set(false);
                 Common.statusLabel(Common.isSending, "sending");
                 new Thread(Common::fill).start();
-                new Thread(EmailSender::sendMessage).start();
+                EmailSender email = new EmailSender();
+                new Thread(email::sendMessage).start();
             }
         });
 
@@ -545,7 +547,7 @@ public class Gui extends JFrame {
         exportBtn.setBounds(492, 8, 32, 23);
         exportBtn.addActionListener(e -> {
             if (model.getRowCount() != 0) {
-                new Thread(ExportToExcel::export_from_RSS_to_excel).start();
+                new Thread(exp::export_from_RSS_to_excel).start();
                 Common.console("status: export");
             } else {
                 Common.console("status: there is no data to export");
