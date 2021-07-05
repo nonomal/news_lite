@@ -57,12 +57,14 @@ public class Common {
                     String text = "keyword," + p_word + "\n";
                     writer.write(text);
                     writer.flush();
+                    writer.close();
                     break;
                 }
                 case "email": {
                     String text = "email," + p_word;
                     writer.write(text.trim() + "\n");
                     writer.flush();
+                    writer.close();
                     break;
                 }
                 case "interval": {
@@ -71,6 +73,7 @@ public class Common {
                             .replace(" min", "m");
                     writer.write(text + "\n");
                     writer.flush();
+                    writer.close();
                     break;
                 }
                 case "checkbox": {
@@ -91,6 +94,7 @@ public class Common {
                     }
                     if (text != null) writer.write(text);
                     writer.flush();
+                    writer.close();
                     break;
                 }
             }
@@ -345,7 +349,6 @@ public class Common {
                     Dialogs.model.addRow(row);
                     i++;
                 }
-
                 break;
             }
             case "log":
@@ -410,13 +413,11 @@ public class Common {
             MessageDigest digest = MessageDigest.getInstance("SHA-256");
             byte[] hash = digest.digest(base.getBytes(StandardCharsets.UTF_8));
             StringBuilder hexString = new StringBuilder();
-
             for (byte b : hash) {
                 String hex = Integer.toHexString(0xff & b);
                 if (hex.length() == 1) hexString.append('0');
                 hexString.append(hex);
             }
-
             return hexString.toString();
         } catch(Exception ex){
             throw new RuntimeException(ex);

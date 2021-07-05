@@ -70,6 +70,7 @@ public class Search {
                 String q_begin = "BEGIN TRANSACTION";
                 Statement st_begin = SQLite.connection.createStatement();
                 st_begin.executeUpdate(q_begin);
+                st_begin.close();
 
                 SyndParser parser = new SyndParser();
                 for (Common.smi_number = 0; Common.smi_number < Common.smi_link.size(); Common.smi_number++) {
@@ -253,6 +254,7 @@ public class Search {
                         isStop.set(true);
                     }
                 }
+                st.close();
                 //Время поиска
                 Gui.timeEnd = System.currentTimeMillis();
                 searchTime = (Gui.timeEnd - Gui.timeStart) / 1000;
@@ -282,11 +284,13 @@ public class Search {
                 String q_commit = "COMMIT";
                 Statement st_commit = SQLite.connection.createStatement();
                 st_commit.executeUpdate(q_commit);
+                st_commit.close();
 
                 // удаляем все пустые строки
                 String q_del = "delete from news_dual where title = ''";
                 Statement st_del = SQLite.connection.createStatement();
                 st_del.executeUpdate(q_del);
+                st_del.close();
 
                 // Заполняем таблицу анализа
                 if (!Gui.wasClickInTableForAnalysis.get()) SQLite.selectSqlite();
@@ -305,6 +309,7 @@ public class Search {
                     String q_begin = "ROLLBACK";
                     Statement st_begin = SQLite.connection.createStatement();
                     st_begin.executeUpdate(q_begin);
+                    st_begin.close();
                 } catch (SQLException ignored) {
                 }
                 isStop.set(true);
