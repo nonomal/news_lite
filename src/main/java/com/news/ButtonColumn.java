@@ -57,6 +57,7 @@ class ButtonColumn extends AbstractCellEditor implements TableCellRenderer, Tabl
     }
 
     public void actionPerformed(ActionEvent e) {
+        SQLite sqlite = new SQLite();
         fireEditingStopped();
         int row_with_source = table.getSelectedRow();
         int row_with_exlude_word = Gui.table_for_analysis.getSelectedRow();
@@ -83,7 +84,7 @@ class ButtonColumn extends AbstractCellEditor implements TableCellRenderer, Tabl
             // удаление из диалогового окна
             Gui.model_for_analysis.removeRow(row_with_exlude_word);
             // добавление в базу данных и файл excluded.txt
-            SQLite.insertNewExcludedWord(source);
+            sqlite.insertNewExcludedWord(source);
         }
 
         // окно источников RSS
@@ -95,7 +96,7 @@ class ButtonColumn extends AbstractCellEditor implements TableCellRenderer, Tabl
             // удаление из файла sources.txt
             //Common.delLine(source, Main.sourcesPath);
             // удаление из базы данных
-            SQLite.deleteSource(source);
+            sqlite.deleteSource(source);
         }
 
         // окно с исключенными из анализа слов (удаляем из базы)
@@ -107,7 +108,7 @@ class ButtonColumn extends AbstractCellEditor implements TableCellRenderer, Tabl
             // удаление из файла excluded.txt
             //Common.delLine(source, Main.excludedPath);
             // удаление из базы данных
-            SQLite.deleteExcluded(source);
+            sqlite.deleteExcluded(source);
         }
 
     }

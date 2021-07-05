@@ -34,12 +34,13 @@ public class Search {
 
     //Main search
     public static void mainSearch(String pSearchType) {
+        SQLite sqlite = new SQLite();
         if (!isSearchNow.get()) {
             int modelRowCount = Gui.model.getRowCount();
             dataForEmail.clear();
             Common.console("status: search started");
             //выборка актуальных источников перед поиском из БД
-            SQLite.selectSources("smi");
+            sqlite.selectSources("smi");
             isSearchNow.set(true);
             Gui.timeStart = System.currentTimeMillis();
             //Common.text = "";
@@ -70,6 +71,7 @@ public class Search {
                 String q_begin = "BEGIN TRANSACTION";
                 Statement st_begin = SQLite.connection.createStatement();
                 st_begin.executeUpdate(q_begin);
+                st_begin.close();
 
                 SyndParser parser = new SyndParser();
                 for (Common.smi_number = 0; Common.smi_number < Common.smi_link.size(); Common.smi_number++) {
@@ -111,7 +113,7 @@ public class Search {
                                     if (title.toLowerCase().contains(Gui.find_word.toLowerCase()) && title.length() > 15 && checkDate == 1) {
 
                                         //отсеиваем новости, которые уже были найдены ранее
-                                        if (SQLite.isTitleExists(Common.sha256(title + pubDate)) && SQLite.isConnectionToSQLite) {
+                                        if (sqlite.isTitleExists(Common.sha256(title + pubDate)) && SQLite.isConnectionToSQLite) {
                                             continue;
                                         }
 
@@ -120,7 +122,7 @@ public class Search {
                                         int date_diff = Common.compareDatesOnly(curent_date, pubDate);
 
                                         // вставка всех новостей в архив
-                                        SQLite.insertAllTitles(title, pubDate.toString());
+                                        sqlite.insertAllTitles(title, pubDate.toString());
 
                                         if (Gui.todayOrNotChbx.getState() && (date_diff != 0)) {
                                             newsCount++;
@@ -146,7 +148,7 @@ public class Search {
                                                     st.executeUpdate();
                                                 }
                                             }
-                                            SQLite.insertTitleIn256(Common.sha256(title + pubDate));
+                                            sqlite.insertTitleIn256(Common.sha256(title + pubDate));
 
                                         } else if (!Gui.todayOrNotChbx.getState()) {
                                             newsCount++;
@@ -172,7 +174,7 @@ public class Search {
                                                     st.executeUpdate();
                                                 }
                                             }
-                                            SQLite.insertTitleIn256(Common.sha256(title + pubDate));
+                                            sqlite.insertTitleIn256(Common.sha256(title + pubDate));
                                         }
                                     }
                                 } else if (pSearchType.equals("words")) {
@@ -180,7 +182,7 @@ public class Search {
                                         if (title.toLowerCase().contains(it.toLowerCase()) && title.length() > 15 && checkDate == 1) {
 
                                             // отсеиваем новости которые были обнаружены ранее
-                                            if (SQLite.isTitleExists(Common.sha256(title + pubDate)) && SQLite.isConnectionToSQLite) {
+                                            if (sqlite.isTitleExists(Common.sha256(title + pubDate)) && SQLite.isConnectionToSQLite) {
                                                 continue;
                                             }
 
@@ -212,7 +214,7 @@ public class Search {
                                                         st.executeUpdate();
                                                     }
                                                 }
-                                                SQLite.insertTitleIn256(Common.sha256(title + pubDate));
+                                                sqlite.insertTitleIn256(Common.sha256(title + pubDate));
                                             } else if (!Gui.todayOrNotChbx.getState()) {
                                                 newsCount++;
                                                 Gui.labelSum.setText(String.valueOf(newsCount));
@@ -237,14 +239,14 @@ public class Search {
                                                         st.executeUpdate();
                                                     }
                                                 }
-                                                SQLite.insertTitleIn256(Common.sha256(title + pubDate));
+                                                sqlite.insertTitleIn256(Common.sha256(title + pubDate));
                                             }
                                         }
                                     }
                                 }
                                 if (isStop.get()) return;
                             }
-                            if (!Gui.isOnlyLastNews && SQLite.isConnectionToSQLite) SQLite.deleteFrom256();
+                            if (!Gui.isOnlyLastNews && SQLite.isConnectionToSQLite) sqlite.deleteFrom256();
                         } catch (Exception no_rss) {
                             Gui.labelInfo.setText("RssList: " + (char) 34 + Common.smi_link.get(Common.smi_number) + (char) 34 + " is not available");
                         }
@@ -253,6 +255,7 @@ public class Search {
                         isStop.set(true);
                     }
                 }
+                st.close();
                 //Время поиска
                 Gui.timeEnd = System.currentTimeMillis();
                 searchTime = (Gui.timeEnd - Gui.timeStart) / 1000;
@@ -282,29 +285,32 @@ public class Search {
                 String q_commit = "COMMIT";
                 Statement st_commit = SQLite.connection.createStatement();
                 st_commit.executeUpdate(q_commit);
+                st_commit.close();
 
                 // удаляем все пустые строки
                 String q_del = "delete from news_dual where title = ''";
                 Statement st_del = SQLite.connection.createStatement();
                 st_del.executeUpdate(q_del);
+                st_del.close();
 
                 // Заполняем таблицу анализа
-                if (!Gui.wasClickInTableForAnalysis.get()) SQLite.selectSqlite();
+                if (!Gui.wasClickInTableForAnalysis.get()) sqlite.selectSqlite();
 
                 // Автоматическая отправка результатов
                 if (Gui.autoSendMessage.getState() && (Gui.model.getRowCount() > 0)) {
                     Gui.sendEmailBtn.doClick();
                 }
 
-                SQLite.deleteDuplicates();
+                sqlite.deleteDuplicates();
                 Gui.wasClickInTableForAnalysis.set(false);
                 if (pSearchType.equals("word"))
-                    Common.console("info: number of news items in the archive = " + SQLite.archiveNewsCount());
+                    Common.console("info: number of news items in the archive = " + sqlite.archiveNewsCount());
             } catch (Exception e) {
                 try {
                     String q_begin = "ROLLBACK";
                     Statement st_begin = SQLite.connection.createStatement();
                     st_begin.executeUpdate(q_begin);
+                    st_begin.close();
                 } catch (SQLException ignored) {
                 }
                 isStop.set(true);
@@ -314,9 +320,10 @@ public class Search {
 
     //Console search
     public static void searchByConsole() {
+        SQLite sqlite = new SQLite();
         if (!isSearchNow.get()) {
             dataForEmail.clear();
-            SQLite.selectSources("smi");
+            sqlite.selectSources("smi");
             isSearchNow.set(true);
             Search.j = 1;
             newsCount = 0;
@@ -368,7 +375,7 @@ public class Search {
 
                                     if (title.toLowerCase().contains(it.toLowerCase()) && title.length() > 15 && checkDate == 1) {
                                         // отсеиваем новости которые были обнаружены ранее
-                                        if (SQLite.isTitleExists(Common.sha256(title + pubDate)) && SQLite.isConnectionToSQLite) {
+                                        if (sqlite.isTitleExists(Common.sha256(title + pubDate)) && SQLite.isConnectionToSQLite) {
                                             continue;
                                         }
 
@@ -383,13 +390,13 @@ public class Search {
                                             /**/
                                             System.out.println(newsCount + ") " + title);
                                             /**/
-                                            SQLite.insertTitleIn256(Common.sha256(title + pubDate));
+                                            sqlite.insertTitleIn256(Common.sha256(title + pubDate));
                                         }
                                     }
                                 }
                             }
                             // удалять новости, чтобы были вообще все, даже те, которые уже были обнаружены
-                            SQLite.deleteFrom256();
+                            sqlite.deleteFrom256();
                         } catch (Exception ignored) {
                         }
                     } catch (Exception ignored) {
@@ -412,7 +419,7 @@ public class Search {
                     Common.isSending.set(false);
                     EmailSender.sendMessage();
                 }
-                SQLite.deleteDuplicates();
+                sqlite.deleteDuplicates();
                 Gui.wasClickInTableForAnalysis.set(false);
 
             } catch (Exception e) {

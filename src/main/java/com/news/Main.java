@@ -74,23 +74,24 @@ public class Main {
 
     public static void main(String[] args) throws IOException { //args1 = email, args2 = interval, args3 = keyword1,.., argsN = keywordN
         keywordsFromConsole = new String[args.length];
+        SQLite sqlite = new SQLite();
         if (args.length == 0 ) {
             LOGGER.log(Level.INFO, "Application started");
             new Gui();
             Common.getSettingsFromFile();
             Gui.newsIntervalCbox.setEnabled(Gui.todayOrNotChbx.getState());
             Gui.isOnlyLastNews = Gui.filterNewsChbx.getState();
-            SQLite.openSQLiteConnection();
+            sqlite.openSQLiteConnection();
         } else {
             // Console search
             isConsoleSearch.set(true);
             emailToFromConsole = args[0];
             minutesIntervalForConsoleSearch = Integer.parseInt(args[1]);
-            SQLite.openSQLiteConnection();
+            sqlite.openSQLiteConnection();
             System.arraycopy(args, 0, keywordsFromConsole, 0, args.length);
             System.out.println(Arrays.toString(keywordsFromConsole)); //***
             Search.searchByConsole();
-            SQLite.closeSQLiteConnection();
+            sqlite.closeSQLiteConnection();
         }
 
         // проверка подключения к интернету

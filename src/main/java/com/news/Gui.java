@@ -21,6 +21,7 @@ import javax.swing.table.*;
 import javax.swing.text.DefaultCaret;
 
 public class Gui extends JFrame {
+    SQLite sqlite = new SQLite();
     private final long autoStartTimer = 30000L; // 30 секунд
     static final String[] intervals = {"1 min", "5 min", "15 min", "30 min", "45 min", "1 hour", "2 hours", "4 hours", "8 hours", "12 hours", "24 hours", "48 hours"};
     static ImageIcon logo_ico = new ImageIcon(Toolkit.getDefaultToolkit().createImage(Gui.class.getResource("/icons/logo.png")));
@@ -97,10 +98,10 @@ public class Gui extends JFrame {
             // закрытие окна
             @Override
             public void windowClosing(WindowEvent e) {
-                SQLite.isConnectionToSQLite = false;
+                sqlite.isConnectionToSQLite = false;
                 Main.LOGGER.log(Level.INFO, "Application closed");
                 Common.saveState();
-                if (SQLite.isConnectionToSQLite) SQLite.closeSQLiteConnection();
+                if (sqlite.isConnectionToSQLite) sqlite.closeSQLiteConnection();
             }
             // сворачивание в трей
             @Override
@@ -218,7 +219,7 @@ public class Gui extends JFrame {
         JLabel table2_label = new JLabel();
         table2_label.setFont(new Font("Tahoma", Font.PLAIN, 11));
         table2_label.setText("word frequency:");
-        table2_label.setToolTipText("matches more than " + SQLite.wordFreqMatches);
+        table2_label.setToolTipText("matches more than " + sqlite.getWordFreqMatches());
         table2_label.setForeground(new Color(247, 255, 58));
         table2_label.setBounds(11, 343, 190, 14);
         getContentPane().add(table2_label);
@@ -329,7 +330,7 @@ public class Gui extends JFrame {
                 Search.isSearchNow.set(false);
                 try {
                     String q_begin = "ROLLBACK";
-                    Statement st_begin = SQLite.connection.createStatement();
+                    Statement st_begin = sqlite.connection.createStatement();
                     st_begin.executeUpdate(q_begin);
                 } catch (SQLException ignored) {
                 }
@@ -355,7 +356,7 @@ public class Gui extends JFrame {
                 Search.isSearchNow.set(false);
                 try {
                     String q_begin = "ROLLBACK";
-                    Statement st_begin = SQLite.connection.createStatement();
+                    Statement st_begin = sqlite.connection.createStatement();
                     st_begin.executeUpdate(q_begin);
                 } catch (SQLException ignored) {
                 }
@@ -812,7 +813,7 @@ public class Gui extends JFrame {
         addNewSource.setBackground(new Color(243, 229, 255));
         addNewSource.setBounds(655, 426, 14, 14);
         getContentPane().add(addNewSource);
-        addNewSource.addActionListener(e -> SQLite.insertNewSource());
+        addNewSource.addActionListener(e -> sqlite.insertNewSource());
         addNewSource.addMouseListener(new MouseAdapter() {
             // наведение мышки на кнопку
             @Override
@@ -958,7 +959,7 @@ public class Gui extends JFrame {
         filterNewsChbx.addItemListener(e -> {
             isOnlyLastNews = filterNewsChbx.getState();
             if (!isOnlyLastNews){
-                SQLite.deleteFrom256();
+                sqlite.deleteFrom256();
             }
         });
 

@@ -24,9 +24,10 @@ public class CheckBoxEditor extends DefaultCellEditor implements ItemListener {
     }
 
     public void itemStateChanged(ItemEvent e) {
+        SQLite sqlite = new SQLite();
         this.fireEditingStopped();
         String source = (String) Dialogs.model.getValueAt(row, 1);
-        SQLite.updateIsActiveStatus(checkBox.isSelected(), source);
+        sqlite.updateIsActiveStatus(checkBox.isSelected(), source);
     }
 
 }
