@@ -1,0 +1,525 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ArtifactsWorkspaceSettings">
+    <artifacts-to-build>
+      <artifact name="news:jar" />
+    </artifacts-to-build>
+  </component>
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="9e6d6f99-cebb-4fd8-99d4-ae1b59f22e89" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/src/main/java/META-INF/MANIFEST.MF" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/META-INF/MANIFEST.MF" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/news/EmailSender.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/news/EmailSender.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/news/ExportToExcel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/news/ExportToExcel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/news/Gui.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/news/Gui.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/news/Search.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/news/Search.java" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="CodeStyleSettingsInfer">
+    <option name="done" value="true" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="RESET_MODE" value="HARD" />
+  </component>
+  <component name="ProjectCodeStyleSettingsMigration">
+    <option name="version" value="1" />
+  </component>
+  <component name="ProjectId" id="1qGS5IV7TPgs9jHTXa9TO0udiNX" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="1" id="Add" />
+  </component>
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="android.sdk.path" value="$USER_HOME$/AppData/Local/Android/Sdk" />
+    <property name="last_opened_file_path" value="D:/Downloads/!work/Seafile/files/java" />
+    <property name="project.structure.last.edited" value="Artifacts" />
+    <property name="project.structure.proportion" value="0.15" />
+    <property name="project.structure.side.proportion" value="0.2" />
+    <property name="restartRequiresConfirmation" value="false" />
+    <property name="settings.editor.selected.configurable" value="reference.settings.project.maven.repository.indices" />
+  </component>
+  <component name="RunAnythingCache">
+    <option name="myCommands">
+      <command value="mvn site" />
+      <command value="mvn validate" />
+      <command value="mvn compile" />
+      <command value="mvn package" />
+      <command value="mvn clean" />
+    </option>
+  </component>
+  <component name="RunManager" selected="Application.Main">
+    <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.news.Main" />
+      <module name="News" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="SyndParser" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.news.SyndParser" />
+      <module name="News" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.news.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Application.Main" />
+        <item itemvalue="Application.SyndParser" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="9e6d6f99-cebb-4fd8-99d4-ae1b59f22e89" name="Default Changelist" comment="" />
+      <created>1616704248449</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1616704248449</updated>
+    </task>
+    <task id="LOCAL-00059" summary="upd_14_06_21_4">
+      <created>1623622626875</created>
+      <option name="number" value="00059" />
+      <option name="presentableId" value="LOCAL-00059" />
+      <option name="project" value="LOCAL" />
+      <updated>1623622626875</updated>
+    </task>
+    <task id="LOCAL-00060" summary="upd_14_06_21_5">
+      <created>1623656614808</created>
+      <option name="number" value="00060" />
+      <option name="presentableId" value="LOCAL-00060" />
+      <option name="project" value="LOCAL" />
+      <updated>1623656614809</updated>
+    </task>
+    <task id="LOCAL-00061" summary="upd_14_06_21_6">
+      <created>1623665716760</created>
+      <option name="number" value="00061" />
+      <option name="presentableId" value="LOCAL-00061" />
+      <option name="project" value="LOCAL" />
+      <updated>1623665716761</updated>
+    </task>
+    <task id="LOCAL-00062" summary="upd_14_06_21_7">
+      <created>1623670088654</created>
+      <option name="number" value="00062" />
+      <option name="presentableId" value="LOCAL-00062" />
+      <option name="project" value="LOCAL" />
+      <updated>1623670088655</updated>
+    </task>
+    <task id="LOCAL-00063" summary="upd_14_06_21_8">
+      <created>1623670672957</created>
+      <option name="number" value="00063" />
+      <option name="presentableId" value="LOCAL-00063" />
+      <option name="project" value="LOCAL" />
+      <updated>1623670672957</updated>
+    </task>
+    <task id="LOCAL-00064" summary="upd_14_06_21_9">
+      <created>1623673305571</created>
+      <option name="number" value="00064" />
+      <option name="presentableId" value="LOCAL-00064" />
+      <option name="project" value="LOCAL" />
+      <updated>1623673305571</updated>
+    </task>
+    <task id="LOCAL-00065" summary="upd_14_06_21_10">
+      <created>1623674142990</created>
+      <option name="number" value="00065" />
+      <option name="presentableId" value="LOCAL-00065" />
+      <option name="project" value="LOCAL" />
+      <updated>1623674142990</updated>
+    </task>
+    <task id="LOCAL-00066" summary="upd_14_06_21_11">
+      <created>1623675155316</created>
+      <option name="number" value="00066" />
+      <option name="presentableId" value="LOCAL-00066" />
+      <option name="project" value="LOCAL" />
+      <updated>1623675155316</updated>
+    </task>
+    <task id="LOCAL-00067" summary="upd_14_06_21_12">
+      <created>1623677735691</created>
+      <option name="number" value="00067" />
+      <option name="presentableId" value="LOCAL-00067" />
+      <option name="project" value="LOCAL" />
+      <updated>1623677735692</updated>
+    </task>
+    <task id="LOCAL-00068" summary="upd_14_06_21_13 (удалено много лишнего)">
+      <created>1623699811568</created>
+      <option name="number" value="00068" />
+      <option name="presentableId" value="LOCAL-00068" />
+      <option name="project" value="LOCAL" />
+      <updated>1623699811568</updated>
+    </task>
+    <task id="LOCAL-00069" summary="upd_14_06_21_14">
+      <created>1623700479669</created>
+      <option name="number" value="00069" />
+      <option name="presentableId" value="LOCAL-00069" />
+      <option name="project" value="LOCAL" />
+      <updated>1623700479669</updated>
+    </task>
+    <task id="LOCAL-00070" summary="upd_14_06_21_15">
+      <created>1623701936835</created>
+      <option name="number" value="00070" />
+      <option name="presentableId" value="LOCAL-00070" />
+      <option name="project" value="LOCAL" />
+      <updated>1623701936835</updated>
+    </task>
+    <task id="LOCAL-00071" summary="upd_14_06_21_16">
+      <created>1623702224850</created>
+      <option name="number" value="00071" />
+      <option name="presentableId" value="LOCAL-00071" />
+      <option name="project" value="LOCAL" />
+      <updated>1623702224850</updated>
+    </task>
+    <task id="LOCAL-00072" summary="upd_16_06_21_1">
+      <created>1623791250583</created>
+      <option name="number" value="00072" />
+      <option name="presentableId" value="LOCAL-00072" />
+      <option name="project" value="LOCAL" />
+      <updated>1623791250583</updated>
+    </task>
+    <task id="LOCAL-00073" summary="upd_23_06_21_1">
+      <created>1624480693071</created>
+      <option name="number" value="00073" />
+      <option name="presentableId" value="LOCAL-00073" />
+      <option name="project" value="LOCAL" />
+      <updated>1624480693071</updated>
+    </task>
+    <task id="LOCAL-00074" summary="upd_24_06_21_1">
+      <created>1624539097430</created>
+      <option name="number" value="00074" />
+      <option name="presentableId" value="LOCAL-00074" />
+      <option name="project" value="LOCAL" />
+      <updated>1624539097430</updated>
+    </task>
+    <task id="LOCAL-00075" summary="upd_24_06_21_2">
+      <created>1624541584556</created>
+      <option name="number" value="00075" />
+      <option name="presentableId" value="LOCAL-00075" />
+      <option name="project" value="LOCAL" />
+      <updated>1624541584556</updated>
+    </task>
+    <task id="LOCAL-00076" summary="upd_24_06_21_3">
+      <created>1624544385688</created>
+      <option name="number" value="00076" />
+      <option name="presentableId" value="LOCAL-00076" />
+      <option name="project" value="LOCAL" />
+      <updated>1624544385689</updated>
+    </task>
+    <task id="LOCAL-00077" summary="upd_24_06_21_4">
+      <created>1624546118389</created>
+      <option name="number" value="00077" />
+      <option name="presentableId" value="LOCAL-00077" />
+      <option name="project" value="LOCAL" />
+      <updated>1624546118389</updated>
+    </task>
+    <task id="LOCAL-00078" summary="upd_24_06_21_5">
+      <created>1624566631607</created>
+      <option name="number" value="00078" />
+      <option name="presentableId" value="LOCAL-00078" />
+      <option name="project" value="LOCAL" />
+      <updated>1624566631607</updated>
+    </task>
+    <task id="LOCAL-00079" summary="upd_25_06_21_1">
+      <created>1624569183250</created>
+      <option name="number" value="00079" />
+      <option name="presentableId" value="LOCAL-00079" />
+      <option name="project" value="LOCAL" />
+      <updated>1624569183250</updated>
+    </task>
+    <task id="LOCAL-00080" summary="upd_25_06_21_2">
+      <created>1624617547867</created>
+      <option name="number" value="00080" />
+      <option name="presentableId" value="LOCAL-00080" />
+      <option name="project" value="LOCAL" />
+      <updated>1624617547867</updated>
+    </task>
+    <task id="LOCAL-00081" summary="upd_25_06_21_3">
+      <created>1624618882857</created>
+      <option name="number" value="00081" />
+      <option name="presentableId" value="LOCAL-00081" />
+      <option name="project" value="LOCAL" />
+      <updated>1624618882857</updated>
+    </task>
+    <task id="LOCAL-00082" summary="upd_25_06_21_4">
+      <created>1624629242314</created>
+      <option name="number" value="00082" />
+      <option name="presentableId" value="LOCAL-00082" />
+      <option name="project" value="LOCAL" />
+      <updated>1624629242315</updated>
+    </task>
+    <task id="LOCAL-00083" summary="Revert &quot;upd_25_06_21_4&quot;&#10;&#10;This reverts commit f3593bfce82025b0490d49536001168b5a32da22.">
+      <created>1624650915860</created>
+      <option name="number" value="00083" />
+      <option name="presentableId" value="LOCAL-00083" />
+      <option name="project" value="LOCAL" />
+      <updated>1624650915860</updated>
+    </task>
+    <task id="LOCAL-00084" summary="upd_25_06_21_6">
+      <created>1624651154565</created>
+      <option name="number" value="00084" />
+      <option name="presentableId" value="LOCAL-00084" />
+      <option name="project" value="LOCAL" />
+      <updated>1624651154565</updated>
+    </task>
+    <task id="LOCAL-00085" summary="upd_25_06_21_7">
+      <created>1624652169256</created>
+      <option name="number" value="00085" />
+      <option name="presentableId" value="LOCAL-00085" />
+      <option name="project" value="LOCAL" />
+      <updated>1624652169256</updated>
+    </task>
+    <task id="LOCAL-00086" summary="upd_26_06_21_1">
+      <created>1624656376350</created>
+      <option name="number" value="00086" />
+      <option name="presentableId" value="LOCAL-00086" />
+      <option name="project" value="LOCAL" />
+      <updated>1624656376351</updated>
+    </task>
+    <task id="LOCAL-00087" summary="upd_26_06_21_2">
+      <created>1624656534141</created>
+      <option name="number" value="00087" />
+      <option name="presentableId" value="LOCAL-00087" />
+      <option name="project" value="LOCAL" />
+      <updated>1624656534141</updated>
+    </task>
+    <task id="LOCAL-00088" summary="upd_26_06_21_3">
+      <created>1624657381367</created>
+      <option name="number" value="00088" />
+      <option name="presentableId" value="LOCAL-00088" />
+      <option name="project" value="LOCAL" />
+      <updated>1624657381368</updated>
+    </task>
+    <task id="LOCAL-00089" summary="upd_26_06_21_3">
+      <created>1624693891366</created>
+      <option name="number" value="00089" />
+      <option name="presentableId" value="LOCAL-00089" />
+      <option name="project" value="LOCAL" />
+      <updated>1624693891366</updated>
+    </task>
+    <task id="LOCAL-00090" summary="upd_26_06_21_4">
+      <created>1624694364704</created>
+      <option name="number" value="00090" />
+      <option name="presentableId" value="LOCAL-00090" />
+      <option name="project" value="LOCAL" />
+      <updated>1624694364704</updated>
+    </task>
+    <task id="LOCAL-00091" summary="upd_26_06_21_5">
+      <created>1624696932701</created>
+      <option name="number" value="00091" />
+      <option name="presentableId" value="LOCAL-00091" />
+      <option name="project" value="LOCAL" />
+      <updated>1624696932702</updated>
+    </task>
+    <task id="LOCAL-00092" summary="upd_26_06_21_6">
+      <created>1624697562859</created>
+      <option name="number" value="00092" />
+      <option name="presentableId" value="LOCAL-00092" />
+      <option name="project" value="LOCAL" />
+      <updated>1624697562859</updated>
+    </task>
+    <task id="LOCAL-00093" summary="upd_26_06_21_7">
+      <created>1624697884464</created>
+      <option name="number" value="00093" />
+      <option name="presentableId" value="LOCAL-00093" />
+      <option name="project" value="LOCAL" />
+      <updated>1624697884465</updated>
+    </task>
+    <task id="LOCAL-00094" summary="upd_26_06_21_8">
+      <created>1624737347285</created>
+      <option name="number" value="00094" />
+      <option name="presentableId" value="LOCAL-00094" />
+      <option name="project" value="LOCAL" />
+      <updated>1624737347285</updated>
+    </task>
+    <task id="LOCAL-00095" summary="upd_26_06_21_9">
+      <created>1624739523185</created>
+      <option name="number" value="00095" />
+      <option name="presentableId" value="LOCAL-00095" />
+      <option name="project" value="LOCAL" />
+      <updated>1624739523185</updated>
+    </task>
+    <task id="LOCAL-00096" summary="upd_26_06_21_10">
+      <created>1624740797039</created>
+      <option name="number" value="00096" />
+      <option name="presentableId" value="LOCAL-00096" />
+      <option name="project" value="LOCAL" />
+      <updated>1624740797039</updated>
+    </task>
+    <task id="LOCAL-00097" summary="upd_30_06_21_1 + console search">
+      <created>1625067871486</created>
+      <option name="number" value="00097" />
+      <option name="presentableId" value="LOCAL-00097" />
+      <option name="project" value="LOCAL" />
+      <updated>1625067871486</updated>
+    </task>
+    <task id="LOCAL-00098" summary="upd_30_06_21_2">
+      <created>1625075845712</created>
+      <option name="number" value="00098" />
+      <option name="presentableId" value="LOCAL-00098" />
+      <option name="project" value="LOCAL" />
+      <updated>1625075845712</updated>
+    </task>
+    <task id="LOCAL-00099" summary="upd_30_06_21_3">
+      <created>1625085205280</created>
+      <option name="number" value="00099" />
+      <option name="presentableId" value="LOCAL-00099" />
+      <option name="project" value="LOCAL" />
+      <updated>1625085205280</updated>
+    </task>
+    <task id="LOCAL-00100" summary="upd_01_07_21_1">
+      <created>1625087291489</created>
+      <option name="number" value="00100" />
+      <option name="presentableId" value="LOCAL-00100" />
+      <option name="project" value="LOCAL" />
+      <updated>1625087291489</updated>
+    </task>
+    <task id="LOCAL-00101" summary="upd_01_07_21_1">
+      <created>1625487653209</created>
+      <option name="number" value="00101" />
+      <option name="presentableId" value="LOCAL-00101" />
+      <option name="project" value="LOCAL" />
+      <updated>1625487653210</updated>
+    </task>
+    <task id="LOCAL-00102" summary="upd_05_07_21_1">
+      <created>1625487945259</created>
+      <option name="number" value="00102" />
+      <option name="presentableId" value="LOCAL-00102" />
+      <option name="project" value="LOCAL" />
+      <updated>1625487945259</updated>
+    </task>
+    <task id="LOCAL-00103" summary="upd_05_07_21_2">
+      <created>1625490439811</created>
+      <option name="number" value="00103" />
+      <option name="presentableId" value="LOCAL-00103" />
+      <option name="project" value="LOCAL" />
+      <updated>1625490439812</updated>
+    </task>
+    <task id="LOCAL-00104" summary="upd_05_07_21_3">
+      <created>1625491385637</created>
+      <option name="number" value="00104" />
+      <option name="presentableId" value="LOCAL-00104" />
+      <option name="project" value="LOCAL" />
+      <updated>1625491385638</updated>
+    </task>
+    <task id="LOCAL-00105" summary="upd_05_07_21_4">
+      <created>1625492712294</created>
+      <option name="number" value="00105" />
+      <option name="presentableId" value="LOCAL-00105" />
+      <option name="project" value="LOCAL" />
+      <updated>1625492712294</updated>
+    </task>
+    <task id="LOCAL-00106" summary="upd_05_07_21_5">
+      <created>1625505819584</created>
+      <option name="number" value="00106" />
+      <option name="presentableId" value="LOCAL-00106" />
+      <option name="project" value="LOCAL" />
+      <updated>1625505819584</updated>
+    </task>
+    <task id="LOCAL-00107" summary="upd_05_07_21_6">
+      <created>1625514423563</created>
+      <option name="number" value="00107" />
+      <option name="presentableId" value="LOCAL-00107" />
+      <option name="project" value="LOCAL" />
+      <updated>1625514423563</updated>
+    </task>
+    <option name="localTasksCounter" value="108" />
+    <servers />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="oldMeFiltersMigrated" value="true" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <ignored-roots>
+      <path value="$PROJECT_DIR$" />
+    </ignored-roots>
+    <MESSAGE value="upd_25_06_21_3" />
+    <MESSAGE value="upd_25_06_21_4" />
+    <MESSAGE value="Revert &quot;upd_25_06_21_4&quot;&#10;&#10;This reverts commit f3593bfce82025b0490d49536001168b5a32da22." />
+    <MESSAGE value="upd_25_06_21_6" />
+    <MESSAGE value="upd_25_06_21_7" />
+    <MESSAGE value="upd_26_06_21_1" />
+    <MESSAGE value="upd_26_06_21_2" />
+    <MESSAGE value="upd_26_06_21_3" />
+    <MESSAGE value="upd_26_06_21_4" />
+    <MESSAGE value="upd_26_06_21_5" />
+    <MESSAGE value="upd_26_06_21_6" />
+    <MESSAGE value="upd_26_06_21_7" />
+    <MESSAGE value="upd_26_06_21_8" />
+    <MESSAGE value="upd_26_06_21_9" />
+    <MESSAGE value="upd_26_06_21_10" />
+    <MESSAGE value="upd_30_06_21_1 + console search" />
+    <MESSAGE value="upd_30_06_21_2" />
+    <MESSAGE value="upd_30_06_21_3" />
+    <MESSAGE value="upd_01_07_21_1" />
+    <MESSAGE value="upd_05_07_21_1" />
+    <MESSAGE value="upd_05_07_21_2" />
+    <MESSAGE value="upd_05_07_21_3" />
+    <MESSAGE value="upd_05_07_21_4" />
+    <MESSAGE value="upd_05_07_21_5" />
+    <MESSAGE value="upd_05_07_21_6" />
+    <option name="LAST_COMMIT_MESSAGE" value="upd_05_07_21_6" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/com/news/Gui.java</url>
+          <line>104</line>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/com/news/Search.java</url>
+          <line>34</line>
+          <option name="timeStamp" value="3" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/com/news/Search.java</url>
+          <line>269</line>
+          <option name="timeStamp" value="4" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/com/news/Search.java</url>
+          <line>45</line>
+          <option name="timeStamp" value="5" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+  </component>
+  <component name="XSLT-Support.FileAssociations.UIState">
+    <expand />
+    <select />
+  </component>
+</project>
