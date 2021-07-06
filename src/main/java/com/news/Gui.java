@@ -24,7 +24,7 @@ public class Gui extends JFrame {
     SQLite sqlite = new SQLite();
     Search search = new Search();
     ExportToExcel exp = new ExportToExcel();
-    private final long autoStartTimer = 30000L; // 30 секунд
+    private final long autoStartTimer = 60000L; // 60 секунд
     static final String[] intervals = {"1 min", "5 min", "15 min", "30 min", "45 min", "1 hour", "2 hours", "4 hours", "8 hours", "12 hours", "24 hours", "48 hours"};
     static ImageIcon logo_ico = new ImageIcon(Toolkit.getDefaultToolkit().createImage(Gui.class.getResource("/icons/logo.png")));
     static ImageIcon send = new ImageIcon(Toolkit.getDefaultToolkit().createImage(Gui.class.getResource("/icons/send.png")));
@@ -115,7 +115,6 @@ public class Gui extends JFrame {
             // разворачивание из трея
             public void windowDeiconified(WindowEvent pEvent) {
                 guiInTray.set(false);
-                autoUpdateNewsBottom.setState(false);
             }
         });
 
