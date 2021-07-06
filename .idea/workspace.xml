@@ -12,9 +12,6 @@
     <list default="true" id="9e6d6f99-cebb-4fd8-99d4-ae1b59f22e89" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/news/Gui.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/news/Gui.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/news/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/news/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/news/MyTimerTask.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/news/MyTimerTask.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/news/Search.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/news/Search.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -102,13 +99,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1616704248449</updated>
-    </task>
-    <task id="LOCAL-00061" summary="upd_14_06_21_6">
-      <created>1623665716760</created>
-      <option name="number" value="00061" />
-      <option name="presentableId" value="LOCAL-00061" />
-      <option name="project" value="LOCAL" />
-      <updated>1623665716761</updated>
     </task>
     <task id="LOCAL-00062" summary="upd_14_06_21_7">
       <created>1623670088654</created>
@@ -446,7 +436,14 @@
       <option name="project" value="LOCAL" />
       <updated>1625515223257</updated>
     </task>
-    <option name="localTasksCounter" value="110" />
+    <task id="LOCAL-00110" summary="upd_05_07_21_9">
+      <created>1625517150638</created>
+      <option name="number" value="00110" />
+      <option name="presentableId" value="LOCAL-00110" />
+      <option name="project" value="LOCAL" />
+      <updated>1625517150638</updated>
+    </task>
+    <option name="localTasksCounter" value="111" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -465,7 +462,6 @@
     <ignored-roots>
       <path value="$PROJECT_DIR$" />
     </ignored-roots>
-    <MESSAGE value="Revert &quot;upd_25_06_21_4&quot;&#10;&#10;This reverts commit f3593bfce82025b0490d49536001168b5a32da22." />
     <MESSAGE value="upd_25_06_21_6" />
     <MESSAGE value="upd_25_06_21_7" />
     <MESSAGE value="upd_26_06_21_1" />
@@ -490,7 +486,8 @@
     <MESSAGE value="upd_05_07_21_6" />
     <MESSAGE value="upd_05_07_21_7" />
     <MESSAGE value="upd_05_07_21_8" />
-    <option name="LAST_COMMIT_MESSAGE" value="upd_05_07_21_8" />
+    <MESSAGE value="upd_05_07_21_9" />
+    <option name="LAST_COMMIT_MESSAGE" value="upd_05_07_21_9" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -499,6 +496,16 @@
           <url>file://$PROJECT_DIR$/src/main/java/com/news/Search.java</url>
           <line>272</line>
           <option name="timeStamp" value="6" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/com/news/Gui.java</url>
+          <line>116</line>
+          <option name="timeStamp" value="7" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/com/news/Gui.java</url>
+          <line>712</line>
+          <option name="timeStamp" value="8" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

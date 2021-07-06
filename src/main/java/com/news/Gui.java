@@ -110,10 +110,12 @@ public class Gui extends JFrame {
             public void windowIconified(WindowEvent pEvent) {
                 guiInTray.set(true);
                 setVisible(false);
+                if (autoUpdateNewsBottom.getState()) animation_status.setText("");
             }
             // разворачивание из трея
             public void windowDeiconified(WindowEvent pEvent) {
                 guiInTray.set(false);
+                autoUpdateNewsBottom.setState(false);
             }
         });
 
