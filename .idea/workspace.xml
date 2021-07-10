@@ -11,7 +11,7 @@
   <component name="ChangeListManager">
     <list default="true" id="9e6d6f99-cebb-4fd8-99d4-ae1b59f22e89" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/news/Gui.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/news/Gui.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/news/Search.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/news/Search.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -99,13 +99,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1616704248449</updated>
-    </task>
-    <task id="LOCAL-00063" summary="upd_14_06_21_8">
-      <created>1623670672957</created>
-      <option name="number" value="00063" />
-      <option name="presentableId" value="LOCAL-00063" />
-      <option name="project" value="LOCAL" />
-      <updated>1623670672957</updated>
     </task>
     <task id="LOCAL-00064" summary="upd_14_06_21_9">
       <created>1623673305571</created>
@@ -443,7 +436,14 @@
       <option name="project" value="LOCAL" />
       <updated>1625594024694</updated>
     </task>
-    <option name="localTasksCounter" value="112" />
+    <task id="LOCAL-00112" summary="upd_06_07_21_2">
+      <created>1625601520223</created>
+      <option name="number" value="00112" />
+      <option name="presentableId" value="LOCAL-00112" />
+      <option name="project" value="LOCAL" />
+      <updated>1625601520223</updated>
+    </task>
+    <option name="localTasksCounter" value="113" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -462,7 +462,6 @@
     <ignored-roots>
       <path value="$PROJECT_DIR$" />
     </ignored-roots>
-    <MESSAGE value="upd_25_06_21_7" />
     <MESSAGE value="upd_26_06_21_1" />
     <MESSAGE value="upd_26_06_21_2" />
     <MESSAGE value="upd_26_06_21_3" />
@@ -487,7 +486,8 @@
     <MESSAGE value="upd_05_07_21_8" />
     <MESSAGE value="upd_05_07_21_9" />
     <MESSAGE value="upd_06_07_21_1" />
-    <option name="LAST_COMMIT_MESSAGE" value="upd_06_07_21_1" />
+    <MESSAGE value="upd_06_07_21_2" />
+    <option name="LAST_COMMIT_MESSAGE" value="upd_06_07_21_2" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -499,12 +499,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/com/news/Gui.java</url>
-          <line>738</line>
-          <option name="timeStamp" value="7" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/com/news/Gui.java</url>
-          <line>117</line>
+          <line>116</line>
           <option name="timeStamp" value="9" />
         </line-breakpoint>
       </breakpoints>

@@ -379,8 +379,8 @@ public class Search {
                                         }
 
                                         //Data for a table
-                                        Date curentDate = new Date();
-                                        int date_diff = Common.compareDatesOnly(curentDate, pubDate);
+                                        Date currentDate = new Date();
+                                        int date_diff = Common.compareDatesOnly(currentDate, pubDate);
 
                                         if (date_diff != 0) { // если новость between Main.minutesIntervalForConsoleSearch and currentDate
                                             newsCount++;
@@ -395,7 +395,7 @@ public class Search {
                                 }
                             }
                             // удалять новости, чтобы были вообще все, даже те, которые уже были обнаружены
-                            sqlite.deleteFrom256();
+                            //sqlite.deleteFrom256();
                         } catch (Exception ignored) {
                         }
                     } catch (Exception ignored) {
