@@ -12,7 +12,9 @@ import javax.mail.internet.MimeMessage;
 import javax.mail.PasswordAuthentication;
 
 public class EmailSender {
-    private static final String from = "rss.news.api@gmail.com";
+    private static final String from = "rps_project@mail.ru";
+    private static final String from_pwd = "RN0kFwDRjEA2vZ91frNu";
+    private static final String smtp = "smtp.mail.ru";
     private static final String subject = ("News (" + Search.today + ")");
 
     void sendMessage() {
@@ -42,7 +44,7 @@ public class EmailSender {
         Common.writeToConfig(to, "email");
 
         Properties p = new Properties();
-        p.put("mail.smtp.host", "smtp.gmail.com");
+        p.put("mail.smtp.host", smtp);
         p.put("mail.smtp.socketFactory.port", 465);
         p.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
         p.put("mail.smtp.auth", "true");
@@ -50,7 +52,7 @@ public class EmailSender {
 
         Session session = Session.getInstance(p, new javax.mail.Authenticator() {
                     protected PasswordAuthentication getPasswordAuthentication() {
-                        return new PasswordAuthentication(from, Gui.rss);
+                        return new PasswordAuthentication(from, from_pwd);
                     }
                 }
         );
@@ -85,16 +87,15 @@ public class EmailSender {
     public static void sendMailFromConsole(String text) {
         try {
             Properties p = new Properties();
-            p.put("mail.smtp.host", "smtp.gmail.com");
+            p.put("mail.smtp.host", smtp);
             p.put("mail.smtp.socketFactory.port", 465);
             p.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
             p.put("mail.smtp.auth", "true");
             p.put("mail.smtp.port", 465);
 
-            String pass = Gui.rss + "007";
             Session session = Session.getInstance(p, new javax.mail.Authenticator() {
                 protected PasswordAuthentication getPasswordAuthentication() {
-                    return new PasswordAuthentication(from, pass);
+                    return new PasswordAuthentication(from, from_pwd);
                 }
             });
 

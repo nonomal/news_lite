@@ -43,7 +43,6 @@ public class Gui extends JFrame {
     static boolean isSelLink = true;
     static boolean isOnlyLastNews = false;
     static String find_word = "";
-    static String rss = "rss.news.api";
     static String send_to;
     static JScrollPane scrollPane;
     static JTable table;
@@ -172,7 +171,6 @@ public class Gui extends JFrame {
         //Cell alignment
         DefaultTableCellRenderer Renderer = new DefaultTableCellRenderer();
         Renderer.setHorizontalAlignment(JLabel.CENTER);
-        rss = rss + "007"; // :))
         table.getColumnModel().getColumn(0).setCellRenderer(Renderer);
         table.setRowHeight(20);
         table.setColumnSelectionAllowed(true);
