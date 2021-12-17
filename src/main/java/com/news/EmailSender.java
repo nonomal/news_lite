@@ -13,7 +13,7 @@ import javax.mail.PasswordAuthentication;
 
 public class EmailSender {
     private static final String from = "rps_project@mail.ru";
-    private static final String from_pwd = "RN0kFwDRjEA2vZ91frNu";
+    private static final String from_pwd = "";  //для работы рассылки пароль можно спросить у меня
     private static final String smtp = "smtp.mail.ru";
     private static final String subject = ("News (" + Search.today + ")");
 
