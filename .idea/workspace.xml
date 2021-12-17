@@ -9,12 +9,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9e6d6f99-cebb-4fd8-99d4-ae1b59f22e89" name="Default Changelist" comment="upd_06_07_21_2">
-      <change beforePath="$PROJECT_DIR$/.idea/artifacts/news_jar.xml" beforeDir="false" />
+    <list default="true" id="9e6d6f99-cebb-4fd8-99d4-ae1b59f22e89" name="Default Changelist" comment="применил тему из FlatLaf">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/News.iml" beforeDir="false" afterPath="$PROJECT_DIR$/News.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/news/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/news/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/news.jar" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -104,13 +101,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1616704248449</updated>
-    </task>
-    <task id="LOCAL-00064" summary="upd_14_06_21_9">
-      <created>1623673305571</created>
-      <option name="number" value="00064" />
-      <option name="presentableId" value="LOCAL-00064" />
-      <option name="project" value="LOCAL" />
-      <updated>1623673305571</updated>
     </task>
     <task id="LOCAL-00065" summary="upd_14_06_21_10">
       <created>1623674142990</created>
@@ -448,7 +438,14 @@
       <option name="project" value="LOCAL" />
       <updated>1625601520223</updated>
     </task>
-    <option name="localTasksCounter" value="113" />
+    <task id="LOCAL-00113" summary="применил тему из FlatLaf">
+      <created>1639779882519</created>
+      <option name="number" value="00113" />
+      <option name="presentableId" value="LOCAL-00113" />
+      <option name="project" value="LOCAL" />
+      <updated>1639779882519</updated>
+    </task>
+    <option name="localTasksCounter" value="114" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -466,7 +463,6 @@
     <ignored-roots>
       <path value="$PROJECT_DIR$" />
     </ignored-roots>
-    <MESSAGE value="upd_26_06_21_1" />
     <MESSAGE value="upd_26_06_21_2" />
     <MESSAGE value="upd_26_06_21_3" />
     <MESSAGE value="upd_26_06_21_4" />
@@ -491,7 +487,8 @@
     <MESSAGE value="upd_05_07_21_9" />
     <MESSAGE value="upd_06_07_21_1" />
     <MESSAGE value="upd_06_07_21_2" />
-    <option name="LAST_COMMIT_MESSAGE" value="upd_06_07_21_2" />
+    <MESSAGE value="применил тему из FlatLaf" />
+    <option name="LAST_COMMIT_MESSAGE" value="применил тему из FlatLaf" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
