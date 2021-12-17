@@ -2,16 +2,19 @@
 <project version="4">
   <component name="ArtifactsWorkspaceSettings">
     <artifacts-to-build>
-      <artifact name="news:jar" />
+      <artifact name="News:jar" />
     </artifacts-to-build>
   </component>
   <component name="AutoImportSettings">
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9e6d6f99-cebb-4fd8-99d4-ae1b59f22e89" name="Default Changelist" comment="">
+    <list default="true" id="9e6d6f99-cebb-4fd8-99d4-ae1b59f22e89" name="Default Changelist" comment="upd_06_07_21_2">
+      <change beforePath="$PROJECT_DIR$/.idea/artifacts/news_jar.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/news/EmailSender.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/news/EmailSender.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/News.iml" beforeDir="false" afterPath="$PROJECT_DIR$/News.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/news/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/news/Main.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -50,7 +53,7 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="android.sdk.path" value="$USER_HOME$/AppData/Local/Android/Sdk" />
-    <property name="last_opened_file_path" value="D:/Downloads/!work/Seafile/files/java" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/main/resources" />
     <property name="project.structure.last.edited" value="Artifacts" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />

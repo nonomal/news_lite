@@ -1,5 +1,9 @@
 package com.news;
 
+import com.formdev.flatlaf.FlatDarkLaf;
+import com.formdev.flatlaf.FlatLightLaf;
+import com.formdev.flatlaf.intellijthemes.FlatHiberbeeDarkIJTheme;
+
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -77,6 +81,11 @@ public class Main {
         SQLite sqlite = new SQLite();
         if (args.length == 0 ) {
             LOGGER.log(Level.INFO, "Application started");
+
+            // Применяем тему для GUI https://github.com/JFormDesigner/FlatLaf
+            //FlatHiberbeeDarkIJTheme.setup();
+            FlatLightLaf.setup();
+
             new Gui();
             Common.getSettingsFromFile();
             Gui.newsIntervalCbox.setEnabled(Gui.todayOrNotChbx.getState());
