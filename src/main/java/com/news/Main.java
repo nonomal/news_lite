@@ -2,6 +2,8 @@ package com.news;
 
 import com.formdev.flatlaf.FlatLightLaf;
 
+import javax.swing.*;
+import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -81,7 +83,9 @@ public class Main {
             LOGGER.log(Level.INFO, "Application started");
 
             // Применяем тему для GUI https://github.com/JFormDesigner/FlatLaf
-            //FlatHiberbeeDarkIJTheme.setup();
+            UIManager.put("Component.arc", 10); //
+            UIManager.put("ProgressBar.arc", 6 );
+            UIManager.put("Table.alternateRowColor", new Color(245, 245, 245));
             FlatLightLaf.setup();
 
             new Gui();

@@ -559,7 +559,7 @@ public class Gui extends JFrame {
         keywordsCbox = new JComboBox<>();
         keywordsCbox.setBackground(SystemColor.white);
         keywordsCbox.setMaximumRowCount(3);
-        keywordsCbox.setFont(new Font("Serif", Font.PLAIN, 12));
+        keywordsCbox.setFont(new Font("Arial", Font.PLAIN, 11));
         //comboBox.setModel(new DefaultComboBoxModel<>(ComboBoxValues));
         keywordsCbox.setModel(new DefaultComboBoxModel<>());
         keywordsCbox.setEditable(false);
@@ -661,7 +661,7 @@ public class Gui extends JFrame {
         progressBar.setBorderPainted(false);
         progressBar.setForeground(new Color(10, 255, 41));
         progressBar.setBackground(new Color(1, 1, 1));
-        progressBar.setBounds(365, 348, 255, 4);
+        progressBar.setBounds(365, 349, 255, 3);
         getContentPane().add(progressBar);
 
         // Today or not
