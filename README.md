@@ -22,6 +22,9 @@ Program features:
 - the ability to add a new source for search
 - the ability to view the folder with program files
 - the ability to exclude unnecessary words from the analysis table (and remove them from the excluded ones)
+- work without UI with commands (in Linux-Crontab or Windows-PowerShell) like:
+
+      30 10 * * * java -jar /home/dchernyavskij/news.jar rps_project@mail.ru 1440 amazon apple рефинанс штраф налог > /home/dchernyavskij/news.log
 
 
 ![Image alt](https://github.com/mrprogre/news_lite/blob/master/gui.gif)
@@ -41,3 +44,10 @@ Program features:
 - возможность добавления нового источника для поиска
 - возможность просмотра папки с файлами программы
 - возможность исключить ненужные слова из таблицы анализа (и удалить их из исключенных)
+- jar можно выложить на сервер где установлен Linux и указать команду в Сrontab для круглосуточного вызова программы. Ни одна новость не будет упущена! Вот команда, которую указывал я (параметр № 1 - адресат, 2 - интервал (момент вызова минус 1440 минут (сутки), далее ключевые слова. Т.е. каждый день в 10:30 утра я получал все новости за сутки по указанным словам + записывал их в лог):
+
+        30 10 * * * java -jar /home/dchernyavskij/news.jar rps_project@mail.ru 1440 выплат ипотек рефинанс штраф налог > /home/dchernyavskij/news.log
+
+В Windows при вызове данной команды в PowerShell:
+
+        java -jar .\news.jar rps_project@mail.ru 180 москв хлеб балаших
