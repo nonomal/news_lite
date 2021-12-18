@@ -4,7 +4,7 @@ Forbes, Yandex, Mail.ru, Lenta, Izvestiya, Vesti, Garant, Life, RBK, Gazeta.ru, 
 
 <b>new UI:</b>
 
-![image](https://user-images.githubusercontent.com/45883640/146640968-83662b83-0fad-497a-81e8-599ff637e282.png)
+![QIP Shot - Screen 083](https://user-images.githubusercontent.com/45883640/146655424-5b853f94-f88e-4d7e-9b66-90145f92b9df.png)
 
 
 Program features:
