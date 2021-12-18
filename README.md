@@ -1,7 +1,11 @@
-# news_founder
+# Avandy news founder
 Search for all news in popular RssList:
-
 Forbes, Yandex, Mail.ru, Lenta, Izvestiya, Vesti, Garant, Life, RBK, Gazeta.ru, Vedomosti, BBC, Poplulyarnaya mekhanika, Nauka i zhizn', RT, C-com.news.Main, Pravitel'stvo RF, Gosduma RF, Rossiyskaya gazeta, Rosteh, Kommersant, Expert, Nasa, Yandex.Kosmos, Astronews, Google, Finam, Aton, MMVB, Esquire, GQ, N+1, SmartLab
+
+<b>new UI:</b>
+
+![image](https://user-images.githubusercontent.com/45883640/146640968-83662b83-0fad-497a-81e8-599ff637e282.png)
+
 
 Program features:
 - keyword search
@@ -18,6 +22,7 @@ Program features:
 - the ability to add a new source for search
 - the ability to view the folder with program files
 - the ability to exclude unnecessary words from the analysis table (and remove them from the excluded ones)
+
 
 ![Image alt](https://github.com/mrprogre/news_lite/blob/master/gui.gif)
 
