@@ -9,9 +9,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9e6d6f99-cebb-4fd8-99d4-ae1b59f22e89" name="Default Changelist" comment="применил тёмную тему FlatLaf">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-    </list>
+    <list default="true" id="9e6d6f99-cebb-4fd8-99d4-ae1b59f22e89" name="Default Changelist" comment="применил тёмную тему FlatLaf" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -100,27 +98,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1616704248449</updated>
-    </task>
-    <task id="LOCAL-00067" summary="upd_14_06_21_12">
-      <created>1623677735691</created>
-      <option name="number" value="00067" />
-      <option name="presentableId" value="LOCAL-00067" />
-      <option name="project" value="LOCAL" />
-      <updated>1623677735692</updated>
-    </task>
-    <task id="LOCAL-00068" summary="upd_14_06_21_13 (удалено много лишнего)">
-      <created>1623699811568</created>
-      <option name="number" value="00068" />
-      <option name="presentableId" value="LOCAL-00068" />
-      <option name="project" value="LOCAL" />
-      <updated>1623699811568</updated>
-    </task>
-    <task id="LOCAL-00069" summary="upd_14_06_21_14">
-      <created>1623700479669</created>
-      <option name="number" value="00069" />
-      <option name="presentableId" value="LOCAL-00069" />
-      <option name="project" value="LOCAL" />
-      <updated>1623700479669</updated>
     </task>
     <task id="LOCAL-00070" summary="upd_14_06_21_15">
       <created>1623701936835</created>
@@ -444,7 +421,28 @@
       <option name="project" value="LOCAL" />
       <updated>1639858233983</updated>
     </task>
-    <option name="localTasksCounter" value="116" />
+    <task id="LOCAL-00116" summary="применил тёмную тему FlatLaf">
+      <created>1639860205506</created>
+      <option name="number" value="00116" />
+      <option name="presentableId" value="LOCAL-00116" />
+      <option name="project" value="LOCAL" />
+      <updated>1639860205506</updated>
+    </task>
+    <task id="LOCAL-00117" summary="применил тёмную тему FlatLaf">
+      <created>1639860342978</created>
+      <option name="number" value="00117" />
+      <option name="presentableId" value="LOCAL-00117" />
+      <option name="project" value="LOCAL" />
+      <updated>1639860342978</updated>
+    </task>
+    <task id="LOCAL-00118" summary="применил тёмную тему FlatLaf">
+      <created>1639860431607</created>
+      <option name="number" value="00118" />
+      <option name="presentableId" value="LOCAL-00118" />
+      <option name="project" value="LOCAL" />
+      <updated>1639860431607</updated>
+    </task>
+    <option name="localTasksCounter" value="119" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
