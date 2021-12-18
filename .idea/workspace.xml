@@ -2,23 +2,15 @@
 <project version="4">
   <component name="ArtifactsWorkspaceSettings">
     <artifacts-to-build>
-      <artifact name="news:jar" />
+      <artifact name="News:jar" />
     </artifacts-to-build>
   </component>
   <component name="AutoImportSettings">
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9e6d6f99-cebb-4fd8-99d4-ae1b59f22e89" name="Default Changelist" comment="применил тему из FlatLaf">
-      <change beforePath="$PROJECT_DIR$/.idea/artifacts/news_jar.xml" beforeDir="false" />
+    <list default="true" id="9e6d6f99-cebb-4fd8-99d4-ae1b59f22e89" name="Default Changelist" comment="применил тёмную тему FlatLaf">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/News.iml" beforeDir="false" afterPath="$PROJECT_DIR$/News.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/META-INF/MANIFEST.MF" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/META-INF/MANIFEST.MF" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/news/Dialogs.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/news/Dialogs.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/news/Gui.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/news/Gui.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/news/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/news/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/news/SQLite.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/news/SQLite.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -108,13 +100,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1616704248449</updated>
-    </task>
-    <task id="LOCAL-00066" summary="upd_14_06_21_11">
-      <created>1623675155316</created>
-      <option name="number" value="00066" />
-      <option name="presentableId" value="LOCAL-00066" />
-      <option name="project" value="LOCAL" />
-      <updated>1623675155316</updated>
     </task>
     <task id="LOCAL-00067" summary="upd_14_06_21_12">
       <created>1623677735691</created>
@@ -452,7 +437,14 @@
       <option name="project" value="LOCAL" />
       <updated>1639780038193</updated>
     </task>
-    <option name="localTasksCounter" value="115" />
+    <task id="LOCAL-00115" summary="применил тёмную тему FlatLaf">
+      <created>1639858233983</created>
+      <option name="number" value="00115" />
+      <option name="presentableId" value="LOCAL-00115" />
+      <option name="project" value="LOCAL" />
+      <updated>1639858233983</updated>
+    </task>
+    <option name="localTasksCounter" value="116" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -470,7 +462,6 @@
     <ignored-roots>
       <path value="$PROJECT_DIR$" />
     </ignored-roots>
-    <MESSAGE value="upd_26_06_21_2" />
     <MESSAGE value="upd_26_06_21_3" />
     <MESSAGE value="upd_26_06_21_4" />
     <MESSAGE value="upd_26_06_21_5" />
@@ -495,7 +486,8 @@
     <MESSAGE value="upd_06_07_21_1" />
     <MESSAGE value="upd_06_07_21_2" />
     <MESSAGE value="применил тему из FlatLaf" />
-    <option name="LAST_COMMIT_MESSAGE" value="применил тему из FlatLaf" />
+    <MESSAGE value="применил тёмную тему FlatLaf" />
+    <option name="LAST_COMMIT_MESSAGE" value="применил тёмную тему FlatLaf" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
