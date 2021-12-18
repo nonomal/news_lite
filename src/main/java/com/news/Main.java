@@ -1,8 +1,6 @@
 package com.news;
 
-import com.formdev.flatlaf.FlatDarkLaf;
 import com.formdev.flatlaf.FlatLightLaf;
-import com.formdev.flatlaf.intellijthemes.FlatHiberbeeDarkIJTheme;
 
 import java.io.File;
 import java.io.IOException;
