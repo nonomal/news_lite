@@ -82,8 +82,9 @@ public class Main {
         if (args.length == 0 ) {
             LOGGER.log(Level.INFO, "Application started");
 
-            // Применяем тему для GUI https://github.com/JFormDesigner/FlatLaf
-            //https://docs.oracle.com/javase/tutorial/uiswing/lookandfeel/_nimbusDefaults.html
+            // Применяем тему FlatLaf для GUI
+            // https://github.com/JFormDesigner/FlatLaf
+            // https://docs.oracle.com/javase/tutorial/uiswing/lookandfeel/_nimbusDefaults.html
             UIManager.put("Component.arc", 10);
             UIManager.put("ProgressBar.arc", 6);
             UIManager.put("Button.arc", 8);
