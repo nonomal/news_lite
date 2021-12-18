@@ -9,7 +9,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9e6d6f99-cebb-4fd8-99d4-ae1b59f22e89" name="Default Changelist" comment="применил тёмную тему FlatLaf" />
+    <list default="true" id="9e6d6f99-cebb-4fd8-99d4-ae1b59f22e89" name="Default Changelist" comment="мелкие доработки по интерфейсу">
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/news/EmailSender.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/news/EmailSender.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -98,27 +100,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1616704248449</updated>
-    </task>
-    <task id="LOCAL-00070" summary="upd_14_06_21_15">
-      <created>1623701936835</created>
-      <option name="number" value="00070" />
-      <option name="presentableId" value="LOCAL-00070" />
-      <option name="project" value="LOCAL" />
-      <updated>1623701936835</updated>
-    </task>
-    <task id="LOCAL-00071" summary="upd_14_06_21_16">
-      <created>1623702224850</created>
-      <option name="number" value="00071" />
-      <option name="presentableId" value="LOCAL-00071" />
-      <option name="project" value="LOCAL" />
-      <updated>1623702224850</updated>
-    </task>
-    <task id="LOCAL-00072" summary="upd_16_06_21_1">
-      <created>1623791250583</created>
-      <option name="number" value="00072" />
-      <option name="presentableId" value="LOCAL-00072" />
-      <option name="project" value="LOCAL" />
-      <updated>1623791250583</updated>
     </task>
     <task id="LOCAL-00073" summary="upd_23_06_21_1">
       <created>1624480693071</created>
@@ -442,7 +423,28 @@
       <option name="project" value="LOCAL" />
       <updated>1639860431607</updated>
     </task>
-    <option name="localTasksCounter" value="119" />
+    <task id="LOCAL-00119" summary="мелкие доработки по интерфейсу">
+      <created>1639860474385</created>
+      <option name="number" value="00119" />
+      <option name="presentableId" value="LOCAL-00119" />
+      <option name="project" value="LOCAL" />
+      <updated>1639860474401</updated>
+    </task>
+    <task id="LOCAL-00120" summary="мелкие доработки по интерфейсу">
+      <created>1639860519316</created>
+      <option name="number" value="00120" />
+      <option name="presentableId" value="LOCAL-00120" />
+      <option name="project" value="LOCAL" />
+      <updated>1639860519316</updated>
+    </task>
+    <task id="LOCAL-00121" summary="мелкие доработки по интерфейсу">
+      <created>1639861083903</created>
+      <option name="number" value="00121" />
+      <option name="presentableId" value="LOCAL-00121" />
+      <option name="project" value="LOCAL" />
+      <updated>1639861083903</updated>
+    </task>
+    <option name="localTasksCounter" value="122" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -460,7 +462,6 @@
     <ignored-roots>
       <path value="$PROJECT_DIR$" />
     </ignored-roots>
-    <MESSAGE value="upd_26_06_21_3" />
     <MESSAGE value="upd_26_06_21_4" />
     <MESSAGE value="upd_26_06_21_5" />
     <MESSAGE value="upd_26_06_21_6" />
@@ -485,7 +486,8 @@
     <MESSAGE value="upd_06_07_21_2" />
     <MESSAGE value="применил тему из FlatLaf" />
     <MESSAGE value="применил тёмную тему FlatLaf" />
-    <option name="LAST_COMMIT_MESSAGE" value="применил тёмную тему FlatLaf" />
+    <MESSAGE value="мелкие доработки по интерфейсу" />
+    <option name="LAST_COMMIT_MESSAGE" value="мелкие доработки по интерфейсу" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
