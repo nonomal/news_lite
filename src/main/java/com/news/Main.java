@@ -1,6 +1,6 @@
 package com.news;
 
-import com.formdev.flatlaf.FlatLightLaf;
+import com.formdev.flatlaf.intellijthemes.FlatHiberbeeDarkIJTheme;
 
 import javax.swing.*;
 import java.awt.*;
@@ -83,10 +83,19 @@ public class Main {
             LOGGER.log(Level.INFO, "Application started");
 
             // Применяем тему для GUI https://github.com/JFormDesigner/FlatLaf
+            //https://docs.oracle.com/javase/tutorial/uiswing/lookandfeel/_nimbusDefaults.html
             UIManager.put("Component.arc", 10); //
-            UIManager.put("ProgressBar.arc", 6 );
-            UIManager.put("Table.alternateRowColor", new Color(245, 245, 245));
-            FlatLightLaf.setup();
+            UIManager.put("ProgressBar.arc", 6);
+            UIManager.put("Button.arc", 8);
+            UIManager.put("Table.alternateRowColor", new Color(59, 59, 59));
+            //UIManager.put("Table.background", Color.GRAY);
+            UIManager.put("Table.foreground", Color.WHITE);
+            UIManager.put("TextField.background", Color.GRAY);
+            UIManager.put("TextField.foreground", Color.BLACK);
+            //UIManager.put("TextArea.background", new Color(25, 100, 11));
+            UIManager.put("TextPane.foreground", new Color(255, 111, 111));
+            //FlatLightLaf.setup();
+            FlatHiberbeeDarkIJTheme.setup();
 
             new Gui();
             Common.getSettingsFromFile();

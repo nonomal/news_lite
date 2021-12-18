@@ -49,10 +49,10 @@ public class Gui extends JFrame {
     static JTable table_for_analysis;
     static DefaultTableModel model;
     static DefaultTableModel model_for_analysis;
-    static TextField topKeyword;
-    static TextField sendEmailTo;
-    static TextField jtf_add_to_list;
-    static TextField passwordField;
+    static JTextField topKeyword;
+    static JTextField sendEmailTo;
+    static JTextField jtf_add_to_list;
+    static JTextField passwordField;
     static JTextArea animation_status;
     static JComboBox<String> keywordsCbox;
     static JComboBox<String> newsIntervalCbox;
@@ -86,7 +86,7 @@ public class Gui extends JFrame {
 
     public Gui() {
         setResizable(false);
-        getContentPane().setBackground(new Color(63, 63, 63));
+        getContentPane().setBackground(new Color(42, 42, 42));
         setTitle("Avandy News");
         setIconImage(logo_ico.getImage());
         setFont(new Font("SansSerif", Font.PLAIN, 12));
@@ -172,7 +172,7 @@ public class Gui extends JFrame {
         DefaultTableCellRenderer Renderer = new DefaultTableCellRenderer();
         Renderer.setHorizontalAlignment(JLabel.CENTER);
         table.getColumnModel().getColumn(0).setCellRenderer(Renderer);
-        table.setRowHeight(20);
+        table.setRowHeight(24);
         table.setColumnSelectionAllowed(true);
         table.setCellSelectionEnabled(true);
         table.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
@@ -183,9 +183,9 @@ public class Gui extends JFrame {
         table.getColumnModel().getColumn(3).setPreferredWidth(45);
         table.getColumnModel().getColumn(4).setMaxWidth(10);
         // Colors
-        table.setForeground(Color.black);
-        table.setSelectionForeground(new Color(26, 79, 164));
-        table.setSelectionBackground(new Color(255, 255, 160));
+        //table.setForeground(Color.black);
+        //table.setSelectionForeground(new Color(26, 79, 164));
+        //table.setSelectionBackground(new Color(255, 255, 160));
         scrollPane.setViewportView(table);
 
         table.addMouseListener(new MouseAdapter() {
@@ -221,7 +221,7 @@ public class Gui extends JFrame {
         table2_label.setFont(new Font("Tahoma", Font.PLAIN, 11));
         table2_label.setText("word frequency:");
         table2_label.setToolTipText("matches more than " + sqlite.getWordFreqMatches());
-        table2_label.setForeground(new Color(247, 255, 58));
+        table2_label.setForeground(new Color(255, 255, 153));
         table2_label.setBounds(11, 343, 190, 14);
         getContentPane().add(table2_label);
 
@@ -263,9 +263,9 @@ public class Gui extends JFrame {
         table_for_analysis.getColumnModel().getColumn(1).setPreferredWidth(140);
         table_for_analysis.getColumnModel().getColumn(2).setPreferredWidth(30);
         // Colors
-        table_for_analysis.setForeground(Color.black);
-        table_for_analysis.setSelectionForeground(new Color(26, 79, 164));
-        table_for_analysis.setSelectionBackground(new Color(255, 255, 160));
+        //table_for_analysis.setForeground(Color.black);
+        //table_for_analysis.setSelectionForeground(new Color(26, 79, 164));
+        //table_for_analysis.setSelectionBackground(new Color(255, 255, 160));
         scroll_for_analysis.setViewportView(table_for_analysis);
 
         // запуск поиска по слову из таблицы анализа
@@ -287,8 +287,11 @@ public class Gui extends JFrame {
         });
 
         //Keyword field
-        topKeyword = new TextField(find_word);
+        topKeyword = new JTextField(find_word);
         topKeyword.setBounds(87, 9, 99, 21);
+        topKeyword.setFont(new Font("Tahoma", Font.BOLD, 13));
+        //topKeyword.setForeground(Color.BLACK);
+        //topKeyword.setBackground(Color.GRAY);
         getContentPane().add(topKeyword);
 
         //Search addNewSource
@@ -399,7 +402,7 @@ public class Gui extends JFrame {
         labelSum = new JLabel();
         labelSum.setBounds(80, 530, 115, 13);
         labelSum.setFont(new Font("Tahoma", Font.PLAIN, 11));
-        labelSum.setForeground(new Color(247, 255, 58));
+        labelSum.setForeground(new Color(255, 255, 153));
         labelSum.setBackground(new Color(240, 255, 240));
         getContentPane().add(labelSum);
 
@@ -477,15 +480,16 @@ public class Gui extends JFrame {
         searchInLinkCbx.addItemListener(e -> isSelLink = searchInLinkCbx.getState());
 
         //send e-mail to
-        sendEmailTo = new TextField("enter your email");
-        sendEmailTo.setBackground(SystemColor.white);
-        sendEmailTo.setBounds(636, 365, 126, 20);
+        sendEmailTo = new JTextField("enter your email");
+        //sendEmailTo.setForeground(Color.BLACK);
+        //sendEmailTo.setBackground(Color.GRAY);
+        sendEmailTo.setBounds(636, 365, 126, 21);
         sendEmailTo.setFont(new Font("Serif", Font.PLAIN, 12));
         getContentPane().add(sendEmailTo);
         //send e-mail to - label
         JLabel lblSendToEmail = new JLabel();
         lblSendToEmail.setText("send to:");
-        lblSendToEmail.setForeground(new Color(247, 255, 58));
+        lblSendToEmail.setForeground(new Color(255, 255, 153));
         lblSendToEmail.setFont(new Font("Tahoma", Font.PLAIN, 11));
         lblSendToEmail.setBounds(631, 342, 83, 14);
         getContentPane().add(lblSendToEmail);
@@ -557,8 +561,8 @@ public class Gui extends JFrame {
 
         //Keywords combobox
         keywordsCbox = new JComboBox<>();
-        keywordsCbox.setBackground(SystemColor.white);
-        keywordsCbox.setMaximumRowCount(3);
+        //keywordsCbox.setBackground(SystemColor.white);
+        //keywordsCbox.setMaximumRowCount(3);
         keywordsCbox.setFont(new Font("Arial", Font.PLAIN, 11));
         //comboBox.setModel(new DefaultComboBoxModel<>(ComboBoxValues));
         keywordsCbox.setModel(new DefaultComboBoxModel<>());
@@ -567,9 +571,10 @@ public class Gui extends JFrame {
         getContentPane().add(keywordsCbox);
 
         //Add to combobox
-        jtf_add_to_list = new TextField();
+        jtf_add_to_list = new JTextField();
+        //jtf_add_to_list.setForeground(Color.BLACK);
         jtf_add_to_list.setFont(new Font("Serif", Font.PLAIN, 12));
-        jtf_add_to_list.setBackground(SystemColor.white);
+        //jtf_add_to_list.setBackground(Color.GRAY);
         jtf_add_to_list.setBounds(321, 490, 57, 22);
         getContentPane().add(jtf_add_to_list);
         //Add to combobox
@@ -625,7 +630,7 @@ public class Gui extends JFrame {
         //Console - label
         JLabel lblConsole = new JLabel();
         lblConsole.setText("console:");
-        lblConsole.setForeground(new Color(247, 255, 58));
+        lblConsole.setForeground(new Color(255, 255, 153));
         lblConsole.setFont(new Font("Tahoma", Font.PLAIN, 11));
         lblConsole.setBounds(321, 342, 83, 14);
         getContentPane().add(lblConsole);
@@ -641,7 +646,7 @@ public class Gui extends JFrame {
 
         //Searching animation
         search_animation = new JLabel();
-        search_animation.setForeground(new Color(247, 255, 58));
+        search_animation.setForeground(new Color(255, 255, 153));
         search_animation.setFont(new Font("Tahoma", Font.PLAIN, 11));
         search_animation.setBackground(new Color(240, 255, 240));
         search_animation.setBounds(10, 530, 80, 13);
@@ -649,7 +654,7 @@ public class Gui extends JFrame {
 
         //Time label
         timeLbl = new JLabel();
-        timeLbl.setForeground(new Color(247, 255, 58));
+        timeLbl.setForeground(new Color(255, 255, 153));
         timeLbl.setFont(new Font("Tahoma", Font.PLAIN, 11));
         timeLbl.setBounds(207, 480, 160, 20);
         getContentPane().add(timeLbl);
@@ -776,7 +781,7 @@ public class Gui extends JFrame {
         //label
         JLabel excludedLabel = new JLabel("excluded list:");
         excludedLabel.setHorizontalAlignment(SwingConstants.LEFT);
-        excludedLabel.setForeground(new Color(247, 255, 58));
+        excludedLabel.setForeground(new Color(255, 255, 153));
         excludedLabel.setFont(new Font("Tahoma", Font.PLAIN, 11));
         excludedLabel.setBackground(new Color(240, 255, 240));
         excludedLabel.setBounds(231, 337, 130, 26);
@@ -945,7 +950,7 @@ public class Gui extends JFrame {
         //label
         connect_to_bd_label = new JLabel("<html><p style=\"color:#bfbfbf\">Connected to SQLite for word frequency analysis</p></html>");
         connect_to_bd_label.setHorizontalAlignment(SwingConstants.LEFT);
-        connect_to_bd_label.setForeground(new Color(247, 255, 58));
+        connect_to_bd_label.setForeground(new Color(255, 255, 153));
         connect_to_bd_label.setFont(new Font("Tahoma", Font.PLAIN, 11));
         connect_to_bd_label.setBackground(new Color(240, 255, 240));
         connect_to_bd_label.setBounds(670, 8, 130, 26);
