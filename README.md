@@ -4,8 +4,7 @@ Forbes, Yandex, Mail.ru, Lenta, Izvestiya, Vesti, Garant, Life, RBK, Gazeta.ru, 
 
 <b>new UI:</b>
 
-![QIP Shot - Screen 083](https://user-images.githubusercontent.com/45883640/146655424-5b853f94-f88e-4d7e-9b66-90145f92b9df.png)
-
+![image](https://user-images.githubusercontent.com/45883640/146657927-bc2254d0-0581-4b2f-a68e-06b8a04c378b.png)
 
 Program features:
 - keyword search
