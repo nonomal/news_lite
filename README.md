@@ -4,7 +4,8 @@ Forbes, Yandex, Mail.ru, Lenta, Izvestiya, Vesti, Garant, Life, RBK, Gazeta.ru, 
 
 <b>new UI:</b>
 
-![image](https://user-images.githubusercontent.com/45883640/146657927-bc2254d0-0581-4b2f-a68e-06b8a04c378b.png)
+![image](https://user-images.githubusercontent.com/45883640/146688376-a359aca2-9d15-4963-9aae-589152f2203f.png)
+
 
 Program features:
 - keyword search
