@@ -120,7 +120,7 @@ public class Gui extends JFrame {
         //Input keyword
         JLabel lblNewLabel = new JLabel("Keyword:");
         lblNewLabel.setForeground(new Color(255, 179, 131));
-        lblNewLabel.setBounds(10, 10, 71, 19);
+        lblNewLabel.setBounds(10, 9, 71, 19);
         lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 15));
         lblNewLabel.setHorizontalAlignment(SwingConstants.LEFT);
         getContentPane().add(lblNewLabel);
