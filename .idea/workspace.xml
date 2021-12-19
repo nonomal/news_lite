@@ -9,10 +9,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9e6d6f99-cebb-4fd8-99d4-ae1b59f22e89" name="Default Changelist" comment="мелкие доработки по интерфейсу">
+    <list default="true" id="9e6d6f99-cebb-4fd8-99d4-ae1b59f22e89" name="Default Changelist" comment="из анализа исключены глаголы в 3 роде">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/news/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/news/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/news/SQLite.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/news/SQLite.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/news.db" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/news.db" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -103,13 +101,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1616704248449</updated>
-    </task>
-    <task id="LOCAL-00075" summary="upd_24_06_21_2">
-      <created>1624541584556</created>
-      <option name="number" value="00075" />
-      <option name="presentableId" value="LOCAL-00075" />
-      <option name="project" value="LOCAL" />
-      <updated>1624541584556</updated>
     </task>
     <task id="LOCAL-00076" summary="upd_24_06_21_3">
       <created>1624544385688</created>
@@ -447,7 +438,14 @@
       <option name="project" value="LOCAL" />
       <updated>1639861356464</updated>
     </task>
-    <option name="localTasksCounter" value="124" />
+    <task id="LOCAL-00124" summary="из анализа исключены глаголы в 3 роде">
+      <created>1639909654844</created>
+      <option name="number" value="00124" />
+      <option name="presentableId" value="LOCAL-00124" />
+      <option name="project" value="LOCAL" />
+      <updated>1639909654844</updated>
+    </task>
+    <option name="localTasksCounter" value="125" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -465,7 +463,6 @@
     <ignored-roots>
       <path value="$PROJECT_DIR$" />
     </ignored-roots>
-    <MESSAGE value="upd_26_06_21_4" />
     <MESSAGE value="upd_26_06_21_5" />
     <MESSAGE value="upd_26_06_21_6" />
     <MESSAGE value="upd_26_06_21_7" />
@@ -490,7 +487,8 @@
     <MESSAGE value="применил тему из FlatLaf" />
     <MESSAGE value="применил тёмную тему FlatLaf" />
     <MESSAGE value="мелкие доработки по интерфейсу" />
-    <option name="LAST_COMMIT_MESSAGE" value="мелкие доработки по интерфейсу" />
+    <MESSAGE value="из анализа исключены глаголы в 3 роде" />
+    <option name="LAST_COMMIT_MESSAGE" value="из анализа исключены глаголы в 3 роде" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
