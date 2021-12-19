@@ -46,22 +46,22 @@ public class Gui extends JFrame {
     static String send_to;
     static JScrollPane scrollPane;
     static JTable table;
-    static JTable table_for_analysis;
+    static JTable tableForAnalysis;
     static DefaultTableModel model;
-    static DefaultTableModel model_for_analysis;
+    static DefaultTableModel modelForAnalysis;
     static JTextField topKeyword;
     static JTextField sendEmailTo;
-    static JTextField jtf_add_to_list;
+    static JTextField addKeywordToList;
     static JTextField passwordField;
-    static JTextArea animation_status;
+    static JTextArea animationStatus;
     static JComboBox<String> keywordsCbox;
     static JComboBox<String> newsIntervalCbox;
     static JLabel labelSign;
     static JLabel labelSum;
     static JLabel labelInfo;
     static JLabel timeLbl;
-    static JLabel search_animation;
-    static JLabel connect_to_bd_label;
+    static JLabel searchAnimation;
+    static JLabel connectToBdLabel;
     static JLabel lblLogSourceSqlite;
     static JButton searchBtnTop;
     static JButton searchBtnBottom;
@@ -109,7 +109,7 @@ public class Gui extends JFrame {
             public void windowIconified(WindowEvent pEvent) {
                 guiInTray.set(true);
                 setVisible(false);
-                if (autoUpdateNewsBottom.getState()) animation_status.setText("");
+                if (autoUpdateNewsBottom.getState()) animationStatus.setText("");
             }
             // разворачивание из трея
             public void windowDeiconified(WindowEvent pEvent) {
@@ -231,7 +231,7 @@ public class Gui extends JFrame {
         getContentPane().add(scroll_for_analysis);
 
         String[] columns_for_analysis = {"total", "words", "del"};
-        model_for_analysis = new DefaultTableModel(new Object[][]{}, columns_for_analysis) {
+        modelForAnalysis = new DefaultTableModel(new Object[][]{}, columns_for_analysis) {
             final boolean[] column_for_analysis = new boolean[]{false, false, true};
             public boolean isCellEditable(int row, int column) {
                 return column_for_analysis[column];
@@ -245,39 +245,39 @@ public class Gui extends JFrame {
                 return this.types_unique[columnIndex];
             }
         };
-        table_for_analysis = new JTable(model_for_analysis);
-        JTableHeader header_for_analysis = table_for_analysis.getTableHeader();
+        tableForAnalysis = new JTable(modelForAnalysis);
+        JTableHeader header_for_analysis = tableForAnalysis.getTableHeader();
         header_for_analysis.setFont(new Font("Tahoma", Font.BOLD, 13));
         //Cell alignment
         DefaultTableCellRenderer renderer_for_analysis = new DefaultTableCellRenderer();
         renderer_for_analysis.setHorizontalAlignment(JLabel.CENTER);
-        table_for_analysis.getColumnModel().getColumn(0).setCellRenderer(renderer_for_analysis);
-        table_for_analysis.getColumnModel().getColumn(1).setCellRenderer(renderer_for_analysis);
-        table_for_analysis.getColumn("del").setCellRenderer(new ButtonColumn(table_for_analysis, 2));
-        table_for_analysis.setRowHeight(20);
-        table_for_analysis.setColumnSelectionAllowed(true);
-        table_for_analysis.setCellSelectionEnabled(true);
-        table_for_analysis.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
-        table_for_analysis.setFont(new Font("SansSerif", Font.PLAIN, 13));
-        table_for_analysis.getColumnModel().getColumn(0).setPreferredWidth(80);
-        table_for_analysis.getColumnModel().getColumn(1).setPreferredWidth(140);
-        table_for_analysis.getColumnModel().getColumn(2).setPreferredWidth(30);
+        tableForAnalysis.getColumnModel().getColumn(0).setCellRenderer(renderer_for_analysis);
+        tableForAnalysis.getColumnModel().getColumn(1).setCellRenderer(renderer_for_analysis);
+        tableForAnalysis.getColumn("del").setCellRenderer(new ButtonColumn(tableForAnalysis, 2));
+        tableForAnalysis.setRowHeight(20);
+        tableForAnalysis.setColumnSelectionAllowed(true);
+        tableForAnalysis.setCellSelectionEnabled(true);
+        tableForAnalysis.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+        tableForAnalysis.setFont(new Font("SansSerif", Font.PLAIN, 13));
+        tableForAnalysis.getColumnModel().getColumn(0).setPreferredWidth(80);
+        tableForAnalysis.getColumnModel().getColumn(1).setPreferredWidth(140);
+        tableForAnalysis.getColumnModel().getColumn(2).setPreferredWidth(30);
         // Colors
         //table_for_analysis.setForeground(Color.black);
         //table_for_analysis.setSelectionForeground(new Color(26, 79, 164));
         //table_for_analysis.setSelectionBackground(new Color(255, 255, 160));
-        scroll_for_analysis.setViewportView(table_for_analysis);
+        scroll_for_analysis.setViewportView(tableForAnalysis);
 
         // запуск поиска по слову из таблицы анализа
-        table_for_analysis.addMouseListener(new MouseAdapter() {
+        tableForAnalysis.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
                 if (e.getClickCount() == 2) {
-                    int row = table_for_analysis.convertRowIndexToModel(table_for_analysis.rowAtPoint(new Point(e.getX(), e.getY())));
-                    int col = table_for_analysis.columnAtPoint(new Point(e.getX(), e.getY()));
+                    int row = tableForAnalysis.convertRowIndexToModel(tableForAnalysis.rowAtPoint(new Point(e.getX(), e.getY())));
+                    int col = tableForAnalysis.columnAtPoint(new Point(e.getX(), e.getY()));
                     if (col == 1) {
                         //Gui.textField.getText().toLowerCase();
-                        Gui.topKeyword.setText((String) table_for_analysis.getModel().getValueAt(row, 1));
+                        Gui.topKeyword.setText((String) tableForAnalysis.getModel().getValueAt(row, 1));
                         searchBtnTop.doClick();
                         wasClickInTableForAnalysis.set(true);
                     }
@@ -327,7 +327,7 @@ public class Gui extends JFrame {
             try {
                 Search.isSearchFinished.set(true);
                 Search.isStop.set(true);
-                search_animation.setText("Stopped");
+                searchAnimation.setText("Stopped");
                 Common.console("status: search stopped");
                 searchBtnTop.setVisible(true);
                 stopBtnTop.setVisible(false);
@@ -353,7 +353,7 @@ public class Gui extends JFrame {
             try {
                 Search.isSearchFinished.set(true);
                 Search.isStop.set(true);
-                search_animation.setText("Stopped");
+                searchAnimation.setText("Stopped");
                 Common.console("status: search stopped");
                 searchBtnBottom.setVisible(true);
                 stopBtnBottom.setVisible(false);
@@ -386,7 +386,7 @@ public class Gui extends JFrame {
                 labelInfo.setText("");
                 Search.j = 1;
                 model.setRowCount(0);
-                model_for_analysis.setRowCount(0);
+                modelForAnalysis.setRowCount(0);
                 q = 0;
                 labelSum.setText("" + q);
                 Common.console("status: clear");
@@ -571,28 +571,28 @@ public class Gui extends JFrame {
         getContentPane().add(keywordsCbox);
 
         //Add to combobox
-        jtf_add_to_list = new JTextField();
+        addKeywordToList = new JTextField();
         //jtf_add_to_list.setForeground(Color.BLACK);
-        jtf_add_to_list.setFont(new Font("Serif", Font.PLAIN, 12));
+        addKeywordToList.setFont(new Font("Serif", Font.PLAIN, 12));
         //jtf_add_to_list.setBackground(Color.GRAY);
-        jtf_add_to_list.setBounds(321, 490, 57, 22);
-        getContentPane().add(jtf_add_to_list);
+        addKeywordToList.setBounds(321, 490, 57, 22);
+        getContentPane().add(addKeywordToList);
         //Add to combobox
-        JButton btn_add_to_list = new JButton("");
-        getContentPane().add(btn_add_to_list);
-        btn_add_to_list.addActionListener(e -> {
-            if (jtf_add_to_list.getText().length() > 0) {
-                Common.writeToConfig(jtf_add_to_list.getText(), "keyword");
-                keywordsCbox.addItem(jtf_add_to_list.getText());
-                jtf_add_to_list.setText("");
+        JButton btnKeywordToList = new JButton("");
+        getContentPane().add(btnKeywordToList);
+        btnKeywordToList.addActionListener(e -> {
+            if (addKeywordToList.getText().length() > 0) {
+                Common.writeToConfig(addKeywordToList.getText(), "keyword");
+                keywordsCbox.addItem(addKeywordToList.getText());
+                addKeywordToList.setText("");
             }
         });
-        btn_add_to_list.setIcon(create_ico);
-        btn_add_to_list.setBounds(384, 490, 24, 22);
+        btnKeywordToList.setIcon(create_ico);
+        btnKeywordToList.setBounds(384, 490, 24, 22);
 
         //Delete from combobox
-        JButton btn_del_from_list = new JButton("");
-        btn_del_from_list.addActionListener(e -> {
+        JButton btnDelFromList = new JButton("");
+        btnDelFromList.addActionListener(e -> {
             if (keywordsCbox.getItemCount() > 0) {
                 try {
                     String item = (String) keywordsCbox.getSelectedItem();
@@ -605,26 +605,26 @@ public class Gui extends JFrame {
             }
 
         });
-        btn_del_from_list.setIcon(delete_ico);
-        btn_del_from_list.setBounds(413, 490, 24, 22);
-        getContentPane().add(btn_del_from_list);
+        btnDelFromList.setIcon(delete_ico);
+        btnDelFromList.setBounds(413, 490, 24, 22);
+        getContentPane().add(btnDelFromList);
 
         //Console - textarea
-        animation_status = new JTextArea();
+        animationStatus = new JTextArea();
         // авто скроллинг
-        DefaultCaret caret = (DefaultCaret) animation_status.getCaret();
+        DefaultCaret caret = (DefaultCaret) animationStatus.getCaret();
         caret.setUpdatePolicy(DefaultCaret.ALWAYS_UPDATE);
-        animation_status.setCaretPosition(animation_status.getDocument().getLength());
-        animation_status.setAutoscrolls(true);
-        animation_status.setLineWrap(true);
-        animation_status.setEditable(false);
-        animation_status.setBounds(320, 360, 300, 120);
-        animation_status.setFont(new Font("Tahoma", Font.PLAIN, 11));
-        animation_status.setForeground(SystemColor.white);
-        animation_status.setBackground(new Color(83, 82, 82));
-        getContentPane().add(animation_status);
+        animationStatus.setCaretPosition(animationStatus.getDocument().getLength());
+        animationStatus.setAutoscrolls(true);
+        animationStatus.setLineWrap(true);
+        animationStatus.setEditable(false);
+        animationStatus.setBounds(320, 360, 300, 120);
+        animationStatus.setFont(new Font("Tahoma", Font.PLAIN, 11));
+        animationStatus.setForeground(SystemColor.white);
+        animationStatus.setBackground(new Color(83, 82, 82));
+        getContentPane().add(animationStatus);
         //Console - scroll
-        JScrollPane console_scroll = new JScrollPane(animation_status, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+        JScrollPane console_scroll = new JScrollPane(animationStatus, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
         console_scroll.setBounds(320, 360, 300, 120);
         getContentPane().add(console_scroll);
         //Console - label
@@ -641,16 +641,16 @@ public class Gui extends JFrame {
         clearConsoleBtn.setToolTipText("Clear the console");
         clearConsoleBtn.setBackground(new Color(179, 221, 254));
         clearConsoleBtn.setBounds(588, 490, 32, 23);
-        clearConsoleBtn.addActionListener(e -> animation_status.setText(""));
+        clearConsoleBtn.addActionListener(e -> animationStatus.setText(""));
         getContentPane().add(clearConsoleBtn);
 
         //Searching animation
-        search_animation = new JLabel();
-        search_animation.setForeground(new Color(255, 255, 153));
-        search_animation.setFont(new Font("Tahoma", Font.PLAIN, 11));
-        search_animation.setBackground(new Color(240, 255, 240));
-        search_animation.setBounds(10, 530, 80, 13);
-        getContentPane().add(search_animation);
+        searchAnimation = new JLabel();
+        searchAnimation.setForeground(new Color(255, 255, 153));
+        searchAnimation.setFont(new Font("Tahoma", Font.PLAIN, 11));
+        searchAnimation.setBackground(new Color(240, 255, 240));
+        searchAnimation.setBounds(10, 530, 80, 13);
+        getContentPane().add(searchAnimation);
 
         //Time label
         timeLbl = new JLabel();
@@ -948,13 +948,13 @@ public class Gui extends JFrame {
         getContentPane().add(queryTableBox);
 
         //label
-        connect_to_bd_label = new JLabel("<html><p style=\"color:#bfbfbf\">Connected to SQLite for word frequency analysis</p></html>");
-        connect_to_bd_label.setHorizontalAlignment(SwingConstants.LEFT);
-        connect_to_bd_label.setForeground(new Color(255, 255, 153));
-        connect_to_bd_label.setFont(new Font("Tahoma", Font.PLAIN, 11));
-        connect_to_bd_label.setBackground(new Color(240, 255, 240));
-        connect_to_bd_label.setBounds(670, 8, 130, 26);
-        getContentPane().add(connect_to_bd_label);
+        connectToBdLabel = new JLabel("<html><p style=\"color:#bfbfbf\">Connected to SQLite for word frequency analysis</p></html>");
+        connectToBdLabel.setHorizontalAlignment(SwingConstants.LEFT);
+        connectToBdLabel.setForeground(new Color(255, 255, 153));
+        connectToBdLabel.setFont(new Font("Tahoma", Font.PLAIN, 11));
+        connectToBdLabel.setBackground(new Color(240, 255, 240));
+        connectToBdLabel.setBounds(670, 8, 130, 26);
+        getContentPane().add(connectToBdLabel);
 
         // latest news
         filterNewsChbx = new Checkbox("only the latest news");

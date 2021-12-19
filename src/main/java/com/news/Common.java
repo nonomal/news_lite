@@ -158,16 +158,16 @@ public class Common {
             for (smi_number = 0; smi_number < smi_link.size(); ) {
                 try {
                     if (p_isSending.get()) return;
-                    Gui.search_animation.setText(p_text + "");
+                    Gui.searchAnimation.setText(p_text + "");
                     Thread.sleep(500);
                     if (p_isSending.get()) return;
-                    Gui.search_animation.setText(p_text + ".");
+                    Gui.searchAnimation.setText(p_text + ".");
                     Thread.sleep(500);
                     if (p_isSending.get()) return;
-                    Gui.search_animation.setText(p_text + "..");
+                    Gui.searchAnimation.setText(p_text + "..");
                     Thread.sleep(500);
                     if (p_isSending.get()) return;
-                    Gui.search_animation.setText(p_text + ".");
+                    Gui.searchAnimation.setText(p_text + ".");
                     Thread.sleep(500);
                     if (p_isSending.get()) return;
                 } catch (InterruptedException e) {
@@ -182,7 +182,7 @@ public class Common {
     public static void console(String p_console) {
         try {
             Thread.sleep(100);
-            Gui.animation_status.setText(Gui.animation_status.getText() + p_console + "\n");
+            Gui.animationStatus.setText(Gui.animationStatus.getText() + p_console + "\n");
             Thread.sleep(100);
         } catch (InterruptedException e) {
             e.printStackTrace();

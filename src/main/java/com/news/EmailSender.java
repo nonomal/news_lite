@@ -72,13 +72,13 @@ public class EmailSender {
             Gui.progressBar.setValue(100);
             Common.isSending.set(true);
             Main.LOGGER.log(Level.INFO, "Email has been sent");
-            Gui.search_animation.setText("sended");
+            Gui.searchAnimation.setText("sended");
             Gui.sendEmailBtn.setIcon(Gui.send3);
         } catch (MessagingException mex) {
             mex.printStackTrace();
             Common.console("status: e-mail wasn't send");
             Gui.progressBar.setValue(100);
-            Gui.search_animation.setText("not send");
+            Gui.searchAnimation.setText("not send");
             Common.isSending.set(true);
             Gui.passwordField.setText("");
         }

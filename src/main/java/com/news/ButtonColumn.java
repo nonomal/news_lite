@@ -60,7 +60,7 @@ class ButtonColumn extends AbstractCellEditor implements TableCellRenderer, Tabl
         SQLite sqlite = new SQLite();
         fireEditingStopped();
         int row_with_source = table.getSelectedRow();
-        int row_with_exlude_word = Gui.table_for_analysis.getSelectedRow();
+        int row_with_exlude_word = Gui.tableForAnalysis.getSelectedRow();
         int del_row_with_exlude_word = 0;
 
         // определяем активное окно
@@ -79,10 +79,10 @@ class ButtonColumn extends AbstractCellEditor implements TableCellRenderer, Tabl
 
         // окно таблицы с анализом частоты слов на основной панели (добавляем в базу)
         if (activeWindow == 1 && row_with_exlude_word != -1) {
-            row_with_exlude_word = Gui.table_for_analysis.convertRowIndexToModel(row_with_exlude_word);
-            String source = (String) Gui.model_for_analysis.getValueAt(row_with_exlude_word, 1);
+            row_with_exlude_word = Gui.tableForAnalysis.convertRowIndexToModel(row_with_exlude_word);
+            String source = (String) Gui.modelForAnalysis.getValueAt(row_with_exlude_word, 1);
             // удаление из диалогового окна
-            Gui.model_for_analysis.removeRow(row_with_exlude_word);
+            Gui.modelForAnalysis.removeRow(row_with_exlude_word);
             // добавление в базу данных и файл excluded.txt
             sqlite.insertNewExcludedWord(source);
         }

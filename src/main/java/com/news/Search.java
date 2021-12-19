@@ -46,7 +46,7 @@ public class Search {
             Gui.labelInfo.setText("");
             Search.j = 1;
             if (!Gui.guiInTray.get()) Gui.model.setRowCount(0);
-            if (!Gui.wasClickInTableForAnalysis.get()) Gui.model_for_analysis.setRowCount(0);
+            if (!Gui.wasClickInTableForAnalysis.get()) Gui.modelForAnalysis.setRowCount(0);
             newsCount = 0;
             Gui.labelSum.setText("" + newsCount);
             Search.isStop.set(false);
@@ -265,8 +265,8 @@ public class Search {
                 isSearchFinished.set(true);
                 Gui.progressBar.setValue(100);
                 Gui.table.setAutoCreateRowSorter(true);
-                Gui.table_for_analysis.setAutoCreateRowSorter(true);
-                Gui.search_animation.setText("total news: ");
+                Gui.tableForAnalysis.setAutoCreateRowSorter(true);
+                Gui.searchAnimation.setText("total news: ");
 
                 // итоги в трей
                 if (newsCount != 0 && newsCount != modelRowCount && Gui.guiInTray.get())
