@@ -60,6 +60,27 @@ public class Common {
                     writer.close();
                     break;
                 }
+                case "fontColorRed": {
+                    String text = "fontColorRed," + p_word + "\n";
+                    writer.write(text);
+                    writer.flush();
+                    writer.close();
+                    break;
+                }
+                case "fontColorGreen": {
+                    String text = "fontColorGreen," + p_word + "\n";
+                    writer.write(text);
+                    writer.flush();
+                    writer.close();
+                    break;
+                }
+                case "fontColorBlue": {
+                    String text = "fontColorBlue," + p_word + "\n";
+                    writer.write(text);
+                    writer.flush();
+                    writer.close();
+                    break;
+                }
                 case "email": {
                     String text = "email," + p_word;
                     writer.write(text.trim() + "\n");
@@ -253,6 +274,40 @@ public class Common {
                             break;
                         case "checkbox:filterNewsChbx":
                             Gui.filterNewsChbx.setState(Boolean.parseBoolean(f[1]));
+                            break;
+                    }
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    // Считывание сохранённого цвета шрифта из файла
+    static void getColorsSettingsFromFile() {
+        int linesAmount = Common.countLines(Main.settingsPath);
+        String[][] lines = new String[linesAmount][];
+
+        try (BufferedReader reader = new BufferedReader(
+                new InputStreamReader(new FileInputStream(Main.settingsPath), StandardCharsets.UTF_8))) {
+            String line;
+            int i = 0;
+
+            while ((line = reader.readLine()) != null && i < linesAmount) {
+                lines[i++] = line.split(",");
+            }
+
+            for (String[] f : lines) {
+                for (int j = 0; j < 1; j++) {
+                    switch (f[0]) {
+                        case "fontColorRed":
+                            Main.red = Integer.parseInt(f[1].trim());
+                            break;
+                        case "fontColorGreen":
+                            Main.green = Integer.parseInt(f[1].trim());
+                            break;
+                        case "fontColorBlue":
+                            Main.blue = Integer.parseInt(f[1].trim());
                             break;
                     }
                 }

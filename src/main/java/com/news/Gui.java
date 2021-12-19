@@ -512,6 +512,28 @@ public class Gui extends JFrame {
         });
         getContentPane().add(exportBtn);
 
+        // Выбор цвета шрифта в таблице
+        JButton fontColorBtn = new JButton("font color");
+        fontColorBtn.setBounds(564, 9, 30, 22);
+        fontColorBtn.addActionListener(e -> {
+            Color color = JColorChooser.showDialog(null, "Color", Color.black);
+            if (color != null) {
+                try {
+                    table.setForeground(color);
+                    Common.delSettings("fontColorRed");
+                    Common.delSettings("fontColorGreen");
+                    Common.delSettings("fontColorBlue");
+                    Common.writeToConfig(String.valueOf(color.getRed()), "fontColorRed");
+                    Common.writeToConfig(String.valueOf(color.getGreen()), "fontColorGreen");
+                    Common.writeToConfig(String.valueOf(color.getBlue()), "fontColorBlue");
+                } catch (IOException ex) {
+                    ex.printStackTrace();
+                }
+            }
+        });
+        getContentPane().add(fontColorBtn);
+
+
         /* BOTTOM SEARCH */
 
         //Add to combobox

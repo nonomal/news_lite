@@ -14,14 +14,18 @@ import java.util.logging.*;
 
 public class Main {
     static SimpleDateFormat date_format = new SimpleDateFormat("dd.MM.yyyy HH:mm:ss");
-    static String directoryPath = "C:\\Users\\Public\\Documents\\News\\";
+    static String directoryPath = System.getProperty("user.home") + File.separator + "News" + File.separator;
     static String settingsPath = directoryPath + "config.txt";
     static String logPath = directoryPath + "log.txt";
     public static final Logger LOGGER = Logger.getLogger("");
     static Calendar minPubDate = Calendar.getInstance();
+    static String fontTableColor;
+    static int red;
+    static int green;
+    static int blue;
     // Console search
     static AtomicBoolean isConsoleSearch = new AtomicBoolean(false);
-    static String emailToFromConsole; //= "rps_project@mail.ru"
+    static String emailToFromConsole;
     static int minutesIntervalForConsoleSearch; //60
     static String[] keywordsFromConsole;
 
@@ -89,7 +93,8 @@ public class Main {
             UIManager.put("ProgressBar.arc", 6);
             UIManager.put("Button.arc", 8);
             UIManager.put("Table.alternateRowColor", new Color(59, 59, 59));
-            UIManager.put("Table.foreground", Color.WHITE);
+            Common.getColorsSettingsFromFile();
+            UIManager.put("Table.foreground", new Color(red, green, blue));
             UIManager.put("TextField.background", Color.GRAY);
             UIManager.put("TextField.foreground", Color.BLACK);
             FlatHiberbeeDarkIJTheme.setup();
