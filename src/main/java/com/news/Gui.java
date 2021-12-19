@@ -42,6 +42,7 @@ public class Gui extends JFrame {
     static boolean isSelTitle = true;
     static boolean isSelLink = true;
     static boolean isOnlyLastNews = false;
+    static boolean isInKeywords = false;
     static String findWord = "";
     static String sendTo;
     static JScrollPane scrollPane;
@@ -582,8 +583,20 @@ public class Gui extends JFrame {
         getContentPane().add(btnKeywordToList);
         btnKeywordToList.addActionListener(e -> {
             if (addKeywordToList.getText().length() > 0) {
-                Common.writeToConfig(addKeywordToList.getText(), "keyword");
-                keywordsCbox.addItem(addKeywordToList.getText());
+                String word = addKeywordToList.getText();
+                for (int i = 0; i < keywordsCbox.getItemCount(); i++) {
+                    if (word.equals(keywordsCbox.getItemAt(i))){
+                        Common.console("info: список ключевых слов уже содержит: " + word);
+                        isInKeywords = true;
+                    } else {
+                        isInKeywords = false;
+                    }
+                }
+                if (!isInKeywords) {
+                    Common.writeToConfig(word, "keyword");
+                    keywordsCbox.addItem(word);
+                    isInKeywords = false;
+                }
                 addKeywordToList.setText("");
             }
         });
