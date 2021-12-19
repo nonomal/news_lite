@@ -80,7 +80,7 @@ public class Common {
                     String text = null;
                     switch (p_word) {
                         case "todayOrNotChbx":
-                            text = "checkbox:" + p_word + "," + Gui.todayOrNotChbx.getState() + "\n";
+                            text = "checkbox:" + p_word + "," + Gui.todayOrNotCbx.getState() + "\n";
                             break;
                         case "checkTitle":
                             text = "checkbox:" + p_word + "," + Gui.searchInTitleCbx.getState() + "\n";
@@ -243,7 +243,7 @@ public class Common {
                             keywordsList.add(f[1]);
                             break;
                         case "checkbox:todayOrNotChbx":
-                            Gui.todayOrNotChbx.setState(Boolean.parseBoolean(f[1]));
+                            Gui.todayOrNotCbx.setState(Boolean.parseBoolean(f[1]));
                             break;
                         case "checkbox:checkTitle":
                             Gui.searchInTitleCbx.setState(Boolean.parseBoolean(f[1]));

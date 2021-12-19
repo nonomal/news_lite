@@ -32,15 +32,15 @@ class ButtonColumn extends AbstractCellEditor implements TableCellRenderer, Tabl
         if (hasFocus) {
             renderButton.setForeground(table.getForeground());
             renderButton.setBackground(UIManager.getColor("Button.background"));
-            renderButton.setIcon(Gui.delete_ico);
+            renderButton.setIcon(Gui.deleteIco);
         } else if (isSelected) {
             renderButton.setForeground(table.getSelectionForeground());
             //renderButton.setBackground(table.getSelectionBackground());
-            renderButton.setIcon(Gui.delete_ico);
+            renderButton.setIcon(Gui.deleteIco);
         } else {
             renderButton.setForeground(table.getForeground());
             renderButton.setBackground(UIManager.getColor("Button.background"));
-            renderButton.setIcon(Gui.delete_ico);
+            renderButton.setIcon(Gui.deleteIco);
         }
         //renderButton.setText((value == null) ? ";" : value.toString() );
         return renderButton;

@@ -60,7 +60,7 @@ public class EmailSender {
         try {
             MimeMessage message = new MimeMessage(session);
             message.setFrom(new InternetAddress(from));
-            message.addRecipient(Message.RecipientType.TO, new InternetAddress(Gui.send_to));
+            message.addRecipient(Message.RecipientType.TO, new InternetAddress(Gui.sendTo));
             message.setSubject(subject);
 
             //Mail body

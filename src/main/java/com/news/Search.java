@@ -50,7 +50,7 @@ public class Search {
             newsCount = 0;
             Gui.labelSum.setText("" + newsCount);
             Search.isStop.set(false);
-            Gui.find_word = Gui.topKeyword.getText().toLowerCase();
+            Gui.findWord = Gui.topKeyword.getText().toLowerCase();
 
             if (pSearchType.equals("word")) {
                 Gui.searchBtnTop.setVisible(false);
@@ -109,7 +109,7 @@ public class Search {
                                 else checkDate = 0;
 
                                 if (pSearchType.equals("word")) {
-                                    if (title.toLowerCase().contains(Gui.find_word.toLowerCase()) && title.length() > 15 && checkDate == 1) {
+                                    if (title.toLowerCase().contains(Gui.findWord.toLowerCase()) && title.length() > 15 && checkDate == 1) {
 
                                         //отсеиваем новости, которые уже были найдены ранее
                                         if (sqlite.isTitleExists(Common.sha256(title + pubDate)) && SQLite.isConnectionToSQLite) {
@@ -123,7 +123,7 @@ public class Search {
                                         // вставка всех новостей в архив
                                         sqlite.insertAllTitles(title, pubDate.toString());
 
-                                        if (Gui.todayOrNotChbx.getState() && (date_diff != 0)) {
+                                        if (Gui.todayOrNotCbx.getState() && (date_diff != 0)) {
                                             newsCount++;
                                             Gui.labelSum.setText(String.valueOf(newsCount));
                                             dataForEmail.add(newsCount + ") " + title + "\n" + link + "\n" + newsDescribe + "\n" +
@@ -149,7 +149,7 @@ public class Search {
                                             }
                                             sqlite.insertTitleIn256(Common.sha256(title + pubDate));
 
-                                        } else if (!Gui.todayOrNotChbx.getState()) {
+                                        } else if (!Gui.todayOrNotCbx.getState()) {
                                             newsCount++;
                                             Gui.labelSum.setText(String.valueOf(newsCount));
                                             dataForEmail.add(newsCount + ") " + title + "\n" + link + "\n" + newsDescribe + "\n" +
@@ -189,7 +189,7 @@ public class Search {
                                             Date curent_date = new Date();
                                             int date_diff = Common.compareDatesOnly(curent_date, pubDate);
 
-                                            if (Gui.todayOrNotChbx.getState() && (date_diff != 0)) {
+                                            if (Gui.todayOrNotCbx.getState() && (date_diff != 0)) {
                                                 newsCount++;
                                                 Gui.labelSum.setText(String.valueOf(newsCount));
                                                 dataForEmail.add(newsCount + ") " + title + "\n" + link + "\n" + newsDescribe + "\n" +
@@ -214,7 +214,7 @@ public class Search {
                                                     }
                                                 }
                                                 sqlite.insertTitleIn256(Common.sha256(title + pubDate));
-                                            } else if (!Gui.todayOrNotChbx.getState()) {
+                                            } else if (!Gui.todayOrNotCbx.getState()) {
                                                 newsCount++;
                                                 Gui.labelSum.setText(String.valueOf(newsCount));
                                                 dataForEmail.add(newsCount + ") " + title + "\n" + link + "\n" + newsDescribe + "\n" +

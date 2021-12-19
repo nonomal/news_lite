@@ -26,24 +26,24 @@ public class Gui extends JFrame {
     ExportToExcel exp = new ExportToExcel();
     private final long autoStartTimer = 60000L; // 60 секунд
     static final String[] intervals = {"1 min", "5 min", "15 min", "30 min", "45 min", "1 hour", "2 hours", "4 hours", "8 hours", "12 hours", "24 hours", "48 hours"};
-    static ImageIcon logo_ico = new ImageIcon(Toolkit.getDefaultToolkit().createImage(Gui.class.getResource("/icons/logo.png")));
+    static ImageIcon logoIco = new ImageIcon(Toolkit.getDefaultToolkit().createImage(Gui.class.getResource("/icons/logo.png")));
     static ImageIcon send = new ImageIcon(Toolkit.getDefaultToolkit().createImage(Gui.class.getResource("/icons/send.png")));
     static ImageIcon send2 = new ImageIcon(Toolkit.getDefaultToolkit().createImage(Gui.class.getResource("/icons/send2.png")));
     static ImageIcon send3 = new ImageIcon(Toolkit.getDefaultToolkit().createImage(Gui.class.getResource("/icons/send3.png")));
-    static ImageIcon search_ico = new ImageIcon(Toolkit.getDefaultToolkit().createImage(Gui.class.getResource("/icons/search.png")));
-    static ImageIcon stop_ico = new ImageIcon(Toolkit.getDefaultToolkit().createImage(Gui.class.getResource("/icons/stop.png")));
-    static ImageIcon clear_ico = new ImageIcon(Toolkit.getDefaultToolkit().createImage(Gui.class.getResource("/icons/clear.png")));
-    static ImageIcon excel_ico = new ImageIcon(Toolkit.getDefaultToolkit().createImage(Gui.class.getResource("/icons/excel.png")));
-    static ImageIcon create_ico = new ImageIcon(Toolkit.getDefaultToolkit().createImage(Gui.class.getResource("/icons/create.png")));
-    static ImageIcon delete_ico = new ImageIcon(Toolkit.getDefaultToolkit().createImage(Gui.class.getResource("/icons/delete.png")));
+    static ImageIcon searchIco = new ImageIcon(Toolkit.getDefaultToolkit().createImage(Gui.class.getResource("/icons/search.png")));
+    static ImageIcon stopIco = new ImageIcon(Toolkit.getDefaultToolkit().createImage(Gui.class.getResource("/icons/stop.png")));
+    static ImageIcon clearIco = new ImageIcon(Toolkit.getDefaultToolkit().createImage(Gui.class.getResource("/icons/clear.png")));
+    static ImageIcon excelIco = new ImageIcon(Toolkit.getDefaultToolkit().createImage(Gui.class.getResource("/icons/excel.png")));
+    static ImageIcon createIco = new ImageIcon(Toolkit.getDefaultToolkit().createImage(Gui.class.getResource("/icons/create.png")));
+    static ImageIcon deleteIco = new ImageIcon(Toolkit.getDefaultToolkit().createImage(Gui.class.getResource("/icons/delete.png")));
     static int q = 1;
     static double timeStart;
     static double timeEnd;
     static boolean isSelTitle = true;
     static boolean isSelLink = true;
     static boolean isOnlyLastNews = false;
-    static String find_word = "";
-    static String send_to;
+    static String findWord = "";
+    static String sendTo;
     static JScrollPane scrollPane;
     static JTable table;
     static JTable tableForAnalysis;
@@ -71,7 +71,7 @@ public class Gui extends JFrame {
     static JButton smiBtn;
     static JButton logBtn;
     static JButton exclBtn;
-    static Checkbox todayOrNotChbx;
+    static Checkbox todayOrNotCbx;
     static Checkbox searchInTitleCbx;
     static Checkbox searchInLinkCbx;
     static Checkbox autoUpdateNewsTop;
@@ -88,7 +88,7 @@ public class Gui extends JFrame {
         setResizable(false);
         getContentPane().setBackground(new Color(42, 42, 42));
         setTitle("Avandy News");
-        setIconImage(logo_ico.getImage());
+        setIconImage(logoIco.getImage());
         setFont(new Font("SansSerif", Font.PLAIN, 12));
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setBounds(500, 100, 817, 585);
@@ -287,7 +287,7 @@ public class Gui extends JFrame {
         });
 
         //Keyword field
-        topKeyword = new JTextField(find_word);
+        topKeyword = new JTextField(findWord);
         topKeyword.setBounds(87, 9, 99, 21);
         topKeyword.setFont(new Font("Tahoma", Font.BOLD, 13));
         //topKeyword.setForeground(Color.BLACK);
@@ -296,7 +296,7 @@ public class Gui extends JFrame {
 
         //Search addNewSource
         searchBtnTop = new JButton("");
-        searchBtnTop.setIcon(search_ico);
+        searchBtnTop.setIcon(searchIco);
         searchBtnTop.setBackground(new Color(154, 237, 196));
         searchBtnTop.setFont(new Font("Tahoma", Font.BOLD, 10));
         searchBtnTop.setBounds(453, 8, 32, 23);
@@ -310,7 +310,7 @@ public class Gui extends JFrame {
 
         //Bottom search by keywords
         searchBtnBottom = new JButton("");
-        searchBtnBottom.setIcon(search_ico);
+        searchBtnBottom.setIcon(searchIco);
         searchBtnBottom.setFont(new Font("Tahoma", Font.BOLD, 10));
         searchBtnBottom.setBackground(new Color(154, 237, 196));
         searchBtnBottom.setBounds(546, 490, 32, 23);
@@ -320,7 +320,7 @@ public class Gui extends JFrame {
 
         //Stop addNewSource
         stopBtnTop = new JButton("");
-        stopBtnTop.setIcon(stop_ico);
+        stopBtnTop.setIcon(stopIco);
         stopBtnTop.setBackground(new Color(255, 208, 202));
         stopBtnTop.setBounds(453, 8, 32, 23);
         stopBtnTop.addActionListener(e -> {
@@ -346,7 +346,7 @@ public class Gui extends JFrame {
 
         //Stop addNewSource (bottom)
         stopBtnBottom = new JButton("");
-        stopBtnBottom.setIcon(stop_ico);
+        stopBtnBottom.setIcon(stopIco);
         stopBtnBottom.setBackground(new Color(255, 208, 202));
         stopBtnBottom.setBounds(546, 490, 32, 23);
         stopBtnBottom.addActionListener(e -> {
@@ -374,7 +374,7 @@ public class Gui extends JFrame {
         JButton clearBtnTop = new JButton();
         clearBtnTop.setToolTipText("Clear the list");
         clearBtnTop.setBackground(new Color(250, 128, 114));
-        clearBtnTop.setIcon(clear_ico);
+        clearBtnTop.setIcon(clearIco);
         clearBtnTop.setBounds(532, 8, 32, 23);
 
         clearBtnTop.addActionListener(e -> {
@@ -506,7 +506,7 @@ public class Gui extends JFrame {
         sendEmailBtn.addActionListener(e -> {
             if (model.getRowCount() > 0 && sendEmailTo.getText().contains("@")) {
                 Common.console("status: sending e-mail");
-                send_to = sendEmailTo.getText();
+                sendTo = sendEmailTo.getText();
                 Common.isSending.set(false);
                 Common.statusLabel(Common.isSending, "sending");
                 new Thread(Common::fill).start();
@@ -545,7 +545,7 @@ public class Gui extends JFrame {
 
         //Export to excel
         JButton exportBtn = new JButton();
-        exportBtn.setIcon(excel_ico);
+        exportBtn.setIcon(excelIco);
         exportBtn.setToolTipText("Export news to excel");
         exportBtn.setBackground(new Color(255, 251, 183));
         exportBtn.setBounds(492, 8, 32, 23);
@@ -587,7 +587,7 @@ public class Gui extends JFrame {
                 addKeywordToList.setText("");
             }
         });
-        btnKeywordToList.setIcon(create_ico);
+        btnKeywordToList.setIcon(createIco);
         btnKeywordToList.setBounds(384, 490, 24, 22);
 
         //Delete from combobox
@@ -605,7 +605,7 @@ public class Gui extends JFrame {
             }
 
         });
-        btnDelFromList.setIcon(delete_ico);
+        btnDelFromList.setIcon(deleteIco);
         btnDelFromList.setBounds(413, 490, 24, 22);
         getContentPane().add(btnDelFromList);
 
@@ -637,7 +637,7 @@ public class Gui extends JFrame {
 
         // Clear console
         JButton clearConsoleBtn = new JButton();
-        clearConsoleBtn.setIcon(clear_ico);
+        clearConsoleBtn.setIcon(clearIco);
         clearConsoleBtn.setToolTipText("Clear the console");
         clearConsoleBtn.setBackground(new Color(179, 221, 254));
         clearConsoleBtn.setBounds(588, 490, 32, 23);
@@ -670,13 +670,13 @@ public class Gui extends JFrame {
         getContentPane().add(progressBar);
 
         // Today or not
-        todayOrNotChbx = new Checkbox("News in the last");
-        todayOrNotChbx.setState(true);
-        todayOrNotChbx.setForeground(Color.WHITE);
-        todayOrNotChbx.setFont(new Font("Arial", Font.PLAIN, 11));
-        todayOrNotChbx.setBounds(192, 10, 95, 20);
-        todayOrNotChbx.addItemListener(e -> newsIntervalCbox.setEnabled(todayOrNotChbx.getState()));
-        getContentPane().add(todayOrNotChbx);
+        todayOrNotCbx = new Checkbox("News in the last");
+        todayOrNotCbx.setState(true);
+        todayOrNotCbx.setForeground(Color.WHITE);
+        todayOrNotCbx.setFont(new Font("Arial", Font.PLAIN, 11));
+        todayOrNotCbx.setBounds(192, 10, 95, 20);
+        todayOrNotCbx.addItemListener(e -> newsIntervalCbox.setEnabled(todayOrNotCbx.getState()));
+        getContentPane().add(todayOrNotCbx);
 
         // Интервалы для поиска новостей
         newsIntervalCbox = new JComboBox<>();
