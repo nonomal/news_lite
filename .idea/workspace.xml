@@ -10,7 +10,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="9e6d6f99-cebb-4fd8-99d4-ae1b59f22e89" name="Default Changelist" comment="мелкие доработки по интерфейсу">
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/news/EmailSender.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/news/EmailSender.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/news/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/news/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/news/SQLite.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/news/SQLite.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/news.db" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/news.db" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -100,20 +103,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1616704248449</updated>
-    </task>
-    <task id="LOCAL-00073" summary="upd_23_06_21_1">
-      <created>1624480693071</created>
-      <option name="number" value="00073" />
-      <option name="presentableId" value="LOCAL-00073" />
-      <option name="project" value="LOCAL" />
-      <updated>1624480693071</updated>
-    </task>
-    <task id="LOCAL-00074" summary="upd_24_06_21_1">
-      <created>1624539097430</created>
-      <option name="number" value="00074" />
-      <option name="presentableId" value="LOCAL-00074" />
-      <option name="project" value="LOCAL" />
-      <updated>1624539097430</updated>
     </task>
     <task id="LOCAL-00075" summary="upd_24_06_21_2">
       <created>1624541584556</created>
@@ -444,7 +433,21 @@
       <option name="project" value="LOCAL" />
       <updated>1639861083903</updated>
     </task>
-    <option name="localTasksCounter" value="122" />
+    <task id="LOCAL-00122" summary="мелкие доработки по интерфейсу">
+      <created>1639861251253</created>
+      <option name="number" value="00122" />
+      <option name="presentableId" value="LOCAL-00122" />
+      <option name="project" value="LOCAL" />
+      <updated>1639861251253</updated>
+    </task>
+    <task id="LOCAL-00123" summary="мелкие доработки по интерфейсу">
+      <created>1639861356464</created>
+      <option name="number" value="00123" />
+      <option name="presentableId" value="LOCAL-00123" />
+      <option name="project" value="LOCAL" />
+      <updated>1639861356464</updated>
+    </task>
+    <option name="localTasksCounter" value="124" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">

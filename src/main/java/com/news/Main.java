@@ -92,7 +92,6 @@ public class Main {
             UIManager.put("Table.foreground", Color.WHITE);
             UIManager.put("TextField.background", Color.GRAY);
             UIManager.put("TextField.foreground", Color.BLACK);
-            //FlatLightLaf.setup();
             FlatHiberbeeDarkIJTheme.setup();
 
             new Gui();

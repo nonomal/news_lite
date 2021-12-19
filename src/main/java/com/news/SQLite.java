@@ -37,6 +37,9 @@ class SQLite {
                     " and title not in (select word from exclude)" +
                     " and title not in (select present from verbs)" +
                     " and title not in (select past from verbs)" +
+                    " and title not in (select verb_female from verbs)" +
+                    " and title not in (select past_many from verbs)" +
+                    " and title not in (select past_it from verbs)" +
                     " order by SUM desc";
             ResultSet rs = st.executeQuery(query);
             while (rs.next()) {
