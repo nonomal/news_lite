@@ -96,7 +96,7 @@ public class Main {
 
             new Gui();
             Common.getSettingsFromFile();
-            Gui.newsIntervalCbox.setEnabled(Gui.todayOrNotCbx.getState());
+            Gui.newsIntervalCbox.setVisible(Gui.todayOrNotCbx.getState());
             Gui.isOnlyLastNews = Gui.filterNewsChbx.getState();
             sqlite.openSQLiteConnection();
         } else {

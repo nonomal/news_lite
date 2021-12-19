@@ -9,9 +9,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9e6d6f99-cebb-4fd8-99d4-ae1b59f22e89" name="Default Changelist" comment="code style">
+    <list default="true" id="9e6d6f99-cebb-4fd8-99d4-ae1b59f22e89" name="Default Changelist" comment="создана проверка на дубли при добавлении слова в список ключевых слов">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/news/Gui.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/news/Gui.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/news/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/news/Main.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -101,13 +102,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1616704248449</updated>
-    </task>
-    <task id="LOCAL-00082" summary="upd_25_06_21_4">
-      <created>1624629242314</created>
-      <option name="number" value="00082" />
-      <option name="presentableId" value="LOCAL-00082" />
-      <option name="project" value="LOCAL" />
-      <updated>1624629242315</updated>
     </task>
     <task id="LOCAL-00083" summary="Revert &quot;upd_25_06_21_4&quot;&#10;&#10;This reverts commit f3593bfce82025b0490d49536001168b5a32da22.">
       <created>1624650915860</created>
@@ -445,7 +439,14 @@
       <option name="project" value="LOCAL" />
       <updated>1639913284343</updated>
     </task>
-    <option name="localTasksCounter" value="131" />
+    <task id="LOCAL-00131" summary="создана проверка на дубли при добавлении слова в список ключевых слов">
+      <created>1639914890480</created>
+      <option name="number" value="00131" />
+      <option name="presentableId" value="LOCAL-00131" />
+      <option name="project" value="LOCAL" />
+      <updated>1639914890480</updated>
+    </task>
+    <option name="localTasksCounter" value="132" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -463,7 +464,6 @@
     <ignored-roots>
       <path value="$PROJECT_DIR$" />
     </ignored-roots>
-    <MESSAGE value="upd_26_06_21_7" />
     <MESSAGE value="upd_26_06_21_8" />
     <MESSAGE value="upd_26_06_21_9" />
     <MESSAGE value="upd_26_06_21_10" />
@@ -488,7 +488,8 @@
     <MESSAGE value="из анализа исключены глаголы в 3 роде" />
     <MESSAGE value="доработаны исключаемые глаголы из анализа" />
     <MESSAGE value="code style" />
-    <option name="LAST_COMMIT_MESSAGE" value="code style" />
+    <MESSAGE value="создана проверка на дубли при добавлении слова в список ключевых слов" />
+    <option name="LAST_COMMIT_MESSAGE" value="создана проверка на дубли при добавлении слова в список ключевых слов" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -510,8 +511,18 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/com/news/Gui.java</url>
-          <line>186</line>
-          <option name="timeStamp" value="15" />
+          <line>291</line>
+          <option name="timeStamp" value="22" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/com/news/Gui.java</url>
+          <line>304</line>
+          <option name="timeStamp" value="25" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/com/news/Gui.java</url>
+          <line>707</line>
+          <option name="timeStamp" value="27" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

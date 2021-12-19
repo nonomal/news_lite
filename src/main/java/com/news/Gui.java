@@ -183,10 +183,6 @@ public class Gui extends JFrame {
         table.getColumnModel().getColumn(2).setPreferredWidth(500);
         table.getColumnModel().getColumn(3).setPreferredWidth(45);
         table.getColumnModel().getColumn(4).setMaxWidth(10);
-        // Colors
-        //table.setForeground(Color.black);
-        //table.setSelectionForeground(new Color(26, 79, 164));
-        //table.setSelectionBackground(new Color(255, 255, 160));
         scrollPane.setViewportView(table);
 
         table.addMouseListener(new MouseAdapter() {
@@ -218,21 +214,21 @@ public class Gui extends JFrame {
         });
 
         // Label for table for analysis
-        JLabel table2_label = new JLabel();
-        table2_label.setFont(new Font("Tahoma", Font.PLAIN, 11));
-        table2_label.setText("word frequency:");
-        table2_label.setToolTipText("matches more than " + sqlite.getWordFreqMatches());
-        table2_label.setForeground(new Color(255, 255, 153));
-        table2_label.setBounds(11, 343, 190, 14);
-        getContentPane().add(table2_label);
+        JLabel tableForAnalysisLabel = new JLabel();
+        tableForAnalysisLabel.setFont(new Font("Tahoma", Font.PLAIN, 11));
+        tableForAnalysisLabel.setText("word frequency:");
+        tableForAnalysisLabel.setToolTipText("matches more than " + sqlite.getWordFreqMatches());
+        tableForAnalysisLabel.setForeground(new Color(255, 255, 153));
+        tableForAnalysisLabel.setBounds(11, 343, 190, 14);
+        getContentPane().add(tableForAnalysisLabel);
 
         //Table for analysis
-        JScrollPane scroll_for_analysis = new JScrollPane();
-        scroll_for_analysis.setBounds(10, 360, 300, 120);
-        getContentPane().add(scroll_for_analysis);
+        JScrollPane scrollForAnalysis = new JScrollPane();
+        scrollForAnalysis.setBounds(10, 360, 300, 120);
+        getContentPane().add(scrollForAnalysis);
 
-        String[] columns_for_analysis = {"total", "words", "del"};
-        modelForAnalysis = new DefaultTableModel(new Object[][]{}, columns_for_analysis) {
+        String[] columnsForAnalysis = {"total", "words", "del"};
+        modelForAnalysis = new DefaultTableModel(new Object[][]{}, columnsForAnalysis) {
             final boolean[] column_for_analysis = new boolean[]{false, false, true};
             public boolean isCellEditable(int row, int column) {
                 return column_for_analysis[column];
@@ -250,10 +246,10 @@ public class Gui extends JFrame {
         JTableHeader header_for_analysis = tableForAnalysis.getTableHeader();
         header_for_analysis.setFont(new Font("Tahoma", Font.BOLD, 13));
         //Cell alignment
-        DefaultTableCellRenderer renderer_for_analysis = new DefaultTableCellRenderer();
-        renderer_for_analysis.setHorizontalAlignment(JLabel.CENTER);
-        tableForAnalysis.getColumnModel().getColumn(0).setCellRenderer(renderer_for_analysis);
-        tableForAnalysis.getColumnModel().getColumn(1).setCellRenderer(renderer_for_analysis);
+        DefaultTableCellRenderer rendererForAnalysis = new DefaultTableCellRenderer();
+        rendererForAnalysis.setHorizontalAlignment(JLabel.CENTER);
+        tableForAnalysis.getColumnModel().getColumn(0).setCellRenderer(rendererForAnalysis);
+        tableForAnalysis.getColumnModel().getColumn(1).setCellRenderer(rendererForAnalysis);
         tableForAnalysis.getColumn("del").setCellRenderer(new ButtonColumn(tableForAnalysis, 2));
         tableForAnalysis.setRowHeight(20);
         tableForAnalysis.setColumnSelectionAllowed(true);
@@ -263,11 +259,7 @@ public class Gui extends JFrame {
         tableForAnalysis.getColumnModel().getColumn(0).setPreferredWidth(80);
         tableForAnalysis.getColumnModel().getColumn(1).setPreferredWidth(140);
         tableForAnalysis.getColumnModel().getColumn(2).setPreferredWidth(30);
-        // Colors
-        //table_for_analysis.setForeground(Color.black);
-        //table_for_analysis.setSelectionForeground(new Color(26, 79, 164));
-        //table_for_analysis.setSelectionBackground(new Color(255, 255, 160));
-        scroll_for_analysis.setViewportView(tableForAnalysis);
+        scrollForAnalysis.setViewportView(tableForAnalysis);
 
         // запуск поиска по слову из таблицы анализа
         tableForAnalysis.addMouseListener(new MouseAdapter() {
@@ -277,7 +269,6 @@ public class Gui extends JFrame {
                     int row = tableForAnalysis.convertRowIndexToModel(tableForAnalysis.rowAtPoint(new Point(e.getX(), e.getY())));
                     int col = tableForAnalysis.columnAtPoint(new Point(e.getX(), e.getY()));
                     if (col == 1) {
-                        //Gui.textField.getText().toLowerCase();
                         Gui.topKeyword.setText((String) tableForAnalysis.getModel().getValueAt(row, 1));
                         searchBtnTop.doClick();
                         wasClickInTableForAnalysis.set(true);
@@ -291,8 +282,6 @@ public class Gui extends JFrame {
         topKeyword = new JTextField(findWord);
         topKeyword.setBounds(87, 9, 99, 21);
         topKeyword.setFont(new Font("Tahoma", Font.BOLD, 13));
-        //topKeyword.setForeground(Color.BLACK);
-        //topKeyword.setBackground(Color.GRAY);
         getContentPane().add(topKeyword);
 
         //Search addNewSource
@@ -300,7 +289,7 @@ public class Gui extends JFrame {
         searchBtnTop.setIcon(searchIco);
         searchBtnTop.setBackground(new Color(154, 237, 196));
         searchBtnTop.setFont(new Font("Tahoma", Font.BOLD, 10));
-        searchBtnTop.setBounds(453, 8, 32, 23);
+        searchBtnTop.setBounds(192, 9, 30, 22);
         getContentPane().add(searchBtnTop);
         // Search by Enter
         getRootPane().setDefaultButton(searchBtnTop);
@@ -309,21 +298,11 @@ public class Gui extends JFrame {
         //searchBtnTop.addActionListener(e -> new Thread(Search::mainSearch).start());
         searchBtnTop.addActionListener(e -> new Thread(() -> search.mainSearch("word")).start());
 
-        //Bottom search by keywords
-        searchBtnBottom = new JButton("");
-        searchBtnBottom.setIcon(searchIco);
-        searchBtnBottom.setFont(new Font("Tahoma", Font.BOLD, 10));
-        searchBtnBottom.setBackground(new Color(154, 237, 196));
-        searchBtnBottom.setBounds(546, 490, 32, 23);
-        //searchBtnBottom.addActionListener(e -> new Thread(Search::keywordsSearch).start());
-        searchBtnBottom.addActionListener(e -> new Thread(() -> search.mainSearch("words")).start());
-        getContentPane().add(searchBtnBottom);
-
         //Stop addNewSource
         stopBtnTop = new JButton("");
         stopBtnTop.setIcon(stopIco);
         stopBtnTop.setBackground(new Color(255, 208, 202));
-        stopBtnTop.setBounds(453, 8, 32, 23);
+        stopBtnTop.setBounds(192, 9, 30, 22);
         stopBtnTop.addActionListener(e -> {
             try {
                 Search.isSearchFinished.set(true);
@@ -345,38 +324,12 @@ public class Gui extends JFrame {
         });
         getContentPane().add(stopBtnTop);
 
-        //Stop addNewSource (bottom)
-        stopBtnBottom = new JButton("");
-        stopBtnBottom.setIcon(stopIco);
-        stopBtnBottom.setBackground(new Color(255, 208, 202));
-        stopBtnBottom.setBounds(546, 490, 32, 23);
-        stopBtnBottom.addActionListener(e -> {
-            try {
-                Search.isSearchFinished.set(true);
-                Search.isStop.set(true);
-                searchAnimation.setText("Stopped");
-                Common.console("status: search stopped");
-                searchBtnBottom.setVisible(true);
-                stopBtnBottom.setVisible(false);
-                Search.isSearchNow.set(false);
-                try {
-                    String q_begin = "ROLLBACK";
-                    Statement st_begin = SQLite.connection.createStatement();
-                    st_begin.executeUpdate(q_begin);
-                } catch (SQLException ignored) {
-                }
-            } catch (Exception t) {
-                Common.console("status: there is no threads to stop");
-            }
-        });
-        getContentPane().add(stopBtnBottom);
-
         //Clear addNewSource
         JButton clearBtnTop = new JButton();
         clearBtnTop.setToolTipText("Clear the list");
         clearBtnTop.setBackground(new Color(250, 128, 114));
         clearBtnTop.setIcon(clearIco);
-        clearBtnTop.setBounds(532, 8, 32, 23);
+        clearBtnTop.setBounds(634, 9, 30, 22);
 
         clearBtnTop.addActionListener(e -> {
             try {
@@ -482,8 +435,6 @@ public class Gui extends JFrame {
 
         //send e-mail to
         sendEmailTo = new JTextField("enter your email");
-        //sendEmailTo.setForeground(Color.BLACK);
-        //sendEmailTo.setBackground(Color.GRAY);
         sendEmailTo.setBounds(636, 365, 126, 21);
         sendEmailTo.setFont(new Font("Serif", Font.PLAIN, 12));
         getContentPane().add(sendEmailTo);
@@ -539,6 +490,7 @@ public class Gui extends JFrame {
         // Автоматическая отправка письма с результатами
         autoSendMessage = new Checkbox("auto send results");
         autoSendMessage.setState(false);
+        autoSendMessage.setFocusable(false);
         autoSendMessage.setForeground(Color.WHITE);
         autoSendMessage.setFont(new Font("Arial", Font.PLAIN, 11));
         autoSendMessage.setBounds(636, 388, 135, 20);
@@ -549,7 +501,7 @@ public class Gui extends JFrame {
         exportBtn.setIcon(excelIco);
         exportBtn.setToolTipText("Export news to excel");
         exportBtn.setBackground(new Color(255, 251, 183));
-        exportBtn.setBounds(492, 8, 32, 23);
+        exportBtn.setBounds(599, 9, 30, 22);
         exportBtn.addActionListener(e -> {
             if (model.getRowCount() != 0) {
                 new Thread(exp::export_from_RSS_to_excel).start();
@@ -560,28 +512,18 @@ public class Gui extends JFrame {
         });
         getContentPane().add(exportBtn);
 
-        //Keywords combobox
-        keywordsCbox = new JComboBox<>();
-        //keywordsCbox.setBackground(SystemColor.white);
-        //keywordsCbox.setMaximumRowCount(3);
-        keywordsCbox.setFont(new Font("Arial", Font.PLAIN, 11));
-        //comboBox.setModel(new DefaultComboBoxModel<>(ComboBoxValues));
-        keywordsCbox.setModel(new DefaultComboBoxModel<>());
-        keywordsCbox.setEditable(false);
-        keywordsCbox.setBounds(444, 490, 95, 22);
-        getContentPane().add(keywordsCbox);
+        /* BOTTOM SEARCH */
 
         //Add to combobox
         addKeywordToList = new JTextField();
-        //jtf_add_to_list.setForeground(Color.BLACK);
         addKeywordToList.setFont(new Font("Serif", Font.PLAIN, 12));
-        //jtf_add_to_list.setBackground(Color.GRAY);
-        addKeywordToList.setBounds(321, 490, 57, 22);
+        addKeywordToList.setBounds(321, 490, 60, 22);
         getContentPane().add(addKeywordToList);
+
         //Add to combobox
-        JButton btnKeywordToList = new JButton("");
-        getContentPane().add(btnKeywordToList);
-        btnKeywordToList.addActionListener(e -> {
+        JButton btnAddKeywordToList = new JButton("");
+        getContentPane().add(btnAddKeywordToList);
+        btnAddKeywordToList.addActionListener(e -> {
             if (addKeywordToList.getText().length() > 0) {
                 String word = addKeywordToList.getText();
                 for (int i = 0; i < keywordsCbox.getItemCount(); i++) {
@@ -600,10 +542,10 @@ public class Gui extends JFrame {
                 addKeywordToList.setText("");
             }
         });
-        btnKeywordToList.setIcon(createIco);
-        btnKeywordToList.setBounds(384, 490, 24, 22);
+        btnAddKeywordToList.setIcon(createIco);
+        btnAddKeywordToList.setBounds(386, 490, 30, 22);
 
-        //Delete from combobox
+        //Delete from combo box
         JButton btnDelFromList = new JButton("");
         btnDelFromList.addActionListener(e -> {
             if (keywordsCbox.getItemCount() > 0) {
@@ -619,8 +561,81 @@ public class Gui extends JFrame {
 
         });
         btnDelFromList.setIcon(deleteIco);
-        btnDelFromList.setBounds(413, 490, 24, 22);
+        btnDelFromList.setBounds(421, 490, 30, 22);
         getContentPane().add(btnDelFromList);
+
+        //Keywords combo box
+        keywordsCbox = new JComboBox<>();
+        keywordsCbox.setFont(new Font("Arial", Font.PLAIN, 11));
+        keywordsCbox.setModel(new DefaultComboBoxModel<>());
+        keywordsCbox.setEditable(false);
+        keywordsCbox.setBounds(456, 490, 90, 22);
+        getContentPane().add(keywordsCbox);
+
+        //Bottom search by keywords
+        searchBtnBottom = new JButton("");
+        searchBtnBottom.setIcon(searchIco);
+        searchBtnBottom.setFont(new Font("Tahoma", Font.BOLD, 10));
+        searchBtnBottom.setBackground(new Color(154, 237, 196));
+        searchBtnBottom.setBounds(552, 490, 30, 22);
+        //searchBtnBottom.addActionListener(e -> new Thread(Search::keywordsSearch).start());
+        searchBtnBottom.addActionListener(e -> new Thread(() -> search.mainSearch("words")).start());
+        getContentPane().add(searchBtnBottom);
+
+        //Stop addNewSource (bottom)
+        stopBtnBottom = new JButton("");
+        stopBtnBottom.setIcon(stopIco);
+        stopBtnBottom.setBackground(new Color(255, 208, 202));
+        stopBtnBottom.setBounds(552, 490, 30, 22);
+        stopBtnBottom.addActionListener(e -> {
+            try {
+                Search.isSearchFinished.set(true);
+                Search.isStop.set(true);
+                searchAnimation.setText("Stopped");
+                Common.console("status: search stopped");
+                searchBtnBottom.setVisible(true);
+                stopBtnBottom.setVisible(false);
+                Search.isSearchNow.set(false);
+                try {
+                    String q_begin = "ROLLBACK";
+                    Statement st_begin = SQLite.connection.createStatement();
+                    st_begin.executeUpdate(q_begin);
+                } catch (SQLException ignored) {
+                }
+            } catch (Exception t) {
+                Common.console("status: there is no threads to stop");
+            }
+        });
+        getContentPane().add(stopBtnBottom);
+
+        // Автозапуск поиска по ключевым словам каждые 30 секунд
+        autoUpdateNewsBottom = new Checkbox("auto upd.");
+        autoUpdateNewsBottom.setState(false);
+        autoUpdateNewsBottom.setFocusable(false);
+        autoUpdateNewsBottom.setForeground(Color.WHITE);
+        autoUpdateNewsBottom.setFont(new Font("Arial", Font.PLAIN, 11));
+        autoUpdateNewsBottom.setBounds(553, 516, 75, 20);
+        getContentPane().add(autoUpdateNewsBottom);
+        autoUpdateNewsBottom.addItemListener(e -> {
+            if (autoUpdateNewsBottom.getState()) {
+                timer = new Timer(true);
+                timerTask = new MyTimerTask();
+                timer.scheduleAtFixedRate(timerTask, 0, autoStartTimer);
+                searchBtnBottom.setVisible(false);
+                stopBtnBottom.setVisible(true);
+                autoUpdateNewsTop.setVisible(false);
+            } else {
+                timer.cancel();
+                searchBtnBottom.setVisible(true);
+                stopBtnBottom.setVisible(false);
+                autoUpdateNewsTop.setVisible(true);
+                try {
+                    stopBtnTop.doClick();
+                } catch (Exception ignored){
+
+                }
+            }
+        });
 
         //Console - textarea
         animationStatus = new JTextArea();
@@ -682,29 +697,31 @@ public class Gui extends JFrame {
         progressBar.setBounds(365, 349, 255, 3);
         getContentPane().add(progressBar);
 
-        // Today or not
-        todayOrNotCbx = new Checkbox("News in the last");
-        todayOrNotCbx.setState(true);
-        todayOrNotCbx.setForeground(Color.WHITE);
-        todayOrNotCbx.setFont(new Font("Arial", Font.PLAIN, 11));
-        todayOrNotCbx.setBounds(192, 10, 95, 20);
-        todayOrNotCbx.addItemListener(e -> newsIntervalCbox.setEnabled(todayOrNotCbx.getState()));
-        getContentPane().add(todayOrNotCbx);
-
         // Интервалы для поиска новостей
         newsIntervalCbox = new JComboBox<>();
         newsIntervalCbox.setFont(new Font("Arial", Font.PLAIN, 11));
-        newsIntervalCbox.setBounds(291, 10, 75, 20);
+        newsIntervalCbox.setBounds(378, 10, 75, 20);
         getContentPane().add(newsIntervalCbox);
         // запись интервалов в комбобокс
         Common.addIntervalsToCombobox(newsIntervalCbox);
 
+        // Today or not
+        todayOrNotCbx = new Checkbox("in the last");
+        todayOrNotCbx.setState(true);
+        todayOrNotCbx.setFocusable(false);
+        todayOrNotCbx.setForeground(Color.WHITE);
+        todayOrNotCbx.setFont(new Font("Arial", Font.PLAIN, 11));
+        todayOrNotCbx.setBounds(310, 10, 64, 20);
+        todayOrNotCbx.addItemListener(e -> newsIntervalCbox.setVisible(todayOrNotCbx.getState()));
+        getContentPane().add(todayOrNotCbx);
+
         // Автозапуск поиска по слову каждые 30 секунд
         autoUpdateNewsTop = new Checkbox("auto update");
         autoUpdateNewsTop.setState(false);
+        autoUpdateNewsTop.setFocusable(false);
         autoUpdateNewsTop.setForeground(Color.WHITE);
         autoUpdateNewsTop.setFont(new Font("Arial", Font.PLAIN, 11));
-        autoUpdateNewsTop.setBounds(372, 10, 75, 20);
+        autoUpdateNewsTop.setBounds(228, 10, 75, 20);
         getContentPane().add(autoUpdateNewsTop);
         autoUpdateNewsTop.addItemListener(e -> {
             if (autoUpdateNewsTop.getState()) {
@@ -723,44 +740,6 @@ public class Gui extends JFrame {
             }
         });
 
-        // Автозапуск поиска по словам каждые 30 секунд
-        autoUpdateNewsBottom = new Checkbox("auto update");
-        autoUpdateNewsBottom.setState(false);
-        autoUpdateNewsBottom.setForeground(Color.WHITE);
-        autoUpdateNewsBottom.setFont(new Font("Arial", Font.PLAIN, 11));
-        autoUpdateNewsBottom.setBounds(547, 516, 74, 20);
-        getContentPane().add(autoUpdateNewsBottom);
-        autoUpdateNewsBottom.addItemListener(e -> {
-            if (autoUpdateNewsBottom.getState()) {
-                timer = new Timer(true);
-                timerTask = new MyTimerTask();
-                timer.scheduleAtFixedRate(timerTask, 0, autoStartTimer);
-                searchBtnBottom.setVisible(false);
-                stopBtnBottom.setVisible(true);
-                autoUpdateNewsTop.setVisible(false);
-
-                searchBtnTop.setBounds(372, 8, 32, 23);
-                stopBtnTop.setBounds(372, 8, 32, 23);
-                exportBtn.setBounds(411, 8, 32, 23);
-                clearBtnTop.setBounds(451, 8, 32, 23);
-            } else {
-                timer.cancel();
-                searchBtnBottom.setVisible(true);
-                stopBtnBottom.setVisible(false);
-                autoUpdateNewsTop.setVisible(true);
-
-                searchBtnTop.setBounds(453, 8, 32, 23);
-                stopBtnTop.setBounds(453, 8, 32, 23);
-                exportBtn.setBounds(492, 8, 32, 23);
-                clearBtnTop.setBounds(532, 8, 32, 23);
-                try {
-                    stopBtnTop.doClick();
-                } catch (Exception ignored){
-
-                }
-            }
-        });
-
         // Источники, лог, sqlite лейбл
         lblLogSourceSqlite = new JLabel();
         lblLogSourceSqlite.setForeground(Color.WHITE);
@@ -775,7 +754,7 @@ public class Gui extends JFrame {
         exclBtn.setContentAreaFilled(true);
         exclBtn.setBorderPainted(false);
         exclBtn.setBackground(new Color(30, 27, 27));
-        exclBtn.setBounds(296, 343, 14, 14);
+        exclBtn.setBounds(297, 343, 14, 14);
         getContentPane().add(exclBtn);
         exclBtn.addActionListener((e) -> new Dialogs("exclDlg"));
         exclBtn.addMouseListener(new MouseAdapter() {
@@ -966,12 +945,13 @@ public class Gui extends JFrame {
         connectToBdLabel.setForeground(new Color(255, 255, 153));
         connectToBdLabel.setFont(new Font("Tahoma", Font.PLAIN, 11));
         connectToBdLabel.setBackground(new Color(240, 255, 240));
-        connectToBdLabel.setBounds(670, 8, 130, 26);
+        connectToBdLabel.setBounds(670, 7, 130, 26);
         getContentPane().add(connectToBdLabel);
 
         // latest news
         filterNewsChbx = new Checkbox("only the latest news");
         filterNewsChbx.setState(false);
+        filterNewsChbx.setFocusable(false);
         filterNewsChbx.setForeground(Color.WHITE);
         filterNewsChbx.setFont(new Font("Arial", Font.PLAIN, 11));
         filterNewsChbx.setBounds(636, 457, 135, 20);
