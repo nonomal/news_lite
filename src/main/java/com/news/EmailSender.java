@@ -123,6 +123,7 @@ public class EmailSender {
     public static void sendMailFromConsole(String text) {
         try {
             Properties p = new Properties();
+            smtp = getSmtp();
             p.put("mail.smtp.host", smtp);
             p.put("mail.smtp.socketFactory.port", 465);
             p.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
