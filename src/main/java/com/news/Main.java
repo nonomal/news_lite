@@ -82,6 +82,7 @@ public class Main {
     public static void main(String[] args) throws IOException { //args1 = email, args2 = interval, args3 = keyword1,.., argsN = keywordN
         keywordsFromConsole = new String[args.length];
         SQLite sqlite = new SQLite();
+        Common.getEmailSettingsFromFile();
         if (args.length == 0 ) {
             LOGGER.log(Level.INFO, "Application started");
 
