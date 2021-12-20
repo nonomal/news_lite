@@ -11,10 +11,11 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import javax.mail.PasswordAuthentication;
 
+// TODO: сделать для отправки пароль для консоли
 public class EmailSender {
-    private static final String from = "rps_project@mail.ru";
+    static String from;
     static String from_pwd;
-    private static final String smtp = "smtp.mail.ru";
+    private static String smtp;
     private static final String subject = ("News (" + Search.today + ")");
 
     void sendMessage() {
@@ -33,6 +34,39 @@ public class EmailSender {
         }
     }
 
+    // определение названия почтового сервиса
+    static String getMailServiceName() {
+        int index = EmailSender.from.indexOf(64);
+        return EmailSender.from.substring(index + 1);
+    }
+
+    public static String getSmtp() {
+        String serviceName = getMailServiceName();
+        switch(serviceName) {
+            case "mail.ru":
+            case "inbox.ru":
+            case "list.ru":
+            case "bk.ru":
+                smtp = "smtp.mail.ru";
+                break;
+            case "gmail.com":
+                smtp = "smtp.gmail.com";
+                break;
+            case "yahoo.com":
+                smtp = "smtp.mail.yahoo.com";
+                break;
+            case "yandex.ru":
+                smtp = "smtp.yandex.ru";
+                break;
+            case "rambler.ru":
+                smtp = "smtp.rambler.ru";
+                break;
+            default:
+                Common.console("info: mail is sent only from Mail.ru, Gmail, Yandex, Yahoo, Rambler");
+        }
+        return smtp;
+    }
+
     void sendMail(String text) {
         String to = Gui.sendEmailTo.getText().trim();
         // чтобы не было задвоений в настройках - удаляем старую почту и записываем новую при отправке
@@ -44,6 +78,7 @@ public class EmailSender {
         Common.writeToConfig(to, "email");
 
         Properties p = new Properties();
+        smtp = getSmtp();
         p.put("mail.smtp.host", smtp);
         p.put("mail.smtp.socketFactory.port", 465);
         p.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");

@@ -262,6 +262,9 @@ public class Common {
                         case "from_pwd":
                             EmailSender.from_pwd = f[1].trim();
                             break;
+                        case "from_adr":
+                            EmailSender.from = f[1].trim();
+                            break;
                         case "keyword":
                             Gui.keywordsCbox.addItem(f[1]);
                             keywordsList.add(f[1]);
