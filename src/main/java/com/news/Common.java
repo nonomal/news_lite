@@ -221,7 +221,6 @@ public class Common {
         }
     }
 
-
     // сохранение состояния окна в config.txt
     public static void saveState(){
         // delete old values

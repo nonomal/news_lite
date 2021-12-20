@@ -36,8 +36,7 @@ public class EmailSender {
 
     // определение названия почтового сервиса
     static String getMailServiceName() {
-        int index = EmailSender.from.indexOf(64);
-        return EmailSender.from.substring(index + 1);
+        return from.substring(from.indexOf(64) + 1);
     }
 
     public static String getSmtp() {
