@@ -27,69 +27,47 @@ public class Common {
     static ArrayList<Boolean> smi_is_active = new ArrayList<>();
     static ArrayList<String> excludedWords = new ArrayList<>();
 
-    // Уведомление в трее
-    static void trayMessage(String pMessage){
-        if (SystemTray.isSupported()) {
-            PopupMenu popup = new PopupMenu();
-            MenuItem exitItem = new MenuItem("Close");
-
-            SystemTray systemTray = SystemTray.getSystemTray();
-            Image image  = Toolkit.getDefaultToolkit().createImage(Common.class.getResource("/icons/message.png"));
-            TrayIcon trayIcon = new TrayIcon(image, pMessage, popup);
-            trayIcon.setImageAutoSize(true);
-            try {
-                systemTray.add(trayIcon);
-            } catch (AWTException e) {
-                e.printStackTrace();
-            }
-            trayIcon.displayMessage("Avandy News", pMessage, TrayIcon.MessageType.INFO);
-            //systemTray.remove(trayIcon);
-            exitItem.addActionListener(e -> systemTray.remove(trayIcon));
-            popup.add(exitItem);
-        }
-    }
-
     // Запись конфигураций приложения
     static void writeToConfig(String p_word, String p_type) {
         try (OutputStreamWriter writer = new OutputStreamWriter(new FileOutputStream(Main.settingsPath, true), StandardCharsets.UTF_8)) {
             switch (p_type) {
                 case "keyword": {
-                    String text = "keyword," + p_word + "\n";
+                    String text = "keyword=" + p_word + "\n";
                     writer.write(text);
                     writer.flush();
                     writer.close();
                     break;
                 }
                 case "fontColorRed": {
-                    String text = "fontColorRed," + p_word + "\n";
+                    String text = "fontColorRed=" + p_word + "\n";
                     writer.write(text);
                     writer.flush();
                     writer.close();
                     break;
                 }
                 case "fontColorGreen": {
-                    String text = "fontColorGreen," + p_word + "\n";
+                    String text = "fontColorGreen=" + p_word + "\n";
                     writer.write(text);
                     writer.flush();
                     writer.close();
                     break;
                 }
                 case "fontColorBlue": {
-                    String text = "fontColorBlue," + p_word + "\n";
+                    String text = "fontColorBlue=" + p_word + "\n";
                     writer.write(text);
                     writer.flush();
                     writer.close();
                     break;
                 }
                 case "email": {
-                    String text = "email," + p_word;
+                    String text = "email=" + p_word;
                     writer.write(text.trim() + "\n");
                     writer.flush();
                     writer.close();
                     break;
                 }
                 case "interval": {
-                    String text = "interval," + p_word.replace(" hour", "h")
+                    String text = "interval=" + p_word.replace(" hour", "h")
                             .replace("s", "")
                             .replace(" min", "m");
                     writer.write(text + "\n");
@@ -101,16 +79,16 @@ public class Common {
                     String text = null;
                     switch (p_word) {
                         case "todayOrNotChbx":
-                            text = "checkbox:" + p_word + "," + Gui.todayOrNotCbx.getState() + "\n";
+                            text = "checkbox:" + p_word + "=" + Gui.todayOrNotCbx.getState() + "\n";
                             break;
                         case "checkTitle":
-                            text = "checkbox:" + p_word + "," + Gui.searchInTitleCbx.getState() + "\n";
+                            text = "checkbox:" + p_word + "=" + Gui.searchInTitleCbx.getState() + "\n";
                             break;
                         case "checkLink":
-                            text = "checkbox:" + p_word + "," + Gui.searchInLinkCbx.getState() + "\n";
+                            text = "checkbox:" + p_word + "=" + Gui.searchInLinkCbx.getState() + "\n";
                             break;
                         case "filterNewsChbx":
-                            text = "checkbox:" + p_word + "," + Gui.filterNewsChbx.getState() + "\n";
+                            text = "checkbox:" + p_word + "=" + Gui.filterNewsChbx.getState() + "\n";
                             break;
                     }
                     if (text != null) writer.write(text);
@@ -124,7 +102,121 @@ public class Common {
         }
     }
 
-    // Запись интервалов в комбобокс
+    // Считывание настроек из файла в массив строк
+    static void getSettingsFromFile() {
+        int linesAmount = Common.countLines(Main.settingsPath);
+        String[][] lines = new String[linesAmount][];
+
+        try (BufferedReader reader = new BufferedReader(
+                new InputStreamReader(new FileInputStream(Main.settingsPath), StandardCharsets.UTF_8))) {
+            String line;
+            int i = 0;
+
+            while ((line = reader.readLine()) != null && i < linesAmount) {
+                lines[i++] = line.split("=");
+            }
+
+            for (String[] f : lines) {
+                for (int j = 0; j < 1; j++) {
+                    switch (f[0]) {
+                        case "interval":
+                            if (f[1].equals("1h")) {
+                                Gui.newsIntervalCbox.setSelectedItem(f[1].replace("h", "") + " hour");
+                            } else if (f[1].equals("1m") || f[1].equals("5m") || f[1].equals("15m")
+                                    || f[1].equals("30m") || f[1].equals("45m")) {
+                                Gui.newsIntervalCbox.setSelectedItem(f[1].replace("m", "") + " min");
+                            } else {
+                                Gui.newsIntervalCbox.setSelectedItem(f[1].replace("h", "") + " hours");
+                            }
+                            break;
+                        case "email":
+                            Gui.sendEmailTo.setText(f[1].trim());
+                            break;
+                        case "from_pwd":
+                            EmailSender.from_pwd = f[1].trim();
+                            break;
+                        case "from_adr":
+                            EmailSender.from = f[1].trim();
+                            break;
+                        case "keyword":
+                            Gui.keywordsCbox.addItem(f[1]);
+                            keywordsList.add(f[1]);
+                            break;
+                        case "checkbox:todayOrNotChbx":
+                            Gui.todayOrNotCbx.setState(Boolean.parseBoolean(f[1]));
+                            break;
+                        case "checkbox:checkTitle":
+                            Gui.searchInTitleCbx.setState(Boolean.parseBoolean(f[1]));
+                            break;
+                        case "checkbox:checkLink":
+                            Gui.searchInLinkCbx.setState(Boolean.parseBoolean(f[1]));
+                            break;
+                        case "checkbox:filterNewsChbx":
+                            Gui.filterNewsChbx.setState(Boolean.parseBoolean(f[1]));
+                            break;
+                    }
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    // Считывание сохранённого цвета шрифта из файла
+    static void getColorsSettingsFromFile() {
+        int linesAmount = Common.countLines(Main.settingsPath);
+        String[][] lines = new String[linesAmount][];
+
+        try (BufferedReader reader = new BufferedReader(
+                new InputStreamReader(new FileInputStream(Main.settingsPath), StandardCharsets.UTF_8))) {
+            String line;
+            int i = 0;
+
+            while ((line = reader.readLine()) != null && i < linesAmount) {
+                lines[i++] = line.split("=");
+            }
+
+            for (String[] f : lines) {
+                for (int j = 0; j < 1; j++) {
+                    switch (f[0]) {
+                        case "fontColorRed":
+                            Main.red = Integer.parseInt(f[1].trim());
+                            break;
+                        case "fontColorGreen":
+                            Main.green = Integer.parseInt(f[1].trim());
+                            break;
+                        case "fontColorBlue":
+                            Main.blue = Integer.parseInt(f[1].trim());
+                            break;
+                    }
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    // сохранение состояния окна в config.txt
+    public static void saveState(){
+        // delete old values
+        try {
+            Common.delSettings("interval");
+            Common.delSettings("checkbox");
+            Common.delSettings("email");
+        } catch (IOException io) {
+            io.printStackTrace();
+            Main.LOGGER.log(Level.WARNING, io.getMessage());
+        }
+        // write new values
+        Common.writeToConfig(Gui.sendEmailTo.getText(), "email");
+        Common.writeToConfig(String.valueOf(Gui.newsIntervalCbox.getSelectedItem()), "interval");
+        Common.writeToConfig("todayOrNotChbx", "checkbox");
+        Common.writeToConfig("checkTitle", "checkbox");
+        Common.writeToConfig("checkLink", "checkbox");
+        Common.writeToConfig("filterNewsChbx", "checkbox");
+    }
+
+    // Запись интервалов в combo box
     static void addIntervalsToCombobox(JComboBox<String> p_cbx_name) {
         for (String p_item : Gui.intervals) {
             p_cbx_name.addItem(p_item);
@@ -150,7 +242,7 @@ public class Common {
         return 0;
     }
 
-    // Удаление ключевого слова из комбобокса
+    // Удаление ключевого слова из combo box
     static void delSettings(String s) throws IOException {
         Path input = Paths.get(Main.settingsPath);
         Path temp = Files.createTempFile("temp", ".txt");
@@ -229,120 +321,6 @@ public class Common {
         }
     }
 
-    // Считывание настроек из файла в массив строк
-    static void getSettingsFromFile() {
-        int linesAmount = Common.countLines(Main.settingsPath);
-        String[][] lines = new String[linesAmount][];
-
-        try (BufferedReader reader = new BufferedReader(
-                new InputStreamReader(new FileInputStream(Main.settingsPath), StandardCharsets.UTF_8))) {
-            String line;
-            int i = 0;
-
-            while ((line = reader.readLine()) != null && i < linesAmount) {
-                lines[i++] = line.split(",");
-            }
-
-            for (String[] f : lines) {
-                for (int j = 0; j < 1; j++) {
-                    switch (f[0]) {
-                        case "interval":
-                            if (f[1].equals("1h")) {
-                                Gui.newsIntervalCbox.setSelectedItem(f[1].replace("h", "") + " hour");
-                            } else if (f[1].equals("1m") || f[1].equals("5m") || f[1].equals("15m")
-                                    || f[1].equals("30m") || f[1].equals("45m")) {
-                                Gui.newsIntervalCbox.setSelectedItem(f[1].replace("m", "") + " min");
-                            } else {
-                                Gui.newsIntervalCbox.setSelectedItem(f[1].replace("h", "") + " hours");
-                            }
-                            break;
-                        case "email":
-                            Gui.sendEmailTo.setText(f[1].trim());
-                            break;
-                        case "from_pwd":
-                            EmailSender.from_pwd = f[1].trim();
-                            break;
-                        case "from_adr":
-                            EmailSender.from = f[1].trim();
-                            break;
-                        case "keyword":
-                            Gui.keywordsCbox.addItem(f[1]);
-                            keywordsList.add(f[1]);
-                            break;
-                        case "checkbox:todayOrNotChbx":
-                            Gui.todayOrNotCbx.setState(Boolean.parseBoolean(f[1]));
-                            break;
-                        case "checkbox:checkTitle":
-                            Gui.searchInTitleCbx.setState(Boolean.parseBoolean(f[1]));
-                            break;
-                        case "checkbox:checkLink":
-                            Gui.searchInLinkCbx.setState(Boolean.parseBoolean(f[1]));
-                            break;
-                        case "checkbox:filterNewsChbx":
-                            Gui.filterNewsChbx.setState(Boolean.parseBoolean(f[1]));
-                            break;
-                    }
-                }
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    // Считывание сохранённого цвета шрифта из файла
-    static void getColorsSettingsFromFile() {
-        int linesAmount = Common.countLines(Main.settingsPath);
-        String[][] lines = new String[linesAmount][];
-
-        try (BufferedReader reader = new BufferedReader(
-                new InputStreamReader(new FileInputStream(Main.settingsPath), StandardCharsets.UTF_8))) {
-            String line;
-            int i = 0;
-
-            while ((line = reader.readLine()) != null && i < linesAmount) {
-                lines[i++] = line.split(",");
-            }
-
-            for (String[] f : lines) {
-                for (int j = 0; j < 1; j++) {
-                    switch (f[0]) {
-                        case "fontColorRed":
-                            Main.red = Integer.parseInt(f[1].trim());
-                            break;
-                        case "fontColorGreen":
-                            Main.green = Integer.parseInt(f[1].trim());
-                            break;
-                        case "fontColorBlue":
-                            Main.blue = Integer.parseInt(f[1].trim());
-                            break;
-                    }
-                }
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    // сохранение состояния окна в config.txt
-    public static void saveState(){
-        // delete old values
-        try {
-            Common.delSettings("interval");
-            Common.delSettings("checkbox");
-            Common.delSettings("email");
-        } catch (IOException io) {
-            io.printStackTrace();
-            Main.LOGGER.log(Level.WARNING, io.getMessage());
-        }
-        // write new values
-        Common.writeToConfig(Gui.sendEmailTo.getText(), "email");
-        Common.writeToConfig(String.valueOf(Gui.newsIntervalCbox.getSelectedItem()), "interval");
-        Common.writeToConfig("todayOrNotChbx", "checkbox");
-        Common.writeToConfig("checkTitle", "checkbox");
-        Common.writeToConfig("checkLink", "checkbox");
-        Common.writeToConfig("filterNewsChbx", "checkbox");
-    }
-
     // Считывание ключевых слов при добавлении/удалении в комбобоксе
     static String[] getKeywordsFromFile() {
         ArrayList<String> lines = new ArrayList<>();
@@ -353,8 +331,8 @@ public class Common {
             String line;
 
             while ((line = reader.readLine()) != null) {
-                if (line.startsWith("keyword,"))
-                    lines.add(line.replace("keyword,", ""));
+                if (line.startsWith("keyword="))
+                    lines.add(line.replace("keyword=", ""));
             }
             listOfKeywords = lines.toArray(new String[0]);
         } catch (IOException e) {
@@ -483,6 +461,28 @@ public class Common {
             return hexString.toString();
         } catch(Exception ex){
             throw new RuntimeException(ex);
+        }
+    }
+
+    // Уведомление в трее
+    static void trayMessage(String pMessage){
+        if (SystemTray.isSupported()) {
+            PopupMenu popup = new PopupMenu();
+            MenuItem exitItem = new MenuItem("Close");
+
+            SystemTray systemTray = SystemTray.getSystemTray();
+            Image image  = Toolkit.getDefaultToolkit().createImage(Common.class.getResource("/icons/message.png"));
+            TrayIcon trayIcon = new TrayIcon(image, pMessage, popup);
+            trayIcon.setImageAutoSize(true);
+            try {
+                systemTray.add(trayIcon);
+            } catch (AWTException e) {
+                e.printStackTrace();
+            }
+            trayIcon.displayMessage("Avandy News", pMessage, TrayIcon.MessageType.INFO);
+            //systemTray.remove(trayIcon);
+            exitItem.addActionListener(e -> systemTray.remove(trayIcon));
+            popup.add(exitItem);
         }
     }
 

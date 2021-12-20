@@ -44,6 +44,7 @@ public class EmailSender {
         String serviceName = getMailServiceName();
         switch(serviceName) {
             case "mail.ru":
+            case "internet.ru":
             case "inbox.ru":
             case "list.ru":
             case "bk.ru":

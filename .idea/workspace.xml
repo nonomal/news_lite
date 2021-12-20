@@ -9,11 +9,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9e6d6f99-cebb-4fd8-99d4-ae1b59f22e89" name="Default Changelist" comment="пароль считывается из файла config.txt">
+    <list default="true" id="9e6d6f99-cebb-4fd8-99d4-ae1b59f22e89" name="Default Changelist" comment="пароль и почта, с которой отправляется результат, считывается из файла config.txt">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/news/Common.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/news/Common.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/news/EmailSender.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/news/EmailSender.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/config.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/config.txt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -103,20 +102,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1616704248449</updated>
-    </task>
-    <task id="LOCAL-00090" summary="upd_26_06_21_4">
-      <created>1624694364704</created>
-      <option name="number" value="00090" />
-      <option name="presentableId" value="LOCAL-00090" />
-      <option name="project" value="LOCAL" />
-      <updated>1624694364704</updated>
-    </task>
-    <task id="LOCAL-00091" summary="upd_26_06_21_5">
-      <created>1624696932701</created>
-      <option name="number" value="00091" />
-      <option name="presentableId" value="LOCAL-00091" />
-      <option name="project" value="LOCAL" />
-      <updated>1624696932702</updated>
     </task>
     <task id="LOCAL-00092" summary="upd_26_06_21_6">
       <created>1624697562859</created>
@@ -447,7 +432,21 @@
       <option name="project" value="LOCAL" />
       <updated>1640002907305</updated>
     </task>
-    <option name="localTasksCounter" value="139" />
+    <task id="LOCAL-00139" summary="пароль и почта, с которой отправляется результат, считывается из файла config.txt">
+      <created>1640003996216</created>
+      <option name="number" value="00139" />
+      <option name="presentableId" value="LOCAL-00139" />
+      <option name="project" value="LOCAL" />
+      <updated>1640003996216</updated>
+    </task>
+    <task id="LOCAL-00140" summary="пароль и почта, с которой отправляется результат, считывается из файла config.txt">
+      <created>1640004021481</created>
+      <option name="number" value="00140" />
+      <option name="presentableId" value="LOCAL-00140" />
+      <option name="project" value="LOCAL" />
+      <updated>1640004021481</updated>
+    </task>
+    <option name="localTasksCounter" value="141" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -465,7 +464,6 @@
     <ignored-roots>
       <path value="$PROJECT_DIR$" />
     </ignored-roots>
-    <MESSAGE value="upd_30_06_21_2" />
     <MESSAGE value="upd_30_06_21_3" />
     <MESSAGE value="upd_01_07_21_1" />
     <MESSAGE value="upd_05_07_21_1" />
@@ -490,7 +488,8 @@
     <MESSAGE value="цвет шрифта теперь можно менять и он сохранится в config.txt" />
     <MESSAGE value="code style" />
     <MESSAGE value="пароль считывается из файла config.txt" />
-    <option name="LAST_COMMIT_MESSAGE" value="пароль считывается из файла config.txt" />
+    <MESSAGE value="пароль и почта, с которой отправляется результат, считывается из файла config.txt" />
+    <option name="LAST_COMMIT_MESSAGE" value="пароль и почта, с которой отправляется результат, считывается из файла config.txt" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
