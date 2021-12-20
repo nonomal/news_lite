@@ -1,4 +1,5 @@
 email,enter your email
+from_pwd,no_password
 interval,8h
 checkbox:todayOrNotChbx,true
 checkbox:checkTitle,true

@@ -259,6 +259,9 @@ public class Common {
                         case "email":
                             Gui.sendEmailTo.setText(f[1].trim());
                             break;
+                        case "from_pwd":
+                            EmailSender.from_pwd = f[1].trim();
+                            break;
                         case "keyword":
                             Gui.keywordsCbox.addItem(f[1]);
                             keywordsList.add(f[1]);

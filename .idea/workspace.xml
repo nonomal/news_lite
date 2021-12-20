@@ -9,10 +9,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9e6d6f99-cebb-4fd8-99d4-ae1b59f22e89" name="Default Changelist" comment="цвет шрифта теперь можно менять и он сохранится в config.txt">
+    <list default="true" id="9e6d6f99-cebb-4fd8-99d4-ae1b59f22e89" name="Default Changelist" comment="code style">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/news/Gui.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/news/Gui.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/news/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/news/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/news/Common.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/news/Common.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/news/EmailSender.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/news/EmailSender.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/config.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/config.txt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -102,13 +103,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1616704248449</updated>
-    </task>
-    <task id="LOCAL-00086" summary="upd_26_06_21_1">
-      <created>1624656376350</created>
-      <option name="number" value="00086" />
-      <option name="presentableId" value="LOCAL-00086" />
-      <option name="project" value="LOCAL" />
-      <updated>1624656376351</updated>
     </task>
     <task id="LOCAL-00087" summary="upd_26_06_21_2">
       <created>1624656534141</created>
@@ -446,7 +440,14 @@
       <option name="project" value="LOCAL" />
       <updated>1639986759440</updated>
     </task>
-    <option name="localTasksCounter" value="135" />
+    <task id="LOCAL-00135" summary="code style">
+      <created>1639998067171</created>
+      <option name="number" value="00135" />
+      <option name="presentableId" value="LOCAL-00135" />
+      <option name="project" value="LOCAL" />
+      <updated>1639998067171</updated>
+    </task>
+    <option name="localTasksCounter" value="136" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -484,12 +485,12 @@
     <MESSAGE value="мелкие доработки по интерфейсу" />
     <MESSAGE value="из анализа исключены глаголы в 3 роде" />
     <MESSAGE value="доработаны исключаемые глаголы из анализа" />
-    <MESSAGE value="code style" />
     <MESSAGE value="создана проверка на дубли при добавлении слова в список ключевых слов" />
     <MESSAGE value="доработан и переделан интерфейс" />
     <MESSAGE value="цвет шрифта основной таблицы теперь можно менять и он сохранится" />
     <MESSAGE value="цвет шрифта теперь можно менять и он сохранится в config.txt" />
-    <option name="LAST_COMMIT_MESSAGE" value="цвет шрифта теперь можно менять и он сохранится в config.txt" />
+    <MESSAGE value="code style" />
+    <option name="LAST_COMMIT_MESSAGE" value="code style" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -516,7 +517,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/com/news/Main.java</url>
-          <line>98</line>
+          <line>95</line>
           <option name="timeStamp" value="30" />
         </line-breakpoint>
       </breakpoints>
