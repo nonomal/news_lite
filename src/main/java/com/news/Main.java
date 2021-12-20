@@ -25,7 +25,7 @@ public class Main {
     // Console search
     static AtomicBoolean isConsoleSearch = new AtomicBoolean(false);
     static String emailToFromConsole;
-    static int minutesIntervalForConsoleSearch; //60
+    static int minutesIntervalForConsoleSearch;
     static String[] keywordsFromConsole;
 
     // создание директорий и файлов

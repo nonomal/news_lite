@@ -296,7 +296,6 @@ public class Gui extends JFrame {
         getRootPane().setDefaultButton(searchBtnTop);
         searchBtnTop.requestFocus();
         searchBtnTop.doClick();
-        //searchBtnTop.addActionListener(e -> new Thread(Search::mainSearch).start());
         searchBtnTop.addActionListener(e -> new Thread(() -> search.mainSearch("word")).start());
 
         //Stop addNewSource
@@ -541,13 +540,13 @@ public class Gui extends JFrame {
 
         /* BOTTOM SEARCH */
 
-        //Add to combobox
+        //Add to combo box
         addKeywordToList = new JTextField();
         addKeywordToList.setFont(new Font("Serif", Font.PLAIN, 12));
         addKeywordToList.setBounds(321, 490, 60, 22);
         getContentPane().add(addKeywordToList);
 
-        //Add to combobox
+        //Add to combo box
         JButton btnAddKeywordToList = new JButton("");
         getContentPane().add(btnAddKeywordToList);
         btnAddKeywordToList.addActionListener(e -> {
@@ -742,7 +741,7 @@ public class Gui extends JFrame {
         todayOrNotCbx.addItemListener(e -> newsIntervalCbox.setVisible(todayOrNotCbx.getState()));
         getContentPane().add(todayOrNotCbx);
 
-        // Автозапуск поиска по слову каждые 30 секунд
+        // Автозапуск поиска по слову каждые 60 секунд
         autoUpdateNewsTop = new Checkbox("auto update");
         autoUpdateNewsTop.setState(false);
         autoUpdateNewsTop.setFocusable(false);
@@ -776,7 +775,6 @@ public class Gui extends JFrame {
 
         // Диалоговое окно со списком исключенных слов из анализа
         exclBtn = new JButton();
-        //exclBtn.setText("excluded words");
         exclBtn.setFocusable(false);
         exclBtn.setContentAreaFilled(true);
         exclBtn.setBorderPainted(false);
