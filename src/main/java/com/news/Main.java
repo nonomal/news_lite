@@ -19,7 +19,6 @@ public class Main {
     static String logPath = directoryPath + "log.txt";
     public static final Logger LOGGER = Logger.getLogger("");
     static Calendar minPubDate = Calendar.getInstance();
-    static String fontTableColor;
     static int red;
     static int green;
     static int blue;

@@ -9,9 +9,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9e6d6f99-cebb-4fd8-99d4-ae1b59f22e89" name="Default Changelist" comment="доработан и переделан интерфейс">
+    <list default="true" id="9e6d6f99-cebb-4fd8-99d4-ae1b59f22e89" name="Default Changelist" comment="цвет шрифта основной таблицы теперь можно менять и он сохранится">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/news/Common.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/news/Common.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/news.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/news/Dialogs.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/news/Dialogs.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/news/Gui.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/news/Gui.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/news/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/news/Main.java" afterDir="false" />
     </list>
@@ -103,13 +104,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1616704248449</updated>
-    </task>
-    <task id="LOCAL-00084" summary="upd_25_06_21_6">
-      <created>1624651154565</created>
-      <option name="number" value="00084" />
-      <option name="presentableId" value="LOCAL-00084" />
-      <option name="project" value="LOCAL" />
-      <updated>1624651154565</updated>
     </task>
     <task id="LOCAL-00085" summary="upd_25_06_21_7">
       <created>1624652169256</created>
@@ -447,7 +441,14 @@
       <option name="project" value="LOCAL" />
       <updated>1639940451813</updated>
     </task>
-    <option name="localTasksCounter" value="133" />
+    <task id="LOCAL-00133" summary="цвет шрифта основной таблицы теперь можно менять и он сохранится">
+      <created>1639953899135</created>
+      <option name="number" value="00133" />
+      <option name="presentableId" value="LOCAL-00133" />
+      <option name="project" value="LOCAL" />
+      <updated>1639953899135</updated>
+    </task>
+    <option name="localTasksCounter" value="134" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -465,7 +466,6 @@
     <ignored-roots>
       <path value="$PROJECT_DIR$" />
     </ignored-roots>
-    <MESSAGE value="upd_26_06_21_9" />
     <MESSAGE value="upd_26_06_21_10" />
     <MESSAGE value="upd_30_06_21_1 + console search" />
     <MESSAGE value="upd_30_06_21_2" />
@@ -490,7 +490,8 @@
     <MESSAGE value="code style" />
     <MESSAGE value="создана проверка на дубли при добавлении слова в список ключевых слов" />
     <MESSAGE value="доработан и переделан интерфейс" />
-    <option name="LAST_COMMIT_MESSAGE" value="доработан и переделан интерфейс" />
+    <MESSAGE value="цвет шрифта основной таблицы теперь можно менять и он сохранится" />
+    <option name="LAST_COMMIT_MESSAGE" value="цвет шрифта основной таблицы теперь можно менять и он сохранится" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -512,17 +513,17 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/com/news/Gui.java</url>
-          <line>291</line>
+          <line>292</line>
           <option name="timeStamp" value="22" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/com/news/Gui.java</url>
-          <line>304</line>
+          <line>305</line>
           <option name="timeStamp" value="25" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/com/news/Gui.java</url>
-          <line>729</line>
+          <line>734</line>
           <option name="timeStamp" value="27" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
@@ -532,8 +533,13 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/com/news/Main.java</url>
-          <line>97</line>
+          <line>95</line>
           <option name="timeStamp" value="30" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/com/news/Gui.java</url>
+          <line>516</line>
+          <option name="timeStamp" value="31" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

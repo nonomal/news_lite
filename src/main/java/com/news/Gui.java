@@ -36,6 +36,7 @@ public class Gui extends JFrame {
     static ImageIcon excelIco = new ImageIcon(Toolkit.getDefaultToolkit().createImage(Gui.class.getResource("/icons/excel.png")));
     static ImageIcon createIco = new ImageIcon(Toolkit.getDefaultToolkit().createImage(Gui.class.getResource("/icons/create.png")));
     static ImageIcon deleteIco = new ImageIcon(Toolkit.getDefaultToolkit().createImage(Gui.class.getResource("/icons/delete.png")));
+    static ImageIcon fontIco = new ImageIcon(Toolkit.getDefaultToolkit().createImage(Gui.class.getResource("/icons/font.png")));
     static int q = 1;
     static double timeStart;
     static double timeEnd;
@@ -513,13 +514,17 @@ public class Gui extends JFrame {
         getContentPane().add(exportBtn);
 
         // Выбор цвета шрифта в таблице
-        JButton fontColorBtn = new JButton("font color");
+        JButton fontColorBtn = new JButton();
+        fontColorBtn.setToolTipText("Font color");
+        fontColorBtn.setBackground(new Color(189, 189, 189));
+        fontColorBtn.setIcon(fontIco);
         fontColorBtn.setBounds(564, 9, 30, 22);
         fontColorBtn.addActionListener(e -> {
             Color color = JColorChooser.showDialog(null, "Color", Color.black);
             if (color != null) {
                 try {
                     table.setForeground(color);
+                    tableForAnalysis.setForeground(color);
                     Common.delSettings("fontColorRed");
                     Common.delSettings("fontColorGreen");
                     Common.delSettings("fontColorBlue");

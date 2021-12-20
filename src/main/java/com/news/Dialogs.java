@@ -64,7 +64,7 @@ public class Dialogs extends JDialog implements KeyListener {
                 table.getColumnModel().getColumn(0).setMaxWidth(24);
                 table.getColumnModel().getColumn(2).setMaxWidth(30);
                 table.getColumnModel().getColumn(3).setMaxWidth(30);
-                //table.setForeground(Color.black);
+                //table.setForeground(new Color(Main.red, Main.green, Main.blue));
                 //table.setSelectionForeground(new Color(26, 79, 164));
                 //table.setSelectionBackground(new Color(255, 255, 160));
                 getContentPane().add(table, BorderLayout.CENTER);
@@ -135,7 +135,7 @@ public class Dialogs extends JDialog implements KeyListener {
                 table.getColumnModel().getColumn(0).setCellRenderer(renderer);
                 table.getColumnModel().getColumn(0).setMaxWidth(40);
                 table.getColumnModel().getColumn(2).setMaxWidth(40);
-                //table.setForeground(Color.black);
+                //table.setForeground(new Color(Main.red, Main.green, Main.blue));
                 //table.setSelectionForeground(new Color(26, 79, 164));
                 //table.setSelectionBackground(new Color(255, 255, 160));
                 getContentPane().add(table, BorderLayout.CENTER);
