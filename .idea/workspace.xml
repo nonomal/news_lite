@@ -9,10 +9,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9e6d6f99-cebb-4fd8-99d4-ae1b59f22e89" name="Default Changelist" comment="пароль и почта, с которой отправляется результат, считывается из файла config.txt">
+    <list default="true" id="9e6d6f99-cebb-4fd8-99d4-ae1b59f22e89" name="Default Changelist" comment="code style">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/news/Common.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/news/Common.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/news/EmailSender.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/news/EmailSender.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -102,27 +100,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1616704248449</updated>
-    </task>
-    <task id="LOCAL-00092" summary="upd_26_06_21_6">
-      <created>1624697562859</created>
-      <option name="number" value="00092" />
-      <option name="presentableId" value="LOCAL-00092" />
-      <option name="project" value="LOCAL" />
-      <updated>1624697562859</updated>
-    </task>
-    <task id="LOCAL-00093" summary="upd_26_06_21_7">
-      <created>1624697884464</created>
-      <option name="number" value="00093" />
-      <option name="presentableId" value="LOCAL-00093" />
-      <option name="project" value="LOCAL" />
-      <updated>1624697884465</updated>
-    </task>
-    <task id="LOCAL-00094" summary="upd_26_06_21_8">
-      <created>1624737347285</created>
-      <option name="number" value="00094" />
-      <option name="presentableId" value="LOCAL-00094" />
-      <option name="project" value="LOCAL" />
-      <updated>1624737347285</updated>
     </task>
     <task id="LOCAL-00095" summary="upd_26_06_21_9">
       <created>1624739523185</created>
@@ -446,7 +423,28 @@
       <option name="project" value="LOCAL" />
       <updated>1640004021481</updated>
     </task>
-    <option name="localTasksCounter" value="141" />
+    <task id="LOCAL-00141" summary="code style">
+      <created>1640005980265</created>
+      <option name="number" value="00141" />
+      <option name="presentableId" value="LOCAL-00141" />
+      <option name="project" value="LOCAL" />
+      <updated>1640005980266</updated>
+    </task>
+    <task id="LOCAL-00142" summary="code style">
+      <created>1640006037764</created>
+      <option name="number" value="00142" />
+      <option name="presentableId" value="LOCAL-00142" />
+      <option name="project" value="LOCAL" />
+      <updated>1640006037764</updated>
+    </task>
+    <task id="LOCAL-00143" summary="code style">
+      <created>1640006072259</created>
+      <option name="number" value="00143" />
+      <option name="presentableId" value="LOCAL-00143" />
+      <option name="project" value="LOCAL" />
+      <updated>1640006072259</updated>
+    </task>
+    <option name="localTasksCounter" value="144" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -486,10 +484,10 @@
     <MESSAGE value="доработан и переделан интерфейс" />
     <MESSAGE value="цвет шрифта основной таблицы теперь можно менять и он сохранится" />
     <MESSAGE value="цвет шрифта теперь можно менять и он сохранится в config.txt" />
-    <MESSAGE value="code style" />
     <MESSAGE value="пароль считывается из файла config.txt" />
     <MESSAGE value="пароль и почта, с которой отправляется результат, считывается из файла config.txt" />
-    <option name="LAST_COMMIT_MESSAGE" value="пароль и почта, с которой отправляется результат, считывается из файла config.txt" />
+    <MESSAGE value="code style" />
+    <option name="LAST_COMMIT_MESSAGE" value="code style" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -511,7 +509,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/com/news/Common.java</url>
-          <line>62</line>
+          <line>40</line>
           <option name="timeStamp" value="29" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
