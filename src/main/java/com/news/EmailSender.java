@@ -11,7 +11,6 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import javax.mail.PasswordAuthentication;
 
-// TODO: сделать для отправки пароль для консоли
 public class EmailSender {
     static String from;
     static String from_pwd;
@@ -71,7 +70,7 @@ public class EmailSender {
         String to = Gui.sendEmailTo.getText().trim();
         // чтобы не было задвоений в настройках - удаляем старую почту и записываем новую при отправке
         try {
-            Common.delSettings("email,");
+            Common.delSettings("email=");
         } catch (IOException e) {
             e.printStackTrace();
         }

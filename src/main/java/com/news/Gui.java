@@ -578,7 +578,7 @@ public class Gui extends JFrame {
                 try {
                     String item = (String) keywordsCbox.getSelectedItem();
                     keywordsCbox.removeItem(item);
-                    Common.delSettings("keyword," + Objects.requireNonNull(item));
+                    Common.delSettings("keyword=" + Objects.requireNonNull(item));
                 } catch (IOException io) {
                     io.printStackTrace();
                     Main.LOGGER.log(Level.WARNING, io.getMessage());
