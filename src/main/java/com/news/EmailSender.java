@@ -103,7 +103,7 @@ public class EmailSender {
     }
 
     void sendMail(String text) {
-        String to = Gui.sendEmailTo.getText().trim();
+        String to = Gui.sendTo;
         // чтобы не было задвоений в настройках - удаляем старую почту и записываем новую при отправке
         try {
             Common.delSettings("email=");
@@ -130,7 +130,7 @@ public class EmailSender {
         try {
             MimeMessage message = new MimeMessage(session);
             message.setFrom(new InternetAddress(from));
-            message.addRecipient(Message.RecipientType.TO, new InternetAddress(Gui.sendTo));
+            message.addRecipient(Message.RecipientType.TO, new InternetAddress(to));
             message.setSubject(subject);
 
             //Mail body
