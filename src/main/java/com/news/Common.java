@@ -190,38 +190,6 @@ public class Common {
         }
     }
 
-    // Считывание настроек почты из файла
-    static void getEmailSettingsFromFile() {
-        int linesAmount = Common.countLines(Main.settingsPath);
-        String[][] lines = new String[linesAmount][];
-
-        try (BufferedReader reader = new BufferedReader(
-                new InputStreamReader(new FileInputStream(Main.settingsPath), StandardCharsets.UTF_8))) {
-            String line;
-            int i = 0;
-
-            while ((line = reader.readLine()) != null && i < linesAmount) {
-                lines[i++] = line.split("=");
-            }
-
-            for (String[] f : lines) {
-                for (int j = 0; j < 1; j++) {
-                    switch (f[0]) {
-                        case "from_pwd":
-                            EmailSender.from_pwd = f[1].trim();
-                            break;
-                        case "from_adr":
-                            EmailSender.from = f[1].trim();
-                            break;
-                    }
-                }
-            }
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
     // сохранение состояния окна в config.txt
     public static void saveState(){
         // delete old values

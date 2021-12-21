@@ -1,6 +1,10 @@
 package com.news;
 
+import java.io.BufferedReader;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
 import java.util.Properties;
 import java.util.logging.Level;
 import javax.mail.Message;
@@ -12,11 +16,43 @@ import javax.mail.internet.MimeMessage;
 import javax.mail.PasswordAuthentication;
 
 public class EmailSender {
-    static String from;
-    static String from_pwd;
+    String from;
+    String from_pwd;
     private String smtp;
     private static final String subject = ("News (" + Search.today + ")");
 
+    // Считывание настроек почты из файла
+    void getEmailSettingsFromFile() {
+        int linesAmount = Common.countLines(Main.settingsPath);
+        String[][] lines = new String[linesAmount][];
+
+        try (BufferedReader reader = new BufferedReader(
+                new InputStreamReader(new FileInputStream(Main.settingsPath), StandardCharsets.UTF_8))) {
+            String line;
+            int i = 0;
+
+            while ((line = reader.readLine()) != null && i < linesAmount) {
+                lines[i++] = line.split("=");
+            }
+
+            for (String[] f : lines) {
+                for (int j = 0; j < 1; j++) {
+                    switch (f[0]) {
+                        case "from_pwd":
+                            from_pwd = f[1].trim();
+                            break;
+                        case "from_adr":
+                            from = f[1].trim();
+                            break;
+                    }
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    // Отправка письма
     void sendMessage() {
         if (!Main.isConsoleSearch.get()) {
             StringBuilder text = new StringBuilder();
