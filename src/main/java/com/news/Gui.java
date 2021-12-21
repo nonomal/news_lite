@@ -54,7 +54,6 @@ public class Gui extends JFrame {
     static JTextField topKeyword;
     static JTextField sendEmailTo;
     static JTextField addKeywordToList;
-    static JTextField passwordField;
     static JTextArea animationStatus;
     static JComboBox<String> keywordsCbox;
     static JComboBox<String> newsIntervalCbox;

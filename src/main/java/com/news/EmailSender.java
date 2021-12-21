@@ -16,10 +16,10 @@ import javax.mail.internet.MimeMessage;
 import javax.mail.PasswordAuthentication;
 
 public class EmailSender {
-    String from;
-    String from_pwd;
+    private String from;
+    private String from_pwd;
     private String smtp;
-    private static final String subject = ("News (" + Search.today + ")");
+    private final String subject = ("News (" + Search.today + ")");
 
     // Считывание настроек почты из файла
     void getEmailSettingsFromFile() {
@@ -147,11 +147,9 @@ public class EmailSender {
         } catch (MessagingException mex) {
             mex.printStackTrace();
             Common.console("status: e-mail wasn't send");
-            Common.console(mex.getMessage());
             Gui.progressBar.setValue(100);
             Gui.searchAnimation.setText("not send");
             Common.isSending.set(true);
-            Gui.passwordField.setText("");
         }
     }
 
