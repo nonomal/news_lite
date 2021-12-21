@@ -14,7 +14,7 @@ import javax.mail.PasswordAuthentication;
 public class EmailSender {
     static String from;
     static String from_pwd;
-    private static String smtp;
+    private String smtp;
     private static final String subject = ("News (" + Search.today + ")");
 
     void sendMessage() {
@@ -34,12 +34,12 @@ public class EmailSender {
     }
 
     // определение названия почтового сервиса
-    static String getMailServiceName() {
-        return from.substring(from.indexOf(64) + 1);
+    public String getMailServiceName(String email) {
+        return email.substring(email.indexOf(64) + 1);
     }
 
-    public static String getSmtp() {
-        String serviceName = getMailServiceName();
+    public String getSmtp() {
+        String serviceName = getMailServiceName(from);
         switch(serviceName) {
             case "mail.ru":
             case "internet.ru":
@@ -111,6 +111,7 @@ public class EmailSender {
         } catch (MessagingException mex) {
             mex.printStackTrace();
             Common.console("status: e-mail wasn't send");
+            Common.console(mex.getMessage());
             Gui.progressBar.setValue(100);
             Gui.searchAnimation.setText("not send");
             Common.isSending.set(true);
@@ -118,7 +119,7 @@ public class EmailSender {
         }
     }
 
-    public static void sendMailFromConsole(String text) {
+    public void sendMailFromConsole(String text) {
         try {
             Properties p = new Properties();
             smtp = getSmtp();
