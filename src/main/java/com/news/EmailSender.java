@@ -44,9 +44,13 @@ public class EmailSender {
                         case "from_adr":
                             from = f[1].trim();
                             break;
+//                        case "smtp":
+//                            smtp = f[1].trim();
+//                            break;
                     }
                 }
             }
+            //System.out.println(from + " " + from_pwd + " " + smtp);
         } catch (IOException e) {
             e.printStackTrace();
         }
