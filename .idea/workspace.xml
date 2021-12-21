@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ArtifactsWorkspaceSettings">
     <artifacts-to-build>
-      <artifact name="News:jar" />
+      <artifact name="news:jar" />
     </artifacts-to-build>
   </component>
   <component name="AutoImportSettings">
@@ -12,8 +12,6 @@
     <list default="true" id="9e6d6f99-cebb-4fd8-99d4-ae1b59f22e89" name="Default Changelist" comment="доработка отправки почты">
       <change beforePath="$PROJECT_DIR$/.idea/artifacts/News_jar.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/news/EmailSender.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/news/EmailSender.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/news/Gui.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/news/Gui.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -103,13 +101,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1616704248449</updated>
-    </task>
-    <task id="LOCAL-00099" summary="upd_30_06_21_3">
-      <created>1625085205280</created>
-      <option name="number" value="00099" />
-      <option name="presentableId" value="LOCAL-00099" />
-      <option name="project" value="LOCAL" />
-      <updated>1625085205280</updated>
     </task>
     <task id="LOCAL-00100" summary="upd_01_07_21_1">
       <created>1625087291489</created>
@@ -447,7 +438,14 @@
       <option name="project" value="LOCAL" />
       <updated>1640040251552</updated>
     </task>
-    <option name="localTasksCounter" value="148" />
+    <task id="LOCAL-00148" summary="доработка отправки почты">
+      <created>1640077421337</created>
+      <option name="number" value="00148" />
+      <option name="presentableId" value="LOCAL-00148" />
+      <option name="project" value="LOCAL" />
+      <updated>1640077421338</updated>
+    </task>
+    <option name="localTasksCounter" value="149" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">

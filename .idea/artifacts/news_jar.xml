@@ -1,0 +1,21 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="news:jar">
+    <output-path>D:/Downloads/!work/Seafile/files/java</output-path>
+    <root id="archive" name="news.jar">
+      <element id="module-output" name="News" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/javax/mail/mail/1.4.7/mail-1.4.7.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/xerial/sqlite-jdbc/3.36.0.2/sqlite-jdbc-3.36.0.2.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/jdom/jdom/1.0/jdom-1.0.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/net/sourceforge/jexcelapi/jxl/2.6.12/jxl-2.6.12.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/com/sun/mail/mailapi/2.0.1/mailapi-2.0.1.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/log4j/log4j/1.2.14/log4j-1.2.14.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/com/formdev/flatlaf-intellij-themes/1.6.5/flatlaf-intellij-themes-1.6.5.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/com/formdev/flatlaf/1.6.5/flatlaf-1.6.5.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/javax/activation/activation/1.1.1/activation-1.1.1.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/com/sun/mail/smtp/2.0.1/smtp-2.0.1.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/com/sun/activation/jakarta.activation/2.0.1/jakarta.activation-2.0.1.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/rome/rome/1.0/rome-1.0.jar" path-in-jar="/" />
+      <element id="dir-copy" path="$PROJECT_DIR$/src/main/resources/META-INF" />
+    </root>
+  </artifact>
+</component>
