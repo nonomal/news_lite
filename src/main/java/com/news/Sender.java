@@ -4,6 +4,13 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import java.util.Properties;
 
+/*
+создать объект
+Sender sender = new Sender("rps_project@mail.ru", "");
+запустить метод
+sender.send("Subject", text.toString(), "rps_project@mail.ru", "rps_project@mail.ru");
+*/
+
 public class Sender {
     private String user;
     private String pwd;
