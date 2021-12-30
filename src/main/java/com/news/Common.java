@@ -210,6 +210,70 @@ public class Common {
         Common.writeToConfig("filterNewsChbx", "checkbox");
     }
 
+    // определение SMTP исходящей почты
+    static String getSmtp() {
+        String smtp = "";
+        String serviceName = EmailSender.from.substring(EmailSender.from.indexOf(64) + 1);
+        switch(serviceName) {
+            case "mail.ru":
+            case "internet.ru":
+            case "inbox.ru":
+            case "list.ru":
+            case "bk.ru":
+                smtp = "smtp.mail.ru";
+                break;
+            case "gmail.com":
+                smtp = "smtp.gmail.com";
+                break;
+            case "yahoo.com":
+                smtp = "smtp.mail.yahoo.com";
+                break;
+            case "yandex.ru":
+                smtp = "smtp.yandex.ru";
+                break;
+            case "rambler.ru":
+                smtp = "smtp.rambler.ru";
+                break;
+            default:
+                Common.console("info: mail is sent only from Mail.ru, Gmail, Yandex, Yahoo, Rambler");
+        }
+        return smtp;
+    }
+
+    // Считывание настроек почты из файла
+    static void getEmailSettingsFromFile() {
+        int linesAmount = Common.countLines(Main.settingsPath);
+        String[][] lines = new String[linesAmount][];
+        try (BufferedReader reader = new BufferedReader(
+                new InputStreamReader(new FileInputStream(Main.settingsPath), StandardCharsets.UTF_8))) {
+            String line;
+            int i = 0;
+
+            while ((line = reader.readLine()) != null && i < linesAmount) {
+                lines[i++] = line.split("=");
+            }
+
+            for (String[] f : lines) {
+                for (int j = 0; j < 1; j++) {
+                    switch (f[0]) {
+                        case "from_pwd":
+                            EmailSender.from_pwd = f[1].trim();
+                            break;
+                        case "from_adr":
+                            EmailSender.from = f[1].trim();
+                            break;
+//                        case "smtp":
+//                            smtp = f[1].trim();
+//                            break;
+                    }
+                }
+            }
+            //System.out.println(from + " " + from_pwd + " " + smtp);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     // Запись интервалов в combo box
     static void addIntervalsToCombobox(JComboBox<String> p_cbx_name) {
         for (String p_item : Gui.intervals) {

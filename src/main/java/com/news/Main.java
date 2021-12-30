@@ -91,6 +91,7 @@ public class Main {
             UIManager.put("Component.arc", 10);
             UIManager.put("ProgressBar.arc", 6);
             UIManager.put("Button.arc", 8);
+            UIManager.put("Table.background", new Color(237, 237, 237));
             UIManager.put("Table.alternateRowColor", new Color(59, 59, 59));
             Common.getColorsSettingsFromFile();
             UIManager.put("Table.foreground", new Color(red, green, blue));

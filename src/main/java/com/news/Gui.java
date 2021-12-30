@@ -462,7 +462,6 @@ public class Gui extends JFrame {
                 Common.statusLabel(Common.isSending, "sending");
                 new Thread(Common::fill).start();
                 EmailSender email = new EmailSender();
-                email.getEmailSettingsFromFile();
                 new Thread(email::sendMessage).start();
             }
         });
