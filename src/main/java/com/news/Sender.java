@@ -1,7 +1,6 @@
 package com.news;
 
 import javax.mail.*;
-import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import java.util.Properties;
@@ -10,7 +9,7 @@ public class Sender {
     private static Properties p = new Properties();
 
     public static void send(String subject, String text, String fromEmail, String pwd, String toEmail) throws MessagingException {
-        String host = "smtp.gmail.com";
+        String host = Common.getSmtp();
         p.put("mail.smtp.starttls.enable", "true");
         p.put("mail.smtp.host", host);
         p.put("mail.smtp.user", fromEmail);
@@ -29,6 +28,5 @@ public class Sender {
         message.setSubject(subject);
         message.setText(text);
         Transport.send(message);
-
     }
 }
