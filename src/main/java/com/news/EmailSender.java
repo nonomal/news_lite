@@ -11,11 +11,11 @@ public class EmailSender {
 
     // Отправка письма
     void sendMessage() {
-        String to = Gui.sendEmailTo.getText();
         Common.getEmailSettingsFromFile();
         smtp = Common.getSmtp();
 
         if (!Main.isConsoleSearch.get()) {
+            String to = Gui.sendEmailTo.getText();
             // Отправка из GUI
             StringBuilder text = new StringBuilder();
             for (String s : Search.dataForEmail) {
@@ -52,7 +52,8 @@ public class EmailSender {
                 text.append(s).append("\n\n");
             }
             //sendMailFromConsole(text.toString());
-            Sender.send(subject, text.toString(), from, from_pwd, Main.emailToFromConsole);
+            //Sender.send(subject, text.toString(), from, from_pwd, Main.emailToFromConsole);
+            Sender.send(subject, text.toString(), "rss.news.api@gmail.com", "rss.news.api_007_!!!", "rps_project@mail.ru");
             Main.LOGGER.log(Level.INFO, "Email has been sent");
         }
     }
