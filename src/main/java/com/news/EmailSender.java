@@ -1,5 +1,6 @@
 package com.news;
 
+import javax.mail.MessagingException;
 import java.io.IOException;
 import java.util.logging.Level;
 
@@ -10,7 +11,7 @@ public class EmailSender {
     private final String subject = ("News (" + Search.today + ")");
 
     // Отправка письма
-    void sendMessage() {
+    void sendMessage(){
         Common.getEmailSettingsFromFile();
         smtp = Common.getSmtp();
 
@@ -51,8 +52,11 @@ public class EmailSender {
             for (String s : Search.dataForEmail) {
                 text.append(s).append("\n\n");
             }
-            //sendMailFromConsole(text.toString());
-            Sender.send(subject, text.toString(), from, from_pwd, Main.emailToFromConsole);
+            try {
+                Sender.send(subject, text.toString(), from, from_pwd, Main.emailToFromConsole);
+            } catch (MessagingException me) {
+                Common.console("status: e-mail wasn't send: " + me.getMessage());
+            }
             Main.LOGGER.log(Level.INFO, "Email has been sent");
         }
     }

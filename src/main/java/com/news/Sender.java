@@ -1,6 +1,7 @@
 package com.news;
 
 import javax.mail.*;
+import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import java.util.Properties;
@@ -8,7 +9,7 @@ import java.util.Properties;
 public class Sender {
     private static Properties p = new Properties();
 
-    public static void send(String subject, String text, String fromEmail, String pwd, String toEmail) {
+    public static void send(String subject, String text, String fromEmail, String pwd, String toEmail) throws MessagingException {
         String host = "smtp.gmail.com";
         p.put("mail.smtp.starttls.enable", "true");
         p.put("mail.smtp.host", host);
@@ -22,15 +23,12 @@ public class Sender {
                 return new PasswordAuthentication(fromEmail, pwd);
             }
         });
-        try {
-            Message message = new MimeMessage(session);
-            message.setFrom(new InternetAddress(fromEmail));
-            message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(toEmail));
-            message.setSubject(subject);
-            message.setText(text);
-            Transport.send(message);
-        } catch (MessagingException e) {
-            Common.console(e.getMessage());
-        }
+        Message message = new MimeMessage(session);
+        message.setFrom(new InternetAddress(fromEmail));
+        message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(toEmail));
+        message.setSubject(subject);
+        message.setText(text);
+        Transport.send(message);
+
     }
 }
