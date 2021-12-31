@@ -6,7 +6,7 @@ import javax.mail.internet.MimeMessage;
 import java.util.Properties;
 
 public class Sender {
-    private static Properties p = new Properties();
+    private static final Properties p = new Properties();
 
     public static void send(String subject, String text, String fromEmail, String pwd, String toEmail) throws MessagingException {
         String host = Common.getSmtp();
