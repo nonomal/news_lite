@@ -52,8 +52,7 @@ public class EmailSender {
                 text.append(s).append("\n\n");
             }
             //sendMailFromConsole(text.toString());
-            //Sender.send(subject, text.toString(), from, from_pwd, Main.emailToFromConsole);
-            Sender.send(subject, text.toString(), "rss.news.api@gmail.com", "", "rps_project@mail.ru");
+            Sender.send(subject, text.toString(), from, from_pwd, Main.emailToFromConsole);
             Main.LOGGER.log(Level.INFO, "Email has been sent");
         }
     }
