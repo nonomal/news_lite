@@ -11,12 +11,11 @@
   <component name="ChangeListManager">
     <list default="true" id="9e6d6f99-cebb-4fd8-99d4-ae1b59f22e89" name="Default Changelist" comment="доработка интерфейса">
       <change beforePath="$PROJECT_DIR$/.idea/artifacts/News_jar.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__com_sun_activation_jakarta_activation_2_0_1.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__com_sun_mail_mailapi_2_0_1.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/News.iml" beforeDir="false" afterPath="$PROJECT_DIR$/News.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/News.jar" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/news/EmailSender.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/news/EmailSender.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/news/EmailSenderOld.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/news/EmailSenderOld.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/news/Sender.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/news/Sender.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -92,20 +91,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1616704248449</updated>
-    </task>
-    <task id="LOCAL-00112" summary="upd_06_07_21_2">
-      <created>1625601520223</created>
-      <option name="number" value="00112" />
-      <option name="presentableId" value="LOCAL-00112" />
-      <option name="project" value="LOCAL" />
-      <updated>1625601520223</updated>
-    </task>
-    <task id="LOCAL-00113" summary="применил тему из FlatLaf">
-      <created>1639779882519</created>
-      <option name="number" value="00113" />
-      <option name="presentableId" value="LOCAL-00113" />
-      <option name="project" value="LOCAL" />
-      <updated>1639779882519</updated>
     </task>
     <task id="LOCAL-00114" summary="применил тему из FlatLaf">
       <created>1639780038193</created>
@@ -436,7 +421,21 @@
       <option name="project" value="LOCAL" />
       <updated>1640900801189</updated>
     </task>
-    <option name="localTasksCounter" value="161" />
+    <task id="LOCAL-00161" summary="доработка интерфейса">
+      <created>1640908254389</created>
+      <option name="number" value="00161" />
+      <option name="presentableId" value="LOCAL-00161" />
+      <option name="project" value="LOCAL" />
+      <updated>1640908254389</updated>
+    </task>
+    <task id="LOCAL-00162" summary="доработка интерфейса">
+      <created>1640908279536</created>
+      <option name="number" value="00162" />
+      <option name="presentableId" value="LOCAL-00162" />
+      <option name="project" value="LOCAL" />
+      <updated>1640908279536</updated>
+    </task>
+    <option name="localTasksCounter" value="163" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">

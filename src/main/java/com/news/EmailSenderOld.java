@@ -60,7 +60,6 @@ public class EmailSenderOld {
     // Отправка письма
     void sendMessage() {
         String to = Gui.sendTo;
-        Sender sender = new Sender(getSmtp());
 
         if (!Main.isConsoleSearch.get()) {
             StringBuilder text = new StringBuilder();
@@ -70,14 +69,14 @@ public class EmailSenderOld {
             //sendMail(text.toString());
 
             Common.console(from+ " " + from_pwd + " to=" + to + " " + getSmtp());
-            sender.send(subject, text.toString(), from, from_pwd, to);
+            Sender.send(subject, text.toString(), from, from_pwd, to);
         } else {
             StringBuilder text = new StringBuilder();
             for (String s : Search.dataForEmail) {
                 text.append(s).append("\n\n");
             }
             //sendMailFromConsole(text.toString());
-            sender.send(subject, text.toString(), from, from_pwd, Main.emailToFromConsole);
+            Sender.send(subject, text.toString(), from, from_pwd, Main.emailToFromConsole);
         }
     }
 

@@ -6,18 +6,17 @@ import javax.mail.internet.MimeMessage;
 import java.util.Properties;
 
 public class Sender {
-    private Properties p;
+    private static Properties p = new Properties();
 
-    public Sender(String fromSmtp) {
-        p = new Properties();
-        p.put("mail.smtp.host", fromSmtp);
-        p.put("mail.smtp.socketFactory.port", 465);
-        p.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
-        p.put("mail.smtp.auth", "true");
+    public static void send(String subject, String text, String fromEmail, String pwd, String toEmail) {
+        String host = "smtp.gmail.com";
+        p.put("mail.smtp.starttls.enable", "true");
+        p.put("mail.smtp.host", host);
+        p.put("mail.smtp.user", fromEmail);
+        p.put("mail.smtp.password", pwd);
         p.put("mail.smtp.port", "587");
-    }
+        p.put("mail.smtp.auth", "true");
 
-    public void send(String subject, String text, String fromEmail, String pwd, String toEmail) {
         Session session = Session.getDefaultInstance(p, new Authenticator() {
             protected PasswordAuthentication getPasswordAuthentication() {
                 return new PasswordAuthentication(fromEmail, pwd);

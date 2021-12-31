@@ -14,7 +14,6 @@ public class EmailSender {
         String to = Gui.sendEmailTo.getText();
         Common.getEmailSettingsFromFile();
         smtp = Common.getSmtp();
-        Sender sender = new Sender(smtp);
 
         if (!Main.isConsoleSearch.get()) {
             // Отправка из GUI
@@ -32,7 +31,7 @@ public class EmailSender {
                 Common.writeToConfig(to, "email");
 
                 //отправка
-                sender.send(subject, text.toString(), from, from_pwd, to);
+                Sender.send(subject, text.toString(), from, from_pwd, to);
                 Common.console("status: e-mail sent successfully");
                 Gui.progressBar.setValue(100);
                 Common.isSending.set(true);
@@ -53,7 +52,7 @@ public class EmailSender {
                 text.append(s).append("\n\n");
             }
             //sendMailFromConsole(text.toString());
-            sender.send(subject, text.toString(), from, from_pwd, Main.emailToFromConsole);
+            Sender.send(subject, text.toString(), from, from_pwd, Main.emailToFromConsole);
             Main.LOGGER.log(Level.INFO, "Email has been sent");
         }
     }
