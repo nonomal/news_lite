@@ -7,13 +7,11 @@ import java.util.logging.Level;
 public class EmailSender {
     static String from;
     static String from_pwd;
-    static String smtp;
     private final String subject = ("News (" + Search.today + ")");
 
     // Отправка письма
     void sendMessage(){
         Common.getEmailSettingsFromFile();
-        smtp = Common.getSmtp();
 
         if (!Main.isConsoleSearch.get()) {
             String to = Gui.sendEmailTo.getText();
