@@ -10,12 +10,12 @@ public class Sender {
 
     public static void send(String subject, String text, String fromEmail, String pwd, String toEmail) throws MessagingException {
         String host = Common.getSmtp();
+        p.put("mail.store.protocol", "imaps");
+        p.put("mail.smtp.auth", "true");
         p.put("mail.smtp.starttls.enable", "true");
         p.put("mail.smtp.host", host);
-        p.put("mail.smtp.user", fromEmail);
-        p.put("mail.smtp.password", pwd);
         p.put("mail.smtp.port", "587");
-        p.put("mail.smtp.auth", "true");
+
 
         Session session = Session.getDefaultInstance(p, new Authenticator() {
             protected PasswordAuthentication getPasswordAuthentication() {

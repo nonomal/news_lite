@@ -39,7 +39,7 @@ public class EmailSender {
                 Gui.sendEmailBtn.setIcon(Gui.send3);
             } catch (Exception mex) {
                 mex.printStackTrace();
-                Common.console("status: e-mail wasn't send: " + mex.getMessage());
+                Common.console("status: e-mail wasn't send: " + mex.getMessage() + "\n" + mex.getCause());
                 Gui.progressBar.setValue(100);
                 Gui.searchAnimation.setText("not send");
                 Common.isSending.set(true);
