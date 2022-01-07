@@ -10,10 +10,8 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.security.MessageDigest;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.Objects;
+import java.util.*;
+import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.logging.Level;
 import java.util.stream.Stream;
@@ -100,6 +98,22 @@ public class Common {
         } catch (IOException ex) {
             ex.printStackTrace();
         }
+    }
+
+    // Считывание ключевых слов при добавлении/удалении в комбо боксе
+    static String[] getKeywordsFromFile() {
+        ArrayList<String> lines = new ArrayList<>();
+        try {
+            List<String> orders = Files.readAllLines(Paths.get(Main.settingsPath));
+
+            for (String s : orders) {
+                if (s.startsWith("keyword="))
+                    lines.add(s.replace("keyword=", ""));
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return lines.toArray(new String[0]);
     }
 
     // Считывание настроек из файла в массив строк
@@ -286,9 +300,7 @@ public class Common {
         try {
             LineNumberReader reader = new LineNumberReader(new FileReader(p_path));
             int cnt;
-            //String lineRead = "";
             while (true) {
-                //if ((lineRead = reader.readLine()) == null) break;
                 if (reader.readLine() == null) break;
             }
             cnt = reader.getLineNumber();
@@ -379,37 +391,17 @@ public class Common {
         }
     }
 
-    // Считывание ключевых слов при добавлении/удалении в комбобоксе
-    static String[] getKeywordsFromFile() {
-        ArrayList<String> lines = new ArrayList<>();
-        String[] listOfKeywords = null;
-
-        try (BufferedReader reader = new BufferedReader(
-                new InputStreamReader(new FileInputStream(Main.settingsPath), StandardCharsets.UTF_8))) {
-            String line;
-
-            while ((line = reader.readLine()) != null) {
-                if (line.startsWith("keyword="))
-                    lines.add(line.replace("keyword=", ""));
-            }
-            listOfKeywords = lines.toArray(new String[0]);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return listOfKeywords;
-    }
-
     // Интервал поиска/таймера в секундах
     static int getInterval() {
         int minutes;
         if (Objects.requireNonNull(Gui.newsIntervalCbox.getSelectedItem()).toString().contains(" min")) {
             minutes = Integer.parseInt(Objects.requireNonNull(Gui.newsIntervalCbox
-                    .getSelectedItem())
+                            .getSelectedItem())
                     .toString()
                     .replace(" min", ""));
         } else {
             minutes = Integer.parseInt(Objects.requireNonNull(Gui.newsIntervalCbox
-                    .getSelectedItem())
+                            .getSelectedItem())
                     .toString()
                     .replace(" hour", "")
                     .replace("s", "")) * 60;
