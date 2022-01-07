@@ -101,8 +101,8 @@ public class Common {
     }
 
     // Считывание ключевых слов при добавлении/удалении в комбобоксе
-    static ArrayList<String> getKeywordsFromFile() {
-        ArrayList<String> keywords = new ArrayList<>();
+    static List<String> getKeywordsFromFile() {
+        List<String> keywords = new ArrayList<>();
         try {
             List<String> orders = Files.readAllLines(Paths.get(Main.settingsPath));
 
