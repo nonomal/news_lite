@@ -100,20 +100,20 @@ public class Common {
         }
     }
 
-    // Считывание ключевых слов при добавлении/удалении в комбо боксе
-    static String[] getKeywordsFromFile() {
-        ArrayList<String> lines = new ArrayList<>();
+    // Считывание ключевых слов при добавлении/удалении в комбобоксе
+    static ArrayList<String> getKeywordsFromFile() {
+        ArrayList<String> keywords = new ArrayList<>();
         try {
             List<String> orders = Files.readAllLines(Paths.get(Main.settingsPath));
 
             for (String s : orders) {
                 if (s.startsWith("keyword="))
-                    lines.add(s.replace("keyword=", ""));
+                    keywords.add(s.replace("keyword=", ""));
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return lines.toArray(new String[0]);
+        return keywords;
     }
 
     // Считывание настроек из файла в массив строк
