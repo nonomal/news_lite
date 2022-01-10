@@ -19,9 +19,12 @@ public class Main {
     static String logPath = directoryPath + "log.txt";
     public static final Logger LOGGER = Logger.getLogger("");
     static Calendar minPubDate = Calendar.getInstance();
-    static int red;
-    static int green;
-    static int blue;
+    static int fontRed;
+    static int fontGreen;
+    static int fontBlue;
+    static int backRed;
+    static int backGreen;
+    static int backBlue;
     // Console search
     static AtomicBoolean isConsoleSearch = new AtomicBoolean(false);
     static String emailToFromConsole;
@@ -91,10 +94,10 @@ public class Main {
             UIManager.put("Component.arc", 10);
             UIManager.put("ProgressBar.arc", 6);
             UIManager.put("Button.arc", 8);
-            UIManager.put("Table.background", new Color(237, 237, 237));
-            UIManager.put("Table.alternateRowColor", new Color(59, 59, 59));
             Common.getColorsSettingsFromFile();
-            UIManager.put("Table.foreground", new Color(red, green, blue));
+            UIManager.put("Table.background", new Color(backRed, backGreen, backBlue));
+            UIManager.put("Table.alternateRowColor", new Color(59, 59, 59));
+            UIManager.put("Table.foreground", new Color(fontRed, fontGreen, fontBlue));
             UIManager.put("TextField.background", Color.GRAY);
             UIManager.put("TextField.foreground", Color.BLACK);
             FlatHiberbeeDarkIJTheme.setup();

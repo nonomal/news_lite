@@ -37,6 +37,7 @@ public class Gui extends JFrame {
     static ImageIcon createIco = new ImageIcon(Toolkit.getDefaultToolkit().createImage(Gui.class.getResource("/icons/create.png")));
     static ImageIcon deleteIco = new ImageIcon(Toolkit.getDefaultToolkit().createImage(Gui.class.getResource("/icons/delete.png")));
     static ImageIcon fontIco = new ImageIcon(Toolkit.getDefaultToolkit().createImage(Gui.class.getResource("/icons/font.png")));
+    static ImageIcon bgIco = new ImageIcon(Toolkit.getDefaultToolkit().createImage(Gui.class.getResource("/icons/bg.png")));
     static int q = 1;
     static double timeStart;
     static double timeEnd;
@@ -62,7 +63,6 @@ public class Gui extends JFrame {
     static JLabel labelInfo;
     static JLabel timeLbl;
     static JLabel searchAnimation;
-    static JLabel connectToBdLabel;
     static JLabel lblLogSourceSqlite;
     static JButton searchBtnTop;
     static JButton searchBtnBottom;
@@ -536,6 +536,31 @@ public class Gui extends JFrame {
         });
         getContentPane().add(fontColorBtn);
 
+        // Выбор цвета фона
+        JButton backgroundColorBtn = new JButton();
+        backgroundColorBtn.setToolTipText("Background color");
+        backgroundColorBtn.setBackground(new Color(190, 251, 255));
+        backgroundColorBtn.setIcon(bgIco);
+        backgroundColorBtn.setBounds(655, 9, 30, 22);
+        backgroundColorBtn.addActionListener(e -> {
+            Color color = JColorChooser.showDialog(null, "Color", Color.black);
+            if (color != null) {
+                try {
+                    table.setBackground(color);
+                    //tableForAnalysis.setBackground(color);
+                    Common.delSettings("backgroundColorRed");
+                    Common.delSettings("backgroundColorGreen");
+                    Common.delSettings("backgroundColorBlue");
+                    Common.writeToConfig(String.valueOf(color.getRed()), "backgroundColorRed");
+                    Common.writeToConfig(String.valueOf(color.getGreen()), "backgroundColorGreen");
+                    Common.writeToConfig(String.valueOf(color.getBlue()), "backgroundColorBlue");
+                } catch (IOException ex) {
+                    ex.printStackTrace();
+                }
+            }
+        });
+        getContentPane().add(backgroundColorBtn);
+
 
         /* BOTTOM SEARCH */
 
@@ -962,15 +987,6 @@ public class Gui extends JFrame {
         queryTableBox.setBorder(new BevelBorder(BevelBorder.RAISED, null, null, null, null));
         queryTableBox.setBounds(631, 420, 161, 26);
         getContentPane().add(queryTableBox);
-
-        //label
-        connectToBdLabel = new JLabel("<html><p style=\"color:#bfbfbf\">SQLite is off</p></html>");
-        connectToBdLabel.setHorizontalAlignment(SwingConstants.LEFT);
-        connectToBdLabel.setForeground(new Color(255, 255, 153));
-        connectToBdLabel.setFont(new Font("Tahoma", Font.PLAIN, 11));
-        connectToBdLabel.setBackground(new Color(240, 255, 240));
-        connectToBdLabel.setBounds(730, 477, 60, 26);
-        getContentPane().add(connectToBdLabel);
 
         // latest news
         filterNewsChbx = new Checkbox("only the latest news");

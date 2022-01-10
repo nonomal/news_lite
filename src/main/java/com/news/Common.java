@@ -57,6 +57,27 @@ public class Common {
                     writer.close();
                     break;
                 }
+                case "backgroundColorRed": {
+                    String text = "backgroundColorRed=" + p_word + "\n";
+                    writer.write(text);
+                    writer.flush();
+                    writer.close();
+                    break;
+                }
+                case "backgroundColorGreen": {
+                    String text = "backgroundColorGreen=" + p_word + "\n";
+                    writer.write(text);
+                    writer.flush();
+                    writer.close();
+                    break;
+                }
+                case "backgroundColorBlue": {
+                    String text = "backgroundColorBlue=" + p_word + "\n";
+                    writer.write(text);
+                    writer.flush();
+                    writer.close();
+                    break;
+                }
                 case "email": {
                     String text = "email=" + p_word;
                     writer.write(text.trim() + "\n");
@@ -188,13 +209,22 @@ public class Common {
                 for (int j = 0; j < 1; j++) {
                     switch (f[0]) {
                         case "fontColorRed":
-                            Main.red = Integer.parseInt(f[1].trim());
+                            Main.fontRed = Integer.parseInt(f[1].trim());
                             break;
                         case "fontColorGreen":
-                            Main.green = Integer.parseInt(f[1].trim());
+                            Main.fontGreen = Integer.parseInt(f[1].trim());
                             break;
                         case "fontColorBlue":
-                            Main.blue = Integer.parseInt(f[1].trim());
+                            Main.fontBlue = Integer.parseInt(f[1].trim());
+                            break;
+                        case "backgroundColorRed":
+                            Main.backRed = Integer.parseInt(f[1].trim());
+                            break;
+                        case "backgroundColorGreen":
+                            Main.backGreen = Integer.parseInt(f[1].trim());
+                            break;
+                        case "backgroundColorBlue":
+                            Main.backBlue = Integer.parseInt(f[1].trim());
                             break;
                     }
                 }

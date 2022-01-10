@@ -9,3 +9,6 @@ checkbox:filterNewsChbx=false
 fontColorRed=0
 fontColorGreen=0
 fontColorBlue=0
+backgroundColorRed=204
+backgroundColorGreen=204
+backgroundColorBlue=204
