@@ -328,7 +328,7 @@ public class Gui extends JFrame {
         clearBtnTop.setToolTipText("Clear the list");
         clearBtnTop.setBackground(new Color(250, 128, 114));
         clearBtnTop.setIcon(clearIco);
-        clearBtnTop.setBounds(634, 9, 30, 22);
+        clearBtnTop.setBounds(760, 9, 30, 22);
 
         clearBtnTop.addActionListener(e -> {
             try {
@@ -500,7 +500,7 @@ public class Gui extends JFrame {
         exportBtn.setIcon(excelIco);
         exportBtn.setToolTipText("Export news to excel");
         exportBtn.setBackground(new Color(255, 251, 183));
-        exportBtn.setBounds(599, 9, 30, 22);
+        exportBtn.setBounds(725, 9, 30, 22);
         exportBtn.addActionListener(e -> {
             if (model.getRowCount() != 0) {
                 new Thread(exp::export_from_RSS_to_excel).start();
@@ -516,7 +516,7 @@ public class Gui extends JFrame {
         fontColorBtn.setToolTipText("Font color");
         fontColorBtn.setBackground(new Color(189, 189, 189));
         fontColorBtn.setIcon(fontIco);
-        fontColorBtn.setBounds(564, 9, 30, 22);
+        fontColorBtn.setBounds(690, 9, 30, 22);
         fontColorBtn.addActionListener(e -> {
             Color color = JColorChooser.showDialog(null, "Color", Color.black);
             if (color != null) {
@@ -964,12 +964,12 @@ public class Gui extends JFrame {
         getContentPane().add(queryTableBox);
 
         //label
-        connectToBdLabel = new JLabel("<html><p style=\"color:#bfbfbf\">Connected to SQLite for word frequency analysis</p></html>");
+        connectToBdLabel = new JLabel("<html><p style=\"color:#bfbfbf\">SQLite is off</p></html>");
         connectToBdLabel.setHorizontalAlignment(SwingConstants.LEFT);
         connectToBdLabel.setForeground(new Color(255, 255, 153));
         connectToBdLabel.setFont(new Font("Tahoma", Font.PLAIN, 11));
         connectToBdLabel.setBackground(new Color(240, 255, 240));
-        connectToBdLabel.setBounds(670, 7, 130, 26);
+        connectToBdLabel.setBounds(730, 477, 60, 26);
         getContentPane().add(connectToBdLabel);
 
         // latest news

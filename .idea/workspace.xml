@@ -9,9 +9,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9e6d6f99-cebb-4fd8-99d4-ae1b59f22e89" name="Default Changelist" comment="доработка отправки почты">
+    <list default="true" id="9e6d6f99-cebb-4fd8-99d4-ae1b59f22e89" name="Default Changelist" comment="доработка считывания настроек">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/news/Common.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/news/Common.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/news/Gui.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/news/Gui.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/news/SQLite.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/news/SQLite.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -87,27 +88,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1616704248449</updated>
-    </task>
-    <task id="LOCAL-00127" summary="доработаны исключаемые глаголы из анализа">
-      <created>1639910780073</created>
-      <option name="number" value="00127" />
-      <option name="presentableId" value="LOCAL-00127" />
-      <option name="project" value="LOCAL" />
-      <updated>1639910780073</updated>
-    </task>
-    <task id="LOCAL-00128" summary="code style">
-      <created>1639912927666</created>
-      <option name="number" value="00128" />
-      <option name="presentableId" value="LOCAL-00128" />
-      <option name="project" value="LOCAL" />
-      <updated>1639912927666</updated>
-    </task>
-    <task id="LOCAL-00129" summary="code style">
-      <created>1639913065786</created>
-      <option name="number" value="00129" />
-      <option name="presentableId" value="LOCAL-00129" />
-      <option name="project" value="LOCAL" />
-      <updated>1639913065786</updated>
     </task>
     <task id="LOCAL-00130" summary="code style">
       <created>1639913284343</created>
@@ -431,7 +411,28 @@
       <option name="project" value="LOCAL" />
       <updated>1641127373949</updated>
     </task>
-    <option name="localTasksCounter" value="176" />
+    <task id="LOCAL-00176" summary="доработка считывания настроек">
+      <created>1641557379723</created>
+      <option name="number" value="00176" />
+      <option name="presentableId" value="LOCAL-00176" />
+      <option name="project" value="LOCAL" />
+      <updated>1641557379723</updated>
+    </task>
+    <task id="LOCAL-00177" summary="доработка считывания настроек">
+      <created>1641557507924</created>
+      <option name="number" value="00177" />
+      <option name="presentableId" value="LOCAL-00177" />
+      <option name="project" value="LOCAL" />
+      <updated>1641557507924</updated>
+    </task>
+    <task id="LOCAL-00178" summary="доработка считывания настроек">
+      <created>1641557553918</created>
+      <option name="number" value="00178" />
+      <option name="presentableId" value="LOCAL-00178" />
+      <option name="project" value="LOCAL" />
+      <updated>1641557553918</updated>
+    </task>
+    <option name="localTasksCounter" value="179" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -449,7 +450,6 @@
     <ignored-roots>
       <path value="$PROJECT_DIR$" />
     </ignored-roots>
-    <MESSAGE value="upd_05_07_21_1" />
     <MESSAGE value="upd_05_07_21_2" />
     <MESSAGE value="upd_05_07_21_3" />
     <MESSAGE value="upd_05_07_21_4" />
@@ -474,7 +474,8 @@
     <MESSAGE value="code style" />
     <MESSAGE value="доработка интерфейса" />
     <MESSAGE value="доработка отправки почты" />
-    <option name="LAST_COMMIT_MESSAGE" value="доработка отправки почты" />
+    <MESSAGE value="доработка считывания настроек" />
+    <option name="LAST_COMMIT_MESSAGE" value="доработка считывания настроек" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -493,6 +494,11 @@
           <url>jar://$USER_HOME$/.ideaLibSources/flatlaf-1.6.5-sources.jar!/com/formdev/flatlaf/FlatLightLaf.java</url>
           <line>65</line>
           <option name="timeStamp" value="11" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/com/news/Gui.java</url>
+          <line>966</line>
+          <option name="timeStamp" value="12" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

@@ -21,7 +21,7 @@ class SQLite {
             isConnectionToSQLite = true;
             Main.LOGGER.log(Level.INFO, "Connected");
             Thread.sleep(1000L);
-            if (!Main.isConsoleSearch.get()) Gui.connectToBdLabel.setText("<html><p style=\"color:#a7ebc0\">Connected to SQLite for word frequency analysis</p></html>");
+            if (!Main.isConsoleSearch.get()) Gui.connectToBdLabel.setText("<html><p style=\"color:#a7ebc0\">SQLite is on</p></html>");
         } catch (Exception e) {
             e.printStackTrace();
             Main.LOGGER.log(Level.WARNING, e.getMessage());
