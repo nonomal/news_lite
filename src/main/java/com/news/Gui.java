@@ -514,7 +514,7 @@ public class Gui extends JFrame {
         // Выбор цвета шрифта в таблице
         JButton fontColorBtn = new JButton();
         fontColorBtn.setToolTipText("Font color");
-        fontColorBtn.setBackground(new Color(189, 189, 189));
+        fontColorBtn.setBackground(new Color(190, 225, 255));
         fontColorBtn.setIcon(fontIco);
         fontColorBtn.setBounds(690, 9, 30, 22);
         fontColorBtn.addActionListener(e -> {
@@ -539,7 +539,7 @@ public class Gui extends JFrame {
         // Выбор цвета фона
         JButton backgroundColorBtn = new JButton();
         backgroundColorBtn.setToolTipText("Background color");
-        backgroundColorBtn.setBackground(new Color(190, 251, 255));
+        backgroundColorBtn.setBackground(new Color(189, 189, 189));
         backgroundColorBtn.setIcon(bgIco);
         backgroundColorBtn.setBounds(655, 9, 30, 22);
         backgroundColorBtn.addActionListener(e -> {
@@ -547,7 +547,6 @@ public class Gui extends JFrame {
             if (color != null) {
                 try {
                     table.setBackground(color);
-                    //tableForAnalysis.setBackground(color);
                     Common.delSettings("backgroundColorRed");
                     Common.delSettings("backgroundColorGreen");
                     Common.delSettings("backgroundColorBlue");
