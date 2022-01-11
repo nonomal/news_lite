@@ -6,9 +6,9 @@ import javax.mail.internet.MimeMessage;
 import java.util.Properties;
 
 public class Sender {
-    private static final Properties p = new Properties();
+    private final Properties p = new Properties();
 
-    public static void send(String subject, String text, String fromEmail, String pwd, String toEmail) throws MessagingException {
+    public void send(String subject, String text, String fromEmail, String pwd, String toEmail) throws MessagingException {
         String host = Common.getSmtp();
         p.put("mail.store.protocol", "imaps");
         p.put("mail.smtp.auth", "true");

@@ -10,8 +10,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="9e6d6f99-cebb-4fd8-99d4-ae1b59f22e89" name="Default Changelist" comment="доработка интерфейса">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/news/Gui.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/news/Gui.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/News.jar" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -87,20 +86,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1616704248449</updated>
-    </task>
-    <task id="LOCAL-00132" summary="доработан и переделан интерфейс">
-      <created>1639940451813</created>
-      <option name="number" value="00132" />
-      <option name="presentableId" value="LOCAL-00132" />
-      <option name="project" value="LOCAL" />
-      <updated>1639940451813</updated>
-    </task>
-    <task id="LOCAL-00133" summary="цвет шрифта основной таблицы теперь можно менять и он сохранится">
-      <created>1639953899135</created>
-      <option name="number" value="00133" />
-      <option name="presentableId" value="LOCAL-00133" />
-      <option name="project" value="LOCAL" />
-      <updated>1639953899135</updated>
     </task>
     <task id="LOCAL-00134" summary="цвет шрифта теперь можно менять и он сохранится в config.txt">
       <created>1639986759440</created>
@@ -431,7 +416,21 @@
       <option name="project" value="LOCAL" />
       <updated>1641856715019</updated>
     </task>
-    <option name="localTasksCounter" value="181" />
+    <task id="LOCAL-00181" summary="доработка интерфейса">
+      <created>1641891549933</created>
+      <option name="number" value="00181" />
+      <option name="presentableId" value="LOCAL-00181" />
+      <option name="project" value="LOCAL" />
+      <updated>1641891549933</updated>
+    </task>
+    <task id="LOCAL-00182" summary="доработка интерфейса">
+      <created>1641891582351</created>
+      <option name="number" value="00182" />
+      <option name="presentableId" value="LOCAL-00182" />
+      <option name="project" value="LOCAL" />
+      <updated>1641891582351</updated>
+    </task>
+    <option name="localTasksCounter" value="183" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">

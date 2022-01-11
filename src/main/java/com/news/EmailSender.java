@@ -30,7 +30,9 @@ public class EmailSender {
                 Common.writeToConfig(to, "email");
 
                 //отправка
-                Sender.send(subject, text.toString(), from, from_pwd, to);
+                Sender sender = new Sender();
+
+                sender.send(subject, text.toString(), from, from_pwd, to);
                 Common.console("status: e-mail sent successfully");
                 Gui.progressBar.setValue(100);
                 Common.isSending.set(true);
@@ -51,7 +53,8 @@ public class EmailSender {
                 text.append(s).append("\n\n");
             }
             try {
-                Sender.send(subject, text.toString(), from, from_pwd, Main.emailToFromConsole);
+                Sender sender = new Sender();
+                sender.send(subject, text.toString(), from, from_pwd, Main.emailToFromConsole);
             } catch (MessagingException me) {
                 Common.console("status: e-mail wasn't send: " + me.getMessage());
             }
