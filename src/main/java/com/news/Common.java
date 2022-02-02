@@ -100,12 +100,6 @@ public class Common {
                         case "todayOrNotChbx":
                             text = "checkbox:" + p_word + "=" + Gui.todayOrNotCbx.getState() + "\n";
                             break;
-                        case "checkTitle":
-                            text = "checkbox:" + p_word + "=" + Gui.searchInTitleCbx.getState() + "\n";
-                            break;
-                        case "checkLink":
-                            text = "checkbox:" + p_word + "=" + Gui.searchInLinkCbx.getState() + "\n";
-                            break;
                         case "filterNewsChbx":
                             text = "checkbox:" + p_word + "=" + Gui.filterNewsChbx.getState() + "\n";
                             break;
@@ -173,12 +167,6 @@ public class Common {
                             break;
                         case "checkbox:todayOrNotChbx":
                             Gui.todayOrNotCbx.setState(Boolean.parseBoolean(f[1]));
-                            break;
-                        case "checkbox:checkTitle":
-                            Gui.searchInTitleCbx.setState(Boolean.parseBoolean(f[1]));
-                            break;
-                        case "checkbox:checkLink":
-                            Gui.searchInLinkCbx.setState(Boolean.parseBoolean(f[1]));
                             break;
                         case "checkbox:filterNewsChbx":
                             Gui.filterNewsChbx.setState(Boolean.parseBoolean(f[1]));

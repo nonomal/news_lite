@@ -73,8 +73,8 @@ public class Gui extends JFrame {
     static JButton logBtn;
     static JButton exclBtn;
     static Checkbox todayOrNotCbx;
-    static Checkbox searchInTitleCbx;
-    static Checkbox searchInLinkCbx;
+    //static Checkbox searchInTitleCbx;
+    //static Checkbox searchInLinkCbx;
     static Checkbox autoUpdateNewsTop;
     static Checkbox autoUpdateNewsBottom;
     static Checkbox autoSendMessage;
@@ -172,6 +172,7 @@ public class Gui extends JFrame {
         //Cell alignment
         DefaultTableCellRenderer Renderer = new DefaultTableCellRenderer();
         Renderer.setHorizontalAlignment(JLabel.CENTER);
+
         table.getColumnModel().getColumn(0).setCellRenderer(Renderer);
         table.setRowHeight(27);
         table.setColumnSelectionAllowed(true);
@@ -182,7 +183,9 @@ public class Gui extends JFrame {
         table.getColumnModel().getColumn(1).setPreferredWidth(50);
         table.getColumnModel().getColumn(2).setPreferredWidth(490);
         table.getColumnModel().getColumn(3).setPreferredWidth(50);
-        table.getColumnModel().getColumn(4).setMaxWidth(10);
+        // Скрыть 4 колонку со ссылкой на новость
+        TableColumn hideColumnWithLink = table.getColumnModel().getColumn(4);
+        table.removeColumn(hideColumnWithLink);
         scrollPane.setViewportView(table);
 
         table.addMouseListener(new MouseAdapter() {
@@ -413,24 +416,6 @@ public class Gui extends JFrame {
                 }
             }
         });
-
-        // Search in title
-        searchInTitleCbx = new Checkbox("Search in title", true);
-        searchInTitleCbx.setForeground(new Color(255, 227, 163));
-        searchInTitleCbx.setFocusable(false);
-        searchInTitleCbx.setFont(new Font("Serif", Font.BOLD, 12));
-        searchInTitleCbx.setBounds(10, 490, 120, 13);
-        getContentPane().add(searchInTitleCbx);
-        searchInTitleCbx.addItemListener(e -> isSelTitle = searchInTitleCbx.getState());
-
-        // Search in link
-        searchInLinkCbx = new Checkbox("Search in link", false);
-        searchInLinkCbx.setForeground(new Color(255, 227, 163));
-        searchInLinkCbx.setFocusable(false);
-        searchInLinkCbx.setFont(new Font("Serif", Font.BOLD, 12));
-        searchInLinkCbx.setBounds(10, 509, 120, 13);
-        getContentPane().add(searchInLinkCbx);
-        searchInLinkCbx.addItemListener(e -> isSelLink = searchInLinkCbx.getState());
 
         //send e-mail to
         sendEmailTo = new JTextField("enter your email");
