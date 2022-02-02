@@ -9,7 +9,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9e6d6f99-cebb-4fd8-99d4-ae1b59f22e89" name="Default Changelist" comment="доработка интерфейса" />
+    <list default="true" id="9e6d6f99-cebb-4fd8-99d4-ae1b59f22e89" name="Default Changelist" comment="доработка интерфейса">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/news/Gui.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/news/Gui.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -84,13 +87,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1616704248449</updated>
-    </task>
-    <task id="LOCAL-00135" summary="code style">
-      <created>1639998067171</created>
-      <option name="number" value="00135" />
-      <option name="presentableId" value="LOCAL-00135" />
-      <option name="project" value="LOCAL" />
-      <updated>1639998067171</updated>
     </task>
     <task id="LOCAL-00136" summary="пароль считывается из файла config.txt">
       <created>1640002809601</created>
@@ -428,7 +424,14 @@
       <option name="project" value="LOCAL" />
       <updated>1641891894576</updated>
     </task>
-    <option name="localTasksCounter" value="184" />
+    <task id="LOCAL-00184" summary="доработка интерфейса">
+      <created>1641891933520</created>
+      <option name="number" value="00184" />
+      <option name="presentableId" value="LOCAL-00184" />
+      <option name="project" value="LOCAL" />
+      <updated>1641891933520</updated>
+    </task>
+    <option name="localTasksCounter" value="185" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -490,6 +493,11 @@
           <url>jar://$USER_HOME$/.ideaLibSources/flatlaf-1.6.5-sources.jar!/com/formdev/flatlaf/FlatLightLaf.java</url>
           <line>65</line>
           <option name="timeStamp" value="11" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/com/news/Gui.java</url>
+          <line>175</line>
+          <option name="timeStamp" value="12" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

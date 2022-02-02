@@ -173,15 +173,15 @@ public class Gui extends JFrame {
         DefaultTableCellRenderer Renderer = new DefaultTableCellRenderer();
         Renderer.setHorizontalAlignment(JLabel.CENTER);
         table.getColumnModel().getColumn(0).setCellRenderer(Renderer);
-        table.setRowHeight(23);
+        table.setRowHeight(27);
         table.setColumnSelectionAllowed(true);
         table.setCellSelectionEnabled(true);
         table.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
-        table.setFont(new Font("SansSerif", Font.PLAIN, 13));
+        table.setFont(new Font("SansSerif", Font.PLAIN, 14));
         table.getColumnModel().getColumn(0).setMaxWidth(40);
         table.getColumnModel().getColumn(1).setPreferredWidth(50);
-        table.getColumnModel().getColumn(2).setPreferredWidth(500);
-        table.getColumnModel().getColumn(3).setPreferredWidth(45);
+        table.getColumnModel().getColumn(2).setPreferredWidth(490);
+        table.getColumnModel().getColumn(3).setPreferredWidth(50);
         table.getColumnModel().getColumn(4).setMaxWidth(10);
         scrollPane.setViewportView(table);
 
