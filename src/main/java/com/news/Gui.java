@@ -41,8 +41,6 @@ public class Gui extends JFrame {
     static int q = 1;
     static double timeStart;
     static double timeEnd;
-    static boolean isSelTitle = true;
-    static boolean isSelLink = true;
     static boolean isOnlyLastNews = false;
     static boolean isInKeywords = false;
     static String findWord = "";
@@ -73,8 +71,6 @@ public class Gui extends JFrame {
     static JButton logBtn;
     static JButton exclBtn;
     static Checkbox todayOrNotCbx;
-    //static Checkbox searchInTitleCbx;
-    //static Checkbox searchInLinkCbx;
     static Checkbox autoUpdateNewsTop;
     static Checkbox autoUpdateNewsBottom;
     static Checkbox autoSendMessage;
@@ -183,9 +179,7 @@ public class Gui extends JFrame {
         table.getColumnModel().getColumn(1).setPreferredWidth(50);
         table.getColumnModel().getColumn(2).setPreferredWidth(490);
         table.getColumnModel().getColumn(3).setPreferredWidth(50);
-        // Скрыть 4 колонку со ссылкой на новость
-        TableColumn hideColumnWithLink = table.getColumnModel().getColumn(4);
-        table.removeColumn(hideColumnWithLink);
+        table.removeColumn(table.getColumnModel().getColumn(4)); // Скрыть 4 колонку со ссылкой на новость
         scrollPane.setViewportView(table);
 
         table.addMouseListener(new MouseAdapter() {
@@ -230,7 +224,7 @@ public class Gui extends JFrame {
         scrollForAnalysis.setBounds(10, 360, 300, 120);
         getContentPane().add(scrollForAnalysis);
 
-        String[] columnsForAnalysis = {"total", "words", "del"};
+        String[] columnsForAnalysis = {"freq.", "words", " "};
         modelForAnalysis = new DefaultTableModel(new Object[][]{}, columnsForAnalysis) {
             final boolean[] column_for_analysis = new boolean[]{false, false, true};
             public boolean isCellEditable(int row, int column) {
@@ -252,8 +246,8 @@ public class Gui extends JFrame {
         DefaultTableCellRenderer rendererForAnalysis = new DefaultTableCellRenderer();
         rendererForAnalysis.setHorizontalAlignment(JLabel.CENTER);
         tableForAnalysis.getColumnModel().getColumn(0).setCellRenderer(rendererForAnalysis);
-        tableForAnalysis.getColumnModel().getColumn(1).setCellRenderer(rendererForAnalysis);
-        tableForAnalysis.getColumn("del").setCellRenderer(new ButtonColumn(tableForAnalysis, 2));
+        //tableForAnalysis.getColumnModel().getColumn(1).setCellRenderer(rendererForAnalysis);
+        tableForAnalysis.getColumn(" ").setCellRenderer(new ButtonColumn(tableForAnalysis, 2));
         tableForAnalysis.setRowHeight(20);
         tableForAnalysis.setColumnSelectionAllowed(true);
         tableForAnalysis.setCellSelectionEnabled(true);
@@ -261,7 +255,7 @@ public class Gui extends JFrame {
         tableForAnalysis.setFont(new Font("SansSerif", Font.PLAIN, 13));
         tableForAnalysis.getColumnModel().getColumn(0).setPreferredWidth(80);
         tableForAnalysis.getColumnModel().getColumn(1).setPreferredWidth(140);
-        tableForAnalysis.getColumnModel().getColumn(2).setPreferredWidth(30);
+        tableForAnalysis.getColumnModel().getColumn(2).setMaxWidth(30);
         scrollForAnalysis.setViewportView(tableForAnalysis);
 
         // запуск поиска по слову из таблицы анализа
@@ -356,7 +350,7 @@ public class Gui extends JFrame {
 
         //Amount of news
         labelSum = new JLabel();
-        labelSum.setBounds(80, 530, 115, 13);
+        labelSum.setBounds(70, 483, 115, 13);
         labelSum.setFont(new Font("Tahoma", Font.PLAIN, 11));
         labelSum.setForeground(new Color(255, 255, 153));
         labelSum.setBackground(new Color(240, 255, 240));
@@ -711,7 +705,7 @@ public class Gui extends JFrame {
         searchAnimation.setForeground(new Color(255, 255, 153));
         searchAnimation.setFont(new Font("Tahoma", Font.PLAIN, 11));
         searchAnimation.setBackground(new Color(240, 255, 240));
-        searchAnimation.setBounds(10, 530, 80, 13);
+        searchAnimation.setBounds(10, 483, 80, 13);
         getContentPane().add(searchAnimation);
 
         //Time label
