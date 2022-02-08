@@ -119,9 +119,7 @@ public class Common {
     static List<String> getKeywordsFromFile() {
         List<String> keywords = new ArrayList<>();
         try {
-            List<String> orders = Files.readAllLines(Paths.get(Main.settingsPath));
-
-            for (String s : orders) {
+            for (String s : Files.readAllLines(Paths.get(Main.settingsPath))) {
                 if (s.startsWith("keyword="))
                     keywords.add(s.replace("keyword=", ""));
             }
@@ -131,13 +129,11 @@ public class Common {
         return keywords;
     }
 
-    // Считывание слов исключений при добавлении/удалении в комбобоксе
+    // Считывание слов исключений для поиска по одному слову
     static List<String> getExcludeWordsFromFile() {
         List<String> excludeWords = new ArrayList<>();
         try {
-            List<String> orders = Files.readAllLines(Paths.get(Main.settingsPath));
-
-            for (String s : orders) {
+            for (String s : Files.readAllLines(Paths.get(Main.settingsPath))) {
                 if (s.startsWith("exclude="))
                     excludeWords.add(s.replace("exclude=", ""));
             }
@@ -240,7 +236,7 @@ public class Common {
     }
 
     // сохранение состояния окна в config.txt
-    public static void saveState(){
+    public static void saveState() {
         // delete old values
         try {
             Common.delSettings("interval");
@@ -263,7 +259,7 @@ public class Common {
     static String getSmtp() {
         String smtp = "";
         String serviceName = EmailSender.from.substring(EmailSender.from.indexOf(64) + 1);
-        switch(serviceName) {
+        switch (serviceName) {
             case "mail.ru":
             case "internet.ru":
             case "inbox.ru":
@@ -534,7 +530,7 @@ public class Common {
 
     // преобразование строки в строку с хэш кодом
     public static String sha256(String base) {
-        try{
+        try {
             MessageDigest digest = MessageDigest.getInstance("SHA-256");
             byte[] hash = digest.digest(base.getBytes(StandardCharsets.UTF_8));
             StringBuilder hexString = new StringBuilder();
@@ -544,19 +540,19 @@ public class Common {
                 hexString.append(hex);
             }
             return hexString.toString();
-        } catch(Exception ex){
+        } catch (Exception ex) {
             throw new RuntimeException(ex);
         }
     }
 
     // Уведомление в трее
-    static void trayMessage(String pMessage){
+    static void trayMessage(String pMessage) {
         if (SystemTray.isSupported()) {
             PopupMenu popup = new PopupMenu();
             MenuItem exitItem = new MenuItem("Close");
 
             SystemTray systemTray = SystemTray.getSystemTray();
-            Image image  = Toolkit.getDefaultToolkit().createImage(Common.class.getResource("/icons/message.png"));
+            Image image = Toolkit.getDefaultToolkit().createImage(Common.class.getResource("/icons/message.png"));
             TrayIcon trayIcon = new TrayIcon(image, pMessage, popup);
             trayIcon.setImageAutoSize(true);
             try {

@@ -1,6 +1,6 @@
 <component name="ArtifactManager">
   <artifact type="jar" name="News:jar">
-    <output-path>$PROJECT_DIR$</output-path>
+    <output-path>D:/Downloads/!work/Seafile/files/java</output-path>
     <root id="archive" name="News.jar">
       <element id="module-output" name="News" />
       <element id="extracted-dir" path="$MAVEN_REPOSITORY$/com/formdev/flatlaf/1.6.5/flatlaf-1.6.5.jar" path-in-jar="/" />

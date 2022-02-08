@@ -9,10 +9,14 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9e6d6f99-cebb-4fd8-99d4-ae1b59f22e89" name="Default Changelist" comment="доработка интерфейса">
+    <list default="true" id="9e6d6f99-cebb-4fd8-99d4-ae1b59f22e89" name="Default Changelist" comment="добавлен фильтр ненужных новостей">
+      <change beforePath="$PROJECT_DIR$/.idea/artifacts/News_jar.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/artifacts/News_jar.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/News.jar" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/news/Common.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/news/Common.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/news/Gui.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/news/Gui.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/news/Search.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/news/Search.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/config.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/config.txt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -88,13 +92,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1616704248449</updated>
-    </task>
-    <task id="LOCAL-00143" summary="code style">
-      <created>1640006072259</created>
-      <option name="number" value="00143" />
-      <option name="presentableId" value="LOCAL-00143" />
-      <option name="project" value="LOCAL" />
-      <updated>1640006072259</updated>
     </task>
     <task id="LOCAL-00144" summary="code style">
       <created>1640006275302</created>
@@ -432,7 +429,14 @@
       <option name="project" value="LOCAL" />
       <updated>1643812781982</updated>
     </task>
-    <option name="localTasksCounter" value="192" />
+    <task id="LOCAL-00192" summary="добавлен фильтр ненужных новостей">
+      <created>1644337898736</created>
+      <option name="number" value="00192" />
+      <option name="presentableId" value="LOCAL-00192" />
+      <option name="project" value="LOCAL" />
+      <updated>1644337898736</updated>
+    </task>
+    <option name="localTasksCounter" value="193" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -450,7 +454,6 @@
     <ignored-roots>
       <path value="$PROJECT_DIR$" />
     </ignored-roots>
-    <MESSAGE value="upd_05_07_21_2" />
     <MESSAGE value="upd_05_07_21_3" />
     <MESSAGE value="upd_05_07_21_4" />
     <MESSAGE value="upd_05_07_21_5" />
@@ -475,7 +478,8 @@
     <MESSAGE value="доработка отправки почты" />
     <MESSAGE value="доработка считывания настроек" />
     <MESSAGE value="доработка интерфейса" />
-    <option name="LAST_COMMIT_MESSAGE" value="доработка интерфейса" />
+    <MESSAGE value="добавлен фильтр ненужных новостей" />
+    <option name="LAST_COMMIT_MESSAGE" value="добавлен фильтр ненужных новостей" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -492,8 +496,13 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/com/news/Search.java</url>
-          <line>19</line>
+          <line>17</line>
           <option name="timeStamp" value="15" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/com/news/Search.java</url>
+          <line>110</line>
+          <option name="timeStamp" value="16" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

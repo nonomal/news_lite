@@ -10,3 +10,6 @@ fontColorBlue=0
 backgroundColorRed=204
 backgroundColorGreen=204
 backgroundColorBlue=204
+exclude=editInConfig
+exclude=editInConfig
+exclude=editInConfig

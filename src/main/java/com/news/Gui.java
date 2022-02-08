@@ -284,6 +284,7 @@ public class Gui extends JFrame {
         //Search addNewSource
         searchBtnTop = new JButton("");
         searchBtnTop.setIcon(searchIco);
+        searchBtnTop.setToolTipText("Без заголовков со словами " + Search.excludeFromSearch);
         searchBtnTop.setBackground(new Color(154, 237, 196));
         searchBtnTop.setFont(new Font("Tahoma", Font.BOLD, 10));
         searchBtnTop.setBounds(192, 9, 30, 22);

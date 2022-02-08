@@ -11,14 +11,11 @@ import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Locale;
+import java.util.*;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 public class Search {
-    List<String> excludeFromSearch = Common.getExcludeWordsFromFile();
+    static List<String> excludeFromSearch = Common.getExcludeWordsFromFile();
     static AtomicBoolean isStop = new AtomicBoolean(false);
     static AtomicBoolean isSearchNow = new AtomicBoolean(false);
     static AtomicBoolean isSearchFinished;
@@ -115,8 +112,8 @@ public class Search {
                                             && title.length() > 15 && checkDate == 1
                                             && !title.toLowerCase().contains(excludeFromSearch.get(0))
                                             && !title.toLowerCase().contains(excludeFromSearch.get(1))
+                                            && !title.toLowerCase().contains(excludeFromSearch.get(2))
                                     ) {
-
                                         //отсеиваем новости, которые уже были найдены ранее
                                         if (sqlite.isTitleExists(Common.sha256(title + pubDate))
                                                 && SQLite.isConnectionToSQLite) {
