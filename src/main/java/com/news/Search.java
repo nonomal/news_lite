@@ -13,10 +13,12 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 public class Search {
+    List<String> excludeFromSearch = Common.getExcludeWordsFromFile();
     static AtomicBoolean isStop = new AtomicBoolean(false);
     static AtomicBoolean isSearchNow = new AtomicBoolean(false);
     static AtomicBoolean isSearchFinished;
@@ -109,10 +111,15 @@ public class Search {
                                 else checkDate = 0;
 
                                 if (pSearchType.equals("word")) {
-                                    if (title.toLowerCase().contains(Gui.findWord.toLowerCase()) && title.length() > 15 && checkDate == 1) {
+                                    if (title.toLowerCase().contains(Gui.findWord.toLowerCase())
+                                            && title.length() > 15 && checkDate == 1
+                                            && !title.toLowerCase().contains(excludeFromSearch.get(0))
+                                            && !title.toLowerCase().contains(excludeFromSearch.get(1))
+                                    ) {
 
                                         //отсеиваем новости, которые уже были найдены ранее
-                                        if (sqlite.isTitleExists(Common.sha256(title + pubDate)) && SQLite.isConnectionToSQLite) {
+                                        if (sqlite.isTitleExists(Common.sha256(title + pubDate))
+                                                && SQLite.isConnectionToSQLite) {
                                             continue;
                                         }
 
@@ -370,7 +377,8 @@ public class Search {
                                 else checkDate = 0;
 
                                 for (String it : Main.keywordsFromConsole) {
-                                    if (it.equals(Main.keywordsFromConsole[0]) || it.equals(Main.keywordsFromConsole[1])) continue;
+                                    if (it.equals(Main.keywordsFromConsole[0]) || it.equals(Main.keywordsFromConsole[1]))
+                                        continue;
 
                                     if (title.toLowerCase().contains(it.toLowerCase()) && title.length() > 15 && checkDate == 1) {
                                         // отсеиваем новости которые были обнаружены ранее

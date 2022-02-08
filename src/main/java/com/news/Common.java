@@ -131,6 +131,23 @@ public class Common {
         return keywords;
     }
 
+    // Считывание слов исключений при добавлении/удалении в комбобоксе
+    static List<String> getExcludeWordsFromFile() {
+        List<String> excludeWords = new ArrayList<>();
+        try {
+            List<String> orders = Files.readAllLines(Paths.get(Main.settingsPath));
+
+            for (String s : orders) {
+                if (s.startsWith("exclude="))
+                    excludeWords.add(s.replace("exclude=", ""));
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        System.out.println("excludeWords = " + excludeWords);
+        return excludeWords;
+    }
+
     // Считывание настроек из файла в массив строк
     static void getSettingsFromFile() {
         int linesAmount = Common.countLines(Main.settingsPath);
