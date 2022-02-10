@@ -19,17 +19,17 @@ public class Search {
     static AtomicBoolean isStop = new AtomicBoolean(false);
     static AtomicBoolean isSearchNow = new AtomicBoolean(false);
     static AtomicBoolean isSearchFinished;
-    static double searchTime;
+    double searchTime;
     static int j = 1;
-    static DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm");
-    static LocalDateTime now = LocalDateTime.now();
-    static String today = dtf.format(now);
-    static SimpleDateFormat date_format = new SimpleDateFormat("dd.MM.yyyy HH:mm");
-    static SimpleDateFormat dateFormatHoursFirst = new SimpleDateFormat("dd.MMM HH:mm", Locale.ENGLISH);
+    DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm");
+    LocalDateTime now = LocalDateTime.now();
+    String today = dtf.format(now);
+    SimpleDateFormat date_format = new SimpleDateFormat("dd.MM.yyyy HH:mm");
+    SimpleDateFormat dateFormatHoursFirst = new SimpleDateFormat("dd.MMM HH:mm", Locale.ENGLISH);
     static ArrayList<String> dataForEmail = new ArrayList<>();
-    static int newsCount = 0;
-    static Date minDate = Main.minPubDate.getTime();
-    static int checkDate;
+    int newsCount = 0;
+    Date minDate = Main.minPubDate.getTime();
+    int checkDate;
 
     //Main search
     void mainSearch(String pSearchType) {

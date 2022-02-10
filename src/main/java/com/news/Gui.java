@@ -542,7 +542,6 @@ public class Gui extends JFrame {
 
 
         /* BOTTOM SEARCH */
-
         //Add to combo box
         addKeywordToList = new JTextField();
         addKeywordToList.setFont(new Font("Serif", Font.PLAIN, 12));

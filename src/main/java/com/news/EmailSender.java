@@ -7,7 +7,7 @@ import java.util.logging.Level;
 public class EmailSender {
     static String from;
     static String from_pwd;
-    private final String subject = ("News (" + Search.today + ")");
+    private final String subject = ("News (" + new Search().today + ")");
 
     // Отправка письма
     void sendMessage(){

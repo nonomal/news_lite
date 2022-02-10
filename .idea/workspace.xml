@@ -9,8 +9,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9e6d6f99-cebb-4fd8-99d4-ae1b59f22e89" name="Default Changelist" comment="добавлен фильтр ненужных новостей">
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/news/Common.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/news/Common.java" afterDir="false" />
+    <list default="true" id="9e6d6f99-cebb-4fd8-99d4-ae1b59f22e89" name="Default Changelist" comment="feat: добавлен фильтр новостей на основной поиск">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/news/EmailSender.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/news/EmailSender.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/news/Gui.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/news/Gui.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/news/Search.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/news/Search.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -50,7 +53,7 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="android.sdk.path" value="$USER_HOME$/AppData/Local/Android/Sdk" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/src/main/resources" />
-    <property name="project.structure.last.edited" value="Artifacts" />
+    <property name="project.structure.last.edited" value="Project" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.18862559" />
     <property name="settings.editor.selected.configurable" value="preferences.keymap" />
@@ -86,13 +89,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1616704248449</updated>
-    </task>
-    <task id="LOCAL-00145" summary="code style">
-      <created>1640006291440</created>
-      <option name="number" value="00145" />
-      <option name="presentableId" value="LOCAL-00145" />
-      <option name="project" value="LOCAL" />
-      <updated>1640006291440</updated>
     </task>
     <task id="LOCAL-00146" summary="доработка отправки почты">
       <created>1640039022504</created>
@@ -430,7 +426,14 @@
       <option name="project" value="LOCAL" />
       <updated>1644348676766</updated>
     </task>
-    <option name="localTasksCounter" value="194" />
+    <task id="LOCAL-00194" summary="feat: добавлен фильтр новостей на основной поиск">
+      <created>1644489873621</created>
+      <option name="number" value="00194" />
+      <option name="presentableId" value="LOCAL-00194" />
+      <option name="project" value="LOCAL" />
+      <updated>1644489873621</updated>
+    </task>
+    <option name="localTasksCounter" value="195" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -448,7 +451,6 @@
     <ignored-roots>
       <path value="$PROJECT_DIR$" />
     </ignored-roots>
-    <MESSAGE value="upd_05_07_21_3" />
     <MESSAGE value="upd_05_07_21_4" />
     <MESSAGE value="upd_05_07_21_5" />
     <MESSAGE value="upd_05_07_21_6" />
@@ -473,7 +475,8 @@
     <MESSAGE value="доработка считывания настроек" />
     <MESSAGE value="доработка интерфейса" />
     <MESSAGE value="добавлен фильтр ненужных новостей" />
-    <option name="LAST_COMMIT_MESSAGE" value="добавлен фильтр ненужных новостей" />
+    <MESSAGE value="feat: добавлен фильтр новостей на основной поиск" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat: добавлен фильтр новостей на основной поиск" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
