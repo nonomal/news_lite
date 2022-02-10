@@ -157,7 +157,7 @@ public class Gui extends JFrame {
                 } catch (RuntimeException ignored) {
                 }
                 assert tip != null;
-                if (tip.length() > 74) {
+                if (tip.length() > 69) {
                     return tip;
                 } else return null;
             }

@@ -140,7 +140,6 @@ public class Common {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        System.out.println("excludeWords = " + excludeWords);
         return excludeWords;
     }
 
