@@ -33,6 +33,8 @@
 В Windows при вызове данной команды в PowerShell:
 
         java -jar .\news.jar user@mail.ru 180 москв хлеб балаших
+        
+![image](https://github.com/mrprogre/news_lite/blob/master/power-shell.png)
 
 ----
 Пароль и почту, с которой будет идти отправка, необходимо указывать в файле config.txt после ключей "from_pwd" и "from_adr" соответственно
