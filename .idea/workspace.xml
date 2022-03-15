@@ -9,19 +9,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9e6d6f99-cebb-4fd8-99d4-ae1b59f22e89" name="Default Changelist" comment="fix: убирал static у переменных">
+    <list default="true" id="9e6d6f99-cebb-4fd8-99d4-ae1b59f22e89" name="Default Changelist" comment="fix: refactor">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/news/Common.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/utils/Common.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/news/Dialogs.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/news/Dialogs.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/news/EmailSender.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/utils/EmailSender.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/news/ExportToExcel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/utils/ExportToExcel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/news/Gui.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/news/Gui.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/news/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/news/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/news/MyTimerTask.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/utils/MyTimerTask.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/news/SQLite.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/news/SQLite.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/news/Search.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/news/Search.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/news/Sender.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/news/Sender.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/news/SyndParser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/utils/SyndParser.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -97,13 +86,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1616704248449</updated>
-    </task>
-    <task id="LOCAL-00147" summary="доработка отправки почты">
-      <created>1640040251552</created>
-      <option name="number" value="00147" />
-      <option name="presentableId" value="LOCAL-00147" />
-      <option name="project" value="LOCAL" />
-      <updated>1640040251552</updated>
     </task>
     <task id="LOCAL-00148" summary="доработка отправки почты">
       <created>1640077421337</created>
@@ -441,7 +423,14 @@
       <option name="project" value="LOCAL" />
       <updated>1644508287632</updated>
     </task>
-    <option name="localTasksCounter" value="196" />
+    <task id="LOCAL-00196" summary="fix: refactor">
+      <created>1647332309176</created>
+      <option name="number" value="00196" />
+      <option name="presentableId" value="LOCAL-00196" />
+      <option name="project" value="LOCAL" />
+      <updated>1647332309176</updated>
+    </task>
+    <option name="localTasksCounter" value="197" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -459,7 +448,6 @@
     <ignored-roots>
       <path value="$PROJECT_DIR$" />
     </ignored-roots>
-    <MESSAGE value="upd_05_07_21_5" />
     <MESSAGE value="upd_05_07_21_6" />
     <MESSAGE value="upd_05_07_21_7" />
     <MESSAGE value="upd_05_07_21_8" />
@@ -484,7 +472,8 @@
     <MESSAGE value="добавлен фильтр ненужных новостей" />
     <MESSAGE value="feat: добавлен фильтр новостей на основной поиск" />
     <MESSAGE value="fix: убирал static у переменных" />
-    <option name="LAST_COMMIT_MESSAGE" value="fix: убирал static у переменных" />
+    <MESSAGE value="fix: refactor" />
+    <option name="LAST_COMMIT_MESSAGE" value="fix: refactor" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
