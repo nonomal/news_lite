@@ -9,6 +9,12 @@
 
 Для работы приложения на ПК должна быть установлена Java: https://www.java.com/ru/download/
 
+----
+
+<b>Актуальная версия интерфейса:</b>
+
+![image](https://github.com/mrprogre/news_lite/blob/master/gui.png)
+
 
 ----
 **Возможности программы:**
@@ -45,11 +51,6 @@
 
 Отправка производится с почтовых сервисов: Mail.ru, Gmail, Yandex, Yahoo, Rambler.
 
-----
-
-<b>Актуальная версия интерфейса:</b>
-
-![image](https://github.com/mrprogre/news_lite/blob/master/gui.png)
 
 ----
 Работа в приложении выглядит следующим образом (интерфейс старый):
