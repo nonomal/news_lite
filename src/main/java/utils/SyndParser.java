@@ -16,9 +16,5 @@ public class SyndParser {
         XmlReader reader = new XmlReader(urlConnection);
 
         return new SyndFeedInput().build(reader);
-
-
-
-
     }
 }
