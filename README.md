@@ -26,11 +26,11 @@
 - возможность исключить ненужные слова из таблицы анализа (и удалить их из исключенных)
 - jar можно выложить на сервер где установлен Linux и указать команду в Сrontab для круглосуточного вызова программы. Ни одна новость не будет упущена! Вот команда, которую указывал я (параметр № 1 - адресат, 2 - интервал (момент вызова минус 1440 минут (сутки), далее ключевые слова. Т.е. каждый день в 10:30 утра я получал все новости за сутки по указанным словам + записывал их в лог):
 
-        30 10 * * * java -jar /home/dchernyavskij/news.jar rps_project@mail.ru 1440 выплат ипотек рефинанс штраф налог > /home/dchernyavskij/news.log
+        30 10 * * * java -jar /home/user/news.jar user@mail.ru 1440 выплат ипотек рефинанс штраф налог > /home/user/news.log
 
 В Windows при вызове данной команды в PowerShell:
 
-        java -jar .\news.jar rps_project@mail.ru 180 москв хлеб балаших
+        java -jar .\news.jar user@mail.ru 180 москв хлеб балаших
 
 ----
 Пароль и почту, с которой будет идти отправка, необходимо указывать в файле config.txt после ключей "from_pwd" и "from_adr" соответственно
@@ -41,12 +41,14 @@
 
 Отправка производится с почтовых сервисов: Mail.ru, Gmail, Yandex, Yahoo, Rambler.
 
-<b>new UI:</b>
+----
+
+<b>Актуальная версия интерфейса:</b>
 
 ![image](https://github.com/mrprogre/news_lite/blob/master/gui.png)
 
 ----
-Работа в старом интерфейсе выглядит так:
+Работа в приложении выглядит следующим образом (интерфейс старый):
 
 ![Image alt](https://github.com/mrprogre/news_lite/blob/master/gui.gif)
 
@@ -74,4 +76,4 @@ Program features:
 - the ability to exclude unnecessary words from the analysis table (and remove them from the excluded ones)
 - work without UI with commands (in Linux-Crontab or Windows-PowerShell) like:
 
-      30 10 * * * java -jar /home/user/news.jar user@mail.ru 1440 amazon apple tax> /home/dchernyavskij/news.log
+      30 10 * * * java -jar /home/user/news.jar user@mail.ru 1440 amazon apple tax> /home/user/news.log
