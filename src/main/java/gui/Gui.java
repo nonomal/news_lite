@@ -1,7 +1,7 @@
 package gui;
 
 import database.SQLite;
-import com.news.Search;
+import search.Search;
 import main.Main;
 import utils.Common;
 import email.EmailSender;

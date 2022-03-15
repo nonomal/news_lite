@@ -1,11 +1,11 @@
 package utils;
 
-import com.news.*;
 import database.SQLite;
 import email.EmailSender;
 import gui.Dialogs;
 import gui.Gui;
 import main.Main;
+import search.Search;
 
 import javax.swing.*;
 import java.awt.*;

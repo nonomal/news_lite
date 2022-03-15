@@ -1,4 +1,4 @@
-package com.news;
+package search;
 
 import com.sun.syndication.feed.synd.SyndContent;
 import com.sun.syndication.feed.synd.SyndEntry;

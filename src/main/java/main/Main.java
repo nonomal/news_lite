@@ -4,7 +4,7 @@ import com.formdev.flatlaf.intellijthemes.FlatHiberbeeDarkIJTheme;
 import gui.Gui;
 import utils.InternetAvailabilityChecker;
 import database.SQLite;
-import com.news.Search;
+import search.Search;
 import utils.Common;
 
 import javax.swing.*;

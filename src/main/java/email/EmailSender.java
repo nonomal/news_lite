@@ -1,8 +1,8 @@
 package email;
 
-import com.news.*;
 import gui.Gui;
 import main.Main;
+import search.Search;
 import utils.Common;
 
 import javax.mail.MessagingException;
