@@ -43,7 +43,7 @@
 
 <b>new UI:</b>
 
-![image](https://user-images.githubusercontent.com/45883640/146732804-940c06c7-6ece-4930-a67c-492bfd419ff3.png)
+![image](https://github.com/mrprogre/news_lite/blob/master/gui.png)
 
 ----
 Работа в старом интерфейсе выглядит так:
