@@ -47,13 +47,11 @@
 ----
 *Пароль и почту, с которой будет идти отправка, необходимо указывать в файле config.txt после ключей "from_pwd" и "from_adr" соответственно*
 
-Путь к файлу настроек в Windows:
+Путь к файлу настроек 
 
-C:\Users\user\News
+**Windows**: C:\Users\user\News\config.txt
 
-В Linux:
-
-home/user/News
+**Linux**: home/user/News/config.txt
 
 *Отправка производится с почтовых сервисов: Mail.ru, Gmail, Yandex, Yahoo, Rambler.*
 
