@@ -1,6 +1,4 @@
-package com.news;
-
-import utils.Common;
+package utils;
 
 import javax.mail.*;
 import javax.mail.internet.InternetAddress;
