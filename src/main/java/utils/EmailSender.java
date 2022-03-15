@@ -1,16 +1,18 @@
-package com.news;
+package utils;
+
+import com.news.*;
 
 import javax.mail.MessagingException;
 import java.io.IOException;
 import java.util.logging.Level;
 
 public class EmailSender {
-    static String from;
-    static String from_pwd;
+    public static String from;
+    public static String from_pwd;
     private final String subject = ("News (" + new Search().today + ")");
 
     // Отправка письма
-    void sendMessage(){
+    public void sendMessage(){
         Common.getEmailSettingsFromFile();
 
         if (!Main.isConsoleSearch.get()) {

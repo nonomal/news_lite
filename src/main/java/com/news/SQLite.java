@@ -1,10 +1,12 @@
 package com.news;
 
+import utils.Common;
+
 import javax.swing.*;
 import java.sql.*;
 import java.util.logging.Level;
 
-class SQLite {
+public class SQLite {
     static Connection connection;
     static boolean isConnectionToSQLite;
     private final int wordFreqMatches = 2;
@@ -80,7 +82,7 @@ class SQLite {
     }
 
     // запись данных по актуальным источникам из базы в массивы для поиска
-    void selectSources(String pDialog) {
+    public void selectSources(String pDialog) {
         if (isConnectionToSQLite) {
             switch (pDialog) {
                 case "smi":

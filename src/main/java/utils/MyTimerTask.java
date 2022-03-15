@@ -1,8 +1,11 @@
-package com.news;
+package utils;
+
+import com.news.Gui;
+import com.news.Search;
 
 import java.util.TimerTask;
 
-class MyTimerTask extends TimerTask {
+public class MyTimerTask extends TimerTask {
     @Override
     public void run() {
         Search search = new Search();

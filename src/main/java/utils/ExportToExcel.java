@@ -1,5 +1,6 @@
-package com.news;
+package utils;
 
+import com.news.Gui;
 import jxl.Workbook;
 import jxl.format.Alignment;
 import jxl.format.Colour;
@@ -12,7 +13,7 @@ import java.io.IOException;
 import java.net.URL;
 
 public class ExportToExcel {
-    void export_from_RSS_to_excel() {
+    public void export_from_RSS_to_excel() {
         try {
             //Save file to
             FileNameExtensionFilter filter = new FileNameExtensionFilter("*.xls", "*.xls", "*.XLS", "*.*");

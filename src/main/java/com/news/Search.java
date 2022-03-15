@@ -3,6 +3,9 @@ package com.news;
 import com.sun.syndication.feed.synd.SyndContent;
 import com.sun.syndication.feed.synd.SyndEntry;
 import com.sun.syndication.feed.synd.SyndFeed;
+import utils.Common;
+import utils.EmailSender;
+import utils.SyndParser;
 
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
@@ -18,21 +21,21 @@ public class Search {
     static List<String> excludeFromSearch = Common.getExcludeWordsFromFile();
     static AtomicBoolean isStop = new AtomicBoolean(false);
     static AtomicBoolean isSearchNow = new AtomicBoolean(false);
-    static AtomicBoolean isSearchFinished;
+    public static AtomicBoolean isSearchFinished;
     double searchTime;
     static int j = 1;
     DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm");
     LocalDateTime now = LocalDateTime.now();
-    String today = dtf.format(now);
+    public String today = dtf.format(now);
     SimpleDateFormat date_format = new SimpleDateFormat("dd.MM.yyyy HH:mm");
     SimpleDateFormat dateFormatHoursFirst = new SimpleDateFormat("dd.MMM HH:mm", Locale.ENGLISH);
-    static ArrayList<String> dataForEmail = new ArrayList<>();
+    public static ArrayList<String> dataForEmail = new ArrayList<>();
     int newsCount = 0;
     Date minDate = Main.minPubDate.getTime();
     int checkDate;
 
     //Main search
-    void mainSearch(String pSearchType) {
+    public void mainSearch(String pSearchType) {
         SQLite sqlite = new SQLite();
         if (!isSearchNow.get()) {
             int modelRowCount = Gui.model.getRowCount();

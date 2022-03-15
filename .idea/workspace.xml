@@ -9,11 +9,19 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9e6d6f99-cebb-4fd8-99d4-ae1b59f22e89" name="Default Changelist" comment="feat: добавлен фильтр новостей на основной поиск">
+    <list default="true" id="9e6d6f99-cebb-4fd8-99d4-ae1b59f22e89" name="Default Changelist" comment="fix: убирал static у переменных">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/news/EmailSender.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/news/EmailSender.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/news/Common.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/utils/Common.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/news/Dialogs.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/news/Dialogs.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/news/EmailSender.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/utils/EmailSender.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/news/ExportToExcel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/utils/ExportToExcel.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/news/Gui.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/news/Gui.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/news/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/news/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/news/MyTimerTask.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/utils/MyTimerTask.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/news/SQLite.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/news/SQLite.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/news/Search.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/news/Search.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/news/Sender.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/news/Sender.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/news/SyndParser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/utils/SyndParser.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -56,7 +64,7 @@
     <property name="project.structure.last.edited" value="Project" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.18862559" />
-    <property name="settings.editor.selected.configurable" value="preferences.keymap" />
+    <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
   </component>
   <component name="RunAnythingCache">
     <option name="myCommands">
@@ -89,13 +97,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1616704248449</updated>
-    </task>
-    <task id="LOCAL-00146" summary="доработка отправки почты">
-      <created>1640039022504</created>
-      <option name="number" value="00146" />
-      <option name="presentableId" value="LOCAL-00146" />
-      <option name="project" value="LOCAL" />
-      <updated>1640039022504</updated>
     </task>
     <task id="LOCAL-00147" summary="доработка отправки почты">
       <created>1640040251552</created>
@@ -433,7 +434,14 @@
       <option name="project" value="LOCAL" />
       <updated>1644489873621</updated>
     </task>
-    <option name="localTasksCounter" value="195" />
+    <task id="LOCAL-00195" summary="fix: убирал static у переменных">
+      <created>1644508287632</created>
+      <option name="number" value="00195" />
+      <option name="presentableId" value="LOCAL-00195" />
+      <option name="project" value="LOCAL" />
+      <updated>1644508287632</updated>
+    </task>
+    <option name="localTasksCounter" value="196" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -451,7 +459,6 @@
     <ignored-roots>
       <path value="$PROJECT_DIR$" />
     </ignored-roots>
-    <MESSAGE value="upd_05_07_21_4" />
     <MESSAGE value="upd_05_07_21_5" />
     <MESSAGE value="upd_05_07_21_6" />
     <MESSAGE value="upd_05_07_21_7" />
@@ -476,7 +483,8 @@
     <MESSAGE value="доработка интерфейса" />
     <MESSAGE value="добавлен фильтр ненужных новостей" />
     <MESSAGE value="feat: добавлен фильтр новостей на основной поиск" />
-    <option name="LAST_COMMIT_MESSAGE" value="feat: добавлен фильтр новостей на основной поиск" />
+    <MESSAGE value="fix: убирал static у переменных" />
+    <option name="LAST_COMMIT_MESSAGE" value="fix: убирал static у переменных" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -493,12 +501,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/com/news/Search.java</url>
-          <line>17</line>
-          <option name="timeStamp" value="15" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/com/news/Search.java</url>
-          <line>110</line>
+          <line>113</line>
           <option name="timeStamp" value="16" />
         </line-breakpoint>
       </breakpoints>

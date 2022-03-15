@@ -1,6 +1,7 @@
 package com.news;
 
 import com.formdev.flatlaf.intellijthemes.FlatHiberbeeDarkIJTheme;
+import utils.Common;
 
 import javax.swing.*;
 import java.awt.*;
@@ -15,20 +16,20 @@ import java.util.logging.*;
 public class Main {
     static SimpleDateFormat date_format = new SimpleDateFormat("dd.MM.yyyy HH:mm:ss");
     static String directoryPath = System.getProperty("user.home") + File.separator + "News" + File.separator;
-    static String settingsPath = directoryPath + "config.txt";
-    static String logPath = directoryPath + "log.txt";
+    public static String settingsPath = directoryPath + "config.txt";
+    public static String logPath = directoryPath + "log.txt";
     public static final Logger LOGGER = Logger.getLogger("");
     static Calendar minPubDate = Calendar.getInstance();
-    static int fontRed;
-    static int fontGreen;
-    static int fontBlue;
-    static int backRed;
-    static int backGreen;
-    static int backBlue;
+    public static int fontRed;
+    public static int fontGreen;
+    public static int fontBlue;
+    public static int backRed;
+    public static int backGreen;
+    public static int backBlue;
     // Console search
-    static AtomicBoolean isConsoleSearch = new AtomicBoolean(false);
-    static String emailToFromConsole;
-    static int minutesIntervalForConsoleSearch;
+    public static AtomicBoolean isConsoleSearch = new AtomicBoolean(false);
+    public static String emailToFromConsole;
+    public static int minutesIntervalForConsoleSearch;
     static String[] keywordsFromConsole;
 
     // создание директорий и файлов

@@ -1,4 +1,6 @@
-package com.news;
+package utils;
+
+import com.news.*;
 
 import javax.swing.*;
 import java.awt.*;
@@ -17,16 +19,16 @@ import java.util.logging.Level;
 import java.util.stream.Stream;
 
 public class Common {
-    static AtomicBoolean isSending = new AtomicBoolean(true);
+    public static AtomicBoolean isSending = new AtomicBoolean(true);
     static ArrayList<String> keywordsList = new ArrayList<>();
     public static int smi_number = 0;
-    static ArrayList<String> smi_link = new ArrayList<>();
-    static ArrayList<String> smi_source = new ArrayList<>();
-    static ArrayList<Boolean> smi_is_active = new ArrayList<>();
-    static ArrayList<String> excludedWords = new ArrayList<>();
+    public static ArrayList<String> smi_link = new ArrayList<>();
+    public static ArrayList<String> smi_source = new ArrayList<>();
+    public static ArrayList<Boolean> smi_is_active = new ArrayList<>();
+    public static ArrayList<String> excludedWords = new ArrayList<>();
 
     // Запись конфигураций приложения
-    static void writeToConfig(String p_word, String p_type) {
+    public static void writeToConfig(String p_word, String p_type) {
         try (OutputStreamWriter writer = new OutputStreamWriter(new FileOutputStream(Main.settingsPath, true), StandardCharsets.UTF_8)) {
             switch (p_type) {
                 case "keyword": {
@@ -116,7 +118,7 @@ public class Common {
     }
 
     // Считывание ключевых слов при добавлении/удалении в комбобоксе
-    static List<String> getKeywordsFromFile() {
+    public static List<String> getKeywordsFromFile() {
         List<String> keywords = new ArrayList<>();
         try {
             for (String s : Files.readAllLines(Paths.get(Main.settingsPath))) {
@@ -130,7 +132,7 @@ public class Common {
     }
 
     // Считывание слов исключений для поиска по одному слову
-    static List<String> getExcludeWordsFromFile() {
+    public static List<String> getExcludeWordsFromFile() {
         List<String> excludeWords = new ArrayList<>();
         try {
             for (String s : Files.readAllLines(Paths.get(Main.settingsPath))) {
@@ -144,7 +146,7 @@ public class Common {
     }
 
     // Считывание настроек из файла в массив строк
-    static void getSettingsFromFile() {
+    public static void getSettingsFromFile() {
         int linesAmount = Common.countLines(Main.settingsPath);
         String[][] lines = new String[linesAmount][];
 
@@ -192,7 +194,7 @@ public class Common {
     }
 
     // Считывание сохранённого цвета шрифта из файла
-    static void getColorsSettingsFromFile() {
+    public static void getColorsSettingsFromFile() {
         int linesAmount = Common.countLines(Main.settingsPath);
         String[][] lines = new String[linesAmount][];
 
@@ -255,7 +257,7 @@ public class Common {
     }
 
     // определение SMTP исходящей почты
-    static String getSmtp() {
+    public static String getSmtp() {
         String smtp = "";
         String serviceName = EmailSender.from.substring(EmailSender.from.indexOf(64) + 1);
         switch (serviceName) {
@@ -285,7 +287,7 @@ public class Common {
     }
 
     // Считывание настроек почты из файла
-    static void getEmailSettingsFromFile() {
+    public static void getEmailSettingsFromFile() {
         int linesAmount = Common.countLines(Main.settingsPath);
         String[][] lines = new String[linesAmount][];
         try (BufferedReader reader = new BufferedReader(
@@ -319,7 +321,7 @@ public class Common {
     }
 
     // Запись интервалов в combo box
-    static void addIntervalsToCombobox(JComboBox<String> p_cbx_name) {
+    public static void addIntervalsToCombobox(JComboBox<String> p_cbx_name) {
         for (String p_item : Gui.intervals) {
             p_cbx_name.addItem(p_item);
         }
@@ -343,7 +345,7 @@ public class Common {
     }
 
     // Удаление ключевого слова из combo box
-    static void delSettings(String s) throws IOException {
+    public static void delSettings(String s) throws IOException {
         Path input = Paths.get(Main.settingsPath);
         Path temp = Files.createTempFile("temp", ".txt");
         Stream<String> lines = Files.lines(input);
@@ -403,7 +405,7 @@ public class Common {
     }
 
     // Шкала прогресса
-    static void fill() {
+    public static void fill() {
         int counter = 0;
         while (!Search.isSearchFinished.get() || !isSending.get()) {
             if (!isSending.get()) Gui.progressBar.setForeground(new Color(255, 115, 0));
@@ -458,7 +460,7 @@ public class Common {
     }
 
     // Заполнение диалоговых окон лога и СМИ
-    static void showDialog(String p_file) {
+    public static void showDialog(String p_file) {
         SQLite sqlite = new SQLite();
         switch (p_file) {
             case "smi": {
@@ -502,7 +504,7 @@ public class Common {
     }
 
     // Копирование файлов из jar
-    static void copyFiles(URL p_file, String copy_to) {
+    public static void copyFiles(URL p_file, String copy_to) {
         File copied = new File(copy_to);
         try (InputStream in = p_file.openStream();
              OutputStream out = new BufferedOutputStream(new FileOutputStream(copied))) {
@@ -518,7 +520,7 @@ public class Common {
     }
 
     // Оставляет только буквы
-    static String delNoLetter(String s) {
+    public static String delNoLetter(String s) {
         StringBuilder sb = new StringBuilder();
         for (int i = 0; i < s.length(); i++) {
             if (Character.isLetter(s.charAt(i)))
@@ -545,7 +547,7 @@ public class Common {
     }
 
     // Уведомление в трее
-    static void trayMessage(String pMessage) {
+    public static void trayMessage(String pMessage) {
         if (SystemTray.isSupported()) {
             PopupMenu popup = new PopupMenu();
             MenuItem exitItem = new MenuItem("Close");

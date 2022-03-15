@@ -1,5 +1,7 @@
 package com.news;
 
+import utils.Common;
+
 import javax.swing.*;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
@@ -9,9 +11,9 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
 public class Dialogs extends JDialog implements KeyListener {
-    static JTextArea textAreaForDialogs;
+    public static JTextArea textAreaForDialogs;
     static JTable table;
-    static DefaultTableModel model;
+    public static DefaultTableModel model;
 
     public Dialogs(String p_file) {
         textAreaForDialogs = new JTextArea();
