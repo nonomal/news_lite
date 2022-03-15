@@ -1,9 +1,9 @@
 package main;
 
 import com.formdev.flatlaf.intellijthemes.FlatHiberbeeDarkIJTheme;
-import com.news.Gui;
-import com.news.InternetAvailabilityChecker;
-import com.news.SQLite;
+import gui.Gui;
+import utils.InternetAvailabilityChecker;
+import database.SQLite;
 import com.news.Search;
 import utils.Common;
 

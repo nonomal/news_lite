@@ -1,6 +1,6 @@
 package utils;
 
-import com.news.Gui;
+import gui.Gui;
 import jxl.Workbook;
 import jxl.format.Alignment;
 import jxl.format.Colour;

@@ -3,10 +3,11 @@ package com.news;
 import com.sun.syndication.feed.synd.SyndContent;
 import com.sun.syndication.feed.synd.SyndEntry;
 import com.sun.syndication.feed.synd.SyndFeed;
+import database.SQLite;
+import gui.Gui;
 import main.Main;
 import utils.Common;
-import utils.EmailSender;
-import utils.SyndParser;
+import email.EmailSender;
 
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
@@ -19,12 +20,12 @@ import java.util.*;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 public class Search {
-    static List<String> excludeFromSearch = Common.getExcludeWordsFromFile();
-    static AtomicBoolean isStop = new AtomicBoolean(false);
-    static AtomicBoolean isSearchNow = new AtomicBoolean(false);
+    public static List<String> excludeFromSearch = Common.getExcludeWordsFromFile();
+    public static AtomicBoolean isStop = new AtomicBoolean(false);
+    public static AtomicBoolean isSearchNow = new AtomicBoolean(false);
     public static AtomicBoolean isSearchFinished;
     double searchTime;
-    static int j = 1;
+    public static int j = 1;
     DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm");
     LocalDateTime now = LocalDateTime.now();
     public String today = dtf.format(now);

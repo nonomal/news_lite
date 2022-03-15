@@ -1,4 +1,4 @@
-package utils;
+package com.news;
 
 import java.io.IOException;
 import java.net.URL;

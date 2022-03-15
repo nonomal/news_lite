@@ -1,4 +1,4 @@
-package com.news;
+package utils;
 
 import java.io.IOException;
 import java.net.InetSocketAddress;

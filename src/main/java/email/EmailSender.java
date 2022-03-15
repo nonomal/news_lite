@@ -1,7 +1,9 @@
-package utils;
+package email;
 
 import com.news.*;
+import gui.Gui;
 import main.Main;
+import utils.Common;
 
 import javax.mail.MessagingException;
 import java.io.IOException;

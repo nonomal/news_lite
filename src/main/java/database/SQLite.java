@@ -1,5 +1,6 @@
-package com.news;
+package database;
 
+import gui.Gui;
 import main.Main;
 import utils.Common;
 
@@ -8,9 +9,9 @@ import java.sql.*;
 import java.util.logging.Level;
 
 public class SQLite {
-    static Connection connection;
-    static boolean isConnectionToSQLite;
-    private final int wordFreqMatches = 2;
+    public static Connection connection;
+    public static boolean isConnectionToSQLite;
+    public final int wordFreqMatches = 2;
 
     public int getWordFreqMatches() {
         return wordFreqMatches;
@@ -31,7 +32,7 @@ public class SQLite {
     }
 
     // Заполняем таблицу анализа
-    void selectSqlite() {
+    public void selectSqlite() {
         try {
             Statement st = connection.createStatement();
             String query = "select SUM, TITLE from v_news_dual where sum > " +
@@ -59,7 +60,7 @@ public class SQLite {
     }
 
     // Delete from news_dual
-    void deleteTitles() {
+    public void deleteTitles() {
         try {
             Statement st = connection.createStatement();
             String query = "delete from news_dual";
@@ -71,7 +72,7 @@ public class SQLite {
     }
 
     // Delete from titles256
-    void deleteFrom256() {
+    public void deleteFrom256() {
         try {
             Statement st = connection.createStatement();
             String query = "delete from titles256";
@@ -154,7 +155,7 @@ public class SQLite {
     }
 
     // вставка нового источника
-    void insertNewSource() {
+    public void insertNewSource() {
         if (isConnectionToSQLite) {
             int max_id_in_source = 0;
             int new_id;
@@ -199,7 +200,7 @@ public class SQLite {
     }
 
     // вставка нового слова для исключения из анализа частоты употребления слов
-    void insertNewExcludedWord(String pWord) {
+    public void insertNewExcludedWord(String pWord) {
         if (isConnectionToSQLite) {
             try {
                 //запись в БД
@@ -218,7 +219,7 @@ public class SQLite {
     }
 
     // вставка кода по заголовку для отсеивания ранее обнаруженных новостей
-    void insertTitleIn256(String pTitle) {
+    public void insertTitleIn256(String pTitle) {
         if (isConnectionToSQLite) {
             try {
                 String query256 = "INSERT INTO titles256(title) VALUES ('" + pTitle + "')";
@@ -232,7 +233,7 @@ public class SQLite {
     }
 
     // сохранение всех заголовков
-    void insertAllTitles(String pTitle, String pDate) {
+    public void insertAllTitles(String pTitle, String pDate) {
         if (isConnectionToSQLite) {
             try {
                 String q = "INSERT INTO all_news(title, news_date) VALUES ('" + pTitle + "', '" + pDate + "')";
@@ -245,7 +246,7 @@ public class SQLite {
     }
 
     // отсеивание заголовков
-    boolean isTitleExists(String pString256) {
+    public boolean isTitleExists(String pString256) {
         int isExists = 0;
         if (isConnectionToSQLite) {
             try {
@@ -267,7 +268,7 @@ public class SQLite {
     }
 
     // новостей в архиве всего
-    int archiveNewsCount() {
+    public int archiveNewsCount() {
         int countNews = 0;
         if (isConnectionToSQLite) {
             try {
@@ -287,7 +288,7 @@ public class SQLite {
     }
 
     // удаление источника
-    void deleteSource(String p_source) {
+    public void deleteSource(String p_source) {
         if (isConnectionToSQLite) {
             try {
                 String query = "DELETE FROM rss_list WHERE source = '" + p_source + "'";
@@ -301,7 +302,7 @@ public class SQLite {
     }
 
     // удаление слова исключенного из поиска
-    void deleteExcluded(String p_source) {
+    public void deleteExcluded(String p_source) {
         if (isConnectionToSQLite) {
             try {
                 String query = "DELETE FROM exclude WHERE word = '" + p_source + "'";
@@ -315,7 +316,7 @@ public class SQLite {
     }
 
     // обновление статуса чекбокса is_active для ресурсов SELECT id, source, link FROM rss_list where is_active = 1  ORDER BY id
-    void updateIsActiveStatus(boolean pBoolean, String pSource) {
+    public void updateIsActiveStatus(boolean pBoolean, String pSource) {
         if (isConnectionToSQLite) {
             try {
                 Statement st = connection.createStatement();
@@ -329,7 +330,7 @@ public class SQLite {
     }
 
     // удаление дубликатов новостей
-    void deleteDuplicates() {
+    public void deleteDuplicates() {
         if (isConnectionToSQLite) {
             try {
                 Statement st = connection.createStatement();

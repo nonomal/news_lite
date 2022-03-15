@@ -1,4 +1,6 @@
-package com.news;
+package gui;
+
+import database.SQLite;
 
 import javax.swing.*;
 import javax.swing.table.TableCellEditor;
@@ -8,7 +10,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-class ButtonColumn extends AbstractCellEditor implements TableCellRenderer, TableCellEditor, ActionListener {
+public class ButtonColumn extends AbstractCellEditor implements TableCellRenderer, TableCellEditor, ActionListener {
     JTable table;
     JButton renderButton;
     JButton editButton;

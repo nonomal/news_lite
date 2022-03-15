@@ -1,6 +1,6 @@
 package utils;
 
-import com.news.Gui;
+import gui.Gui;
 import com.news.Search;
 
 import java.util.TimerTask;

@@ -1,4 +1,4 @@
-package com.news;
+package gui;
 
 import utils.Common;
 

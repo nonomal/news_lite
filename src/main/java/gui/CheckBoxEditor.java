@@ -1,7 +1,7 @@
-package com.news;
+package gui;
 
+import database.SQLite;
 import javax.swing.*;
-import javax.swing.table.TableColumnModel;
 import java.awt.*;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
