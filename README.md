@@ -7,7 +7,7 @@
 
 Актуальная версия прграммы: https://github.com/mrprogre/news_lite/raw/master/News.jar
 
-Для работы приложения на ПК должна быть установлена Java: https://www.java.com/en/download/windows_offline.jsp
+Для работы приложения на ПК должна быть установлена Java: https://www.java.com/ru/download/
 
 
 ----
