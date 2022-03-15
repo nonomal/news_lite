@@ -1,21 +1,10 @@
 # Avandy news founder
 
-----
-Search for all news in popular RSS lists:
-Forbes, Yandex, Mail.ru, Lenta, Izvestiya, Vesti, Garant, Life, RBK, Gazeta.ru, Vedomosti, BBC, Poplulyarnaya mekhanika, 
-Nauka i zhizn', RT, C-com.news.Main, Pravitel'stvo RF, Gosduma RF, Rossiyskaya gazeta, Rosteh, Kommersant, Expert, Nasa, 
-Yandex.Kosmos, Astronews, Google, Finam, Aton, MMVB, Esquire, GQ, N+1, SmartLab
 
-<b>new UI:</b>
+Поисковик новостей по RSS потокам популярных новостных источников.
 
-![image](https://user-images.githubusercontent.com/45883640/146732804-940c06c7-6ece-4930-a67c-492bfd419ff3.png)
 
-----
-Работа в старом интерфейсе выглядит так:
-
-![Image alt](https://github.com/mrprogre/news_lite/blob/master/gui.gif)
-
-Возможности программы:
+**Возможности программы:**
 - поиск по ключевым словам
 - отправка результата поиска на электронную почту (+ возможность выбора автоматической отправки результатов после каждого поиска)
 - экспорт результатов поиска в Excel
@@ -47,7 +36,22 @@ Yandex.Kosmos, Astronews, Google, Finam, Aton, MMVB, Esquire, GQ, N+1, SmartLab
 
 Отправка производится с почтовых сервисов: Mail.ru, Gmail, Yandex, Yahoo, Rambler.
 
+<b>new UI:</b>
+
+![image](https://user-images.githubusercontent.com/45883640/146732804-940c06c7-6ece-4930-a67c-492bfd419ff3.png)
+
 ----
+Работа в старом интерфейсе выглядит так:
+
+![Image alt](https://github.com/mrprogre/news_lite/blob/master/gui.gif)
+
+----
+Search for all news in popular RSS lists:
+        
+Forbes, Yandex, Mail.ru, Lenta, Izvestiya, Vesti, Garant, Life, RBK, Gazeta.ru, Vedomosti, BBC, Poplulyarnaya mekhanika, 
+Nauka i zhizn', RT, C-com.news.Main, Pravitel'stvo RF, Gosduma RF, Rossiyskaya gazeta, Rosteh, Kommersant, Expert, Nasa, 
+Yandex.Kosmos, Astronews, Google, Finam, Aton, MMVB, Esquire, GQ, N+1, SmartLab        
+        
 Program features:
 - keyword search
 - sending the search result to e-mail (+ the ability to choose to automatically send the results after each search)
