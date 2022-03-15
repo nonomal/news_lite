@@ -1,5 +1,6 @@
 package com.news;
 
+import main.Main;
 import utils.Common;
 
 import javax.swing.*;
@@ -16,7 +17,7 @@ public class SQLite {
     }
 
     // Открытие соединения с базой данных
-    void openSQLiteConnection() {
+    public void openSQLiteConnection() {
         try {
             Class.forName("org.sqlite.JDBC");
             connection = DriverManager.getConnection("jdbc:sqlite:" + Main.directoryPath + "news.db");
@@ -342,7 +343,7 @@ public class SQLite {
     }
 
     // закрытие соединения с SQLite
-    void closeSQLiteConnection() {
+    public void closeSQLiteConnection() {
         try {
             if (isConnectionToSQLite) {
                 connection.close();

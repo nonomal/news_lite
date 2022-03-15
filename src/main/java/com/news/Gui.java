@@ -1,5 +1,6 @@
 package com.news;
 
+import main.Main;
 import utils.Common;
 import utils.EmailSender;
 import utils.ExportToExcel;
@@ -46,7 +47,7 @@ public class Gui extends JFrame {
     static int q = 1;
     static double timeStart;
     static double timeEnd;
-    static boolean isOnlyLastNews = false;
+    public static boolean isOnlyLastNews = false;
     static boolean isInKeywords = false;
     static String findWord = "";
     static String sendTo;

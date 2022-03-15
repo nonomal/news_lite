@@ -9,7 +9,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9e6d6f99-cebb-4fd8-99d4-ae1b59f22e89" name="Default Changelist" comment="fix: refactor">
+    <list default="true" id="9e6d6f99-cebb-4fd8-99d4-ae1b59f22e89" name="Default Changelist" comment="feat: дополнен readme">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -66,7 +66,7 @@
   </component>
   <component name="RunManager">
     <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="com.news.Main" />
+      <option name="MAIN_CLASS_NAME" value="main.Main" />
       <module name="News" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -86,34 +86,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1616704248449</updated>
-    </task>
-    <task id="LOCAL-00148" summary="доработка отправки почты">
-      <created>1640077421337</created>
-      <option name="number" value="00148" />
-      <option name="presentableId" value="LOCAL-00148" />
-      <option name="project" value="LOCAL" />
-      <updated>1640077421338</updated>
-    </task>
-    <task id="LOCAL-00149" summary="доработка отправки почты">
-      <created>1640077610999</created>
-      <option name="number" value="00149" />
-      <option name="presentableId" value="LOCAL-00149" />
-      <option name="project" value="LOCAL" />
-      <updated>1640077610999</updated>
-    </task>
-    <task id="LOCAL-00150" summary="доработка отправки почты">
-      <created>1640096649149</created>
-      <option name="number" value="00150" />
-      <option name="presentableId" value="LOCAL-00150" />
-      <option name="project" value="LOCAL" />
-      <updated>1640096649150</updated>
-    </task>
-    <task id="LOCAL-00151" summary="доработка отправки почты">
-      <created>1640096712072</created>
-      <option name="number" value="00151" />
-      <option name="presentableId" value="LOCAL-00151" />
-      <option name="project" value="LOCAL" />
-      <updated>1640096712072</updated>
     </task>
     <task id="LOCAL-00152" summary="доработка отправки почты">
       <created>1640096943895</created>
@@ -430,7 +402,35 @@
       <option name="project" value="LOCAL" />
       <updated>1647332309176</updated>
     </task>
-    <option name="localTasksCounter" value="197" />
+    <task id="LOCAL-00197" summary="fix: refactor">
+      <created>1647334018445</created>
+      <option name="number" value="00197" />
+      <option name="presentableId" value="LOCAL-00197" />
+      <option name="project" value="LOCAL" />
+      <updated>1647334018445</updated>
+    </task>
+    <task id="LOCAL-00198" summary="fix: refactor">
+      <created>1647334067095</created>
+      <option name="number" value="00198" />
+      <option name="presentableId" value="LOCAL-00198" />
+      <option name="project" value="LOCAL" />
+      <updated>1647334067095</updated>
+    </task>
+    <task id="LOCAL-00199" summary="fix: refactor">
+      <created>1647334203549</created>
+      <option name="number" value="00199" />
+      <option name="presentableId" value="LOCAL-00199" />
+      <option name="project" value="LOCAL" />
+      <updated>1647334203549</updated>
+    </task>
+    <task id="LOCAL-00200" summary="feat: дополнен readme">
+      <created>1647334610124</created>
+      <option name="number" value="00200" />
+      <option name="presentableId" value="LOCAL-00200" />
+      <option name="project" value="LOCAL" />
+      <updated>1647334610124</updated>
+    </task>
+    <option name="localTasksCounter" value="201" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -448,7 +448,6 @@
     <ignored-roots>
       <path value="$PROJECT_DIR$" />
     </ignored-roots>
-    <MESSAGE value="upd_05_07_21_6" />
     <MESSAGE value="upd_05_07_21_7" />
     <MESSAGE value="upd_05_07_21_8" />
     <MESSAGE value="upd_05_07_21_9" />
@@ -473,7 +472,8 @@
     <MESSAGE value="feat: добавлен фильтр новостей на основной поиск" />
     <MESSAGE value="fix: убирал static у переменных" />
     <MESSAGE value="fix: refactor" />
-    <option name="LAST_COMMIT_MESSAGE" value="fix: refactor" />
+    <MESSAGE value="feat: дополнен readme" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat: дополнен readme" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

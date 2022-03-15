@@ -49,7 +49,7 @@
 Search for all news in popular RSS lists:
         
 Forbes, Yandex, Mail.ru, Lenta, Izvestiya, Vesti, Garant, Life, RBK, Gazeta.ru, Vedomosti, BBC, Poplulyarnaya mekhanika, 
-Nauka i zhizn', RT, C-com.news.Main, Pravitel'stvo RF, Gosduma RF, Rossiyskaya gazeta, Rosteh, Kommersant, Expert, Nasa, 
+Nauka i zhizn', RT, C-main.Main, Pravitel'stvo RF, Gosduma RF, Rossiyskaya gazeta, Rosteh, Kommersant, Expert, Nasa, 
 Yandex.Kosmos, Astronews, Google, Finam, Aton, MMVB, Esquire, GQ, N+1, SmartLab        
         
 Program features:

@@ -3,6 +3,7 @@ package com.news;
 import com.sun.syndication.feed.synd.SyndContent;
 import com.sun.syndication.feed.synd.SyndEntry;
 import com.sun.syndication.feed.synd.SyndFeed;
+import main.Main;
 import utils.Common;
 import utils.EmailSender;
 import utils.SyndParser;
@@ -325,7 +326,7 @@ public class Search {
     }
 
     //Console search
-    void searchByConsole() {
+    public void searchByConsole() {
         SQLite sqlite = new SQLite();
         if (!isSearchNow.get()) {
             dataForEmail.clear();
