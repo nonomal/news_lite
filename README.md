@@ -3,9 +3,9 @@
 
 Поисковик новостей по RSS потокам популярных новостных источников (*Открыто для доработок! open source*). 
 
-Для работы приложения на ПК должна быть установлена Java:
+Актуальная версия прграммы: https://github.com/mrprogre/news_lite/raw/master/News.jar
 
-https://www.java.com/en/download/windows_offline.jsp
+Для работы приложения на ПК должна быть установлена Java: https://www.java.com/en/download/windows_offline.jsp
 
 
 ----
