@@ -9,10 +9,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9e6d6f99-cebb-4fd8-99d4-ae1b59f22e89" name="Default Changelist" comment="feat: рефакторинг">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/search/SyndParser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/search/SyndParser.java" afterDir="false" />
-    </list>
+    <list default="true" id="9e6d6f99-cebb-4fd8-99d4-ae1b59f22e89" name="Default Changelist" comment="feat: отображение долгого времени поиска в консоли" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -87,13 +84,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1616704248449</updated>
-    </task>
-    <task id="LOCAL-00161" summary="доработка интерфейса">
-      <created>1640908254389</created>
-      <option name="number" value="00161" />
-      <option name="presentableId" value="LOCAL-00161" />
-      <option name="project" value="LOCAL" />
-      <updated>1640908254389</updated>
     </task>
     <task id="LOCAL-00162" summary="доработка интерфейса">
       <created>1640908279536</created>
@@ -431,7 +421,14 @@
       <option name="project" value="LOCAL" />
       <updated>1647341463176</updated>
     </task>
-    <option name="localTasksCounter" value="210" />
+    <task id="LOCAL-00210" summary="feat: отображение долгого времени поиска в консоли">
+      <created>1648195372484</created>
+      <option name="number" value="00210" />
+      <option name="presentableId" value="LOCAL-00210" />
+      <option name="project" value="LOCAL" />
+      <updated>1648195372484</updated>
+    </task>
+    <option name="localTasksCounter" value="211" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -449,7 +446,6 @@
     <ignored-roots>
       <path value="$PROJECT_DIR$" />
     </ignored-roots>
-    <MESSAGE value="upd_05_07_21_9" />
     <MESSAGE value="upd_06_07_21_1" />
     <MESSAGE value="upd_06_07_21_2" />
     <MESSAGE value="применил тему из FlatLaf" />
@@ -474,7 +470,8 @@
     <MESSAGE value="feat: дополнен readme" />
     <MESSAGE value="feat: рефактор" />
     <MESSAGE value="feat: рефакторинг" />
-    <option name="LAST_COMMIT_MESSAGE" value="feat: рефакторинг" />
+    <MESSAGE value="feat: отображение долгого времени поиска в консоли" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat: отображение долгого времени поиска в консоли" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
