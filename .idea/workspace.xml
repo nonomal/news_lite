@@ -10,13 +10,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="9e6d6f99-cebb-4fd8-99d4-ae1b59f22e89" name="Default Changelist" comment="feat: рефакторинг">
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/news/Search.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/search/Search.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/news/SyndParser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/search/SyndParser.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/email/EmailSender.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/email/EmailSender.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/gui/Gui.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/gui/Gui.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/main/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/main/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/utils/Common.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/utils/Common.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/utils/MyTimerTask.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/utils/MyTimerTask.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/search/SyndParser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/search/SyndParser.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -92,27 +87,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1616704248449</updated>
-    </task>
-    <task id="LOCAL-00158" summary="доработка интерфейса">
-      <created>1640900705826</created>
-      <option name="number" value="00158" />
-      <option name="presentableId" value="LOCAL-00158" />
-      <option name="project" value="LOCAL" />
-      <updated>1640900705826</updated>
-    </task>
-    <task id="LOCAL-00159" summary="доработка интерфейса">
-      <created>1640900716245</created>
-      <option name="number" value="00159" />
-      <option name="presentableId" value="LOCAL-00159" />
-      <option name="project" value="LOCAL" />
-      <updated>1640900716245</updated>
-    </task>
-    <task id="LOCAL-00160" summary="доработка интерфейса">
-      <created>1640900801189</created>
-      <option name="number" value="00160" />
-      <option name="presentableId" value="LOCAL-00160" />
-      <option name="project" value="LOCAL" />
-      <updated>1640900801189</updated>
     </task>
     <task id="LOCAL-00161" summary="доработка интерфейса">
       <created>1640908254389</created>
@@ -436,7 +410,28 @@
       <option name="project" value="LOCAL" />
       <updated>1647341134255</updated>
     </task>
-    <option name="localTasksCounter" value="207" />
+    <task id="LOCAL-00207" summary="feat: рефакторинг">
+      <created>1647341408368</created>
+      <option name="number" value="00207" />
+      <option name="presentableId" value="LOCAL-00207" />
+      <option name="project" value="LOCAL" />
+      <updated>1647341408368</updated>
+    </task>
+    <task id="LOCAL-00208" summary="feat: рефакторинг">
+      <created>1647341442603</created>
+      <option name="number" value="00208" />
+      <option name="presentableId" value="LOCAL-00208" />
+      <option name="project" value="LOCAL" />
+      <updated>1647341442603</updated>
+    </task>
+    <task id="LOCAL-00209" summary="feat: рефакторинг">
+      <created>1647341463176</created>
+      <option name="number" value="00209" />
+      <option name="presentableId" value="LOCAL-00209" />
+      <option name="project" value="LOCAL" />
+      <updated>1647341463176</updated>
+    </task>
+    <option name="localTasksCounter" value="210" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
