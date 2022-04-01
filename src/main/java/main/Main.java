@@ -39,7 +39,7 @@ public class Main {
     // создание директорий и файлов
     static {
         // Минимальная дата публикации новости 01.01.2021
-        minPubDate.set(Calendar.YEAR, 2021);
+        minPubDate.set(Calendar.YEAR, 2022);
         minPubDate.set(Calendar.DAY_OF_YEAR, 1);
 
         File mainDirectory = new File(directoryPath);

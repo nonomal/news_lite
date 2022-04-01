@@ -42,7 +42,6 @@ public class Search {
         if (!isSearchNow.get()) {
             int modelRowCount = Gui.model.getRowCount();
             dataForEmail.clear();
-            if (!Gui.guiInTray.get()) Common.console("status: search started");
             //выборка актуальных источников перед поиском из БД
             sqlite.selectSources("smi");
             isSearchNow.set(true);
@@ -73,7 +72,7 @@ public class Search {
                 PreparedStatement st = SQLite.connection.prepareStatement("insert into news_dual(title) values (?)");
                 String q_begin = "BEGIN TRANSACTION";
                 Statement st_begin = SQLite.connection.createStatement();
-                st_begin.executeUpdate(q_begin);
+                st_begin.execute(q_begin);
                 st_begin.close();
 
                 SyndParser parser = new SyndParser();
@@ -129,7 +128,7 @@ public class Search {
                                         Date curent_date = new Date();
                                         int date_diff = Common.compareDatesOnly(curent_date, pubDate);
 
-                                        // вставка всех новостей в архив
+                                        // вставка всех новостей в архив (ощутимо замедляет общий поиск)
                                         sqlite.insertAllTitles(title, pubDate.toString());
 
                                         if (Gui.todayOrNotCbx.getState() && (date_diff != 0)) {
@@ -292,7 +291,7 @@ public class Search {
                 // коммитим транзакцию
                 String q_commit = "COMMIT";
                 Statement st_commit = SQLite.connection.createStatement();
-                st_commit.executeUpdate(q_commit);
+                st_commit.execute(q_commit);
                 st_commit.close();
 
                 // удаляем все пустые строки
@@ -317,7 +316,7 @@ public class Search {
                 try {
                     String q_begin = "ROLLBACK";
                     Statement st_begin = SQLite.connection.createStatement();
-                    st_begin.executeUpdate(q_begin);
+                    st_begin.execute(q_begin);
                     st_begin.close();
                 } catch (SQLException ignored) {
                 }
@@ -416,7 +415,7 @@ public class Search {
                 // коммитим транзакцию
                 String q_commit = "COMMIT";
                 Statement st_commit = SQLite.connection.createStatement();
-                st_commit.executeUpdate(q_commit);
+                st_commit.execute(q_commit);
 
                 // удаляем все пустые строки
                 String q_del = "delete from news_dual where title = ''";
@@ -437,7 +436,7 @@ public class Search {
                 try {
                     String q_begin = "ROLLBACK";
                     Statement st_begin = SQLite.connection.createStatement();
-                    st_begin.executeUpdate(q_begin);
+                    st_begin.execute(q_begin);
                 } catch (SQLException sql) {
                     sql.printStackTrace();
                 }
