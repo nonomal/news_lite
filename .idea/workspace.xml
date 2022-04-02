@@ -9,9 +9,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9e6d6f99-cebb-4fd8-99d4-ae1b59f22e89" name="Default Changelist" comment="feat: отображение долгого времени поиска в консоли">
+    <list default="true" id="9e6d6f99-cebb-4fd8-99d4-ae1b59f22e89" name="Default Changelist" comment="info: оптимизация работы с БД">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/main/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/main/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/gui/Gui.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/gui/Gui.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/search/Search.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/search/Search.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -89,13 +89,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1616704248449</updated>
-    </task>
-    <task id="LOCAL-00164" summary="доработка отправки почты">
-      <created>1640954079322</created>
-      <option name="number" value="00164" />
-      <option name="presentableId" value="LOCAL-00164" />
-      <option name="project" value="LOCAL" />
-      <updated>1640954079322</updated>
     </task>
     <task id="LOCAL-00165" summary="доработка отправки почты">
       <created>1640954178482</created>
@@ -433,7 +426,14 @@
       <option name="project" value="LOCAL" />
       <updated>1648196418891</updated>
     </task>
-    <option name="localTasksCounter" value="213" />
+    <task id="LOCAL-00213" summary="info: оптимизация работы с БД">
+      <created>1648826332453</created>
+      <option name="number" value="00213" />
+      <option name="presentableId" value="LOCAL-00213" />
+      <option name="project" value="LOCAL" />
+      <updated>1648826332453</updated>
+    </task>
+    <option name="localTasksCounter" value="214" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -451,7 +451,6 @@
     <ignored-roots>
       <path value="$PROJECT_DIR$" />
     </ignored-roots>
-    <MESSAGE value="upd_06_07_21_1" />
     <MESSAGE value="upd_06_07_21_2" />
     <MESSAGE value="применил тему из FlatLaf" />
     <MESSAGE value="применил тёмную тему FlatLaf" />
@@ -476,7 +475,8 @@
     <MESSAGE value="feat: рефактор" />
     <MESSAGE value="feat: рефакторинг" />
     <MESSAGE value="feat: отображение долгого времени поиска в консоли" />
-    <option name="LAST_COMMIT_MESSAGE" value="feat: отображение долгого времени поиска в консоли" />
+    <MESSAGE value="info: оптимизация работы с БД" />
+    <option name="LAST_COMMIT_MESSAGE" value="info: оптимизация работы с БД" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

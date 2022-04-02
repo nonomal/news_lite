@@ -47,8 +47,6 @@ public class Gui extends JFrame {
     public static ImageIcon fontIco = new ImageIcon(Toolkit.getDefaultToolkit().createImage(Gui.class.getResource("/icons/font.png")));
     public static ImageIcon bgIco = new ImageIcon(Toolkit.getDefaultToolkit().createImage(Gui.class.getResource("/icons/bg.png")));
     public static int q = 1;
-    public static double timeStart;
-    public static double timeEnd;
     public static boolean isOnlyLastNews = false;
     public static boolean isInKeywords = false;
     public static String findWord = "";

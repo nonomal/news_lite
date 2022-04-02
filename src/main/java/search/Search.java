@@ -14,7 +14,9 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
+import java.time.Duration;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -24,7 +26,7 @@ public class Search {
     public static AtomicBoolean isStop = new AtomicBoolean(false);
     public static AtomicBoolean isSearchNow = new AtomicBoolean(false);
     public static AtomicBoolean isSearchFinished;
-    double searchTime;
+
     public static int j = 1;
     DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm");
     LocalDateTime now = LocalDateTime.now();
@@ -35,6 +37,9 @@ public class Search {
     int newsCount = 0;
     Date minDate = Main.minPubDate.getTime();
     int checkDate;
+    LocalTime timeStart;
+    LocalTime timeEnd;
+    Duration searchTime;
 
     //Main search
     public void mainSearch(String pSearchType) {
@@ -45,7 +50,7 @@ public class Search {
             //выборка актуальных источников перед поиском из БД
             sqlite.selectSources("smi");
             isSearchNow.set(true);
-            Gui.timeStart = System.currentTimeMillis();
+            timeStart = LocalTime.now();
             Gui.labelInfo.setText("");
             Search.j = 1;
             if (!Gui.guiInTray.get()) Gui.model.setRowCount(0);
@@ -264,10 +269,10 @@ public class Search {
                 }
                 st.close();
                 //Время поиска
-                Gui.timeEnd = System.currentTimeMillis();
-                searchTime = (Gui.timeEnd - Gui.timeStart) / 1000;
-                DecimalFormat f = new DecimalFormat("##.00");
-                if (!Gui.guiInTray.get()) Common.console("status: search completed in " + f.format(searchTime) + " s.");
+                timeEnd = LocalTime.now();
+                searchTime = Duration.between(timeStart, timeEnd);
+                if (!Gui.guiInTray.get()) Common.console("status: search completed in " +
+                        searchTime.getSeconds() + " s.");
                 isSearchNow.set(false);
 
                 isSearchFinished.set(true);
