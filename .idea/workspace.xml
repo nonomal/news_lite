@@ -9,12 +9,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9e6d6f99-cebb-4fd8-99d4-ae1b59f22e89" name="Default Changelist" comment="info: время поиска">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/News.iml" beforeDir="false" afterPath="$PROJECT_DIR$/News.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/utils/InternetAvailabilityChecker.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/utils/InternetAvailabilityChecker.java" afterDir="false" />
-    </list>
+    <list default="true" id="9e6d6f99-cebb-4fd8-99d4-ae1b59f22e89" name="Default Changelist" comment="feat: добавлен тест" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -57,7 +52,7 @@
     <property name="com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5" value="" />
     <property name="last.edited.regexp" value="Samplv&lt;p&gt;e Tex&lt;p&gt;t" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/src/main/resources" />
-    <property name="project.structure.last.edited" value="Project" />
+    <property name="project.structure.last.edited" value="Artifacts" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.18862559" />
     <property name="settings.editor.selected.configurable" value="preferences.lookFeel" />
@@ -134,20 +129,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1616704248449</updated>
-    </task>
-    <task id="LOCAL-00166" summary="доработка отправки почты">
-      <created>1640954208250</created>
-      <option name="number" value="00166" />
-      <option name="presentableId" value="LOCAL-00166" />
-      <option name="project" value="LOCAL" />
-      <updated>1640954208250</updated>
-    </task>
-    <task id="LOCAL-00167" summary="доработка отправки почты">
-      <created>1640954251475</created>
-      <option name="number" value="00167" />
-      <option name="presentableId" value="LOCAL-00167" />
-      <option name="project" value="LOCAL" />
-      <updated>1640954251475</updated>
     </task>
     <task id="LOCAL-00168" summary="доработка отправки почты">
       <created>1640954639795</created>
@@ -478,7 +459,21 @@
       <option name="project" value="LOCAL" />
       <updated>1648906899583</updated>
     </task>
-    <option name="localTasksCounter" value="215" />
+    <task id="LOCAL-00215" summary="feat: добавлен тест проверки соединения с интернетом">
+      <created>1649409544158</created>
+      <option name="number" value="00215" />
+      <option name="presentableId" value="LOCAL-00215" />
+      <option name="project" value="LOCAL" />
+      <updated>1649409544159</updated>
+    </task>
+    <task id="LOCAL-00216" summary="feat: добавлен тест">
+      <created>1649409807158</created>
+      <option name="number" value="00216" />
+      <option name="presentableId" value="LOCAL-00216" />
+      <option name="project" value="LOCAL" />
+      <updated>1649409807158</updated>
+    </task>
+    <option name="localTasksCounter" value="217" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -496,8 +491,6 @@
     <ignored-roots>
       <path value="$PROJECT_DIR$" />
     </ignored-roots>
-    <MESSAGE value="применил тему из FlatLaf" />
-    <MESSAGE value="применил тёмную тему FlatLaf" />
     <MESSAGE value="мелкие доработки по интерфейсу" />
     <MESSAGE value="из анализа исключены глаголы в 3 роде" />
     <MESSAGE value="доработаны исключаемые глаголы из анализа" />
@@ -521,7 +514,9 @@
     <MESSAGE value="feat: отображение долгого времени поиска в консоли" />
     <MESSAGE value="info: оптимизация работы с БД" />
     <MESSAGE value="info: время поиска" />
-    <option name="LAST_COMMIT_MESSAGE" value="info: время поиска" />
+    <MESSAGE value="feat: добавлен тест проверки соединения с интернетом" />
+    <MESSAGE value="feat: добавлен тест" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat: добавлен тест" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -542,5 +537,10 @@
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
     <select />
+  </component>
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/news_lite$InternetAvailabilityCheckerTest.ic" NAME="InternetAvailabilityCheckerTest Coverage Results" MODIFIED="1649409553202" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
+      <FILTER>utils.*</FILTER>
+    </SUITE>
   </component>
 </project>
