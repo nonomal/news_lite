@@ -145,8 +145,8 @@ public class Search {
                                             Object[] row = new Object[]{
                                                     newsCount,
                                                     smi_source,
-                                                    title,
                                                     dateFormatHoursFirst.format(pubDate),
+                                                    title,
                                                     link
                                             };
                                             Gui.model.addRow(row);
@@ -171,8 +171,8 @@ public class Search {
                                             Object[] row = new Object[]{
                                                     newsCount,
                                                     smi_source,
-                                                    title,
                                                     dateFormatHoursFirst.format(pubDate),
+                                                    title,
                                                     link
                                             };
                                             Gui.model.addRow(row);
@@ -211,8 +211,8 @@ public class Search {
                                                 Object[] row = new Object[]{
                                                         newsCount,
                                                         smi_source,
-                                                        title,
                                                         dateFormatHoursFirst.format(pubDate),
+                                                        title,
                                                         link
                                                 };
                                                 Gui.model.addRow(row);
@@ -236,8 +236,8 @@ public class Search {
                                                 Object[] row = new Object[]{
                                                         newsCount,
                                                         smi_source,
-                                                        title,
                                                         dateFormatHoursFirst.format(pubDate),
+                                                        title,
                                                         link
                                                 };
                                                 Gui.model.addRow(row);

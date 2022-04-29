@@ -94,7 +94,7 @@ public class Gui extends JFrame {
         setIconImage(logoIco.getImage());
         setFont(new Font("SansSerif", Font.PLAIN, 12));
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setBounds(320, 200, 1217, 685);
+        setBounds(320, 170, 1217, 685);
         getContentPane().setLayout(null);
 
         //Action Listener for EXIT_ON_CLOSE
@@ -171,7 +171,7 @@ public class Gui extends JFrame {
         scrollPane = new JScrollPane();
         scrollPane.setBounds(10, 40, 1160, 400);
         getContentPane().add(scrollPane);
-        Object[] columns = {"Num", "Source", "Title (double click to open the link)", "Date", "Link"};
+        Object[] columns = {"Num", "Source", "Date", "Title (double click to open the link)", "Link"};
         model = new DefaultTableModel(new Object[][]{
         }, columns) {
             final boolean[] columnEditables = new boolean[]{
@@ -196,7 +196,7 @@ public class Gui extends JFrame {
                 String tip = null;
                 java.awt.Point p = e.getPoint();
                 int rowIndex = rowAtPoint(p);
-                int colIndex = 2;
+                int colIndex = 3;
                 try {
                     tip = (String) getValueAt(rowIndex, colIndex);
                 } catch (RuntimeException ignored) {
@@ -221,9 +221,11 @@ public class Gui extends JFrame {
         table.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
         table.setFont(new Font("SansSerif", Font.PLAIN, 14));
         table.getColumnModel().getColumn(0).setMaxWidth(40);
-        table.getColumnModel().getColumn(1).setPreferredWidth(50);
-        table.getColumnModel().getColumn(2).setPreferredWidth(490);
-        table.getColumnModel().getColumn(3).setPreferredWidth(50);
+        table.getColumnModel().getColumn(1).setPreferredWidth(100);
+        table.getColumnModel().getColumn(1).setMaxWidth(180);
+        table.getColumnModel().getColumn(2).setPreferredWidth(100);
+        table.getColumnModel().getColumn(2).setMaxWidth(100);
+        table.getColumnModel().getColumn(3).setPreferredWidth(490);
         table.removeColumn(table.getColumnModel().getColumn(4)); // Скрыть 4 колонку со ссылкой на новость
         scrollPane.setViewportView(table);
 
@@ -233,7 +235,7 @@ public class Gui extends JFrame {
                 if (e.getClickCount() == 2) {
                     int row = table.convertRowIndexToModel(table.rowAtPoint(new Point(e.getX(), e.getY()))); // при сортировке строк оставляет верные данные
                     int col = table.columnAtPoint(new Point(e.getX(), e.getY()));
-                    if (col == 2|| col == 4) {
+                    if (col == 3|| col == 4) {
                         String url = (String) table.getModel().getValueAt(row, 4);
                         URI uri = null;
                         try {
@@ -612,12 +614,14 @@ public class Gui extends JFrame {
         animationStatus.setBounds(320, 460, 300, 120);
         animationStatus.setFont(new Font("Tahoma", Font.PLAIN, 11));
         animationStatus.setForeground(SystemColor.white);
-        animationStatus.setBackground(new Color(83, 82, 82));
+        animationStatus.setBackground(new Color(49, 42, 82)); // 83, 82, 82
         getContentPane().add(animationStatus);
+
         //Console - scroll
-        JScrollPane console_scroll = new JScrollPane(animationStatus, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-        console_scroll.setBounds(320, 460, 300, 120);
-        getContentPane().add(console_scroll);
+        JScrollPane consoleScroll = new JScrollPane(animationStatus, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+        consoleScroll.setBounds(320, 460, 300, 120);
+        consoleScroll.setBorder(null);
+        getContentPane().add(consoleScroll);
         //Console - label
         JLabel lblConsole = new JLabel();
         lblConsole.setText("console:");
