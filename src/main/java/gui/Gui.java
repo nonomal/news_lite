@@ -94,7 +94,7 @@ public class Gui extends JFrame {
         setIconImage(logoIco.getImage());
         setFont(new Font("SansSerif", Font.PLAIN, 12));
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setBounds(500, 100, 817, 585);
+        setBounds(320, 200, 1217, 685);
         getContentPane().setLayout(null);
 
         //Action Listener for EXIT_ON_CLOSE
@@ -130,7 +130,7 @@ public class Gui extends JFrame {
 
         //Table
         scrollPane = new JScrollPane();
-        scrollPane.setBounds(10, 40, 781, 300);
+        scrollPane.setBounds(10, 40, 1160, 400);
         getContentPane().add(scrollPane);
         Object[] columns = {"Num", "Source", "Title (double click to open the link)", "Date", "Link"};
         model = new DefaultTableModel(new Object[][]{
@@ -222,12 +222,12 @@ public class Gui extends JFrame {
         tableForAnalysisLabel.setText("word frequency:");
         tableForAnalysisLabel.setToolTipText("matches more than " + sqlite.getWordFreqMatches());
         tableForAnalysisLabel.setForeground(new Color(255, 255, 153));
-        tableForAnalysisLabel.setBounds(11, 343, 190, 14);
+        tableForAnalysisLabel.setBounds(11, 443, 190, 14);
         getContentPane().add(tableForAnalysisLabel);
 
         //Table for analysis
         JScrollPane scrollForAnalysis = new JScrollPane();
-        scrollForAnalysis.setBounds(10, 360, 300, 120);
+        scrollForAnalysis.setBounds(10, 460, 300, 120);
         getContentPane().add(scrollForAnalysis);
 
         String[] columnsForAnalysis = {"freq.", "words", " "};
@@ -327,37 +327,9 @@ public class Gui extends JFrame {
         });
         getContentPane().add(stopBtnTop);
 
-        //Clear addNewSource
-        JButton clearBtnTop = new JButton();
-        clearBtnTop.setToolTipText("Clear the list");
-        clearBtnTop.setBackground(new Color(250, 128, 114));
-        clearBtnTop.setIcon(clearIco);
-        clearBtnTop.setBounds(760, 9, 30, 22);
-
-        clearBtnTop.addActionListener(e -> {
-            try {
-                if (model.getRowCount() == 0) {
-                    Common.console("status: no data to clear");
-                    return;
-                }
-                labelInfo.setText("");
-                Search.j = 1;
-                model.setRowCount(0);
-                modelForAnalysis.setRowCount(0);
-                q = 0;
-                labelSum.setText("" + q);
-                Common.console("status: clear");
-            } catch (Exception t) {
-                Common.console(t.getMessage());
-                t.printStackTrace();
-                Main.LOGGER.log(Level.WARNING, t.getMessage());
-            }
-        });
-        getContentPane().add(clearBtnTop);
-
         //Amount of news
         labelSum = new JLabel();
-        labelSum.setBounds(70, 483, 115, 13);
+        labelSum.setBounds(70, 583, 115, 13);
         labelSum.setFont(new Font("Tahoma", Font.PLAIN, 11));
         labelSum.setForeground(new Color(255, 255, 153));
         labelSum.setBackground(new Color(240, 255, 240));
@@ -365,7 +337,7 @@ public class Gui extends JFrame {
 
         //Another info
         labelInfo = new JLabel();
-        labelInfo.setBounds(125, 585, 300, 13);
+        labelInfo.setBounds(125, 685, 300, 13);
         labelInfo.setFont(new Font("Tahoma", Font.PLAIN, 11));
         labelInfo.setForeground(new Color(149, 255, 118));
         labelInfo.setBackground(new Color(240, 255, 240));
@@ -376,7 +348,7 @@ public class Gui extends JFrame {
         labelSign.setForeground(new Color(255, 160, 122));
         labelSign.setEnabled(false);
         labelSign.setFont(new Font("Tahoma", Font.BOLD, 11));
-        labelSign.setBounds(730, 525, 57, 14);
+        labelSign.setBounds(730, 625, 57, 14);
         getContentPane().add(labelSign);
         labelSign.addMouseListener(new MouseAdapter() {
             // наведение мышки на письмо
@@ -420,7 +392,7 @@ public class Gui extends JFrame {
 
         //send e-mail to
         sendEmailTo = new JTextField("enter your email");
-        sendEmailTo.setBounds(636, 365, 126, 21);
+        sendEmailTo.setBounds(636, 465, 126, 21);
         sendEmailTo.setFont(new Font("Serif", Font.PLAIN, 12));
         getContentPane().add(sendEmailTo);
         //send e-mail to - label
@@ -428,7 +400,7 @@ public class Gui extends JFrame {
         lblSendToEmail.setText("send to:");
         lblSendToEmail.setForeground(new Color(255, 255, 153));
         lblSendToEmail.setFont(new Font("Tahoma", Font.PLAIN, 11));
-        lblSendToEmail.setBounds(631, 342, 83, 14);
+        lblSendToEmail.setBounds(631, 442, 83, 14);
         getContentPane().add(lblSendToEmail);
 
         //Send e-mail addNewSource
@@ -439,7 +411,7 @@ public class Gui extends JFrame {
         sendEmailBtn.setContentAreaFilled(false);
         sendEmailBtn.setBorderPainted(false);
         sendEmailBtn.setBackground(new Color(255, 255, 153));
-        sendEmailBtn.setBounds(760, 364, 32, 23);
+        sendEmailBtn.setBounds(760, 464, 32, 23);
         sendEmailBtn.addActionListener(e -> {
             if (model.getRowCount() > 0 && sendEmailTo.getText().contains("@")) {
                 Common.console("status: sending e-mail");
@@ -478,31 +450,40 @@ public class Gui extends JFrame {
         autoSendMessage.setFocusable(false);
         autoSendMessage.setForeground(Color.WHITE);
         autoSendMessage.setFont(new Font("Arial", Font.PLAIN, 11));
-        autoSendMessage.setBounds(636, 388, 135, 20);
+        autoSendMessage.setBounds(636, 488, 135, 20);
         getContentPane().add(autoSendMessage);
 
-        //Export to excel
-        JButton exportBtn = new JButton();
-        exportBtn.setIcon(excelIco);
-        exportBtn.setToolTipText("Export news to excel");
-        exportBtn.setBackground(new Color(255, 251, 183));
-        exportBtn.setBounds(725, 9, 30, 22);
-        exportBtn.addActionListener(e -> {
-            if (model.getRowCount() != 0) {
-                new Thread(exp::export_from_RSS_to_excel).start();
-                Common.console("status: export");
-            } else {
-                Common.console("status: there is no data to export");
+        /* Top-Right bottoms */
+        // Выбор цвета фона
+        JButton backgroundColorBtn = new JButton();
+        backgroundColorBtn.setToolTipText("Background color");
+        backgroundColorBtn.setBackground(new Color(189, 189, 189));
+        backgroundColorBtn.setIcon(bgIco);
+        backgroundColorBtn.setBounds(1035, 9, 30, 22);
+        backgroundColorBtn.addActionListener(e -> {
+            Color color = JColorChooser.showDialog(null, "Color", Color.black);
+            if (color != null) {
+                try {
+                    table.setBackground(color);
+                    Common.delSettings("backgroundColorRed");
+                    Common.delSettings("backgroundColorGreen");
+                    Common.delSettings("backgroundColorBlue");
+                    Common.writeToConfig(String.valueOf(color.getRed()), "backgroundColorRed");
+                    Common.writeToConfig(String.valueOf(color.getGreen()), "backgroundColorGreen");
+                    Common.writeToConfig(String.valueOf(color.getBlue()), "backgroundColorBlue");
+                } catch (IOException ex) {
+                    ex.printStackTrace();
+                }
             }
         });
-        getContentPane().add(exportBtn);
+        getContentPane().add(backgroundColorBtn);
 
         // Выбор цвета шрифта в таблице
         JButton fontColorBtn = new JButton();
         fontColorBtn.setToolTipText("Font color");
         fontColorBtn.setBackground(new Color(190, 225, 255));
         fontColorBtn.setIcon(fontIco);
-        fontColorBtn.setBounds(690, 9, 30, 22);
+        fontColorBtn.setBounds(1070, 9, 30, 22);
         fontColorBtn.addActionListener(e -> {
             Color color = JColorChooser.showDialog(null, "Color", Color.black);
             if (color != null) {
@@ -522,36 +503,55 @@ public class Gui extends JFrame {
         });
         getContentPane().add(fontColorBtn);
 
-        // Выбор цвета фона
-        JButton backgroundColorBtn = new JButton();
-        backgroundColorBtn.setToolTipText("Background color");
-        backgroundColorBtn.setBackground(new Color(189, 189, 189));
-        backgroundColorBtn.setIcon(bgIco);
-        backgroundColorBtn.setBounds(655, 9, 30, 22);
-        backgroundColorBtn.addActionListener(e -> {
-            Color color = JColorChooser.showDialog(null, "Color", Color.black);
-            if (color != null) {
-                try {
-                    table.setBackground(color);
-                    Common.delSettings("backgroundColorRed");
-                    Common.delSettings("backgroundColorGreen");
-                    Common.delSettings("backgroundColorBlue");
-                    Common.writeToConfig(String.valueOf(color.getRed()), "backgroundColorRed");
-                    Common.writeToConfig(String.valueOf(color.getGreen()), "backgroundColorGreen");
-                    Common.writeToConfig(String.valueOf(color.getBlue()), "backgroundColorBlue");
-                } catch (IOException ex) {
-                    ex.printStackTrace();
-                }
+        //Export to excel
+        JButton exportBtn = new JButton();
+        exportBtn.setIcon(excelIco);
+        exportBtn.setToolTipText("Export news to excel");
+        exportBtn.setBackground(new Color(255, 251, 183));
+        exportBtn.setBounds(1105, 9, 30, 22);
+        exportBtn.addActionListener(e -> {
+            if (model.getRowCount() != 0) {
+                new Thread(exp::export_from_RSS_to_excel).start();
+                Common.console("status: export");
+            } else {
+                Common.console("status: there is no data to export");
             }
         });
-        getContentPane().add(backgroundColorBtn);
+        getContentPane().add(exportBtn);
 
+        //Clear addNewSource
+        JButton clearBtnTop = new JButton();
+        clearBtnTop.setToolTipText("Clear the list");
+        clearBtnTop.setBackground(new Color(250, 128, 114));
+        clearBtnTop.setIcon(clearIco);
+        clearBtnTop.setBounds(1140, 9, 30, 22);
+
+        clearBtnTop.addActionListener(e -> {
+            try {
+                if (model.getRowCount() == 0) {
+                    Common.console("status: no data to clear");
+                    return;
+                }
+                labelInfo.setText("");
+                Search.j = 1;
+                model.setRowCount(0);
+                modelForAnalysis.setRowCount(0);
+                q = 0;
+                labelSum.setText("" + q);
+                Common.console("status: clear");
+            } catch (Exception t) {
+                Common.console(t.getMessage());
+                t.printStackTrace();
+                Main.LOGGER.log(Level.WARNING, t.getMessage());
+            }
+        });
+        getContentPane().add(clearBtnTop);
 
         /* BOTTOM SEARCH */
         //Add to combo box
         addKeywordToList = new JTextField();
         addKeywordToList.setFont(new Font("Serif", Font.PLAIN, 12));
-        addKeywordToList.setBounds(321, 490, 60, 22);
+        addKeywordToList.setBounds(321, 590, 60, 22);
         getContentPane().add(addKeywordToList);
 
         //Add to combo box
@@ -577,7 +577,7 @@ public class Gui extends JFrame {
             }
         });
         btnAddKeywordToList.setIcon(createIco);
-        btnAddKeywordToList.setBounds(386, 490, 30, 22);
+        btnAddKeywordToList.setBounds(386, 590, 30, 22);
 
         //Delete from combo box
         JButton btnDelFromList = new JButton("");
@@ -595,7 +595,7 @@ public class Gui extends JFrame {
 
         });
         btnDelFromList.setIcon(deleteIco);
-        btnDelFromList.setBounds(421, 490, 30, 22);
+        btnDelFromList.setBounds(421, 590, 30, 22);
         getContentPane().add(btnDelFromList);
 
         //Keywords combo box
@@ -603,7 +603,7 @@ public class Gui extends JFrame {
         keywordsCbox.setFont(new Font("Arial", Font.PLAIN, 11));
         keywordsCbox.setModel(new DefaultComboBoxModel<>());
         keywordsCbox.setEditable(false);
-        keywordsCbox.setBounds(456, 490, 90, 22);
+        keywordsCbox.setBounds(456, 590, 90, 22);
         getContentPane().add(keywordsCbox);
 
         //Bottom search by keywords
@@ -611,7 +611,7 @@ public class Gui extends JFrame {
         searchBtnBottom.setIcon(searchIco);
         searchBtnBottom.setFont(new Font("Tahoma", Font.BOLD, 10));
         searchBtnBottom.setBackground(new Color(154, 237, 196));
-        searchBtnBottom.setBounds(552, 490, 30, 22);
+        searchBtnBottom.setBounds(552, 590, 30, 22);
         //searchBtnBottom.addActionListener(e -> new Thread(Search::keywordsSearch).start());
         searchBtnBottom.addActionListener(e -> new Thread(() -> search.mainSearch("words")).start());
         getContentPane().add(searchBtnBottom);
@@ -620,7 +620,7 @@ public class Gui extends JFrame {
         stopBtnBottom = new JButton("");
         stopBtnBottom.setIcon(stopIco);
         stopBtnBottom.setBackground(new Color(255, 208, 202));
-        stopBtnBottom.setBounds(552, 490, 30, 22);
+        stopBtnBottom.setBounds(552, 590, 30, 22);
         stopBtnBottom.addActionListener(e -> {
             try {
                 Search.isSearchFinished.set(true);
@@ -648,7 +648,7 @@ public class Gui extends JFrame {
         autoUpdateNewsBottom.setFocusable(false);
         autoUpdateNewsBottom.setForeground(Color.WHITE);
         autoUpdateNewsBottom.setFont(new Font("Arial", Font.PLAIN, 11));
-        autoUpdateNewsBottom.setBounds(553, 516, 75, 20);
+        autoUpdateNewsBottom.setBounds(553, 616, 75, 20);
         getContentPane().add(autoUpdateNewsBottom);
         autoUpdateNewsBottom.addItemListener(e -> {
             if (autoUpdateNewsBottom.getState()) {
@@ -680,21 +680,21 @@ public class Gui extends JFrame {
         animationStatus.setAutoscrolls(true);
         animationStatus.setLineWrap(true);
         animationStatus.setEditable(false);
-        animationStatus.setBounds(320, 360, 300, 120);
+        animationStatus.setBounds(320, 460, 300, 120);
         animationStatus.setFont(new Font("Tahoma", Font.PLAIN, 11));
         animationStatus.setForeground(SystemColor.white);
         animationStatus.setBackground(new Color(83, 82, 82));
         getContentPane().add(animationStatus);
         //Console - scroll
         JScrollPane console_scroll = new JScrollPane(animationStatus, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-        console_scroll.setBounds(320, 360, 300, 120);
+        console_scroll.setBounds(320, 460, 300, 120);
         getContentPane().add(console_scroll);
         //Console - label
         JLabel lblConsole = new JLabel();
         lblConsole.setText("console:");
         lblConsole.setForeground(new Color(255, 255, 153));
         lblConsole.setFont(new Font("Tahoma", Font.PLAIN, 11));
-        lblConsole.setBounds(321, 342, 83, 14);
+        lblConsole.setBounds(321, 442, 83, 14);
         getContentPane().add(lblConsole);
 
         // Clear console
@@ -702,7 +702,7 @@ public class Gui extends JFrame {
         clearConsoleBtn.setIcon(clearIco);
         clearConsoleBtn.setToolTipText("Clear the console");
         clearConsoleBtn.setBackground(new Color(179, 221, 254));
-        clearConsoleBtn.setBounds(588, 490, 32, 23);
+        clearConsoleBtn.setBounds(588, 590, 32, 23);
         clearConsoleBtn.addActionListener(e -> animationStatus.setText(""));
         getContentPane().add(clearConsoleBtn);
 
@@ -711,14 +711,14 @@ public class Gui extends JFrame {
         searchAnimation.setForeground(new Color(255, 255, 153));
         searchAnimation.setFont(new Font("Tahoma", Font.PLAIN, 11));
         searchAnimation.setBackground(new Color(240, 255, 240));
-        searchAnimation.setBounds(10, 483, 80, 13);
+        searchAnimation.setBounds(10, 583, 80, 13);
         getContentPane().add(searchAnimation);
 
         //Time label
         timeLbl = new JLabel();
         timeLbl.setForeground(new Color(255, 255, 153));
         timeLbl.setFont(new Font("Tahoma", Font.PLAIN, 11));
-        timeLbl.setBounds(207, 480, 160, 20);
+        timeLbl.setBounds(207, 580, 160, 20);
         getContentPane().add(timeLbl);
 
         // Шкала прогресса
@@ -728,7 +728,7 @@ public class Gui extends JFrame {
         progressBar.setBorderPainted(false);
         progressBar.setForeground(new Color(10, 255, 41));
         progressBar.setBackground(new Color(1, 1, 1));
-        progressBar.setBounds(365, 349, 255, 3);
+        progressBar.setBounds(365, 449, 255, 3);
         getContentPane().add(progressBar);
 
         // Интервалы для поиска новостей
@@ -778,7 +778,7 @@ public class Gui extends JFrame {
         lblLogSourceSqlite = new JLabel();
         lblLogSourceSqlite.setForeground(Color.WHITE);
         lblLogSourceSqlite.setFont(new Font("Arial", Font.PLAIN, 11));
-        lblLogSourceSqlite.setBounds(730, 426, 60, 14);
+        lblLogSourceSqlite.setBounds(730, 526, 60, 14);
         getContentPane().add(lblLogSourceSqlite);
 
         // Диалоговое окно со списком исключенных слов из анализа
@@ -787,7 +787,7 @@ public class Gui extends JFrame {
         exclBtn.setContentAreaFilled(true);
         exclBtn.setBorderPainted(false);
         exclBtn.setBackground(new Color(30, 27, 27));
-        exclBtn.setBounds(297, 343, 14, 14);
+        exclBtn.setBounds(297, 443, 14, 14);
         getContentPane().add(exclBtn);
         exclBtn.addActionListener((e) -> new Dialogs("exclDlg"));
         exclBtn.addMouseListener(new MouseAdapter() {
@@ -809,7 +809,7 @@ public class Gui extends JFrame {
         excludedLabel.setForeground(new Color(255, 255, 153));
         excludedLabel.setFont(new Font("Tahoma", Font.PLAIN, 11));
         excludedLabel.setBackground(new Color(240, 255, 240));
-        excludedLabel.setBounds(231, 337, 130, 26);
+        excludedLabel.setBounds(231, 437, 130, 26);
         getContentPane().add(excludedLabel);
 
         // Диалоговое окно со списком источников
@@ -818,7 +818,7 @@ public class Gui extends JFrame {
         smiBtn.setContentAreaFilled(true);
         smiBtn.setBorderPainted(false);
         smiBtn.setFocusable(false);
-        smiBtn.setBounds(636, 426, 14, 14);
+        smiBtn.setBounds(636, 526, 14, 14);
         smiBtn.setBackground(new Color(221, 255, 221));
         getContentPane().add(smiBtn);
         smiBtn.addActionListener((e) -> new Dialogs("smiDlg"));
@@ -843,7 +843,7 @@ public class Gui extends JFrame {
         addNewSource.setContentAreaFilled(true);
         addNewSource.setBorderPainted(false);
         addNewSource.setBackground(new Color(243, 229, 255));
-        addNewSource.setBounds(655, 426, 14, 14);
+        addNewSource.setBounds(655, 526, 14, 14);
         getContentPane().add(addNewSource);
         addNewSource.addActionListener(e -> sqlite.insertNewSource());
         addNewSource.addMouseListener(new MouseAdapter() {
@@ -869,7 +869,7 @@ public class Gui extends JFrame {
         sqliteBtn.setContentAreaFilled(true);
         sqliteBtn.setBorderPainted(false);
         sqliteBtn.setBackground(new Color(244, 181, 181));
-        sqliteBtn.setBounds(693, 426, 14, 14);
+        sqliteBtn.setBounds(693, 526, 14, 14);
         getContentPane().add(sqliteBtn);
         sqliteBtn.addActionListener(e -> {
             // запуск SQLite
@@ -908,7 +908,7 @@ public class Gui extends JFrame {
         logBtn.setBorderPainted(false);
         logBtn.setFocusable(false);
         logBtn.setBackground(new Color(248, 206, 165));
-        logBtn.setBounds(674, 426, 14, 14);
+        logBtn.setBounds(674, 526, 14, 14);
         getContentPane().add(logBtn);
         logBtn.addActionListener(e -> new Dialogs("logDlg"));
         logBtn.addMouseListener(new MouseAdapter() {
@@ -932,7 +932,7 @@ public class Gui extends JFrame {
         settingsDirectoryBtn.setContentAreaFilled(true);
         settingsDirectoryBtn.setBorderPainted(false);
         settingsDirectoryBtn.setBackground(new Color(219, 229, 252));
-        settingsDirectoryBtn.setBounds(712, 426, 14, 14);
+        settingsDirectoryBtn.setBounds(712, 526, 14, 14);
         getContentPane().add(settingsDirectoryBtn);
         settingsDirectoryBtn.addActionListener(e -> {
             if (Desktop.isDesktopSupported() && Desktop.getDesktop().isSupported(Desktop.Action.OPEN)) {
@@ -963,13 +963,13 @@ public class Gui extends JFrame {
         // Border email
         Box verticalBox = Box.createVerticalBox();
         verticalBox.setBorder(new BevelBorder(BevelBorder.RAISED, null, null, null, null));
-        verticalBox.setBounds(630, 360, 161, 51);
+        verticalBox.setBounds(630, 460, 161, 51);
         getContentPane().add(verticalBox);
 
         // Border different bottoms
         Box queryTableBox = Box.createVerticalBox();
         queryTableBox.setBorder(new BevelBorder(BevelBorder.RAISED, null, null, null, null));
-        queryTableBox.setBounds(631, 420, 161, 26);
+        queryTableBox.setBounds(631, 520, 161, 26);
         getContentPane().add(queryTableBox);
 
         // latest news
@@ -978,7 +978,7 @@ public class Gui extends JFrame {
         filterNewsChbx.setFocusable(false);
         filterNewsChbx.setForeground(Color.WHITE);
         filterNewsChbx.setFont(new Font("Arial", Font.PLAIN, 11));
-        filterNewsChbx.setBounds(636, 457, 135, 20);
+        filterNewsChbx.setBounds(636, 557, 135, 20);
         getContentPane().add(filterNewsChbx);
         filterNewsChbx.addItemListener(e -> {
             isOnlyLastNews = filterNewsChbx.getState();
@@ -990,7 +990,7 @@ public class Gui extends JFrame {
         // border
         Box latestNewsBorder = Box.createVerticalBox();
         latestNewsBorder.setBorder(new BevelBorder(BevelBorder.RAISED, null, null, null, null));
-        latestNewsBorder.setBounds(631, 454, 161, 26);
+        latestNewsBorder.setBounds(631, 554, 161, 26);
         getContentPane().add(latestNewsBorder);
 
         // Сворачивание приложения в трей
