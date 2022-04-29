@@ -390,69 +390,6 @@ public class Gui extends JFrame {
             }
         });
 
-        //send e-mail to
-        sendEmailTo = new JTextField("enter your email");
-        sendEmailTo.setBounds(636, 465, 126, 21);
-        sendEmailTo.setFont(new Font("Serif", Font.PLAIN, 12));
-        getContentPane().add(sendEmailTo);
-        //send e-mail to - label
-        JLabel lblSendToEmail = new JLabel();
-        lblSendToEmail.setText("send to:");
-        lblSendToEmail.setForeground(new Color(255, 255, 153));
-        lblSendToEmail.setFont(new Font("Tahoma", Font.PLAIN, 11));
-        lblSendToEmail.setBounds(631, 442, 83, 14);
-        getContentPane().add(lblSendToEmail);
-
-        //Send e-mail addNewSource
-        sendEmailBtn = new JButton();
-        sendEmailBtn.setIcon(send);
-        sendEmailBtn.setToolTipText("send the current result");
-        sendEmailBtn.setFocusable(false);
-        sendEmailBtn.setContentAreaFilled(false);
-        sendEmailBtn.setBorderPainted(false);
-        sendEmailBtn.setBackground(new Color(255, 255, 153));
-        sendEmailBtn.setBounds(760, 464, 32, 23);
-        sendEmailBtn.addActionListener(e -> {
-            if (model.getRowCount() > 0 && sendEmailTo.getText().contains("@")) {
-                Common.console("status: sending e-mail");
-                sendTo = sendEmailTo.getText();
-                Common.isSending.set(false);
-                Common.statusLabel(Common.isSending, "sending");
-                new Thread(Common::fill).start();
-                EmailSender email = new EmailSender();
-                new Thread(email::sendMessage).start();
-            }
-        });
-
-        sendEmailBtn.addMouseListener(new MouseAdapter() {
-            // наведение мышки на письмо
-            @Override
-            public void mouseEntered(MouseEvent e) {
-                if (sendEmailBtn.getIcon() == send) {
-                    sendEmailBtn.setIcon(send2);
-                }
-            }
-
-            @Override
-            // убрали мышку с письма
-            public void mouseExited(MouseEvent e) {
-                if (sendEmailBtn.getIcon() == send2) {
-                    sendEmailBtn.setIcon(send);
-                }
-            }
-
-        });
-        getContentPane().add(sendEmailBtn);
-
-        // Автоматическая отправка письма с результатами
-        autoSendMessage = new Checkbox("auto send results");
-        autoSendMessage.setState(false);
-        autoSendMessage.setFocusable(false);
-        autoSendMessage.setForeground(Color.WHITE);
-        autoSendMessage.setFont(new Font("Arial", Font.PLAIN, 11));
-        autoSendMessage.setBounds(636, 488, 135, 20);
-        getContentPane().add(autoSendMessage);
-
         /* Top-Right bottoms */
         // Выбор цвета фона
         JButton backgroundColorBtn = new JButton();
@@ -774,13 +711,6 @@ public class Gui extends JFrame {
             }
         });
 
-        // Источники, лог, sqlite лейбл
-        lblLogSourceSqlite = new JLabel();
-        lblLogSourceSqlite.setForeground(Color.WHITE);
-        lblLogSourceSqlite.setFont(new Font("Arial", Font.PLAIN, 11));
-        lblLogSourceSqlite.setBounds(730, 526, 60, 14);
-        getContentPane().add(lblLogSourceSqlite);
-
         // Диалоговое окно со списком исключенных слов из анализа
         exclBtn = new JButton();
         exclBtn.setFocusable(false);
@@ -812,13 +742,83 @@ public class Gui extends JFrame {
         excludedLabel.setBounds(231, 437, 130, 26);
         getContentPane().add(excludedLabel);
 
-        // Диалоговое окно со списком источников
+        /* BOTTOM RIGHT AREA */
+        //send e-mail to - label
+        JLabel lblSendToEmail = new JLabel();
+        lblSendToEmail.setText("send to:");
+        lblSendToEmail.setForeground(new Color(255, 255, 153));
+        lblSendToEmail.setFont(new Font("Tahoma", Font.PLAIN, 11));
+        lblSendToEmail.setBounds(1011, 442, 83, 14);
+        getContentPane().add(lblSendToEmail);
+
+        //send e-mail to
+        sendEmailTo = new JTextField("enter your email");
+        sendEmailTo.setBounds(1016, 465, 126, 21);
+        sendEmailTo.setFont(new Font("Serif", Font.PLAIN, 12));
+        getContentPane().add(sendEmailTo);
+
+        //Send current results e-mail
+        sendEmailBtn = new JButton();
+        sendEmailBtn.setIcon(send);
+        sendEmailBtn.setToolTipText("send the current result");
+        sendEmailBtn.setFocusable(false);
+        sendEmailBtn.setContentAreaFilled(false);
+        sendEmailBtn.setBorderPainted(false);
+        sendEmailBtn.setBackground(new Color(255, 255, 153));
+        sendEmailBtn.setBounds(1140, 464, 32, 23);
+        sendEmailBtn.addActionListener(e -> {
+            if (model.getRowCount() > 0 && sendEmailTo.getText().contains("@")) {
+                Common.console("status: sending e-mail");
+                sendTo = sendEmailTo.getText();
+                Common.isSending.set(false);
+                Common.statusLabel(Common.isSending, "sending");
+                new Thread(Common::fill).start();
+                EmailSender email = new EmailSender();
+                new Thread(email::sendMessage).start();
+            }
+        });
+        sendEmailBtn.addMouseListener(new MouseAdapter() {
+            // наведение мышки на письмо
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                if (sendEmailBtn.getIcon() == send) {
+                    sendEmailBtn.setIcon(send2);
+                }
+            }
+            @Override
+            // убрали мышку с письма
+            public void mouseExited(MouseEvent e) {
+                if (sendEmailBtn.getIcon() == send2) {
+                    sendEmailBtn.setIcon(send);
+                }
+            }
+
+        });
+        getContentPane().add(sendEmailBtn);
+
+        // Автоматическая отправка письма с результатами
+        autoSendMessage = new Checkbox("auto send results");
+        autoSendMessage.setState(false);
+        autoSendMessage.setFocusable(false);
+        autoSendMessage.setForeground(Color.WHITE);
+        autoSendMessage.setFont(new Font("Arial", Font.PLAIN, 11));
+        autoSendMessage.setBounds(1016, 488, 135, 20);
+        getContentPane().add(autoSendMessage);
+
+        // Источники, лог, sqlite лейбл
+        lblLogSourceSqlite = new JLabel();
+        lblLogSourceSqlite.setForeground(Color.WHITE);
+        lblLogSourceSqlite.setFont(new Font("Arial", Font.PLAIN, 11));
+        lblLogSourceSqlite.setBounds(1110, 526, 60, 14);
+        getContentPane().add(lblLogSourceSqlite);
+
+        // Диалоговое окно со списком источников "sources"
         smiBtn = new JButton();
         smiBtn.setFocusable(false);
         smiBtn.setContentAreaFilled(true);
         smiBtn.setBorderPainted(false);
         smiBtn.setFocusable(false);
-        smiBtn.setBounds(636, 526, 14, 14);
+        smiBtn.setBounds(1016, 526, 14, 14);
         smiBtn.setBackground(new Color(221, 255, 221));
         getContentPane().add(smiBtn);
         smiBtn.addActionListener((e) -> new Dialogs("smiDlg"));
@@ -838,12 +838,13 @@ public class Gui extends JFrame {
             }
         });
 
+        // добавить новый RSS источник "add source"
         JButton addNewSource = new JButton();
         addNewSource.setFocusable(false);
         addNewSource.setContentAreaFilled(true);
         addNewSource.setBorderPainted(false);
         addNewSource.setBackground(new Color(243, 229, 255));
-        addNewSource.setBounds(655, 526, 14, 14);
+        addNewSource.setBounds(1035, 526, 14, 14);
         getContentPane().add(addNewSource);
         addNewSource.addActionListener(e -> sqlite.insertNewSource());
         addNewSource.addMouseListener(new MouseAdapter() {
@@ -862,6 +863,30 @@ public class Gui extends JFrame {
             }
         });
 
+        // Диалоговое окно лога "log"
+        logBtn = new JButton();
+        logBtn.setContentAreaFilled(true);
+        logBtn.setBorderPainted(false);
+        logBtn.setFocusable(false);
+        logBtn.setBackground(new Color(248, 206, 165));
+        logBtn.setBounds(1054, 526, 14, 14);
+        getContentPane().add(logBtn);
+        logBtn.addActionListener(e -> new Dialogs("logDlg"));
+        logBtn.addMouseListener(new MouseAdapter() {
+            // наведение мышки на кнопку
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                logBtn.setBackground(new Color(222, 114, 7));
+                lblLogSourceSqlite.setText("log");
+            }
+            @Override
+            // убрали мышку с кнопки
+            public void mouseExited(MouseEvent e) {
+                logBtn.setBackground(new Color(248, 206, 165));
+                lblLogSourceSqlite.setText("");
+            }
+        });
+
         //SQLite
         JButton sqliteBtn = new JButton();
         sqliteBtn.setToolTipText("press CTRL+v in SQLite to open the database");
@@ -869,7 +894,7 @@ public class Gui extends JFrame {
         sqliteBtn.setContentAreaFilled(true);
         sqliteBtn.setBorderPainted(false);
         sqliteBtn.setBackground(new Color(244, 181, 181));
-        sqliteBtn.setBounds(693, 526, 14, 14);
+        sqliteBtn.setBounds(1073, 526, 14, 14);
         getContentPane().add(sqliteBtn);
         sqliteBtn.addActionListener(e -> {
             // запуск SQLite
@@ -902,37 +927,13 @@ public class Gui extends JFrame {
             }
         });
 
-        // Диалоговое окно лога
-        logBtn = new JButton();
-        logBtn.setContentAreaFilled(true);
-        logBtn.setBorderPainted(false);
-        logBtn.setFocusable(false);
-        logBtn.setBackground(new Color(248, 206, 165));
-        logBtn.setBounds(674, 526, 14, 14);
-        getContentPane().add(logBtn);
-        logBtn.addActionListener(e -> new Dialogs("logDlg"));
-        logBtn.addMouseListener(new MouseAdapter() {
-            // наведение мышки на кнопку
-            @Override
-            public void mouseEntered(MouseEvent e) {
-                logBtn.setBackground(new Color(222, 114, 7));
-                lblLogSourceSqlite.setText("log");
-            }
-            @Override
-            // убрали мышку с кнопки
-            public void mouseExited(MouseEvent e) {
-                logBtn.setBackground(new Color(248, 206, 165));
-                lblLogSourceSqlite.setText("");
-            }
-        });
-
-        //Открыть папку с настройками
+        //Открыть папку с настройками "files"
         JButton settingsDirectoryBtn = new JButton();
         settingsDirectoryBtn.setFocusable(false);
         settingsDirectoryBtn.setContentAreaFilled(true);
         settingsDirectoryBtn.setBorderPainted(false);
         settingsDirectoryBtn.setBackground(new Color(219, 229, 252));
-        settingsDirectoryBtn.setBounds(712, 526, 14, 14);
+        settingsDirectoryBtn.setBounds(1092, 526, 14, 14);
         getContentPane().add(settingsDirectoryBtn);
         settingsDirectoryBtn.addActionListener(e -> {
             if (Desktop.isDesktopSupported() && Desktop.getDesktop().isSupported(Desktop.Action.OPEN)) {
@@ -963,13 +964,13 @@ public class Gui extends JFrame {
         // Border email
         Box verticalBox = Box.createVerticalBox();
         verticalBox.setBorder(new BevelBorder(BevelBorder.RAISED, null, null, null, null));
-        verticalBox.setBounds(630, 460, 161, 51);
+        verticalBox.setBounds(1010, 460, 161, 51);
         getContentPane().add(verticalBox);
 
         // Border different bottoms
         Box queryTableBox = Box.createVerticalBox();
         queryTableBox.setBorder(new BevelBorder(BevelBorder.RAISED, null, null, null, null));
-        queryTableBox.setBounds(631, 520, 161, 26);
+        queryTableBox.setBounds(1011, 520, 161, 26);
         getContentPane().add(queryTableBox);
 
         // latest news
@@ -978,7 +979,7 @@ public class Gui extends JFrame {
         filterNewsChbx.setFocusable(false);
         filterNewsChbx.setForeground(Color.WHITE);
         filterNewsChbx.setFont(new Font("Arial", Font.PLAIN, 11));
-        filterNewsChbx.setBounds(636, 557, 135, 20);
+        filterNewsChbx.setBounds(1016, 557, 135, 20);
         getContentPane().add(filterNewsChbx);
         filterNewsChbx.addItemListener(e -> {
             isOnlyLastNews = filterNewsChbx.getState();
@@ -987,10 +988,10 @@ public class Gui extends JFrame {
             }
         });
 
-        // border
+        // border latest news
         Box latestNewsBorder = Box.createVerticalBox();
         latestNewsBorder.setBorder(new BevelBorder(BevelBorder.RAISED, null, null, null, null));
-        latestNewsBorder.setBounds(631, 554, 161, 26);
+        latestNewsBorder.setBounds(1011, 554, 161, 26);
         getContentPane().add(latestNewsBorder);
 
         // Сворачивание приложения в трей
