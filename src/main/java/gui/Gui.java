@@ -120,6 +120,45 @@ public class Gui extends JFrame {
             }
         });
 
+        // Сворачивание приложения в трей
+        try {
+            BufferedImage Icon = ImageIO.read(Objects.requireNonNull(Gui.class.getResourceAsStream("/icons/logo.png")));
+            final TrayIcon trayIcon =  new TrayIcon(Icon, "Avandy News");
+            SystemTray systemTray = SystemTray.getSystemTray();
+            systemTray.add(trayIcon);
+
+            final PopupMenu trayMenu = new PopupMenu();
+            MenuItem itemShow = new MenuItem("Show");
+            itemShow.addActionListener(e -> {
+                setVisible(true);
+                setExtendedState(JFrame.NORMAL);
+            });
+            trayMenu.add(itemShow);
+
+            MenuItem itemClose = new MenuItem("Close");
+            itemClose.addActionListener(e -> System.exit(0));
+            trayMenu.add(itemClose);
+
+            trayIcon.addMouseListener(new MouseAdapter(){
+                @Override
+                public void mouseClicked(MouseEvent e){
+                    if (SwingUtilities.isLeftMouseButton(e)){
+                        setVisible(true);
+                        setExtendedState(JFrame.NORMAL);
+                    }
+                }
+
+                @Override
+                public void mouseReleased(MouseEvent e){
+                    if (SwingUtilities.isRightMouseButton(e)){
+                        trayIcon.setPopupMenu(trayMenu);
+                    }
+                }
+            });
+        } catch (IOException | AWTException e) {
+            e.printStackTrace();
+        }
+
         //Input keyword
         JLabel lblNewLabel = new JLabel("Keyword:");
         lblNewLabel.setForeground(new Color(255, 179, 131));
@@ -342,53 +381,6 @@ public class Gui extends JFrame {
         labelInfo.setForeground(new Color(149, 255, 118));
         labelInfo.setBackground(new Color(240, 255, 240));
         getContentPane().add(labelInfo);
-
-        //My sign
-        labelSign = new JLabel(":mrprogre");
-        labelSign.setForeground(new Color(255, 160, 122));
-        labelSign.setEnabled(false);
-        labelSign.setFont(new Font("Tahoma", Font.BOLD, 11));
-        labelSign.setBounds(730, 625, 57, 14);
-        getContentPane().add(labelSign);
-        labelSign.addMouseListener(new MouseAdapter() {
-            // наведение мышки на письмо
-            @Override
-            public void mouseEntered(MouseEvent e) {
-                if (!labelSign.isEnabled()) {
-                    labelSign.setEnabled(true);
-                }
-            }
-
-            // убрали мышку с письма
-            @Override
-            public void mouseExited(MouseEvent e) {
-                if (labelSign.isEnabled()) {
-                    labelSign.setEnabled(false);
-                }
-            }
-
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                if (e.getButton() == MouseEvent.BUTTON1) {
-                    String url = "https://github.com/mrprogre";
-                    URI uri = null;
-                    try {
-                        uri = new URI(url);
-                    } catch (URISyntaxException ex) {
-                        ex.printStackTrace();
-                    }
-                    Desktop desktop = Desktop.getDesktop();
-                    assert uri != null;
-                    try {
-                        desktop.browse(uri);
-                    } catch (IOException ex) {
-                        ex.printStackTrace();
-                        Main.LOGGER.log(Level.WARNING, ex.getMessage());
-                    }
-
-                }
-            }
-        });
 
         /* Top-Right bottoms */
         // Выбор цвета фона
@@ -994,44 +986,50 @@ public class Gui extends JFrame {
         latestNewsBorder.setBounds(1011, 554, 161, 26);
         getContentPane().add(latestNewsBorder);
 
-        // Сворачивание приложения в трей
-        try {
-            BufferedImage Icon = ImageIO.read(Objects.requireNonNull(Gui.class.getResourceAsStream("/icons/logo.png")));
-            final TrayIcon trayIcon =  new TrayIcon(Icon, "Avandy News");
-            SystemTray systemTray = SystemTray.getSystemTray();
-            systemTray.add(trayIcon);
-
-            final PopupMenu trayMenu = new PopupMenu();
-            MenuItem itemShow = new MenuItem("Show");
-            itemShow.addActionListener(e -> {
-                setVisible(true);
-                setExtendedState(JFrame.NORMAL);
-            });
-            trayMenu.add(itemShow);
-
-            MenuItem itemClose = new MenuItem("Close");
-            itemClose.addActionListener(e -> System.exit(0));
-            trayMenu.add(itemClose);
-
-            trayIcon.addMouseListener(new MouseAdapter(){
-                @Override
-                public void mouseClicked(MouseEvent e){
-                    if (SwingUtilities.isLeftMouseButton(e)){
-                        setVisible(true);
-                        setExtendedState(JFrame.NORMAL);
-                    }
+        //My sign
+        labelSign = new JLabel(":mrprogre");
+        labelSign.setForeground(new Color(255, 160, 122));
+        labelSign.setEnabled(false);
+        labelSign.setFont(new Font("Tahoma", Font.BOLD, 11));
+        labelSign.setBounds(1115, 625, 57, 14);
+        getContentPane().add(labelSign);
+        labelSign.addMouseListener(new MouseAdapter() {
+            // наведение мышки на письмо
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                if (!labelSign.isEnabled()) {
+                    labelSign.setEnabled(true);
                 }
-
-                @Override
-                public void mouseReleased(MouseEvent e){
-                   if (SwingUtilities.isRightMouseButton(e)){
-                        trayIcon.setPopupMenu(trayMenu);
-                    }
+            }
+            // убрали мышку с письма
+            @Override
+            public void mouseExited(MouseEvent e) {
+                if (labelSign.isEnabled()) {
+                    labelSign.setEnabled(false);
                 }
-            });
-        } catch (IOException | AWTException e) {
-            e.printStackTrace();
-        }
+            }
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                if (e.getButton() == MouseEvent.BUTTON1) {
+                    String url = "https://github.com/mrprogre";
+                    URI uri = null;
+                    try {
+                        uri = new URI(url);
+                    } catch (URISyntaxException ex) {
+                        ex.printStackTrace();
+                    }
+                    Desktop desktop = Desktop.getDesktop();
+                    assert uri != null;
+                    try {
+                        desktop.browse(uri);
+                    } catch (IOException ex) {
+                        ex.printStackTrace();
+                        Main.LOGGER.log(Level.WARNING, ex.getMessage());
+                    }
+
+                }
+            }
+        });
 
         setVisible(true);
     }
