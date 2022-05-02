@@ -156,7 +156,7 @@ public class Common {
         String[][] lines = new String[linesAmount][];
 
         try (BufferedReader reader = new BufferedReader(
-                new InputStreamReader(new FileInputStream(Main.settingsPath), StandardCharsets.UTF_8))) {
+                new InputStreamReader(Files.newInputStream(Paths.get(Main.settingsPath)), StandardCharsets.UTF_8))) {
             String line;
             int i = 0;
 
@@ -204,7 +204,7 @@ public class Common {
         String[][] lines = new String[linesAmount][];
 
         try (BufferedReader reader = new BufferedReader(
-                new InputStreamReader(new FileInputStream(Main.settingsPath), StandardCharsets.UTF_8))) {
+                new InputStreamReader(Files.newInputStream(Paths.get(Main.settingsPath)), StandardCharsets.UTF_8))) {
             String line;
             int i = 0;
 
@@ -296,7 +296,7 @@ public class Common {
         int linesAmount = Common.countLines(Main.settingsPath);
         String[][] lines = new String[linesAmount][];
         try (BufferedReader reader = new BufferedReader(
-                new InputStreamReader(new FileInputStream(Main.settingsPath), StandardCharsets.UTF_8))) {
+                new InputStreamReader(Files.newInputStream(Paths.get(Main.settingsPath)), StandardCharsets.UTF_8))) {
             String line;
             int i = 0;
 
@@ -353,21 +353,22 @@ public class Common {
     public static void delSettings(String s) throws IOException {
         Path input = Paths.get(Main.settingsPath);
         Path temp = Files.createTempFile("temp", ".txt");
-        Stream<String> lines = Files.lines(input);
-        try (BufferedWriter writer = Files.newBufferedWriter(temp)) {
-            lines
-                    .filter(line -> {
-                        assert s != null;
-                        return !line.startsWith(s);
-                    })
-                    .forEach(line -> {
-                        try {
-                            writer.write(line);
-                            writer.newLine();
-                        } catch (IOException e) {
-                            throw new RuntimeException(e);
-                        }
-                    });
+        try (Stream<String> lines = Files.lines(input)) {
+            try (BufferedWriter writer = Files.newBufferedWriter(temp)) {
+                lines
+                        .filter(line -> {
+                            assert s != null;
+                            return !line.startsWith(s);
+                        })
+                        .forEach(line -> {
+                            try {
+                                writer.write(line);
+                                writer.newLine();
+                            } catch (IOException e) {
+                                throw new RuntimeException(e);
+                            }
+                        });
+            }
         }
         Files.move(temp, input, StandardCopyOption.REPLACE_EXISTING);
     }
@@ -402,7 +403,7 @@ public class Common {
     public static void console(String p_console) {
         try {
             Thread.sleep(100);
-            Gui.animationStatus.setText(Gui.animationStatus.getText() + p_console + "\n");
+            Gui.consoleTextArea.setText(Gui.consoleTextArea.getText() + p_console + "\n");
             Thread.sleep(100);
         } catch (InterruptedException e) {
             e.printStackTrace();
@@ -482,7 +483,7 @@ public class Common {
                 String path = Main.logPath;
 
                 try (BufferedReader reader = new BufferedReader(
-                        new InputStreamReader(new FileInputStream(path), StandardCharsets.UTF_8))) {
+                        new InputStreamReader(Files.newInputStream(Paths.get(path)), StandardCharsets.UTF_8))) {
                     String line;
                     StringBuilder allTab = new StringBuilder();
 
@@ -512,7 +513,7 @@ public class Common {
     public static void copyFiles(URL p_file, String copy_to) {
         File copied = new File(copy_to);
         try (InputStream in = p_file.openStream();
-             OutputStream out = new BufferedOutputStream(new FileOutputStream(copied))) {
+             OutputStream out = new BufferedOutputStream(Files.newOutputStream(copied.toPath()))) {
             byte[] buffer = new byte[1024];
             int lengthRead;
             while ((lengthRead = in.read(buffer)) > 0) {

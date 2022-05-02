@@ -9,10 +9,17 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9e6d6f99-cebb-4fd8-99d4-ae1b59f22e89" name="Default Changelist" comment="feat: шире интерфейс 1.3">
+    <list default="true" id="9e6d6f99-cebb-4fd8-99d4-ae1b59f22e89" name="Default Changelist" comment="feat: изменение интерфейса">
+      <change beforePath="$PROJECT_DIR$/.idea/jarRepositories.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/jarRepositories.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__com_formdev_flatlaf_1_6_5.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__com_formdev_flatlaf_intellij_themes_1_6_5.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_xerial_sqlite_jdbc_3_36_0_2.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/News.iml" beforeDir="false" afterPath="$PROJECT_DIR$/News.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/gui/Gui.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/gui/Gui.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/search/Search.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/search/Search.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/utils/Common.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/utils/Common.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/utils/InternetAvailabilityCheckerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/DifferentTests.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -48,21 +55,18 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">
-    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
-    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
-    <property name="android.sdk.path" value="$USER_HOME$/AppData/Local/Android/Sdk" />
-    <property name="com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary" value="JUnit5" />
-    <property name="com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5" value="" />
-    <property name="last.edited.regexp" value="Samplv&lt;p&gt;e Tex&lt;p&gt;t" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/main/resources" />
-    <property name="project.structure.last.edited" value="Artifacts" />
-    <property name="project.structure.proportion" value="0.15" />
-    <property name="project.structure.side.proportion" value="0.18862559" />
-    <property name="settings.editor.selected.configurable" value="preferences.lookFeel" />
-  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "project.structure.last.edited": "Artifacts",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.0"
+  }
+}]]></component>
   <component name="RecentsManager">
     <key name="CreateTestDialog.Recents.Supers">
+      <recent name="" />
+    </key>
+    <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
       <recent name="" />
     </key>
     <key name="CreateTestDialog.RecentsKey">
@@ -86,63 +90,63 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="InternetAvailabilityCheckerTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="DifferentTests" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="News" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="utils.*" />
+          <option name="PATTERN" value=".*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
-      <option name="PACKAGE_NAME" value="utils" />
-      <option name="MAIN_CLASS_NAME" value="utils.InternetAvailabilityCheckerTest" />
+      <option name="PACKAGE_NAME" value="" />
+      <option name="MAIN_CLASS_NAME" value="DifferentTests" />
       <option name="TEST_OBJECT" value="class" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="InternetAvailabilityCheckerTest.openSQLiteConnection" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="DifferentTests.openSQLiteConnection" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="News" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="utils.*" />
+          <option name="PATTERN" value=".*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
-      <option name="PACKAGE_NAME" value="utils" />
-      <option name="MAIN_CLASS_NAME" value="utils.InternetAvailabilityCheckerTest" />
+      <option name="PACKAGE_NAME" value="" />
+      <option name="MAIN_CLASS_NAME" value="DifferentTests" />
       <option name="METHOD_NAME" value="openSQLiteConnection" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="InternetAvailabilityCheckerTest.shouldOpenSQLiteConnectionTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="DifferentTests.shouldOpenSQLiteConnectionTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="News" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="utils.*" />
+          <option name="PATTERN" value=".*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
-      <option name="PACKAGE_NAME" value="utils" />
-      <option name="MAIN_CLASS_NAME" value="utils.InternetAvailabilityCheckerTest" />
+      <option name="PACKAGE_NAME" value="" />
+      <option name="MAIN_CLASS_NAME" value="DifferentTests" />
       <option name="METHOD_NAME" value="shouldOpenSQLiteConnectionTest" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="InternetAvailabilityCheckerTest.shouldToCheckInternetAvailableTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="DifferentTests.shouldToCheckInternetAvailableTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="News" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="utils.*" />
+          <option name="PATTERN" value=".*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
-      <option name="PACKAGE_NAME" value="utils" />
-      <option name="MAIN_CLASS_NAME" value="utils.InternetAvailabilityCheckerTest" />
+      <option name="PACKAGE_NAME" value="" />
+      <option name="MAIN_CLASS_NAME" value="DifferentTests" />
       <option name="METHOD_NAME" value="shouldToCheckInternetAvailableTest" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
@@ -152,10 +156,10 @@
     <recent_temporary>
       <list>
         <item itemvalue="Application.Main" />
-        <item itemvalue="JUnit.InternetAvailabilityCheckerTest.shouldOpenSQLiteConnectionTest" />
-        <item itemvalue="JUnit.InternetAvailabilityCheckerTest.openSQLiteConnection" />
-        <item itemvalue="JUnit.InternetAvailabilityCheckerTest" />
-        <item itemvalue="JUnit.InternetAvailabilityCheckerTest.shouldToCheckInternetAvailableTest" />
+        <item itemvalue="JUnit.DifferentTests.shouldOpenSQLiteConnectionTest" />
+        <item itemvalue="JUnit.DifferentTests.openSQLiteConnection" />
+        <item itemvalue="JUnit.DifferentTests" />
+        <item itemvalue="JUnit.DifferentTests.shouldToCheckInternetAvailableTest" />
       </list>
     </recent_temporary>
   </component>
@@ -167,13 +171,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1616704248449</updated>
-    </task>
-    <task id="LOCAL-00173" summary="доработка отправки почты">
-      <created>1640955263097</created>
-      <option name="number" value="00173" />
-      <option name="presentableId" value="LOCAL-00173" />
-      <option name="project" value="LOCAL" />
-      <updated>1640955263097</updated>
     </task>
     <task id="LOCAL-00174" summary="доработка отправки почты">
       <created>1640973912038</created>
@@ -511,7 +508,14 @@
       <option name="project" value="LOCAL" />
       <updated>1651239913476</updated>
     </task>
-    <option name="localTasksCounter" value="222" />
+    <task id="LOCAL-00222" summary="feat: шире интерфейс 1.4">
+      <created>1651240923750</created>
+      <option name="number" value="00222" />
+      <option name="presentableId" value="LOCAL-00222" />
+      <option name="project" value="LOCAL" />
+      <updated>1651240923750</updated>
+    </task>
+    <option name="localTasksCounter" value="223" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -529,8 +533,6 @@
     <ignored-roots>
       <path value="$PROJECT_DIR$" />
     </ignored-roots>
-    <MESSAGE value="доработан и переделан интерфейс" />
-    <MESSAGE value="цвет шрифта основной таблицы теперь можно менять и он сохранится" />
     <MESSAGE value="цвет шрифта теперь можно менять и он сохранится в config.txt" />
     <MESSAGE value="пароль считывается из файла config.txt" />
     <MESSAGE value="пароль и почта, с которой отправляется результат, считывается из файла config.txt" />
@@ -554,7 +556,9 @@
     <MESSAGE value="feat: шире интерфейс" />
     <MESSAGE value="feat: шире интерфейс 1.2." />
     <MESSAGE value="feat: шире интерфейс 1.3" />
-    <option name="LAST_COMMIT_MESSAGE" value="feat: шире интерфейс 1.3" />
+    <MESSAGE value="feat: шире интерфейс 1.4" />
+    <MESSAGE value="feat: изменение интерфейса" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat: изменение интерфейса" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

@@ -59,7 +59,7 @@ public class Gui extends JFrame {
     public static JTextField topKeyword;
     public static JTextField sendEmailTo;
     public static JTextField addKeywordToList;
-    public static JTextArea animationStatus;
+    public static JTextArea consoleTextArea;
     public static JComboBox<String> keywordsCbox;
     public static JComboBox<String> newsIntervalCbox;
     public static JLabel labelSign;
@@ -94,7 +94,7 @@ public class Gui extends JFrame {
         setIconImage(logoIco.getImage());
         setFont(new Font("SansSerif", Font.PLAIN, 12));
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setBounds(320, 170, 1217, 685);
+        setBounds(336, 170, 1192, 685);
         getContentPane().setLayout(null);
 
         //Action Listener for EXIT_ON_CLOSE
@@ -112,7 +112,7 @@ public class Gui extends JFrame {
             public void windowIconified(WindowEvent pEvent) {
                 guiInTray.set(true);
                 setVisible(false);
-                if (autoUpdateNewsBottom.getState()) animationStatus.setText("");
+                if (autoUpdateNewsBottom.getState()) consoleTextArea.setText("");
             }
             // разворачивание из трея
             public void windowDeiconified(WindowEvent pEvent) {
@@ -260,7 +260,7 @@ public class Gui extends JFrame {
         // Label for table for analysis
         JLabel tableForAnalysisLabel = new JLabel();
         tableForAnalysisLabel.setFont(new Font("Tahoma", Font.PLAIN, 11));
-        tableForAnalysisLabel.setText("word frequency:");
+        tableForAnalysisLabel.setText("word frequency");
         tableForAnalysisLabel.setToolTipText("matches more than " + sqlite.getWordFreqMatches());
         tableForAnalysisLabel.setForeground(new Color(255, 255, 153));
         tableForAnalysisLabel.setBounds(11, 443, 190, 14);
@@ -318,7 +318,6 @@ public class Gui extends JFrame {
                         wasClickInTableForAnalysis.set(true);
                     }
                 }
-
             }
         });
 
@@ -478,14 +477,25 @@ public class Gui extends JFrame {
         });
         getContentPane().add(clearBtnTop);
 
-        /* BOTTOM SEARCH */
+        /* KEYWORDS SEARCH */
+        int bottomSearchCoefficientX = 10;
+        int bottomSearchCoefficientY = 0;
+
+        // label
+        JLabel lblKeywordsSearch = new JLabel();
+        lblKeywordsSearch.setText("search by keywords");
+        lblKeywordsSearch.setForeground(new Color(255, 255, 153));
+        lblKeywordsSearch.setFont(new Font("Tahoma", Font.PLAIN, 11));
+        lblKeywordsSearch.setBounds(621 + bottomSearchCoefficientX, 442 + bottomSearchCoefficientY, 160, 14);
+        getContentPane().add(lblKeywordsSearch);
+
         //Add to combo box
         addKeywordToList = new JTextField();
         addKeywordToList.setFont(new Font("Serif", Font.PLAIN, 12));
-        addKeywordToList.setBounds(321, 590, 60, 22);
+        addKeywordToList.setBounds(621 + bottomSearchCoefficientX, 460 + bottomSearchCoefficientY, 80, 22);
         getContentPane().add(addKeywordToList);
 
-        //Add to combo box
+        //Add to keywords combo box
         JButton btnAddKeywordToList = new JButton("");
         getContentPane().add(btnAddKeywordToList);
         btnAddKeywordToList.addActionListener(e -> {
@@ -508,7 +518,7 @@ public class Gui extends JFrame {
             }
         });
         btnAddKeywordToList.setIcon(createIco);
-        btnAddKeywordToList.setBounds(386, 590, 30, 22);
+        btnAddKeywordToList.setBounds(706 + bottomSearchCoefficientX, 460 + bottomSearchCoefficientY, 30, 22);
 
         //Delete from combo box
         JButton btnDelFromList = new JButton("");
@@ -526,7 +536,7 @@ public class Gui extends JFrame {
 
         });
         btnDelFromList.setIcon(deleteIco);
-        btnDelFromList.setBounds(421, 590, 30, 22);
+        btnDelFromList.setBounds(741 + bottomSearchCoefficientX, 460 + bottomSearchCoefficientY, 30, 22);
         getContentPane().add(btnDelFromList);
 
         //Keywords combo box
@@ -534,7 +544,7 @@ public class Gui extends JFrame {
         keywordsCbox.setFont(new Font("Arial", Font.PLAIN, 11));
         keywordsCbox.setModel(new DefaultComboBoxModel<>());
         keywordsCbox.setEditable(false);
-        keywordsCbox.setBounds(456, 590, 90, 22);
+        keywordsCbox.setBounds(776 + bottomSearchCoefficientX, 460 + bottomSearchCoefficientY, 90, 22);
         getContentPane().add(keywordsCbox);
 
         //Bottom search by keywords
@@ -542,7 +552,7 @@ public class Gui extends JFrame {
         searchBtnBottom.setIcon(searchIco);
         searchBtnBottom.setFont(new Font("Tahoma", Font.BOLD, 10));
         searchBtnBottom.setBackground(new Color(154, 237, 196));
-        searchBtnBottom.setBounds(552, 590, 30, 22);
+        searchBtnBottom.setBounds(872 + bottomSearchCoefficientX, 460 + bottomSearchCoefficientY, 30, 22);
         //searchBtnBottom.addActionListener(e -> new Thread(Search::keywordsSearch).start());
         searchBtnBottom.addActionListener(e -> new Thread(() -> search.mainSearch("words")).start());
         getContentPane().add(searchBtnBottom);
@@ -551,7 +561,7 @@ public class Gui extends JFrame {
         stopBtnBottom = new JButton("");
         stopBtnBottom.setIcon(stopIco);
         stopBtnBottom.setBackground(new Color(255, 208, 202));
-        stopBtnBottom.setBounds(552, 590, 30, 22);
+        stopBtnBottom.setBounds(872 + bottomSearchCoefficientX, 460 + bottomSearchCoefficientY, 30, 22);
         stopBtnBottom.addActionListener(e -> {
             try {
                 Search.isSearchFinished.set(true);
@@ -574,12 +584,12 @@ public class Gui extends JFrame {
         getContentPane().add(stopBtnBottom);
 
         // Автозапуск поиска по ключевым словам каждые 30 секунд
-        autoUpdateNewsBottom = new Checkbox("auto upd.");
+        autoUpdateNewsBottom = new Checkbox("auto update");
         autoUpdateNewsBottom.setState(false);
         autoUpdateNewsBottom.setFocusable(false);
         autoUpdateNewsBottom.setForeground(Color.WHITE);
         autoUpdateNewsBottom.setFont(new Font("Arial", Font.PLAIN, 11));
-        autoUpdateNewsBottom.setBounds(553, 616, 75, 20);
+        autoUpdateNewsBottom.setBounds(908 + bottomSearchCoefficientX, 460 + bottomSearchCoefficientY, 75, 20);
         getContentPane().add(autoUpdateNewsBottom);
         autoUpdateNewsBottom.addItemListener(e -> {
             if (autoUpdateNewsBottom.getState()) {
@@ -602,29 +612,30 @@ public class Gui extends JFrame {
             }
         });
 
+        /* CONSOLE */
         //Console - textarea
-        animationStatus = new JTextArea();
+        consoleTextArea = new JTextArea();
         // авто скроллинг
-        DefaultCaret caret = (DefaultCaret) animationStatus.getCaret();
+        DefaultCaret caret = (DefaultCaret) consoleTextArea.getCaret();
         caret.setUpdatePolicy(DefaultCaret.ALWAYS_UPDATE);
-        animationStatus.setCaretPosition(animationStatus.getDocument().getLength());
-        animationStatus.setAutoscrolls(true);
-        animationStatus.setLineWrap(true);
-        animationStatus.setEditable(false);
-        animationStatus.setBounds(320, 460, 300, 120);
-        animationStatus.setFont(new Font("Tahoma", Font.PLAIN, 11));
-        animationStatus.setForeground(SystemColor.white);
-        animationStatus.setBackground(new Color(49, 42, 82)); // 83, 82, 82
-        getContentPane().add(animationStatus);
+        consoleTextArea.setCaretPosition(consoleTextArea.getDocument().getLength());
+        consoleTextArea.setAutoscrolls(true);
+        consoleTextArea.setLineWrap(true);
+        consoleTextArea.setEditable(false);
+        consoleTextArea.setBounds(320, 460, 300, 120);
+        consoleTextArea.setFont(new Font("Tahoma", Font.PLAIN, 11));
+        consoleTextArea.setForeground(SystemColor.white);
+        consoleTextArea.setBackground(new Color(49, 42, 82)); // 83, 82, 82
+        getContentPane().add(consoleTextArea);
 
         //Console - scroll
-        JScrollPane consoleScroll = new JScrollPane(animationStatus, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+        JScrollPane consoleScroll = new JScrollPane(consoleTextArea, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
         consoleScroll.setBounds(320, 460, 300, 120);
         consoleScroll.setBorder(null);
         getContentPane().add(consoleScroll);
         //Console - label
         JLabel lblConsole = new JLabel();
-        lblConsole.setText("console:");
+        lblConsole.setText("console");
         lblConsole.setForeground(new Color(255, 255, 153));
         lblConsole.setFont(new Font("Tahoma", Font.PLAIN, 11));
         lblConsole.setBounds(321, 442, 83, 14);
@@ -632,11 +643,11 @@ public class Gui extends JFrame {
 
         // Clear console
         JButton clearConsoleBtn = new JButton();
-        clearConsoleBtn.setIcon(clearIco);
+        //clearConsoleBtn.setIcon(clearIco);
         clearConsoleBtn.setToolTipText("Clear the console");
-        clearConsoleBtn.setBackground(new Color(179, 221, 254));
-        clearConsoleBtn.setBounds(588, 590, 32, 23);
-        clearConsoleBtn.addActionListener(e -> animationStatus.setText(""));
+        clearConsoleBtn.setBackground(new Color(0, 52, 96));
+        clearConsoleBtn.setBounds(606, 444, 14, 14);
+        clearConsoleBtn.addActionListener(e -> consoleTextArea.setText(""));
         getContentPane().add(clearConsoleBtn);
 
         //Searching animation
@@ -661,7 +672,7 @@ public class Gui extends JFrame {
         progressBar.setBorderPainted(false);
         progressBar.setForeground(new Color(10, 255, 41));
         progressBar.setBackground(new Color(1, 1, 1));
-        progressBar.setBounds(365, 449, 255, 3);
+        progressBar.setBounds(365, 449, 239, 3);
         getContentPane().add(progressBar);
 
         // Интервалы для поиска новостей
@@ -730,7 +741,7 @@ public class Gui extends JFrame {
             }
         });
         //label
-        JLabel excludedLabel = new JLabel("excluded list:");
+        JLabel excludedLabel = new JLabel("excluded list");
         excludedLabel.setHorizontalAlignment(SwingConstants.LEFT);
         excludedLabel.setForeground(new Color(255, 255, 153));
         excludedLabel.setFont(new Font("Tahoma", Font.PLAIN, 11));
@@ -741,7 +752,7 @@ public class Gui extends JFrame {
         /* BOTTOM RIGHT AREA */
         //send e-mail to - label
         JLabel lblSendToEmail = new JLabel();
-        lblSendToEmail.setText("send to:");
+        lblSendToEmail.setText("send to");
         lblSendToEmail.setForeground(new Color(255, 255, 153));
         lblSendToEmail.setFont(new Font("Tahoma", Font.PLAIN, 11));
         lblSendToEmail.setBounds(1011, 442, 83, 14);
