@@ -32,8 +32,7 @@ public class Gui extends JFrame {
     SQLite sqlite = new SQLite();
     Search search = new Search();
     ExportToExcel exp = new ExportToExcel();
-    private final long autoStartTimer = 60000L; // 60 секунд
-    public static final String[] intervals = {"1 min", "5 min", "15 min", "30 min", "45 min", "1 hour", "2 hours", "4 hours", "8 hours", "12 hours", "24 hours", "48 hours"};
+    private static final long AUTO_START_TIMER = 60000L; // 60 секунд
     public static ImageIcon logoIco = new ImageIcon(Toolkit.getDefaultToolkit().createImage(Gui.class.getResource("/icons/logo.png")));
     public static ImageIcon send = new ImageIcon(Toolkit.getDefaultToolkit().createImage(Gui.class.getResource("/icons/send.png")));
     public static ImageIcon send2 = new ImageIcon(Toolkit.getDefaultToolkit().createImage(Gui.class.getResource("/icons/send2.png")));
@@ -94,7 +93,7 @@ public class Gui extends JFrame {
         setIconImage(logoIco.getImage());
         setFont(new Font("SansSerif", Font.PLAIN, 12));
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setBounds(336, 170, 1192, 685);
+        setBounds(336, 170, 1195, 685);
         getContentPane().setLayout(null);
 
         //Action Listener for EXIT_ON_CLOSE
@@ -595,7 +594,7 @@ public class Gui extends JFrame {
             if (autoUpdateNewsBottom.getState()) {
                 timer = new Timer(true);
                 timerTask = new MyTimerTask();
-                timer.scheduleAtFixedRate(timerTask, 0, autoStartTimer);
+                timer.scheduleAtFixedRate(timerTask, 0, AUTO_START_TIMER);
                 searchBtnBottom.setVisible(false);
                 stopBtnBottom.setVisible(true);
                 autoUpdateNewsTop.setVisible(false);
@@ -681,7 +680,7 @@ public class Gui extends JFrame {
         newsIntervalCbox.setBounds(378, 10, 75, 20);
         getContentPane().add(newsIntervalCbox);
         // запись интервалов в комбобокс
-        Common.addIntervalsToCombobox(newsIntervalCbox);
+        Common.addIntervalsToComboBox(newsIntervalCbox);
 
         // Today or not
         todayOrNotCbx = new Checkbox("in the last");
@@ -705,7 +704,7 @@ public class Gui extends JFrame {
             if (autoUpdateNewsTop.getState()) {
                 timer = new Timer(true);
                 timerTask = new MyTimerTask();
-                timer.scheduleAtFixedRate(timerTask, 0, autoStartTimer);
+                timer.scheduleAtFixedRate(timerTask, 0, AUTO_START_TIMER);
                 searchBtnTop.setVisible(false);
                 stopBtnTop.setVisible(true);
                 autoUpdateNewsBottom.setVisible(false);

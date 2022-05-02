@@ -18,7 +18,6 @@ public class Sender {
         p.put("mail.smtp.host", host);
         p.put("mail.smtp.port", "587");
 
-
         Session session = Session.getDefaultInstance(p, new Authenticator() {
             protected PasswordAuthentication getPasswordAuthentication() {
                 return new PasswordAuthentication(fromEmail, pwd);
