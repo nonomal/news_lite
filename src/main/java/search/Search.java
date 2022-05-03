@@ -4,21 +4,23 @@ import com.sun.syndication.feed.synd.SyndContent;
 import com.sun.syndication.feed.synd.SyndEntry;
 import com.sun.syndication.feed.synd.SyndFeed;
 import database.SQLite;
+import email.EmailSender;
 import gui.Gui;
 import main.Main;
 import utils.Common;
-import email.EmailSender;
 
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.Locale;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 public class Search {
@@ -130,8 +132,8 @@ public class Search {
                                         }
 
                                         //Data for a table
-                                        Date curent_date = new Date();
-                                        int date_diff = Common.compareDatesOnly(curent_date, pubDate);
+                                        Date currentDate = new Date();
+                                        int date_diff = Common.compareDatesOnly(currentDate, pubDate);
 
                                         // вставка всех новостей в архив (ощутимо замедляет общий поиск)
                                         sqlite.insertAllTitles(title, pubDate.toString());
@@ -145,8 +147,8 @@ public class Search {
                                             Object[] row = new Object[]{
                                                     newsCount,
                                                     smi_source,
-                                                    dateFormatHoursFirst.format(pubDate),
                                                     title,
+                                                    dateFormatHoursFirst.format(pubDate),
                                                     link
                                             };
                                             Gui.model.addRow(row);
@@ -171,8 +173,8 @@ public class Search {
                                             Object[] row = new Object[]{
                                                     newsCount,
                                                     smi_source,
-                                                    dateFormatHoursFirst.format(pubDate),
                                                     title,
+                                                    dateFormatHoursFirst.format(pubDate),
                                                     link
                                             };
                                             Gui.model.addRow(row);
@@ -211,8 +213,8 @@ public class Search {
                                                 Object[] row = new Object[]{
                                                         newsCount,
                                                         smi_source,
-                                                        dateFormatHoursFirst.format(pubDate),
                                                         title,
+                                                        dateFormatHoursFirst.format(pubDate),
                                                         link
                                                 };
                                                 Gui.model.addRow(row);
@@ -236,8 +238,8 @@ public class Search {
                                                 Object[] row = new Object[]{
                                                         newsCount,
                                                         smi_source,
-                                                        dateFormatHoursFirst.format(pubDate),
                                                         title,
+                                                        dateFormatHoursFirst.format(pubDate),
                                                         link
                                                 };
                                                 Gui.model.addRow(row);

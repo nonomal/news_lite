@@ -170,7 +170,7 @@ public class Gui extends JFrame {
         scrollPane = new JScrollPane();
         scrollPane.setBounds(10, 40, 1160, 400);
         getContentPane().add(scrollPane);
-        Object[] columns = {"Num", "Source", "Date", "Title (double click to open the link)", "Link"};
+        Object[] columns = {"Num", "Source", "Title (double click to open the link)", "Date", "Link"};
         model = new DefaultTableModel(new Object[][]{
         }, columns) {
             final boolean[] columnEditables = new boolean[]{
@@ -195,7 +195,7 @@ public class Gui extends JFrame {
                 String tip = null;
                 java.awt.Point p = e.getPoint();
                 int rowIndex = rowAtPoint(p);
-                int colIndex = 3;
+                int colIndex = 2;
                 try {
                     tip = (String) getValueAt(rowIndex, colIndex);
                 } catch (RuntimeException ignored) {
@@ -222,9 +222,9 @@ public class Gui extends JFrame {
         table.getColumnModel().getColumn(0).setMaxWidth(40);
         table.getColumnModel().getColumn(1).setPreferredWidth(100);
         table.getColumnModel().getColumn(1).setMaxWidth(180);
-        table.getColumnModel().getColumn(2).setPreferredWidth(100);
-        table.getColumnModel().getColumn(2).setMaxWidth(100);
-        table.getColumnModel().getColumn(3).setPreferredWidth(490);
+        table.getColumnModel().getColumn(2).setPreferredWidth(490);
+        table.getColumnModel().getColumn(3).setPreferredWidth(100);
+        table.getColumnModel().getColumn(3).setMaxWidth(100);
         table.removeColumn(table.getColumnModel().getColumn(4)); // Скрыть 4 колонку со ссылкой на новость
         scrollPane.setViewportView(table);
 
@@ -234,7 +234,7 @@ public class Gui extends JFrame {
                 if (e.getClickCount() == 2) {
                     int row = table.convertRowIndexToModel(table.rowAtPoint(new Point(e.getX(), e.getY()))); // при сортировке строк оставляет верные данные
                     int col = table.columnAtPoint(new Point(e.getX(), e.getY()));
-                    if (col == 3|| col == 4) {
+                    if (col == 2|| col == 4) {
                         String url = (String) table.getModel().getValueAt(row, 4);
                         URI uri = null;
                         try {
