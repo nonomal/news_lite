@@ -441,7 +441,7 @@ public class Gui extends JFrame {
         exportBtn.setBounds(1105, 9, 30, 22);
         exportBtn.addActionListener(e -> {
             if (model.getRowCount() != 0) {
-                new Thread(exp::export_from_RSS_to_excel).start();
+                new Thread(exp::exportResultsToExcel).start();
                 Common.console("status: export");
             } else {
                 Common.console("status: there is no data to export");

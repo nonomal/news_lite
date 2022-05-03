@@ -13,7 +13,7 @@ import java.io.IOException;
 import java.net.URL;
 
 public class ExportToExcel {
-    public void export_from_RSS_to_excel() {
+    public void exportResultsToExcel() {
         try {
             //Save file to
             FileNameExtensionFilter filter = new FileNameExtensionFilter("*.xls", "*.xls", "*.XLS", "*.*");

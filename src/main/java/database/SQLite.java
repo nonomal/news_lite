@@ -37,12 +37,7 @@ public class SQLite {
             Statement st = connection.createStatement();
             String query = "select SUM, TITLE from v_news_dual where sum > " +
                     wordFreqMatches +
-                    " and title not in (select word from exclude)" +
-                    " and title not in (select present from verbs)" +
-                    " and title not in (select past from verbs)" +
-                    " and title not in (select verb_female from verbs)" +
-                    " and title not in (select past_many from verbs)" +
-                    " and title not in (select past_it from verbs)" +
+                    " and title not in (select word from all_titles_to_exclude)" +
                     " order by SUM desc";
             ResultSet rs = st.executeQuery(query);
             while (rs.next()) {
