@@ -92,7 +92,7 @@ public class Gui extends JFrame {
         setIconImage(logoIco.getImage());
         setFont(new Font("SansSerif", Font.PLAIN, 12));
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setBounds(336, 170, 1195, 634);
+        setBounds(340, 100, 1195, 634);
         getContentPane().setLayout(null);
 
         //Action Listener for EXIT_ON_CLOSE
@@ -261,7 +261,7 @@ public class Gui extends JFrame {
         scrollForAnalysis.setBounds(880, 40, 290, 195);
         getContentPane().add(scrollForAnalysis);
 
-        String[] columnsForAnalysis = {"Frequency", "", " "};
+        String[] columnsForAnalysis = {"", "freq.", " "};
         modelForAnalysis = new DefaultTableModel(new Object[][]{}, columnsForAnalysis) {
             final boolean[] column_for_analysis = new boolean[]{false, false, true};
             public boolean isCellEditable(int row, int column) {
@@ -269,7 +269,7 @@ public class Gui extends JFrame {
             }
 
             // Сортировка
-            final Class[] types_unique = {Integer.class, String.class, Button.class};
+            final Class[] types_unique = {String.class, Integer.class, Button.class};
 
             @Override
             public Class getColumnClass(int columnIndex) {
@@ -282,7 +282,7 @@ public class Gui extends JFrame {
         //Cell alignment
         DefaultTableCellRenderer rendererForAnalysis = new DefaultTableCellRenderer();
         rendererForAnalysis.setHorizontalAlignment(JLabel.CENTER);
-        tableForAnalysis.getColumnModel().getColumn(0).setCellRenderer(rendererForAnalysis);
+        tableForAnalysis.getColumnModel().getColumn(1).setCellRenderer(rendererForAnalysis);
         //tableForAnalysis.getColumnModel().getColumn(1).setCellRenderer(rendererForAnalysis);
         tableForAnalysis.getColumn(" ").setCellRenderer(new ButtonColumn(tableForAnalysis, 2));
         tableForAnalysis.setRowHeight(21);
@@ -290,8 +290,9 @@ public class Gui extends JFrame {
         tableForAnalysis.setCellSelectionEnabled(true);
         tableForAnalysis.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
         tableForAnalysis.setFont(new Font("SansSerif", Font.PLAIN, 14));
-        tableForAnalysis.getColumnModel().getColumn(0).setPreferredWidth(80);
-        tableForAnalysis.getColumnModel().getColumn(1).setPreferredWidth(140);
+        tableForAnalysis.getColumnModel().getColumn(0).setPreferredWidth(140);
+        tableForAnalysis.getColumnModel().getColumn(1).setPreferredWidth(40);
+        tableForAnalysis.getColumnModel().getColumn(1).setMaxWidth(40);
         tableForAnalysis.getColumnModel().getColumn(2).setMaxWidth(30);
         scrollForAnalysis.setViewportView(tableForAnalysis);
 
@@ -459,9 +460,6 @@ public class Gui extends JFrame {
         getContentPane().add(clearBtnTop);
 
         /* KEYWORDS SEARCH */
-        int bottomSearchCoefficientX = 10;
-        int bottomSearchCoefficientY = 0;
-
         // label
         JLabel lblKeywordsSearch = new JLabel();
         lblKeywordsSearch.setText("search by keywords");
@@ -610,7 +608,7 @@ public class Gui extends JFrame {
 
         //Console - scroll
         JScrollPane consoleScroll = new JScrollPane(consoleTextArea, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-        consoleScroll.setBounds(880, 273, 290, 120);
+        consoleScroll.setBounds(880, 260, 290, 120);
         consoleScroll.setBorder(null);
         getContentPane().add(consoleScroll);
         //Console - label
@@ -618,7 +616,7 @@ public class Gui extends JFrame {
         lblConsole.setText("clear console");
         lblConsole.setForeground(new Color(255, 255, 153));
         lblConsole.setFont(new Font("Tahoma", Font.PLAIN, 11));
-        lblConsole.setBounds(1087, 257, 64, 14);
+        lblConsole.setBounds(1090, 382, 64, 14);
         getContentPane().add(lblConsole);
 
         // Clear console
@@ -626,7 +624,7 @@ public class Gui extends JFrame {
         //clearConsoleBtn.setIcon(clearIco);
         clearConsoleBtn.setToolTipText("Clear the console");
         clearConsoleBtn.setBackground(new Color(0, 52, 96));
-        clearConsoleBtn.setBounds(1156, 257, 14, 14);
+        clearConsoleBtn.setBounds(1156, 382, 14, 14);
         clearConsoleBtn.addActionListener(e -> consoleTextArea.setText(""));
         getContentPane().add(clearConsoleBtn);
 
@@ -696,7 +694,7 @@ public class Gui extends JFrame {
         exclBtn.setContentAreaFilled(true);
         //exclBtn.setBorderPainted(false);
         exclBtn.setBackground(new Color(0, 52, 96));
-        exclBtn.setBounds(1156, 236, 14, 14);
+        exclBtn.setBounds(1157, 236, 14, 14);
         getContentPane().add(exclBtn);
         exclBtn.addActionListener((e) -> new Dialogs("exclDlg"));
         exclBtn.addMouseListener(new MouseAdapter() {
@@ -718,7 +716,7 @@ public class Gui extends JFrame {
         excludedLabel.setForeground(new Color(255, 255, 153));
         excludedLabel.setFont(new Font("Tahoma", Font.PLAIN, 11));
         excludedLabel.setBackground(new Color(240, 255, 240));
-        excludedLabel.setBounds(1090, 236, 64, 14);
+        excludedLabel.setBounds(1092, 236, 64, 14);
         getContentPane().add(excludedLabel);
 
         /* BOTTOM RIGHT AREA */
@@ -784,7 +782,6 @@ public class Gui extends JFrame {
         getContentPane().add(autoSendMessage);
 
         // Диалоговое окно со списком источников "sources"
-        int buttonsY = 320;
         smiBtn = new JButton();
         smiBtn.setFocusable(false);
         smiBtn.setContentAreaFilled(true);
@@ -943,13 +940,13 @@ public class Gui extends JFrame {
         // Border email
         Box verticalBox = Box.createVerticalBox();
         verticalBox.setBorder(new BevelBorder(BevelBorder.RAISED, null, null, null, null));
-        verticalBox.setBounds(880, 416, 161, 51);
+        verticalBox.setBounds(880, 416, 164, 51);
         getContentPane().add(verticalBox);
 
         // Border different bottoms
         Box queryTableBox = Box.createVerticalBox();
         queryTableBox.setBorder(new BevelBorder(BevelBorder.RAISED, null, null, null, null));
-        queryTableBox.setBounds(880, 478, 161, 26);
+        queryTableBox.setBounds(880, 478, 164, 26);
         getContentPane().add(queryTableBox);
 
         // latest news
@@ -970,7 +967,7 @@ public class Gui extends JFrame {
         // border latest news
         Box latestNewsBorder = Box.createVerticalBox();
         latestNewsBorder.setBorder(new BevelBorder(BevelBorder.RAISED, null, null, null, null));
-        latestNewsBorder.setBounds(880, 514, 161, 26);
+        latestNewsBorder.setBounds(880, 514, 164, 26);
         getContentPane().add(latestNewsBorder);
 
         //My sign
@@ -1013,7 +1010,6 @@ public class Gui extends JFrame {
                         ex.printStackTrace();
                         Main.LOGGER.log(Level.WARNING, ex.getMessage());
                     }
-
                 }
             }
         });

@@ -39,7 +39,7 @@ public class SQLite {
             while (rs.next()) {
                 String word = rs.getString("TITLE");
                 int sum = rs.getInt("SUM");
-                Object[] row2 = new Object[]{sum, word};
+                Object[] row2 = new Object[]{word, sum};
                 Gui.modelForAnalysis.addRow(row2);
             }
             deleteTitles();
