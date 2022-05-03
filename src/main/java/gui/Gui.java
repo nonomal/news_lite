@@ -103,8 +103,8 @@ public class Gui extends JFrame {
             public void windowClosing(WindowEvent e) {
                 Search.isSearchFinished.set(true);
                 SQLite.isConnectionToSQLite = false;
-                Main.LOGGER.log(Level.INFO, "Application closed");
                 Common.saveState();
+                Main.LOGGER.log(Level.INFO, "Application closed");
                 if (SQLite.isConnectionToSQLite) sqlite.closeSQLiteConnection();
             }
             // сворачивание в трей

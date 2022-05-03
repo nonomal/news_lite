@@ -24,10 +24,17 @@ import java.util.Locale;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 public class Search {
-    public static List<String> excludeFromSearch = Common.getExcludeWordsFromFile();
-    public static AtomicBoolean isStop = new AtomicBoolean(false);
-    public static AtomicBoolean isSearchNow = new AtomicBoolean(false);
+    public static List<String> excludeFromSearch;
+    public static AtomicBoolean isStop;
+    public static AtomicBoolean isSearchNow;
     public static AtomicBoolean isSearchFinished;
+
+    public Search() {
+        excludeFromSearch = Common.getExcludeWordsFromFile();
+        isStop = new AtomicBoolean(false);
+        isSearchNow = new AtomicBoolean(false);
+        isSearchFinished = new AtomicBoolean(false);
+    }
 
     public static int j = 1;
     DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm");
