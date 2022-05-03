@@ -92,7 +92,7 @@ public class Gui extends JFrame {
         setIconImage(logoIco.getImage());
         setFont(new Font("SansSerif", Font.PLAIN, 12));
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setBounds(336, 170, 1195, 685);
+        setBounds(336, 170, 1195, 634);
         getContentPane().setLayout(null);
 
         //Action Listener for EXIT_ON_CLOSE
@@ -168,7 +168,7 @@ public class Gui extends JFrame {
 
         //Table
         scrollPane = new JScrollPane();
-        scrollPane.setBounds(10, 40, 860, 392);
+        scrollPane.setBounds(10, 40, 860, 500);
         getContentPane().add(scrollPane);
         Object[] columns = {"Num", "Source", "Title (double click to open the link)", "Date", "Link"};
         model = new DefaultTableModel(new Object[][]{
@@ -467,13 +467,13 @@ public class Gui extends JFrame {
         lblKeywordsSearch.setText("search by keywords");
         lblKeywordsSearch.setForeground(new Color(255, 255, 153));
         lblKeywordsSearch.setFont(new Font("Tahoma", Font.PLAIN, 11));
-        lblKeywordsSearch.setBounds(621 + bottomSearchCoefficientX, 442 + bottomSearchCoefficientY, 160, 14);
+        lblKeywordsSearch.setBounds(10, 545, 160, 14);
         getContentPane().add(lblKeywordsSearch);
 
         //Add to combo box
         addKeywordToList = new JTextField();
         addKeywordToList.setFont(new Font("Serif", Font.PLAIN, 12));
-        addKeywordToList.setBounds(621 + bottomSearchCoefficientX, 460 + bottomSearchCoefficientY, 80, 22);
+        addKeywordToList.setBounds(10, 561, 80, 22);
         getContentPane().add(addKeywordToList);
 
         //Add to keywords combo box
@@ -499,7 +499,7 @@ public class Gui extends JFrame {
             }
         });
         btnAddKeywordToList.setIcon(createIco);
-        btnAddKeywordToList.setBounds(706 + bottomSearchCoefficientX, 460 + bottomSearchCoefficientY, 30, 22);
+        btnAddKeywordToList.setBounds(95, 561, 30, 22);
 
         //Delete from combo box
         JButton btnDelFromList = new JButton("");
@@ -517,7 +517,7 @@ public class Gui extends JFrame {
 
         });
         btnDelFromList.setIcon(deleteIco);
-        btnDelFromList.setBounds(741 + bottomSearchCoefficientX, 460 + bottomSearchCoefficientY, 30, 22);
+        btnDelFromList.setBounds(130, 561, 30, 22);
         getContentPane().add(btnDelFromList);
 
         //Keywords combo box
@@ -525,7 +525,7 @@ public class Gui extends JFrame {
         keywordsCbox.setFont(new Font("Arial", Font.PLAIN, 11));
         keywordsCbox.setModel(new DefaultComboBoxModel<>());
         keywordsCbox.setEditable(false);
-        keywordsCbox.setBounds(776 + bottomSearchCoefficientX, 460 + bottomSearchCoefficientY, 90, 22);
+        keywordsCbox.setBounds(165, 561, 90, 22);
         getContentPane().add(keywordsCbox);
 
         //Bottom search by keywords
@@ -533,7 +533,7 @@ public class Gui extends JFrame {
         searchBtnBottom.setIcon(searchIco);
         searchBtnBottom.setFont(new Font("Tahoma", Font.BOLD, 10));
         searchBtnBottom.setBackground(new Color(154, 237, 196));
-        searchBtnBottom.setBounds(872 + bottomSearchCoefficientX, 460 + bottomSearchCoefficientY, 30, 22);
+        searchBtnBottom.setBounds(261, 561, 30, 22);
         //searchBtnBottom.addActionListener(e -> new Thread(Search::keywordsSearch).start());
         searchBtnBottom.addActionListener(e -> new Thread(() -> search.mainSearch("words")).start());
         getContentPane().add(searchBtnBottom);
@@ -542,7 +542,7 @@ public class Gui extends JFrame {
         stopBtnBottom = new JButton("");
         stopBtnBottom.setIcon(stopIco);
         stopBtnBottom.setBackground(new Color(255, 208, 202));
-        stopBtnBottom.setBounds(872 + bottomSearchCoefficientX, 460 + bottomSearchCoefficientY, 30, 22);
+        stopBtnBottom.setBounds(261, 561, 30, 22);
         stopBtnBottom.addActionListener(e -> {
             try {
                 Search.isSearchFinished.set(true);
@@ -569,7 +569,7 @@ public class Gui extends JFrame {
         autoUpdateNewsBottom.setFocusable(false);
         autoUpdateNewsBottom.setForeground(Color.WHITE);
         autoUpdateNewsBottom.setFont(new Font("Arial", Font.PLAIN, 11));
-        autoUpdateNewsBottom.setBounds(908 + bottomSearchCoefficientX, 460 + bottomSearchCoefficientY, 75, 20);
+        autoUpdateNewsBottom.setBounds(297, 561, 75, 20);
         getContentPane().add(autoUpdateNewsBottom);
         autoUpdateNewsBottom.addItemListener(e -> {
             if (autoUpdateNewsBottom.getState()) {
@@ -610,15 +610,15 @@ public class Gui extends JFrame {
 
         //Console - scroll
         JScrollPane consoleScroll = new JScrollPane(consoleTextArea, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-        consoleScroll.setBounds(320, 460, 300, 120);
+        consoleScroll.setBounds(880, 273, 290, 120);
         consoleScroll.setBorder(null);
         getContentPane().add(consoleScroll);
         //Console - label
         JLabel lblConsole = new JLabel();
-        lblConsole.setText("console");
+        lblConsole.setText("clear console");
         lblConsole.setForeground(new Color(255, 255, 153));
         lblConsole.setFont(new Font("Tahoma", Font.PLAIN, 11));
-        lblConsole.setBounds(321, 442, 83, 14);
+        lblConsole.setBounds(1087, 257, 64, 14);
         getContentPane().add(lblConsole);
 
         // Clear console
@@ -626,7 +626,7 @@ public class Gui extends JFrame {
         //clearConsoleBtn.setIcon(clearIco);
         clearConsoleBtn.setToolTipText("Clear the console");
         clearConsoleBtn.setBackground(new Color(0, 52, 96));
-        clearConsoleBtn.setBounds(606, 444, 14, 14);
+        clearConsoleBtn.setBounds(1156, 257, 14, 14);
         clearConsoleBtn.addActionListener(e -> consoleTextArea.setText(""));
         getContentPane().add(clearConsoleBtn);
 
@@ -644,7 +644,7 @@ public class Gui extends JFrame {
         progressBar.setBorderPainted(false);
         progressBar.setForeground(new Color(10, 255, 41));
         progressBar.setBackground(new Color(1, 1, 1));
-        progressBar.setBounds(365, 449, 239, 3);
+        progressBar.setBounds(10, 37, 860, 1);
         getContentPane().add(progressBar);
 
         // Интервалы для поиска новостей
@@ -727,12 +727,12 @@ public class Gui extends JFrame {
         lblSendToEmail.setText("send to");
         lblSendToEmail.setForeground(new Color(255, 255, 153));
         lblSendToEmail.setFont(new Font("Tahoma", Font.PLAIN, 11));
-        lblSendToEmail.setBounds(880, 236, 83, 14);
+        lblSendToEmail.setBounds(880, 400, 83, 14);
         getContentPane().add(lblSendToEmail);
 
         //send e-mail to
         sendEmailTo = new JTextField("enter your email");
-        sendEmailTo.setBounds(885, 256, 126, 21);
+        sendEmailTo.setBounds(885, 420, 126, 21);
         sendEmailTo.setFont(new Font("Serif", Font.PLAIN, 12));
         getContentPane().add(sendEmailTo);
 
@@ -744,7 +744,7 @@ public class Gui extends JFrame {
         sendEmailBtn.setContentAreaFilled(false);
         sendEmailBtn.setBorderPainted(false);
         sendEmailBtn.setBackground(new Color(255, 255, 153));
-        sendEmailBtn.setBounds(1010, 255, 32, 23);
+        sendEmailBtn.setBounds(1010, 419, 32, 23);
         sendEmailBtn.addActionListener(e -> {
             if (model.getRowCount() > 0 && sendEmailTo.getText().contains("@")) {
                 Common.console("status: sending e-mail");
@@ -780,7 +780,7 @@ public class Gui extends JFrame {
         autoSendMessage.setFocusable(false);
         autoSendMessage.setForeground(Color.WHITE);
         autoSendMessage.setFont(new Font("Arial", Font.PLAIN, 11));
-        autoSendMessage.setBounds(885, 280, 135, 20);
+        autoSendMessage.setBounds(885, 444, 135, 20);
         getContentPane().add(autoSendMessage);
 
         // Диалоговое окно со списком источников "sources"
@@ -790,7 +790,7 @@ public class Gui extends JFrame {
         smiBtn.setContentAreaFilled(true);
         smiBtn.setBorderPainted(false);
         smiBtn.setFocusable(false);
-        smiBtn.setBounds(884, buttonsY, 14, 14);
+        smiBtn.setBounds(884, 484, 14, 14);
         smiBtn.setBackground(new Color(221, 255, 221));
         getContentPane().add(smiBtn);
         smiBtn.addActionListener((e) -> new Dialogs("smiDlg"));
@@ -816,7 +816,7 @@ public class Gui extends JFrame {
         addNewSource.setContentAreaFilled(true);
         addNewSource.setBorderPainted(false);
         addNewSource.setBackground(new Color(243, 229, 255));
-        addNewSource.setBounds(903, buttonsY, 14, 14);
+        addNewSource.setBounds(903, 484, 14, 14);
         getContentPane().add(addNewSource);
         addNewSource.addActionListener(e -> sqlite.insertNewSource());
         addNewSource.addMouseListener(new MouseAdapter() {
@@ -841,7 +841,7 @@ public class Gui extends JFrame {
         logBtn.setBorderPainted(false);
         logBtn.setFocusable(false);
         logBtn.setBackground(new Color(248, 206, 165));
-        logBtn.setBounds(922, buttonsY, 14, 14);
+        logBtn.setBounds(922, 484, 14, 14);
         getContentPane().add(logBtn);
         logBtn.addActionListener(e -> new Dialogs("logDlg"));
         logBtn.addMouseListener(new MouseAdapter() {
@@ -866,7 +866,7 @@ public class Gui extends JFrame {
         sqliteBtn.setContentAreaFilled(true);
         sqliteBtn.setBorderPainted(false);
         sqliteBtn.setBackground(new Color(244, 181, 181));
-        sqliteBtn.setBounds(941, buttonsY, 14, 14);
+        sqliteBtn.setBounds(941, 484, 14, 14);
         getContentPane().add(sqliteBtn);
         sqliteBtn.addActionListener(e -> {
             // запуск SQLite
@@ -905,7 +905,7 @@ public class Gui extends JFrame {
         settingsDirectoryBtn.setContentAreaFilled(true);
         settingsDirectoryBtn.setBorderPainted(false);
         settingsDirectoryBtn.setBackground(new Color(219, 229, 252));
-        settingsDirectoryBtn.setBounds(960, buttonsY, 14, 14);
+        settingsDirectoryBtn.setBounds(960, 484, 14, 14);
         getContentPane().add(settingsDirectoryBtn);
         settingsDirectoryBtn.addActionListener(e -> {
             if (Desktop.isDesktopSupported() && Desktop.getDesktop().isSupported(Desktop.Action.OPEN)) {
@@ -937,19 +937,19 @@ public class Gui extends JFrame {
         lblLogSourceSqlite = new JLabel();
         lblLogSourceSqlite.setForeground(Color.WHITE);
         lblLogSourceSqlite.setFont(new Font("Arial", Font.PLAIN, 11));
-        lblLogSourceSqlite.setBounds(980, buttonsY, 60, 14);
+        lblLogSourceSqlite.setBounds(980, 484, 60, 14);
         getContentPane().add(lblLogSourceSqlite);
 
         // Border email
         Box verticalBox = Box.createVerticalBox();
         verticalBox.setBorder(new BevelBorder(BevelBorder.RAISED, null, null, null, null));
-        verticalBox.setBounds(880, 252, 161, 51);
+        verticalBox.setBounds(880, 416, 161, 51);
         getContentPane().add(verticalBox);
 
         // Border different bottoms
         Box queryTableBox = Box.createVerticalBox();
         queryTableBox.setBorder(new BevelBorder(BevelBorder.RAISED, null, null, null, null));
-        queryTableBox.setBounds(880, 314, 161, 26);
+        queryTableBox.setBounds(880, 478, 161, 26);
         getContentPane().add(queryTableBox);
 
         // latest news
@@ -958,7 +958,7 @@ public class Gui extends JFrame {
         filterNewsChbx.setFocusable(false);
         filterNewsChbx.setForeground(Color.WHITE);
         filterNewsChbx.setFont(new Font("Arial", Font.PLAIN, 11));
-        filterNewsChbx.setBounds(885, 353, 135, 20);
+        filterNewsChbx.setBounds(885, 517, 135, 20);
         getContentPane().add(filterNewsChbx);
         filterNewsChbx.addItemListener(e -> {
             isOnlyLastNews = filterNewsChbx.getState();
@@ -970,7 +970,7 @@ public class Gui extends JFrame {
         // border latest news
         Box latestNewsBorder = Box.createVerticalBox();
         latestNewsBorder.setBorder(new BevelBorder(BevelBorder.RAISED, null, null, null, null));
-        latestNewsBorder.setBounds(880, 350, 161, 26);
+        latestNewsBorder.setBounds(880, 514, 161, 26);
         getContentPane().add(latestNewsBorder);
 
         //My sign
