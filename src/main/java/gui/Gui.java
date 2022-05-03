@@ -258,7 +258,7 @@ public class Gui extends JFrame {
 
         //Table for analysis
         JScrollPane scrollForAnalysis = new JScrollPane();
-        scrollForAnalysis.setBounds(880, 40, 300, 195);
+        scrollForAnalysis.setBounds(880, 40, 290, 195);
         getContentPane().add(scrollForAnalysis);
 
         String[] columnsForAnalysis = {"Frequency", "", " "};
@@ -696,7 +696,7 @@ public class Gui extends JFrame {
         exclBtn.setContentAreaFilled(true);
         //exclBtn.setBorderPainted(false);
         exclBtn.setBackground(new Color(0, 52, 96));
-        exclBtn.setBounds(297, 443, 14, 14);
+        exclBtn.setBounds(1156, 236, 14, 14);
         getContentPane().add(exclBtn);
         exclBtn.addActionListener((e) -> new Dialogs("exclDlg"));
         exclBtn.addMouseListener(new MouseAdapter() {
@@ -718,7 +718,7 @@ public class Gui extends JFrame {
         excludedLabel.setForeground(new Color(255, 255, 153));
         excludedLabel.setFont(new Font("Tahoma", Font.PLAIN, 11));
         excludedLabel.setBackground(new Color(240, 255, 240));
-        excludedLabel.setBounds(231, 437, 130, 26);
+        excludedLabel.setBounds(1090, 236, 64, 14);
         getContentPane().add(excludedLabel);
 
         /* BOTTOM RIGHT AREA */

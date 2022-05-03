@@ -11,11 +11,7 @@ import java.util.logging.Level;
 public class SQLite {
     public static Connection connection;
     public static boolean isConnectionToSQLite;
-    public final int wordFreqMatches = 2;
-
-    public int getWordFreqMatches() {
-        return wordFreqMatches;
-    }
+    private static final int WORD_FREQ_MATCHES = 5;
 
     // Открытие соединения с базой данных
     public void openSQLiteConnection() {
@@ -36,7 +32,7 @@ public class SQLite {
         try {
             Statement st = connection.createStatement();
             String query = "select SUM, TITLE from v_news_dual where sum > " +
-                    wordFreqMatches +
+                    WORD_FREQ_MATCHES +
                     " and title not in (select word from all_titles_to_exclude)" +
                     " order by SUM desc";
             ResultSet rs = st.executeQuery(query);
