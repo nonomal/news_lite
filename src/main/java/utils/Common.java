@@ -375,32 +375,6 @@ public class Common {
         Files.move(temp, input, StandardCopyOption.REPLACE_EXISTING);
     }
 
-    // Search animation
-    public static void statusLabel(AtomicBoolean p_isSending, String p_text) {
-        Thread thr = new Thread(() -> {
-            for (smi_number = 0; smi_number < smi_link.size(); ) {
-                try {
-                    if (p_isSending.get()) return;
-                    Gui.searchAnimation.setText(p_text + "");
-                    Thread.sleep(500);
-                    if (p_isSending.get()) return;
-                    Gui.searchAnimation.setText(p_text + ".");
-                    Thread.sleep(500);
-                    if (p_isSending.get()) return;
-                    Gui.searchAnimation.setText(p_text + "..");
-                    Thread.sleep(500);
-                    if (p_isSending.get()) return;
-                    Gui.searchAnimation.setText(p_text + ".");
-                    Thread.sleep(500);
-                    if (p_isSending.get()) return;
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-            }
-        });
-        thr.start();
-    }
-
     //Console
     public static void console(String p_console) {
         try {

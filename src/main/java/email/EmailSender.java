@@ -38,7 +38,6 @@ public class EmailSender {
                 new Sender().send(subject, text.toString(), from, from_pwd, to);
                 Common.console("status: e-mail sent successfully");
                 Main.LOGGER.log(Level.INFO, "Email has been sent");
-                Gui.searchAnimation.setText("sent one");
                 Gui.sendEmailBtn.setIcon(Gui.send3);
                 Common.isSending.set(true);
                 Search.isSearchFinished.set(true);
@@ -46,7 +45,6 @@ public class EmailSender {
             } catch (Exception mex) {
                 mex.printStackTrace();
                 Common.console("status: e-mail wasn't send: " + mex.getMessage() + "\n" + mex.getCause());
-                Gui.searchAnimation.setText("not sent");
                 Common.isSending.set(true);
                 Search.isSearchFinished.set(true);
                 Gui.progressBar.setValue(100);

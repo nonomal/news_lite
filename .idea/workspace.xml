@@ -9,12 +9,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9e6d6f99-cebb-4fd8-99d4-ae1b59f22e89" name="Default Changelist" comment="feat: рефакторинг">
+    <list default="true" id="9e6d6f99-cebb-4fd8-99d4-ae1b59f22e89" name="Default Changelist" comment="feat: добавлена view, соединяющая все слова исключения">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/database/SQLite.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/database/SQLite.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/gui/Gui.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/gui/Gui.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/utils/ExportToExcel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/utils/ExportToExcel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/news.db" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/news.db" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/search/Search.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/search/Search.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -27,8 +25,8 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Class" />
         <option value="JUnit5 Test Class" />
+        <option value="Class" />
       </list>
     </option>
   </component>
@@ -166,13 +164,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1616704248449</updated>
-    </task>
-    <task id="LOCAL-00180" summary="доработка интерфейса">
-      <created>1641856715019</created>
-      <option name="number" value="00180" />
-      <option name="presentableId" value="LOCAL-00180" />
-      <option name="project" value="LOCAL" />
-      <updated>1641856715019</updated>
     </task>
     <task id="LOCAL-00181" summary="доработка интерфейса">
       <created>1641891549933</created>
@@ -510,7 +501,14 @@
       <option name="project" value="LOCAL" />
       <updated>1651571900083</updated>
     </task>
-    <option name="localTasksCounter" value="229" />
+    <task id="LOCAL-00229" summary="feat: добавлена view, соединяющая все слова исключения">
+      <created>1651578081043</created>
+      <option name="number" value="00229" />
+      <option name="presentableId" value="LOCAL-00229" />
+      <option name="project" value="LOCAL" />
+      <updated>1651578081043</updated>
+    </task>
+    <option name="localTasksCounter" value="230" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -528,7 +526,6 @@
     <ignored-roots>
       <path value="$PROJECT_DIR$" />
     </ignored-roots>
-    <MESSAGE value="пароль считывается из файла config.txt" />
     <MESSAGE value="пароль и почта, с которой отправляется результат, считывается из файла config.txt" />
     <MESSAGE value="code style" />
     <MESSAGE value="доработка отправки почты" />
@@ -553,7 +550,8 @@
     <MESSAGE value="feat: изменение интерфейса" />
     <MESSAGE value="feat: изменение порядка столбцов таблицы" />
     <MESSAGE value="feat: рефакторинг" />
-    <option name="LAST_COMMIT_MESSAGE" value="feat: рефакторинг" />
+    <MESSAGE value="feat: добавлена view, соединяющая все слова исключения" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat: добавлена view, соединяющая все слова исключения" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -570,8 +568,13 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/gui/Gui.java</url>
-          <line>682</line>
-          <option name="timeStamp" value="12" />
+          <line>749</line>
+          <option name="timeStamp" value="16" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/search/Search.java</url>
+          <line>273</line>
+          <option name="timeStamp" value="17" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

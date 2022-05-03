@@ -60,7 +60,6 @@ public class Search {
             sqlite.selectSources("smi");
             isSearchNow.set(true);
             timeStart = LocalTime.now();
-            Gui.labelInfo.setText("");
             Search.j = 1;
             if (!Gui.guiInTray.get()) Gui.model.setRowCount(0);
             if (!Gui.wasClickInTableForAnalysis.get()) Gui.modelForAnalysis.setRowCount(0);
@@ -78,7 +77,6 @@ public class Search {
             }
 
             isSearchFinished = new AtomicBoolean(false);
-            Common.statusLabel(isSearchFinished, "Searching");
             Gui.sendEmailBtn.setIcon(Gui.send);
             new Thread(Common::fill).start();
             try {
@@ -269,7 +267,10 @@ public class Search {
                             }
                             if (!Gui.isOnlyLastNews && SQLite.isConnectionToSQLite) sqlite.deleteFrom256();
                         } catch (Exception no_rss) {
-                            Gui.labelInfo.setText("RssList: " + (char) 34 + Common.smi_link.get(Common.smi_number) + (char) 34 + " is not available");
+                            String smi = Common.smi_link.get(Common.smi_number)
+                                    .replaceAll(("https://|http://|www."), "");
+                            smi = smi.substring(0, smi.indexOf("/"));
+                            Common.console("rss is not available: " + smi);
                         }
                     } catch (Exception e) {
                         Common.console("status: to many news.. please restart the application!");
@@ -288,7 +289,6 @@ public class Search {
                 Gui.progressBar.setValue(100);
                 Gui.table.setAutoCreateRowSorter(true);
                 Gui.tableForAnalysis.setAutoCreateRowSorter(true);
-                Gui.searchAnimation.setText("total news: ");
 
                 // итоги в трей
                 if (newsCount != 0 && newsCount != modelRowCount && Gui.guiInTray.get())
