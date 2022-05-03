@@ -9,8 +9,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9e6d6f99-cebb-4fd8-99d4-ae1b59f22e89" name="Default Changelist" comment="feat: изменение интерфейса">
+    <list default="true" id="9e6d6f99-cebb-4fd8-99d4-ae1b59f22e89" name="Default Changelist" comment="feat: изменение порядка столбцов таблицы">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/gui/Gui.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/gui/Gui.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -162,13 +163,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1616704248449</updated>
-    </task>
-    <task id="LOCAL-00176" summary="доработка считывания настроек">
-      <created>1641557379723</created>
-      <option name="number" value="00176" />
-      <option name="presentableId" value="LOCAL-00176" />
-      <option name="project" value="LOCAL" />
-      <updated>1641557379723</updated>
     </task>
     <task id="LOCAL-00177" summary="доработка считывания настроек">
       <created>1641557507924</created>
@@ -506,7 +500,14 @@
       <option name="project" value="LOCAL" />
       <updated>1651498272402</updated>
     </task>
-    <option name="localTasksCounter" value="225" />
+    <task id="LOCAL-00225" summary="feat: изменение порядка столбцов таблицы">
+      <created>1651559289117</created>
+      <option name="number" value="00225" />
+      <option name="presentableId" value="LOCAL-00225" />
+      <option name="project" value="LOCAL" />
+      <updated>1651559289117</updated>
+    </task>
+    <option name="localTasksCounter" value="226" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -524,7 +525,6 @@
     <ignored-roots>
       <path value="$PROJECT_DIR$" />
     </ignored-roots>
-    <MESSAGE value="цвет шрифта теперь можно менять и он сохранится в config.txt" />
     <MESSAGE value="пароль считывается из файла config.txt" />
     <MESSAGE value="пароль и почта, с которой отправляется результат, считывается из файла config.txt" />
     <MESSAGE value="code style" />
@@ -549,7 +549,8 @@
     <MESSAGE value="feat: шире интерфейс 1.3" />
     <MESSAGE value="feat: шире интерфейс 1.4" />
     <MESSAGE value="feat: изменение интерфейса" />
-    <option name="LAST_COMMIT_MESSAGE" value="feat: изменение интерфейса" />
+    <MESSAGE value="feat: изменение порядка столбцов таблицы" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat: изменение порядка столбцов таблицы" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -566,8 +567,13 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/gui/Gui.java</url>
-          <line>681</line>
+          <line>682</line>
           <option name="timeStamp" value="12" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/gui/Gui.java</url>
+          <line>104</line>
+          <option name="timeStamp" value="13" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

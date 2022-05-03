@@ -101,6 +101,7 @@ public class Gui extends JFrame {
             // закрытие окна
             @Override
             public void windowClosing(WindowEvent e) {
+                Search.isSearchFinished.set(true);
                 SQLite.isConnectionToSQLite = false;
                 Main.LOGGER.log(Level.INFO, "Application closed");
                 Common.saveState();
@@ -173,12 +174,12 @@ public class Gui extends JFrame {
         Object[] columns = {"Num", "Source", "Title (double click to open the link)", "Date", "Link"};
         model = new DefaultTableModel(new Object[][]{
         }, columns) {
-            final boolean[] columnEditables = new boolean[]{
+            final boolean[] columnEditable = new boolean[]{
                     false, false, false, false, false
             };
 
             public boolean isCellEditable(int row, int column) {
-                return columnEditables[column];
+                return columnEditable[column];
             }
 
             // Сортировка
@@ -214,7 +215,7 @@ public class Gui extends JFrame {
         Renderer.setHorizontalAlignment(JLabel.CENTER);
 
         table.getColumnModel().getColumn(0).setCellRenderer(Renderer);
-        table.setRowHeight(27);
+        table.setRowHeight(28);
         table.setColumnSelectionAllowed(true);
         table.setCellSelectionEnabled(true);
         table.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
@@ -624,7 +625,7 @@ public class Gui extends JFrame {
         consoleTextArea.setBounds(320, 460, 300, 120);
         consoleTextArea.setFont(new Font("Tahoma", Font.PLAIN, 11));
         consoleTextArea.setForeground(SystemColor.white);
-        consoleTextArea.setBackground(new Color(49, 42, 82)); // 83, 82, 82
+        consoleTextArea.setBackground(new Color(83, 82, 82)); // 83, 82, 82
         getContentPane().add(consoleTextArea);
 
         //Console - scroll
