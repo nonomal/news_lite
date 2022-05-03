@@ -8,17 +8,21 @@ import javax.mail.internet.MimeMessage;
 import java.util.Properties;
 
 public class Sender {
-    private final Properties p = new Properties();
+    private final Properties properties;
+
+    public Sender() {
+        properties = new Properties();
+    }
 
     public void send(String subject, String text, String fromEmail, String pwd, String toEmail) throws MessagingException {
         String host = Common.getSmtp();
-        p.put("mail.store.protocol", "imaps");
-        p.put("mail.smtp.auth", "true");
-        p.put("mail.smtp.starttls.enable", "true");
-        p.put("mail.smtp.host", host);
-        p.put("mail.smtp.port", "587");
+        properties.put("mail.store.protocol", "imaps");
+        properties.put("mail.smtp.auth", "true");
+        properties.put("mail.smtp.starttls.enable", "true");
+        properties.put("mail.smtp.host", host);
+        properties.put("mail.smtp.port", "587");
 
-        Session session = Session.getDefaultInstance(p, new Authenticator() {
+        Session session = Session.getDefaultInstance(properties, new Authenticator() {
             protected PasswordAuthentication getPasswordAuthentication() {
                 return new PasswordAuthentication(fromEmail, pwd);
             }

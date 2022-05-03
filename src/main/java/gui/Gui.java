@@ -722,8 +722,8 @@ public class Gui extends JFrame {
         exclBtn = new JButton();
         exclBtn.setFocusable(false);
         exclBtn.setContentAreaFilled(true);
-        exclBtn.setBorderPainted(false);
-        exclBtn.setBackground(new Color(30, 27, 27));
+        //exclBtn.setBorderPainted(false);
+        exclBtn.setBackground(new Color(0, 52, 96));
         exclBtn.setBounds(297, 443, 14, 14);
         getContentPane().add(exclBtn);
         exclBtn.addActionListener((e) -> new Dialogs("exclDlg"));
@@ -737,7 +737,7 @@ public class Gui extends JFrame {
             @Override
             // убрали мышку с кнопки
             public void mouseExited(MouseEvent e) {
-                exclBtn.setBackground(new Color(30, 27, 27));
+                exclBtn.setBackground(new Color(0, 52, 96));
             }
         });
         //label

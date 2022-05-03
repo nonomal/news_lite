@@ -9,7 +9,14 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9e6d6f99-cebb-4fd8-99d4-ae1b59f22e89" name="Default Changelist" comment="feat: изменение порядка столбцов таблицы" />
+    <list default="true" id="9e6d6f99-cebb-4fd8-99d4-ae1b59f22e89" name="Default Changelist" comment="feat: рефакторинг">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/email/EmailSender.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/email/EmailSender.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/email/Sender.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/email/Sender.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/gui/Gui.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/gui/Gui.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/search/SyndParser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/search/SyndParser.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/utils/Common.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/utils/Common.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -160,13 +167,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1616704248449</updated>
-    </task>
-    <task id="LOCAL-00178" summary="доработка считывания настроек">
-      <created>1641557553918</created>
-      <option name="number" value="00178" />
-      <option name="presentableId" value="LOCAL-00178" />
-      <option name="project" value="LOCAL" />
-      <updated>1641557553918</updated>
     </task>
     <task id="LOCAL-00179" summary="доработка интерфейса">
       <created>1641849700494</created>
@@ -504,7 +504,14 @@
       <option name="project" value="LOCAL" />
       <updated>1651559724929</updated>
     </task>
-    <option name="localTasksCounter" value="227" />
+    <task id="LOCAL-00227" summary="feat: рефакторинг">
+      <created>1651570414074</created>
+      <option name="number" value="00227" />
+      <option name="presentableId" value="LOCAL-00227" />
+      <option name="project" value="LOCAL" />
+      <updated>1651570414075</updated>
+    </task>
+    <option name="localTasksCounter" value="228" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -534,7 +541,6 @@
     <MESSAGE value="fix: refactor" />
     <MESSAGE value="feat: дополнен readme" />
     <MESSAGE value="feat: рефактор" />
-    <MESSAGE value="feat: рефакторинг" />
     <MESSAGE value="feat: отображение долгого времени поиска в консоли" />
     <MESSAGE value="info: оптимизация работы с БД" />
     <MESSAGE value="info: время поиска" />
@@ -547,7 +553,8 @@
     <MESSAGE value="feat: шире интерфейс 1.4" />
     <MESSAGE value="feat: изменение интерфейса" />
     <MESSAGE value="feat: изменение порядка столбцов таблицы" />
-    <option name="LAST_COMMIT_MESSAGE" value="feat: изменение порядка столбцов таблицы" />
+    <MESSAGE value="feat: рефакторинг" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat: рефакторинг" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

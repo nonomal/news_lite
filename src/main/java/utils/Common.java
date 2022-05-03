@@ -417,7 +417,7 @@ public class Common {
         int counter = 0;
         while (!Search.isSearchFinished.get() || !isSending.get()) {
             if (!isSending.get()) Gui.progressBar.setForeground(new Color(255, 115, 0));
-            else if (!Search.isSearchFinished.get()) Gui.progressBar.setForeground(new Color(10, 255, 41));
+            else Gui.progressBar.setForeground(new Color(10, 255, 41));
             if (counter == 99) {
                 counter = 0;
             }
