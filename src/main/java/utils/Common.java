@@ -112,6 +112,9 @@ public class Common {
                         case "filterNewsChbx":
                             text = "checkbox:" + p_word + "=" + Gui.filterNewsChbx.getState() + "\n";
                             break;
+                        case "autoSendChbx":
+                            text = "checkbox:" + p_word + "=" + Gui.autoSendMessage.getState() + "\n";
+                            break;
                     }
                     if (text != null) writer.write(text);
                     writer.flush();
@@ -192,6 +195,9 @@ public class Common {
                         case "checkbox:filterNewsChbx":
                             Gui.filterNewsChbx.setState(Boolean.parseBoolean(f[1]));
                             break;
+                        case "checkbox:autoSendChbx":
+                            Gui.autoSendMessage.setState(Boolean.parseBoolean(f[1]));
+                            break;
                     }
                 }
             }
@@ -261,6 +267,7 @@ public class Common {
         Common.writeToConfig("checkTitle", "checkbox");
         Common.writeToConfig("checkLink", "checkbox");
         Common.writeToConfig("filterNewsChbx", "checkbox");
+        Common.writeToConfig("autoSendChbx", "checkbox");
     }
 
     // определение SMTP исходящей почты

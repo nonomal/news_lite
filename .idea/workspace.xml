@@ -9,10 +9,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9e6d6f99-cebb-4fd8-99d4-ae1b59f22e89" name="Default Changelist" comment="feat: изменён интерфейс">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/gui/Gui.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/gui/Gui.java" afterDir="false" />
-    </list>
+    <list default="true" id="9e6d6f99-cebb-4fd8-99d4-ae1b59f22e89" name="Default Changelist" comment="feat: изменён интерфейс" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -163,20 +160,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1616704248449</updated>
-    </task>
-    <task id="LOCAL-00187" summary="доработка интерфейса">
-      <created>1643803461351</created>
-      <option name="number" value="00187" />
-      <option name="presentableId" value="LOCAL-00187" />
-      <option name="project" value="LOCAL" />
-      <updated>1643803461351</updated>
-    </task>
-    <task id="LOCAL-00188" summary="доработка интерфейса">
-      <created>1643809796893</created>
-      <option name="number" value="00188" />
-      <option name="presentableId" value="LOCAL-00188" />
-      <option name="project" value="LOCAL" />
-      <updated>1643809796893</updated>
     </task>
     <task id="LOCAL-00189" summary="доработка интерфейса">
       <created>1643809847686</created>
@@ -507,7 +490,21 @@
       <option name="project" value="LOCAL" />
       <updated>1651591565063</updated>
     </task>
-    <option name="localTasksCounter" value="236" />
+    <task id="LOCAL-00236" summary="feat: изменён интерфейс">
+      <created>1651755423762</created>
+      <option name="number" value="00236" />
+      <option name="presentableId" value="LOCAL-00236" />
+      <option name="project" value="LOCAL" />
+      <updated>1651755423763</updated>
+    </task>
+    <task id="LOCAL-00237" summary="feat: изменён интерфейс">
+      <created>1651755444655</created>
+      <option name="number" value="00237" />
+      <option name="presentableId" value="LOCAL-00237" />
+      <option name="project" value="LOCAL" />
+      <updated>1651755444655</updated>
+    </task>
+    <option name="localTasksCounter" value="238" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
