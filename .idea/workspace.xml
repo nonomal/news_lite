@@ -9,7 +9,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9e6d6f99-cebb-4fd8-99d4-ae1b59f22e89" name="Default Changelist" comment="feat: изменён интерфейс" />
+    <list default="true" id="9e6d6f99-cebb-4fd8-99d4-ae1b59f22e89" name="Default Changelist" comment="feat: доработан интерфейс" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -160,20 +160,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1616704248449</updated>
-    </task>
-    <task id="LOCAL-00189" summary="доработка интерфейса">
-      <created>1643809847686</created>
-      <option name="number" value="00189" />
-      <option name="presentableId" value="LOCAL-00189" />
-      <option name="project" value="LOCAL" />
-      <updated>1643809847686</updated>
-    </task>
-    <task id="LOCAL-00190" summary="доработка интерфейса">
-      <created>1643812744193</created>
-      <option name="number" value="00190" />
-      <option name="presentableId" value="LOCAL-00190" />
-      <option name="project" value="LOCAL" />
-      <updated>1643812744193</updated>
     </task>
     <task id="LOCAL-00191" summary="доработка интерфейса">
       <created>1643812781982</created>
@@ -504,7 +490,21 @@
       <option name="project" value="LOCAL" />
       <updated>1651755444655</updated>
     </task>
-    <option name="localTasksCounter" value="238" />
+    <task id="LOCAL-00238" summary="feat: доработан интерфейс">
+      <created>1651755831904</created>
+      <option name="number" value="00238" />
+      <option name="presentableId" value="LOCAL-00238" />
+      <option name="project" value="LOCAL" />
+      <updated>1651755831904</updated>
+    </task>
+    <task id="LOCAL-00239" summary="feat: доработан интерфейс">
+      <created>1651755859375</created>
+      <option name="number" value="00239" />
+      <option name="presentableId" value="LOCAL-00239" />
+      <option name="project" value="LOCAL" />
+      <updated>1651755859375</updated>
+    </task>
+    <option name="localTasksCounter" value="240" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -522,7 +522,6 @@
     <ignored-roots>
       <path value="$PROJECT_DIR$" />
     </ignored-roots>
-    <MESSAGE value="code style" />
     <MESSAGE value="доработка отправки почты" />
     <MESSAGE value="доработка считывания настроек" />
     <MESSAGE value="доработка интерфейса" />
@@ -547,7 +546,8 @@
     <MESSAGE value="feat: рефакторинг" />
     <MESSAGE value="feat: добавлена view, соединяющая все слова исключения" />
     <MESSAGE value="feat: изменён интерфейс" />
-    <option name="LAST_COMMIT_MESSAGE" value="feat: изменён интерфейс" />
+    <MESSAGE value="feat: доработан интерфейс" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat: доработан интерфейс" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
