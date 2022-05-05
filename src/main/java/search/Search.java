@@ -285,6 +285,8 @@ public class Search {
                         searchTime.getSeconds() + " s.");
                 isSearchNow.set(false);
 
+                Gui.labelSum.setText("total: " + newsCount);
+
                 isSearchFinished.set(true);
                 Gui.progressBar.setValue(100);
                 Gui.table.setAutoCreateRowSorter(true);
@@ -444,7 +446,6 @@ public class Search {
                 }
                 sqlite.deleteDuplicates();
                 Gui.wasClickInTableForAnalysis.set(false);
-
             } catch (Exception e) {
                 e.printStackTrace();
                 try {

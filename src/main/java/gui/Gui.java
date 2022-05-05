@@ -64,7 +64,6 @@ public class Gui extends JFrame {
     public static JLabel labelSign;
     public static JLabel labelSum;
     public static JLabel labelInfo;
-    public static JLabel timeLbl;
     public static JLabel lblLogSourceSqlite;
     public static JButton searchBtnTop;
     public static JButton searchBtnBottom;
@@ -261,7 +260,7 @@ public class Gui extends JFrame {
         scrollForAnalysis.setBounds(880, 40, 290, 236);
         getContentPane().add(scrollForAnalysis);
 
-        String[] columnsForAnalysis = {"", "freq.", " "};
+        String[] columnsForAnalysis = {"top 10", "freq.", " "};
         modelForAnalysis = new DefaultTableModel(new Object[][]{}, columnsForAnalysis) {
             final boolean[] column_for_analysis = new boolean[]{false, false, true};
             public boolean isCellEditable(int row, int column) {
@@ -359,7 +358,7 @@ public class Gui extends JFrame {
 
         //Amount of news
         labelSum = new JLabel();
-        labelSum.setBounds(880, 278, 30, 13);
+        labelSum.setBounds(880, 278, 120, 13);
         labelSum.setFont(new Font("Tahoma", Font.PLAIN, 11));
         labelSum.setForeground(new Color(255, 255, 153));
         labelSum.setBackground(new Color(240, 255, 240));
@@ -627,13 +626,6 @@ public class Gui extends JFrame {
         clearConsoleBtn.setBounds(1155, 448, 14, 14);
         clearConsoleBtn.addActionListener(e -> consoleTextArea.setText(""));
         getContentPane().add(clearConsoleBtn);
-
-        //Time label
-        timeLbl = new JLabel();
-        timeLbl.setForeground(new Color(255, 255, 153));
-        timeLbl.setFont(new Font("Tahoma", Font.PLAIN, 11));
-        timeLbl.setBounds(207, 580, 160, 20);
-        getContentPane().add(timeLbl);
 
         // Шкала прогресса
         progressBar = new JProgressBar();
