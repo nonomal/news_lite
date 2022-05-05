@@ -258,7 +258,7 @@ public class Gui extends JFrame {
 
         //Table for analysis
         JScrollPane scrollForAnalysis = new JScrollPane();
-        scrollForAnalysis.setBounds(880, 40, 290, 195);
+        scrollForAnalysis.setBounds(880, 40, 290, 236);
         getContentPane().add(scrollForAnalysis);
 
         String[] columnsForAnalysis = {"", "freq.", " "};
@@ -359,7 +359,7 @@ public class Gui extends JFrame {
 
         //Amount of news
         labelSum = new JLabel();
-        labelSum.setBounds(232, 14, 30, 13);
+        labelSum.setBounds(880, 278, 30, 13);
         labelSum.setFont(new Font("Tahoma", Font.PLAIN, 11));
         labelSum.setForeground(new Color(255, 255, 153));
         labelSum.setBackground(new Color(240, 255, 240));
@@ -600,7 +600,7 @@ public class Gui extends JFrame {
         consoleTextArea.setAutoscrolls(true);
         consoleTextArea.setLineWrap(true);
         consoleTextArea.setEditable(false);
-        consoleTextArea.setBounds(320, 460, 300, 120);
+        consoleTextArea.setBounds(20, 11, 145, 51);
         consoleTextArea.setFont(new Font("Tahoma", Font.PLAIN, 11));
         consoleTextArea.setForeground(SystemColor.white);
         consoleTextArea.setBackground(new Color(83, 82, 82)); // 83, 82, 82
@@ -608,7 +608,7 @@ public class Gui extends JFrame {
 
         //Console - scroll
         JScrollPane consoleScroll = new JScrollPane(consoleTextArea, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-        consoleScroll.setBounds(880, 260, 290, 120);
+        consoleScroll.setBounds(879, 303, 290, 142);
         consoleScroll.setBorder(null);
         getContentPane().add(consoleScroll);
         //Console - label
@@ -616,7 +616,7 @@ public class Gui extends JFrame {
         lblConsole.setText("clear console");
         lblConsole.setForeground(new Color(255, 255, 153));
         lblConsole.setFont(new Font("Tahoma", Font.PLAIN, 11));
-        lblConsole.setBounds(1090, 382, 64, 14);
+        lblConsole.setBounds(1089, 448, 64, 14);
         getContentPane().add(lblConsole);
 
         // Clear console
@@ -624,7 +624,7 @@ public class Gui extends JFrame {
         //clearConsoleBtn.setIcon(clearIco);
         clearConsoleBtn.setToolTipText("Clear the console");
         clearConsoleBtn.setBackground(new Color(0, 52, 96));
-        clearConsoleBtn.setBounds(1156, 382, 14, 14);
+        clearConsoleBtn.setBounds(1155, 448, 14, 14);
         clearConsoleBtn.addActionListener(e -> consoleTextArea.setText(""));
         getContentPane().add(clearConsoleBtn);
 
@@ -648,7 +648,7 @@ public class Gui extends JFrame {
         // Интервалы для поиска новостей
         newsIntervalCbox = new JComboBox<>();
         newsIntervalCbox.setFont(new Font("Arial", Font.PLAIN, 11));
-        newsIntervalCbox.setBounds(428, 10, 75, 20);
+        newsIntervalCbox.setBounds(516, 10, 75, 20);
         getContentPane().add(newsIntervalCbox);
         // запись интервалов в комбобокс
         Common.addIntervalsToComboBox(newsIntervalCbox);
@@ -659,7 +659,7 @@ public class Gui extends JFrame {
         todayOrNotCbx.setFocusable(false);
         todayOrNotCbx.setForeground(Color.WHITE);
         todayOrNotCbx.setFont(new Font("Arial", Font.PLAIN, 11));
-        todayOrNotCbx.setBounds(360, 10, 64, 20);
+        todayOrNotCbx.setBounds(449, 10, 64, 20);
         todayOrNotCbx.addItemListener(e -> newsIntervalCbox.setVisible(todayOrNotCbx.getState()));
         getContentPane().add(todayOrNotCbx);
 
@@ -669,7 +669,7 @@ public class Gui extends JFrame {
         autoUpdateNewsTop.setFocusable(false);
         autoUpdateNewsTop.setForeground(Color.WHITE);
         autoUpdateNewsTop.setFont(new Font("Arial", Font.PLAIN, 11));
-        autoUpdateNewsTop.setBounds(268, 10, 75, 20);
+        autoUpdateNewsTop.setBounds(297, 10, 75, 20);
         getContentPane().add(autoUpdateNewsTop);
         autoUpdateNewsTop.addItemListener(e -> {
             if (autoUpdateNewsTop.getState()) {
@@ -694,7 +694,7 @@ public class Gui extends JFrame {
         exclBtn.setContentAreaFilled(true);
         //exclBtn.setBorderPainted(false);
         exclBtn.setBackground(new Color(0, 52, 96));
-        exclBtn.setBounds(1157, 236, 14, 14);
+        exclBtn.setBounds(1157, 278, 14, 14);
         getContentPane().add(exclBtn);
         exclBtn.addActionListener((e) -> new Dialogs("exclDlg"));
         exclBtn.addMouseListener(new MouseAdapter() {
@@ -716,7 +716,7 @@ public class Gui extends JFrame {
         excludedLabel.setForeground(new Color(255, 255, 153));
         excludedLabel.setFont(new Font("Tahoma", Font.PLAIN, 11));
         excludedLabel.setBackground(new Color(240, 255, 240));
-        excludedLabel.setBounds(1092, 236, 64, 14);
+        excludedLabel.setBounds(1092, 278, 64, 14);
         getContentPane().add(excludedLabel);
 
         /* BOTTOM RIGHT AREA */
@@ -725,12 +725,12 @@ public class Gui extends JFrame {
         lblSendToEmail.setText("send to");
         lblSendToEmail.setForeground(new Color(255, 255, 153));
         lblSendToEmail.setFont(new Font("Tahoma", Font.PLAIN, 11));
-        lblSendToEmail.setBounds(880, 400, 83, 14);
+        lblSendToEmail.setBounds(880, 504, 36, 14);
         getContentPane().add(lblSendToEmail);
 
         //send e-mail to
         sendEmailTo = new JTextField("enter your email");
-        sendEmailTo.setBounds(885, 420, 126, 21);
+        sendEmailTo.setBounds(880, 519, 142, 21);
         sendEmailTo.setFont(new Font("Serif", Font.PLAIN, 12));
         getContentPane().add(sendEmailTo);
 
@@ -742,7 +742,7 @@ public class Gui extends JFrame {
         sendEmailBtn.setContentAreaFilled(false);
         sendEmailBtn.setBorderPainted(false);
         sendEmailBtn.setBackground(new Color(255, 255, 153));
-        sendEmailBtn.setBounds(1010, 419, 32, 23);
+        sendEmailBtn.setBounds(1020, 518, 32, 23);
         sendEmailBtn.addActionListener(e -> {
             if (model.getRowCount() > 0 && sendEmailTo.getText().contains("@")) {
                 Common.console("status: sending e-mail");
@@ -773,12 +773,12 @@ public class Gui extends JFrame {
         getContentPane().add(sendEmailBtn);
 
         // Автоматическая отправка письма с результатами
-        autoSendMessage = new Checkbox("auto send results");
+        autoSendMessage = new Checkbox("auto send");
         autoSendMessage.setState(false);
         autoSendMessage.setFocusable(false);
         autoSendMessage.setForeground(Color.WHITE);
         autoSendMessage.setFont(new Font("Arial", Font.PLAIN, 11));
-        autoSendMessage.setBounds(885, 444, 135, 20);
+        autoSendMessage.setBounds(378, 10, 66, 20);
         getContentPane().add(autoSendMessage);
 
         // Диалоговое окно со списком источников "sources"
@@ -787,7 +787,7 @@ public class Gui extends JFrame {
         smiBtn.setContentAreaFilled(true);
         smiBtn.setBorderPainted(false);
         smiBtn.setFocusable(false);
-        smiBtn.setBounds(884, 484, 14, 14);
+        smiBtn.setBounds(883, 479, 14, 14);
         smiBtn.setBackground(new Color(221, 255, 221));
         getContentPane().add(smiBtn);
         smiBtn.addActionListener((e) -> new Dialogs("smiDlg"));
@@ -813,7 +813,7 @@ public class Gui extends JFrame {
         addNewSource.setContentAreaFilled(true);
         addNewSource.setBorderPainted(false);
         addNewSource.setBackground(new Color(243, 229, 255));
-        addNewSource.setBounds(903, 484, 14, 14);
+        addNewSource.setBounds(902, 479, 14, 14);
         getContentPane().add(addNewSource);
         addNewSource.addActionListener(e -> sqlite.insertNewSource());
         addNewSource.addMouseListener(new MouseAdapter() {
@@ -838,7 +838,7 @@ public class Gui extends JFrame {
         logBtn.setBorderPainted(false);
         logBtn.setFocusable(false);
         logBtn.setBackground(new Color(248, 206, 165));
-        logBtn.setBounds(922, 484, 14, 14);
+        logBtn.setBounds(921, 479, 14, 14);
         getContentPane().add(logBtn);
         logBtn.addActionListener(e -> new Dialogs("logDlg"));
         logBtn.addMouseListener(new MouseAdapter() {
@@ -863,7 +863,7 @@ public class Gui extends JFrame {
         sqliteBtn.setContentAreaFilled(true);
         sqliteBtn.setBorderPainted(false);
         sqliteBtn.setBackground(new Color(244, 181, 181));
-        sqliteBtn.setBounds(941, 484, 14, 14);
+        sqliteBtn.setBounds(940, 479, 14, 14);
         getContentPane().add(sqliteBtn);
         sqliteBtn.addActionListener(e -> {
             // запуск SQLite
@@ -902,7 +902,7 @@ public class Gui extends JFrame {
         settingsDirectoryBtn.setContentAreaFilled(true);
         settingsDirectoryBtn.setBorderPainted(false);
         settingsDirectoryBtn.setBackground(new Color(219, 229, 252));
-        settingsDirectoryBtn.setBounds(960, 484, 14, 14);
+        settingsDirectoryBtn.setBounds(959, 479, 14, 14);
         getContentPane().add(settingsDirectoryBtn);
         settingsDirectoryBtn.addActionListener(e -> {
             if (Desktop.isDesktopSupported() && Desktop.getDesktop().isSupported(Desktop.Action.OPEN)) {
@@ -934,28 +934,22 @@ public class Gui extends JFrame {
         lblLogSourceSqlite = new JLabel();
         lblLogSourceSqlite.setForeground(Color.WHITE);
         lblLogSourceSqlite.setFont(new Font("Arial", Font.PLAIN, 11));
-        lblLogSourceSqlite.setBounds(980, 484, 60, 14);
+        lblLogSourceSqlite.setBounds(979, 479, 60, 14);
         getContentPane().add(lblLogSourceSqlite);
-
-        // Border email
-        Box verticalBox = Box.createVerticalBox();
-        verticalBox.setBorder(new BevelBorder(BevelBorder.RAISED, null, null, null, null));
-        verticalBox.setBounds(880, 416, 164, 51);
-        getContentPane().add(verticalBox);
 
         // Border different bottoms
         Box queryTableBox = Box.createVerticalBox();
         queryTableBox.setBorder(new BevelBorder(BevelBorder.RAISED, null, null, null, null));
-        queryTableBox.setBounds(880, 478, 164, 26);
+        queryTableBox.setBounds(879, 473, 290, 26);
         getContentPane().add(queryTableBox);
 
         // latest news
-        filterNewsChbx = new Checkbox("only the latest news");
+        filterNewsChbx = new Checkbox("only new");
         filterNewsChbx.setState(false);
         filterNewsChbx.setFocusable(false);
         filterNewsChbx.setForeground(Color.WHITE);
         filterNewsChbx.setFont(new Font("Arial", Font.PLAIN, 11));
-        filterNewsChbx.setBounds(885, 517, 135, 20);
+        filterNewsChbx.setBounds(230, 10, 65, 20);
         getContentPane().add(filterNewsChbx);
         filterNewsChbx.addItemListener(e -> {
             isOnlyLastNews = filterNewsChbx.getState();
@@ -963,12 +957,6 @@ public class Gui extends JFrame {
                 sqlite.deleteFrom256();
             }
         });
-
-        // border latest news
-        Box latestNewsBorder = Box.createVerticalBox();
-        latestNewsBorder.setBorder(new BevelBorder(BevelBorder.RAISED, null, null, null, null));
-        latestNewsBorder.setBounds(880, 514, 164, 26);
-        getContentPane().add(latestNewsBorder);
 
         //My sign
         labelSign = new JLabel("mrPro");

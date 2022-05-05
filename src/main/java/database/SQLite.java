@@ -11,7 +11,7 @@ import java.util.logging.Level;
 public class SQLite {
     public static Connection connection;
     public static boolean isConnectionToSQLite;
-    private static final int WORD_FREQ_MATCHES = 5;
+    private static final int WORD_FREQ_MATCHES = 2;
 
     // Открытие соединения с базой данных
     public void openSQLiteConnection() {
