@@ -315,8 +315,8 @@ public class Gui extends JFrame {
                 if (e.getClickCount() == 2) {
                     int row = tableForAnalysis.convertRowIndexToModel(tableForAnalysis.rowAtPoint(new Point(e.getX(), e.getY())));
                     int col = tableForAnalysis.columnAtPoint(new Point(e.getX(), e.getY()));
-                    if (col == 1) {
-                        Gui.topKeyword.setText((String) tableForAnalysis.getModel().getValueAt(row, 1));
+                    if (col == 0) {
+                        Gui.topKeyword.setText((String) tableForAnalysis.getModel().getValueAt(row, 0));
                         searchBtnTop.doClick();
                         wasClickInTableForAnalysis.set(true);
                     }
