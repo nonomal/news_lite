@@ -9,11 +9,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9e6d6f99-cebb-4fd8-99d4-ae1b59f22e89" name="Default Changelist" comment="feat: доработан интерфейс">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/gui/Gui.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/gui/Gui.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/search/Search.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/search/Search.java" afterDir="false" />
-    </list>
+    <list default="true" id="9e6d6f99-cebb-4fd8-99d4-ae1b59f22e89" name="Default Changelist" comment="feat: доработка интерфейса" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -166,27 +162,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1616704248449</updated>
-    </task>
-    <task id="LOCAL-00192" summary="добавлен фильтр ненужных новостей">
-      <created>1644337898736</created>
-      <option name="number" value="00192" />
-      <option name="presentableId" value="LOCAL-00192" />
-      <option name="project" value="LOCAL" />
-      <updated>1644337898736</updated>
-    </task>
-    <task id="LOCAL-00193" summary="добавлен фильтр ненужных новостей">
-      <created>1644348676766</created>
-      <option name="number" value="00193" />
-      <option name="presentableId" value="LOCAL-00193" />
-      <option name="project" value="LOCAL" />
-      <updated>1644348676766</updated>
-    </task>
-    <task id="LOCAL-00194" summary="feat: добавлен фильтр новостей на основной поиск">
-      <created>1644489873621</created>
-      <option name="number" value="00194" />
-      <option name="presentableId" value="LOCAL-00194" />
-      <option name="project" value="LOCAL" />
-      <updated>1644489873621</updated>
     </task>
     <task id="LOCAL-00195" summary="fix: убирал static у переменных">
       <created>1644508287632</created>
@@ -510,7 +485,28 @@
       <option name="project" value="LOCAL" />
       <updated>1651755954930</updated>
     </task>
-    <option name="localTasksCounter" value="241" />
+    <task id="LOCAL-00241" summary="feat: доработка интерфейса">
+      <created>1651763481052</created>
+      <option name="number" value="00241" />
+      <option name="presentableId" value="LOCAL-00241" />
+      <option name="project" value="LOCAL" />
+      <updated>1651763481052</updated>
+    </task>
+    <task id="LOCAL-00242" summary="feat: доработка интерфейса">
+      <created>1651763507154</created>
+      <option name="number" value="00242" />
+      <option name="presentableId" value="LOCAL-00242" />
+      <option name="project" value="LOCAL" />
+      <updated>1651763507154</updated>
+    </task>
+    <task id="LOCAL-00243" summary="feat: доработка интерфейса">
+      <created>1651763715065</created>
+      <option name="number" value="00243" />
+      <option name="presentableId" value="LOCAL-00243" />
+      <option name="project" value="LOCAL" />
+      <updated>1651763715065</updated>
+    </task>
+    <option name="localTasksCounter" value="244" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -528,7 +524,6 @@
     <ignored-roots>
       <path value="$PROJECT_DIR$" />
     </ignored-roots>
-    <MESSAGE value="доработка отправки почты" />
     <MESSAGE value="доработка считывания настроек" />
     <MESSAGE value="доработка интерфейса" />
     <MESSAGE value="добавлен фильтр ненужных новостей" />
@@ -553,7 +548,8 @@
     <MESSAGE value="feat: добавлена view, соединяющая все слова исключения" />
     <MESSAGE value="feat: изменён интерфейс" />
     <MESSAGE value="feat: доработан интерфейс" />
-    <option name="LAST_COMMIT_MESSAGE" value="feat: доработан интерфейс" />
+    <MESSAGE value="feat: доработка интерфейса" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat: доработка интерфейса" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
