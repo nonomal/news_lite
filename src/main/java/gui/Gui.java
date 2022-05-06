@@ -40,6 +40,7 @@ public class Gui extends JFrame {
     SQLite sqlite = new SQLite();
     Search search = new Search();
     ExportToExcel exp = new ExportToExcel();
+    private static final Font GUI_FONT = new Font("Tahoma", Font.PLAIN, 11);
     private static final String[] INTERVALS = {"1 min", "5 min", "15 min", "30 min", "45 min", "1 hour", "2 hours",
             "4 hours", "8 hours", "12 hours", "24 hours", "48 hours"};
     private static final long AUTO_START_TIMER = 60000L; // 60 секунд
@@ -99,7 +100,7 @@ public class Gui extends JFrame {
         getContentPane().setBackground(new Color(42, 42, 42));
         setTitle("Avandy News");
         setIconImage(logoIco.getImage());
-        setFont(new Font("SansSerif", Font.PLAIN, 12));
+        setFont(GUI_FONT);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setBounds(340, 100, 1195, 634);
         getContentPane().setLayout(null);
@@ -229,7 +230,7 @@ public class Gui extends JFrame {
         table.setColumnSelectionAllowed(true);
         table.setCellSelectionEnabled(true);
         table.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
-        table.setFont(new Font("SansSerif", Font.PLAIN, 14));
+        table.setFont(new Font("Tahoma", Font.PLAIN, 14));
         table.getColumnModel().getColumn(0).setMaxWidth(40);
         table.getColumnModel().getColumn(1).setPreferredWidth(100);
         table.getColumnModel().getColumn(1).setMaxWidth(180);
@@ -301,7 +302,7 @@ public class Gui extends JFrame {
         tableForAnalysis.setColumnSelectionAllowed(true);
         tableForAnalysis.setCellSelectionEnabled(true);
         tableForAnalysis.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
-        tableForAnalysis.setFont(new Font("SansSerif", Font.PLAIN, 14));
+        tableForAnalysis.setFont(new Font("Tahoma", Font.PLAIN, 14));
         tableForAnalysis.getColumnModel().getColumn(0).setPreferredWidth(140);
         tableForAnalysis.getColumnModel().getColumn(1).setPreferredWidth(40);
         tableForAnalysis.getColumnModel().getColumn(1).setMaxWidth(40);
@@ -372,7 +373,7 @@ public class Gui extends JFrame {
         //Amount of news
         labelSum = new JLabel();
         labelSum.setBounds(880, 278, 120, 13);
-        labelSum.setFont(new Font("Tahoma", Font.PLAIN, 11));
+        labelSum.setFont(GUI_FONT);
         labelSum.setForeground(new Color(255, 255, 153));
         labelSum.setBackground(new Color(240, 255, 240));
         getContentPane().add(labelSum);
@@ -476,13 +477,13 @@ public class Gui extends JFrame {
         JLabel lblKeywordsSearch = new JLabel();
         lblKeywordsSearch.setText("search by keywords");
         lblKeywordsSearch.setForeground(new Color(255, 255, 153));
-        lblKeywordsSearch.setFont(new Font("Tahoma", Font.PLAIN, 11));
+        lblKeywordsSearch.setFont(GUI_FONT);
         lblKeywordsSearch.setBounds(10, 545, 160, 14);
         getContentPane().add(lblKeywordsSearch);
 
         //Add to combo box
         addKeywordToList = new JTextField();
-        addKeywordToList.setFont(new Font("Serif", Font.PLAIN, 12));
+        addKeywordToList.setFont(GUI_FONT);
         addKeywordToList.setBounds(9, 561, 80, 22);
         getContentPane().add(addKeywordToList);
 
@@ -532,7 +533,7 @@ public class Gui extends JFrame {
 
         //Keywords combo box
         keywordsCbox = new JComboBox<>();
-        keywordsCbox.setFont(new Font("Arial", Font.PLAIN, 11));
+        keywordsCbox.setFont(GUI_FONT);
         keywordsCbox.setModel(new DefaultComboBoxModel<>());
         keywordsCbox.setEditable(false);
         keywordsCbox.setBounds(165, 561, 90, 22);
@@ -578,7 +579,7 @@ public class Gui extends JFrame {
         autoUpdateNewsBottom.setState(false);
         autoUpdateNewsBottom.setFocusable(false);
         autoUpdateNewsBottom.setForeground(Color.WHITE);
-        autoUpdateNewsBottom.setFont(new Font("Arial", Font.PLAIN, 11));
+        autoUpdateNewsBottom.setFont(GUI_FONT);
         autoUpdateNewsBottom.setBounds(297, 561, 75, 20);
         getContentPane().add(autoUpdateNewsBottom);
         autoUpdateNewsBottom.addItemListener(e -> {
@@ -613,7 +614,7 @@ public class Gui extends JFrame {
         consoleTextArea.setLineWrap(true);
         consoleTextArea.setEditable(false);
         consoleTextArea.setBounds(20, 11, 145, 51);
-        consoleTextArea.setFont(new Font("Tahoma", Font.PLAIN, 11));
+        consoleTextArea.setFont(GUI_FONT);
         consoleTextArea.setForeground(SystemColor.white);
         consoleTextArea.setBackground(new Color(83, 82, 82)); // 83, 82, 82
         getContentPane().add(consoleTextArea);
@@ -627,7 +628,7 @@ public class Gui extends JFrame {
         JLabel lblConsole = new JLabel();
         lblConsole.setText("clear console");
         lblConsole.setForeground(new Color(255, 255, 153));
-        lblConsole.setFont(new Font("Tahoma", Font.PLAIN, 11));
+        lblConsole.setFont(GUI_FONT);
         lblConsole.setBounds(1089, 448, 64, 14);
         getContentPane().add(lblConsole);
 
@@ -652,7 +653,7 @@ public class Gui extends JFrame {
 
         // Интервалы для поиска новостей
         newsIntervalCbox = new JComboBox<>(INTERVALS);
-        newsIntervalCbox.setFont(new Font("Arial", Font.PLAIN, 11));
+        newsIntervalCbox.setFont(GUI_FONT);
         newsIntervalCbox.setBounds(516, 10, 75, 20);
         getContentPane().add(newsIntervalCbox);
 
@@ -661,7 +662,7 @@ public class Gui extends JFrame {
         todayOrNotCbx.setState(true);
         todayOrNotCbx.setFocusable(false);
         todayOrNotCbx.setForeground(Color.WHITE);
-        todayOrNotCbx.setFont(new Font("Arial", Font.PLAIN, 11));
+        todayOrNotCbx.setFont(GUI_FONT);
         todayOrNotCbx.setBounds(449, 10, 64, 20);
         todayOrNotCbx.addItemListener(e -> newsIntervalCbox.setVisible(todayOrNotCbx.getState()));
         getContentPane().add(todayOrNotCbx);
@@ -671,7 +672,7 @@ public class Gui extends JFrame {
         autoUpdateNewsTop.setState(false);
         autoUpdateNewsTop.setFocusable(false);
         autoUpdateNewsTop.setForeground(Color.WHITE);
-        autoUpdateNewsTop.setFont(new Font("Arial", Font.PLAIN, 11));
+        autoUpdateNewsTop.setFont(GUI_FONT);
         autoUpdateNewsTop.setBounds(297, 10, 75, 20);
         getContentPane().add(autoUpdateNewsTop);
         autoUpdateNewsTop.addItemListener(e -> {
@@ -717,7 +718,7 @@ public class Gui extends JFrame {
         JLabel excludedLabel = new JLabel("excluded list");
         excludedLabel.setHorizontalAlignment(SwingConstants.LEFT);
         excludedLabel.setForeground(new Color(255, 255, 153));
-        excludedLabel.setFont(new Font("Tahoma", Font.PLAIN, 11));
+        excludedLabel.setFont(GUI_FONT);
         excludedLabel.setBackground(new Color(240, 255, 240));
         excludedLabel.setBounds(1092, 278, 64, 14);
         getContentPane().add(excludedLabel);
@@ -727,14 +728,14 @@ public class Gui extends JFrame {
         JLabel lblSendToEmail = new JLabel();
         lblSendToEmail.setText("send to");
         lblSendToEmail.setForeground(new Color(255, 255, 153));
-        lblSendToEmail.setFont(new Font("Tahoma", Font.PLAIN, 11));
+        lblSendToEmail.setFont(GUI_FONT);
         lblSendToEmail.setBounds(880, 504, 36, 14);
         getContentPane().add(lblSendToEmail);
 
         //send e-mail to
         sendEmailTo = new JTextField("enter your email");
         sendEmailTo.setBounds(879, 519, 142, 21);
-        sendEmailTo.setFont(new Font("Serif", Font.PLAIN, 12));
+        sendEmailTo.setFont(GUI_FONT);
         getContentPane().add(sendEmailTo);
 
         //Send current results e-mail
@@ -781,7 +782,7 @@ public class Gui extends JFrame {
         autoSendMessage.setState(false);
         autoSendMessage.setFocusable(false);
         autoSendMessage.setForeground(Color.WHITE);
-        autoSendMessage.setFont(new Font("Arial", Font.PLAIN, 11));
+        autoSendMessage.setFont(GUI_FONT);
         autoSendMessage.setBounds(378, 10, 66, 20);
         getContentPane().add(autoSendMessage);
 
@@ -938,7 +939,7 @@ public class Gui extends JFrame {
         // Источники, лог, sqlite лейбл
         lblLogSourceSqlite = new JLabel();
         lblLogSourceSqlite.setForeground(Color.WHITE);
-        lblLogSourceSqlite.setFont(new Font("Arial", Font.PLAIN, 11));
+        lblLogSourceSqlite.setFont(GUI_FONT);
         lblLogSourceSqlite.setBounds(979, 479, 60, 14);
         getContentPane().add(lblLogSourceSqlite);
 
@@ -953,7 +954,7 @@ public class Gui extends JFrame {
         filterNewsChbx.setState(false);
         filterNewsChbx.setFocusable(false);
         filterNewsChbx.setForeground(Color.WHITE);
-        filterNewsChbx.setFont(new Font("Arial", Font.PLAIN, 11));
+        filterNewsChbx.setFont(GUI_FONT);
         filterNewsChbx.setBounds(230, 10, 65, 20);
         getContentPane().add(filterNewsChbx);
         filterNewsChbx.addItemListener(e -> {
