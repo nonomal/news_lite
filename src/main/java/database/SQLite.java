@@ -2,13 +2,15 @@ package database;
 
 import gui.Gui;
 import main.Main;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import utils.Common;
 
 import javax.swing.*;
 import java.sql.*;
-import java.util.logging.Level;
 
 public class SQLite {
+    private static final Logger log = LoggerFactory.getLogger(SQLite.class);
     public static Connection connection;
     public static boolean isConnectionToSQLite;
     private static final int WORD_FREQ_MATCHES = 2;
@@ -19,11 +21,11 @@ public class SQLite {
             Class.forName("org.sqlite.JDBC");
             connection = DriverManager.getConnection("jdbc:sqlite:" + Main.directoryPath + "news.db");
             isConnectionToSQLite = true;
-            Main.LOGGER.log(Level.INFO, "Connected");
+            log.warn("Connected to SQLite");
             Thread.sleep(1000L);
         } catch (Exception e) {
             e.printStackTrace();
-            Main.LOGGER.log(Level.WARNING, e.getMessage());
+            log.warn(e.getMessage());
         }
     }
 
@@ -179,7 +181,7 @@ public class SQLite {
                     st.close();
 
                     Common.console("status: source added");
-                    Main.LOGGER.log(Level.INFO, "New source added");
+                    log.warn("New source added");
                 } else {
                     Common.console("status: adding source canceled");
                 }
@@ -201,7 +203,7 @@ public class SQLite {
                 st.close();
 
                 Common.console("status: word \"" + pWord + "\" excluded from analysis");
-                Main.LOGGER.log(Level.INFO, "New word excluded from analysis");
+                log.warn("New word excluded from analysis");
             } catch (Exception e) {
                 e.printStackTrace();
                 Common.console("status: " + e.getMessage());
@@ -339,7 +341,7 @@ public class SQLite {
         try {
             if (isConnectionToSQLite) {
                 connection.close();
-                Main.LOGGER.log(Level.INFO, "Connection closed");
+                log.warn("Connection closed");
             }
         } catch (Exception e) {
             System.out.println(e.getMessage());

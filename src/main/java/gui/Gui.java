@@ -1,18 +1,31 @@
 package gui;
 
 import database.SQLite;
-import search.Search;
-import main.Main;
-import utils.Common;
 import email.EmailSender;
+import main.Main;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import search.Search;
+import utils.Common;
 import utils.ExportToExcel;
 import utils.MyTimerTask;
 
+import javax.imageio.ImageIO;
+import javax.swing.*;
+import javax.swing.border.BevelBorder;
+import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.JTableHeader;
+import javax.swing.text.DefaultCaret;
 import java.awt.*;
 import java.awt.datatransfer.StringSelection;
-import java.awt.event.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.awt.image.BufferedImage;
-import java.io.*;
+import java.io.File;
+import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.sql.SQLException;
@@ -21,14 +34,9 @@ import java.util.Objects;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.concurrent.atomic.AtomicBoolean;
-import java.util.logging.Level;
-import javax.imageio.ImageIO;
-import javax.swing.*;
-import javax.swing.border.BevelBorder;
-import javax.swing.table.*;
-import javax.swing.text.DefaultCaret;
 
 public class Gui extends JFrame {
+    private static final Logger log = LoggerFactory.getLogger(Gui.class);
     SQLite sqlite = new SQLite();
     Search search = new Search();
     ExportToExcel exp = new ExportToExcel();
@@ -104,9 +112,10 @@ public class Gui extends JFrame {
                 Search.isSearchFinished.set(true);
                 SQLite.isConnectionToSQLite = false;
                 Common.saveState();
-                Main.LOGGER.log(Level.INFO, "Application closed");
+                log.info("Application closed");
                 if (SQLite.isConnectionToSQLite) sqlite.closeSQLiteConnection();
             }
+
             // сворачивание в трей
             @Override
             public void windowIconified(WindowEvent pEvent) {
@@ -114,6 +123,7 @@ public class Gui extends JFrame {
                 setVisible(false);
                 if (autoUpdateNewsBottom.getState()) consoleTextArea.setText("");
             }
+
             // разворачивание из трея
             public void windowDeiconified(WindowEvent pEvent) {
                 guiInTray.set(false);
@@ -123,7 +133,7 @@ public class Gui extends JFrame {
         // Сворачивание приложения в трей
         try {
             BufferedImage Icon = ImageIO.read(Objects.requireNonNull(Gui.class.getResourceAsStream("/icons/logo.png")));
-            final TrayIcon trayIcon =  new TrayIcon(Icon, "Avandy News");
+            final TrayIcon trayIcon = new TrayIcon(Icon, "Avandy News");
             SystemTray systemTray = SystemTray.getSystemTray();
             systemTray.add(trayIcon);
 
@@ -139,18 +149,18 @@ public class Gui extends JFrame {
             itemClose.addActionListener(e -> System.exit(0));
             trayMenu.add(itemClose);
 
-            trayIcon.addMouseListener(new MouseAdapter(){
+            trayIcon.addMouseListener(new MouseAdapter() {
                 @Override
-                public void mouseClicked(MouseEvent e){
-                    if (SwingUtilities.isLeftMouseButton(e)){
+                public void mouseClicked(MouseEvent e) {
+                    if (SwingUtilities.isLeftMouseButton(e)) {
                         setVisible(true);
                         setExtendedState(JFrame.NORMAL);
                     }
                 }
 
                 @Override
-                public void mouseReleased(MouseEvent e){
-                    if (SwingUtilities.isRightMouseButton(e)){
+                public void mouseReleased(MouseEvent e) {
+                    if (SwingUtilities.isRightMouseButton(e)) {
                         trayIcon.setPopupMenu(trayMenu);
                     }
                 }
@@ -235,14 +245,14 @@ public class Gui extends JFrame {
                 if (e.getClickCount() == 2) {
                     int row = table.convertRowIndexToModel(table.rowAtPoint(new Point(e.getX(), e.getY()))); // при сортировке строк оставляет верные данные
                     int col = table.columnAtPoint(new Point(e.getX(), e.getY()));
-                    if (col == 2|| col == 4) {
+                    if (col == 2 || col == 4) {
                         String url = (String) table.getModel().getValueAt(row, 4);
                         URI uri = null;
                         try {
                             uri = new URI(url);
                         } catch (URISyntaxException ex) {
                             ex.printStackTrace();
-                            Main.LOGGER.log(Level.WARNING, ex.getMessage());
+                            log.warn(ex.getMessage());
                         }
                         Desktop desktop = Desktop.getDesktop();
                         assert uri != null;
@@ -250,7 +260,7 @@ public class Gui extends JFrame {
                             desktop.browse(uri);
                         } catch (IOException ex) {
                             ex.printStackTrace();
-                            Main.LOGGER.log(Level.WARNING, ex.getMessage());
+                            log.warn(ex.getMessage());
                         }
                     }
                 }
@@ -265,6 +275,7 @@ public class Gui extends JFrame {
         String[] columnsForAnalysis = {"top 10", "freq.", " "};
         modelForAnalysis = new DefaultTableModel(new Object[][]{}, columnsForAnalysis) {
             final boolean[] column_for_analysis = new boolean[]{false, false, true};
+
             public boolean isCellEditable(int row, int column) {
                 return column_for_analysis[column];
             }
@@ -455,7 +466,7 @@ public class Gui extends JFrame {
             } catch (Exception t) {
                 Common.console(t.getMessage());
                 t.printStackTrace();
-                Main.LOGGER.log(Level.WARNING, t.getMessage());
+                log.warn(t.getMessage());
             }
         });
         getContentPane().add(clearBtnTop);
@@ -482,7 +493,7 @@ public class Gui extends JFrame {
             if (addKeywordToList.getText().length() > 0) {
                 String word = addKeywordToList.getText();
                 for (int i = 0; i < keywordsCbox.getItemCount(); i++) {
-                    if (word.equals(keywordsCbox.getItemAt(i))){
+                    if (word.equals(keywordsCbox.getItemAt(i))) {
                         Common.console("info: список ключевых слов уже содержит: " + word);
                         isInKeywords = true;
                     } else {
@@ -510,7 +521,7 @@ public class Gui extends JFrame {
                     Common.delSettings("keyword=" + Objects.requireNonNull(item));
                 } catch (IOException io) {
                     io.printStackTrace();
-                    Main.LOGGER.log(Level.WARNING, io.getMessage());
+                    log.warn(io.getMessage());
                 }
             }
 
@@ -585,7 +596,7 @@ public class Gui extends JFrame {
                 autoUpdateNewsTop.setVisible(true);
                 try {
                     stopBtnTop.doClick();
-                } catch (Exception ignored){
+                } catch (Exception ignored) {
 
                 }
             }
@@ -753,6 +764,7 @@ public class Gui extends JFrame {
                     sendEmailBtn.setIcon(send2);
                 }
             }
+
             @Override
             // убрали мышку с письма
             public void mouseExited(MouseEvent e) {
@@ -840,6 +852,7 @@ public class Gui extends JFrame {
                 logBtn.setBackground(new Color(222, 114, 7));
                 lblLogSourceSqlite.setText("log");
             }
+
             @Override
             // убрали мышку с кнопки
             public void mouseExited(MouseEvent e) {
@@ -945,7 +958,7 @@ public class Gui extends JFrame {
         getContentPane().add(filterNewsChbx);
         filterNewsChbx.addItemListener(e -> {
             isOnlyLastNews = filterNewsChbx.getState();
-            if (!isOnlyLastNews){
+            if (!isOnlyLastNews) {
                 sqlite.deleteFrom256();
             }
         });
@@ -965,6 +978,7 @@ public class Gui extends JFrame {
                     labelSign.setEnabled(true);
                 }
             }
+
             // убрали мышку с письма
             @Override
             public void mouseExited(MouseEvent e) {
@@ -972,6 +986,7 @@ public class Gui extends JFrame {
                     labelSign.setEnabled(false);
                 }
             }
+
             @Override
             public void mouseClicked(MouseEvent e) {
                 if (e.getButton() == MouseEvent.BUTTON1) {
@@ -988,20 +1003,12 @@ public class Gui extends JFrame {
                         desktop.browse(uri);
                     } catch (IOException ex) {
                         ex.printStackTrace();
-                        Main.LOGGER.log(Level.WARNING, ex.getMessage());
+                        log.warn(ex.getMessage());
                     }
                 }
             }
         });
 
         setVisible(true);
-    }
-
-
-    // Запись интервалов в combo box
-    public static void addIntervalsToComboBox(JComboBox<String> name) {
-        for (String p_item : INTERVALS) {
-            name.addItem(p_item);
-        }
     }
 }

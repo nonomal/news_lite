@@ -6,6 +6,9 @@ import jxl.format.Alignment;
 import jxl.format.Colour;
 import jxl.format.UnderlineStyle;
 import jxl.write.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import java.io.File;
@@ -13,6 +16,8 @@ import java.io.IOException;
 import java.net.URL;
 
 public class ExportToExcel {
+    private static final Logger log = LoggerFactory.getLogger(ExportToExcel.class);
+
     public void exportResultsToExcel() {
         try {
             //Save file to
@@ -115,7 +120,8 @@ public class ExportToExcel {
                 Common.console("status: export is done");
             } else Common.console("status: export canceled");
         } catch (WriteException | IOException e) {
-            Common.console("status: export exception.. please try again!");
+            Common.console("status: export exception");
+            log.warn("export exception");
         }
     }
 }

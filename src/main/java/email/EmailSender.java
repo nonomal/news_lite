@@ -2,14 +2,16 @@ package email;
 
 import gui.Gui;
 import main.Main;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import search.Search;
 import utils.Common;
 
 import javax.mail.MessagingException;
 import java.io.IOException;
-import java.util.logging.Level;
 
 public class EmailSender {
+    private static final Logger log = LoggerFactory.getLogger(EmailSender.class);
     public static String from;
     public static String from_pwd;
     private final String subject = ("News (" + new Search().today + ")");
@@ -37,7 +39,7 @@ public class EmailSender {
                 //отправка
                 new Sender().send(subject, text.toString(), from, from_pwd, to);
                 Common.console("status: e-mail sent successfully");
-                Main.LOGGER.log(Level.INFO, "Email has been sent");
+                log.info("Email has been sent");
                 Gui.sendEmailBtn.setIcon(Gui.send3);
                 Common.isSending.set(true);
                 Search.isSearchFinished.set(true);
@@ -48,6 +50,7 @@ public class EmailSender {
                 Common.isSending.set(true);
                 Search.isSearchFinished.set(true);
                 Gui.progressBar.setValue(100);
+                log.warn("E-mail wasn't send");
             }
         } else {
             // Отправка из консоли
@@ -59,9 +62,10 @@ public class EmailSender {
                 Sender sender = new Sender();
                 sender.send(subject, text.toString(), from, from_pwd, Main.emailToFromConsole);
             } catch (MessagingException me) {
+                log.warn("E-mail wasn't send");
                 Common.console("status: e-mail wasn't send: " + me.getMessage());
             }
-            Main.LOGGER.log(Level.INFO, "Email has been sent");
+            log.info("Email has been sent");
         }
     }
 }

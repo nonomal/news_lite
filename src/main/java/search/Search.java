@@ -7,6 +7,8 @@ import database.SQLite;
 import email.EmailSender;
 import gui.Gui;
 import main.Main;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import utils.Common;
 
 import java.sql.PreparedStatement;
@@ -24,6 +26,7 @@ import java.util.Locale;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 public class Search {
+    private static final Logger log = LoggerFactory.getLogger(Search.class);
     public static List<String> excludeFromSearch;
     public static AtomicBoolean isStop;
     public static AtomicBoolean isSearchNow;
@@ -271,9 +274,11 @@ public class Search {
                                     .replaceAll(("https://|http://|www."), "");
                             smi = smi.substring(0, smi.indexOf("/"));
                             Common.console("rss is not available: " + smi);
+                            log.warn("rss is not available: " + smi);
                         }
                     } catch (Exception e) {
                         Common.console("status: to many news.. please restart the application!");
+                        log.warn("status: restart the application please!");
                         isStop.set(true);
                     }
                 }
@@ -295,6 +300,7 @@ public class Search {
                 // итоги в трей
                 if (newsCount != 0 && newsCount != modelRowCount && Gui.guiInTray.get())
                     Common.trayMessage("News found: " + newsCount);
+                log.info("News found: " + newsCount);
 
                 if (pSearchType.equals("word")) {
                     Gui.searchBtnTop.setVisible(true);
@@ -328,13 +334,16 @@ public class Search {
                 Gui.wasClickInTableForAnalysis.set(false);
                 if (pSearchType.equals("word"))
                     Common.console("info: number of news items in the archive = " + sqlite.archiveNewsCount());
+                log.info("number of news items in the archive = " + sqlite.archiveNewsCount());
             } catch (Exception e) {
+                log.warn(e.getMessage());
                 try {
                     String q_begin = "ROLLBACK";
                     Statement st_begin = SQLite.connection.createStatement();
                     st_begin.execute(q_begin);
                     st_begin.close();
-                } catch (SQLException ignored) {
+                } catch (SQLException i) {
+                    log.warn(i.getMessage());
                 }
                 isStop.set(true);
             }

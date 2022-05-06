@@ -1,28 +1,31 @@
 package main;
 
 import com.formdev.flatlaf.intellijthemes.FlatHiberbeeDarkIJTheme;
-import gui.Gui;
-import utils.InternetAvailabilityChecker;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import database.SQLite;
+import gui.Gui;
 import search.Search;
 import utils.Common;
+import utils.InternetAvailabilityChecker;
 
 import javax.swing.*;
 import java.awt.*;
 import java.io.File;
 import java.io.IOException;
-import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.concurrent.atomic.AtomicBoolean;
-import java.util.logging.*;
+import java.util.logging.FileHandler;
+import java.util.logging.Handler;
+import java.util.logging.Level;
+import java.util.logging.SimpleFormatter;
 
 public class Main {
-    public static SimpleDateFormat date_format = new SimpleDateFormat("dd.MM.yyyy HH:mm:ss");
+    private static final Logger log = LoggerFactory.getLogger(Main.class);
     public static String directoryPath = System.getProperty("user.home") + File.separator + "News" + File.separator;
     public static String settingsPath = directoryPath + "config.txt";
     public static String logPath = directoryPath + "log.txt";
-    public static final Logger LOGGER = Logger.getLogger("");
     public static Calendar minPubDate = Calendar.getInstance();
     public static int fontRed;
     public static int fontGreen;
@@ -53,13 +56,6 @@ public class Main {
             handler.setLevel(Level.ALL);
             handler.setEncoding("UTF-8");
             handler.setFormatter(new SimpleFormatter());
-            LOGGER.addHandler(handler);
-            LOGGER.getHandlers()[0].setFormatter(new Formatter() {
-                @Override
-                public String format(LogRecord record) {
-                    return record.getLevel() + " " + record.getMessage() + " " + date_format.format(record.getMillis()) + "\n";
-                }
-            });
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -90,8 +86,8 @@ public class Main {
     public static void main(String[] args) throws IOException { //args1 = email, args2 = interval, args3 = keyword1,.., argsN = keywordN
         keywordsFromConsole = new String[args.length];
         SQLite sqlite = new SQLite();
-        if (args.length == 0 ) {
-            LOGGER.log(Level.INFO, "Application started");
+        if (args.length == 0) {
+            log.info("Application started");
 
             // Применяем тему FlatLaf для GUI
             // https://github.com/JFormDesigner/FlatLaf

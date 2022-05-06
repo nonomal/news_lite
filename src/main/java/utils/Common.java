@@ -5,9 +5,10 @@ import email.EmailSender;
 import gui.Dialogs;
 import gui.Gui;
 import main.Main;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import search.Search;
 
-import javax.swing.*;
 import java.awt.*;
 import java.io.*;
 import java.net.URL;
@@ -17,13 +18,13 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.security.MessageDigest;
-import java.util.*;
 import java.util.List;
+import java.util.*;
 import java.util.concurrent.atomic.AtomicBoolean;
-import java.util.logging.Level;
 import java.util.stream.Stream;
 
 public class Common {
+    private static final Logger log = LoggerFactory.getLogger(Common.class);
     public static AtomicBoolean isSending = new AtomicBoolean(true);
     static ArrayList<String> keywordsList = new ArrayList<>();
     public static int smi_number = 0;
@@ -256,7 +257,7 @@ public class Common {
             Common.delSettings("email");
         } catch (IOException io) {
             io.printStackTrace();
-            Main.LOGGER.log(Level.WARNING, io.getMessage());
+            log.warn(io.getMessage());
         }
         // write new values
         Common.writeToConfig(Gui.sendEmailTo.getText(), "email");
@@ -320,13 +321,9 @@ public class Common {
                         case "from_adr":
                             EmailSender.from = f[1].trim();
                             break;
-//                        case "smtp":
-//                            smtp = f[1].trim();
-//                            break;
                     }
                 }
             }
-            //System.out.println(from + " " + from_pwd + " " + smtp);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -480,7 +477,6 @@ public class Common {
                 break;
             }
         }
-
     }
 
     // Копирование файлов из jar
