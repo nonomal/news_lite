@@ -13,7 +13,7 @@
 
 <b>Актуальная версия интерфейса:</b>
 
-![image](https://github.com/mrprogre/news_lite/blob/master/Gui.png)
+![image](https://github.com/mrprogre/news_lite/blob/master/gui.png)
 
 
 ----

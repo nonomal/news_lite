@@ -164,20 +164,6 @@
       <option name="presentableId" value="Default" />
       <updated>1616704248449</updated>
     </task>
-    <task id="LOCAL-00207" summary="feat: рефакторинг">
-      <created>1647341408368</created>
-      <option name="number" value="00207" />
-      <option name="presentableId" value="LOCAL-00207" />
-      <option name="project" value="LOCAL" />
-      <updated>1647341408368</updated>
-    </task>
-    <task id="LOCAL-00208" summary="feat: рефакторинг">
-      <created>1647341442603</created>
-      <option name="number" value="00208" />
-      <option name="presentableId" value="LOCAL-00208" />
-      <option name="project" value="LOCAL" />
-      <updated>1647341442603</updated>
-    </task>
     <task id="LOCAL-00209" summary="feat: рефакторинг">
       <created>1647341463176</created>
       <option name="number" value="00209" />
@@ -507,7 +493,21 @@
       <option name="project" value="LOCAL" />
       <updated>1651850551027</updated>
     </task>
-    <option name="localTasksCounter" value="256" />
+    <task id="LOCAL-00256" summary="feat: рефакторинг">
+      <created>1651850605294</created>
+      <option name="number" value="00256" />
+      <option name="presentableId" value="LOCAL-00256" />
+      <option name="project" value="LOCAL" />
+      <updated>1651850605294</updated>
+    </task>
+    <task id="LOCAL-00257" summary="feat: рефакторинг">
+      <created>1651850613145</created>
+      <option name="number" value="00257" />
+      <option name="presentableId" value="LOCAL-00257" />
+      <option name="project" value="LOCAL" />
+      <updated>1651850613145</updated>
+    </task>
+    <option name="localTasksCounter" value="258" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
