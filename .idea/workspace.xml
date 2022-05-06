@@ -9,7 +9,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9e6d6f99-cebb-4fd8-99d4-ae1b59f22e89" name="Default Changelist" comment="feat: логирование" />
+    <list default="true" id="9e6d6f99-cebb-4fd8-99d4-ae1b59f22e89" name="Default Changelist" comment="feat: таблица анализа" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -163,13 +163,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1616704248449</updated>
-    </task>
-    <task id="LOCAL-00202" summary="feat: рефактор">
-      <created>1647335872385</created>
-      <option name="number" value="00202" />
-      <option name="presentableId" value="LOCAL-00202" />
-      <option name="project" value="LOCAL" />
-      <updated>1647335872385</updated>
     </task>
     <task id="LOCAL-00203" summary="feat: рефактор">
       <created>1647335949882</created>
@@ -507,7 +500,14 @@
       <option name="project" value="LOCAL" />
       <updated>1651835455862</updated>
     </task>
-    <option name="localTasksCounter" value="251" />
+    <task id="LOCAL-00251" summary="feat: таблица анализа">
+      <created>1651848545645</created>
+      <option name="number" value="00251" />
+      <option name="presentableId" value="LOCAL-00251" />
+      <option name="project" value="LOCAL" />
+      <updated>1651848545645</updated>
+    </task>
+    <option name="localTasksCounter" value="252" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -525,7 +525,6 @@
     <ignored-roots>
       <path value="$PROJECT_DIR$" />
     </ignored-roots>
-    <MESSAGE value="fix: убирал static у переменных" />
     <MESSAGE value="fix: refactor" />
     <MESSAGE value="feat: дополнен readme" />
     <MESSAGE value="feat: рефактор" />
@@ -550,7 +549,8 @@
     <MESSAGE value="feat: запись интервалов" />
     <MESSAGE value="feat: добавлено логирование" />
     <MESSAGE value="feat: логирование" />
-    <option name="LAST_COMMIT_MESSAGE" value="feat: логирование" />
+    <MESSAGE value="feat: таблица анализа" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat: таблица анализа" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
