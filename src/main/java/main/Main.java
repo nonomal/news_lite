@@ -1,10 +1,10 @@
 package main;
 
 import com.formdev.flatlaf.intellijthemes.FlatHiberbeeDarkIJTheme;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import database.SQLite;
 import gui.Gui;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import search.Search;
 import utils.Common;
 import utils.InternetAvailabilityChecker;
@@ -16,16 +16,11 @@ import java.io.IOException;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.concurrent.atomic.AtomicBoolean;
-import java.util.logging.FileHandler;
-import java.util.logging.Handler;
-import java.util.logging.Level;
-import java.util.logging.SimpleFormatter;
 
 public class Main {
     private static final Logger log = LoggerFactory.getLogger(Main.class);
     public static String directoryPath = System.getProperty("user.home") + File.separator + "News" + File.separator;
     public static String settingsPath = directoryPath + "config.txt";
-    public static String logPath = directoryPath + "log.txt";
     public static Calendar minPubDate = Calendar.getInstance();
     public static int fontRed;
     public static int fontGreen;
@@ -46,19 +41,7 @@ public class Main {
         minPubDate.set(Calendar.DAY_OF_YEAR, 1);
 
         File mainDirectory = new File(directoryPath);
-        File logFile = new File(logPath);
-
-        try {
-            if (!mainDirectory.exists()) mainDirectory.mkdirs();
-            if (!logFile.exists()) logFile.createNewFile();
-            // запись лога в файл
-            Handler handler = new FileHandler(logPath, true);
-            handler.setLevel(Level.ALL);
-            handler.setEncoding("UTF-8");
-            handler.setFormatter(new SimpleFormatter());
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        if (!mainDirectory.exists()) mainDirectory.mkdirs();
 
         // создание файлов программы
         File sqliteExeIsExists = new File(directoryPath + "sqlite3.exe");
