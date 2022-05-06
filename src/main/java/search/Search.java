@@ -80,7 +80,7 @@ public class Search {
             }
 
             isSearchFinished = new AtomicBoolean(false);
-            Gui.sendEmailBtn.setIcon(Gui.send);
+            Gui.sendEmailBtn.setIcon(Gui.SEND);
             new Thread(Common::fill).start();
             try {
                 // начало транзакции
