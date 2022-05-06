@@ -9,12 +9,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9e6d6f99-cebb-4fd8-99d4-ae1b59f22e89" name="Default Changelist" comment="feat: таблица анализа">
-      <change beforePath="$PROJECT_DIR$/src/main/java/email/EmailSender.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/email/EmailSender.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/gui/ButtonColumn.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/gui/ButtonColumn.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/gui/Gui.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/gui/Gui.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/search/Search.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/search/Search.java" afterDir="false" />
-    </list>
+    <list default="true" id="9e6d6f99-cebb-4fd8-99d4-ae1b59f22e89" name="Default Changelist" comment="feat: рефакторинг" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -168,13 +163,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1616704248449</updated>
-    </task>
-    <task id="LOCAL-00206" summary="feat: рефакторинг">
-      <created>1647341134254</created>
-      <option name="number" value="00206" />
-      <option name="presentableId" value="LOCAL-00206" />
-      <option name="project" value="LOCAL" />
-      <updated>1647341134255</updated>
     </task>
     <task id="LOCAL-00207" summary="feat: рефакторинг">
       <created>1647341408368</created>
@@ -512,7 +500,14 @@
       <option name="project" value="LOCAL" />
       <updated>1651849656286</updated>
     </task>
-    <option name="localTasksCounter" value="255" />
+    <task id="LOCAL-00255" summary="feat: рефакторинг">
+      <created>1651850551027</created>
+      <option name="number" value="00255" />
+      <option name="presentableId" value="LOCAL-00255" />
+      <option name="project" value="LOCAL" />
+      <updated>1651850551027</updated>
+    </task>
+    <option name="localTasksCounter" value="256" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -545,7 +540,6 @@
     <MESSAGE value="feat: шире интерфейс 1.4" />
     <MESSAGE value="feat: изменение интерфейса" />
     <MESSAGE value="feat: изменение порядка столбцов таблицы" />
-    <MESSAGE value="feat: рефакторинг" />
     <MESSAGE value="feat: добавлена view, соединяющая все слова исключения" />
     <MESSAGE value="feat: изменён интерфейс" />
     <MESSAGE value="feat: доработан интерфейс" />
@@ -555,7 +549,8 @@
     <MESSAGE value="feat: добавлено логирование" />
     <MESSAGE value="feat: логирование" />
     <MESSAGE value="feat: таблица анализа" />
-    <option name="LAST_COMMIT_MESSAGE" value="feat: таблица анализа" />
+    <MESSAGE value="feat: рефакторинг" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat: рефакторинг" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
