@@ -24,8 +24,6 @@ import java.util.logging.Level;
 import java.util.stream.Stream;
 
 public class Common {
-    private static final String[] INTERVALS = {"1 min", "5 min", "15 min", "30 min", "45 min", "1 hour", "2 hours",
-            "4 hours", "8 hours", "12 hours", "24 hours", "48 hours"};
     public static AtomicBoolean isSending = new AtomicBoolean(true);
     static ArrayList<String> keywordsList = new ArrayList<>();
     public static int smi_number = 0;
@@ -331,13 +329,6 @@ public class Common {
             //System.out.println(from + " " + from_pwd + " " + smtp);
         } catch (IOException e) {
             e.printStackTrace();
-        }
-    }
-
-    // Запись интервалов в combo box
-    public static void addIntervalsToComboBox(JComboBox<String> name) {
-        for (String p_item : INTERVALS) {
-            name.addItem(p_item);
         }
     }
 

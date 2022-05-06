@@ -32,6 +32,8 @@ public class Gui extends JFrame {
     SQLite sqlite = new SQLite();
     Search search = new Search();
     ExportToExcel exp = new ExportToExcel();
+    private static final String[] INTERVALS = {"1 min", "5 min", "15 min", "30 min", "45 min", "1 hour", "2 hours",
+            "4 hours", "8 hours", "12 hours", "24 hours", "48 hours"};
     private static final long AUTO_START_TIMER = 60000L; // 60 секунд
     public static ImageIcon logoIco = new ImageIcon(Toolkit.getDefaultToolkit().createImage(Gui.class.getResource("/icons/logo.png")));
     public static ImageIcon send = new ImageIcon(Toolkit.getDefaultToolkit().createImage(Gui.class.getResource("/icons/send.png")));
@@ -638,12 +640,10 @@ public class Gui extends JFrame {
         getContentPane().add(progressBar);
 
         // Интервалы для поиска новостей
-        newsIntervalCbox = new JComboBox<>();
+        newsIntervalCbox = new JComboBox<>(INTERVALS);
         newsIntervalCbox.setFont(new Font("Arial", Font.PLAIN, 11));
         newsIntervalCbox.setBounds(516, 10, 75, 20);
         getContentPane().add(newsIntervalCbox);
-        // запись интервалов в комбобокс
-        Common.addIntervalsToComboBox(newsIntervalCbox);
 
         // Today or not
         todayOrNotCbx = new Checkbox("in the last");
@@ -995,5 +995,13 @@ public class Gui extends JFrame {
         });
 
         setVisible(true);
+    }
+
+
+    // Запись интервалов в combo box
+    public static void addIntervalsToComboBox(JComboBox<String> name) {
+        for (String p_item : INTERVALS) {
+            name.addItem(p_item);
+        }
     }
 }
