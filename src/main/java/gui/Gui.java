@@ -38,6 +38,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 public class Gui extends JFrame {
     private static final Logger log = LoggerFactory.getLogger(Gui.class);
     SQLite sqlite = new SQLite();
+    Search search = new Search();
     private static final Font GUI_FONT = new Font("Tahoma", Font.PLAIN, 11);
     private static final String[] INTERVALS = {"1 min", "5 min", "15 min", "30 min", "45 min", "1 hour", "2 hours",
             "4 hours", "8 hours", "12 hours", "24 hours", "48 hours"};
@@ -341,7 +342,7 @@ public class Gui extends JFrame {
         getRootPane().setDefaultButton(searchBtnTop);
         searchBtnTop.requestFocus();
         searchBtnTop.doClick();
-        searchBtnTop.addActionListener(e -> new Thread(() -> new Search().mainSearch("word")).start());
+        searchBtnTop.addActionListener(e -> new Thread(() -> search.mainSearch("word")).start());
 
         //Stop addNewSource
         stopBtnTop = new JButton("");
@@ -544,7 +545,7 @@ public class Gui extends JFrame {
         searchBtnBottom.setBackground(new Color(154, 237, 196));
         searchBtnBottom.setBounds(261, 561, 30, 22);
         //searchBtnBottom.addActionListener(e -> new Thread(Search::keywordsSearch).start());
-        searchBtnBottom.addActionListener(e -> new Thread(() -> new Search().mainSearch("words")).start());
+        searchBtnBottom.addActionListener(e -> new Thread(() -> search.mainSearch("words")).start());
         getContentPane().add(searchBtnBottom);
 
         //Stop addNewSource (bottom)

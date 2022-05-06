@@ -164,13 +164,6 @@
       <option name="presentableId" value="Default" />
       <updated>1616704248449</updated>
     </task>
-    <task id="LOCAL-00209" summary="feat: рефакторинг">
-      <created>1647341463176</created>
-      <option name="number" value="00209" />
-      <option name="presentableId" value="LOCAL-00209" />
-      <option name="project" value="LOCAL" />
-      <updated>1647341463176</updated>
-    </task>
     <task id="LOCAL-00210" summary="feat: отображение долгого времени поиска в консоли">
       <created>1648195372484</created>
       <option name="number" value="00210" />
@@ -507,7 +500,14 @@
       <option name="project" value="LOCAL" />
       <updated>1651850613145</updated>
     </task>
-    <option name="localTasksCounter" value="258" />
+    <task id="LOCAL-00258" summary="feat: рефакторинг">
+      <created>1651851000625</created>
+      <option name="number" value="00258" />
+      <option name="presentableId" value="LOCAL-00258" />
+      <option name="project" value="LOCAL" />
+      <updated>1651851000625</updated>
+    </task>
+    <option name="localTasksCounter" value="259" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
