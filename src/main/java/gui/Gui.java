@@ -364,7 +364,7 @@ public class Gui extends JFrame {
         labelSum.setBackground(new Color(240, 255, 240));
         getContentPane().add(labelSum);
 
-        /* Top-Right bottoms */
+        /* Top-Right buttons */
         // Выбор цвета фона
         JButton backgroundColorBtn = new JButton();
         backgroundColorBtn.setToolTipText("Background color");
@@ -470,7 +470,7 @@ public class Gui extends JFrame {
         //Add to combo box
         addKeywordToList = new JTextField();
         addKeywordToList.setFont(new Font("Serif", Font.PLAIN, 12));
-        addKeywordToList.setBounds(10, 561, 80, 22);
+        addKeywordToList.setBounds(9, 561, 80, 22);
         getContentPane().add(addKeywordToList);
 
         //Add to keywords combo box
@@ -722,7 +722,7 @@ public class Gui extends JFrame {
 
         //send e-mail to
         sendEmailTo = new JTextField("enter your email");
-        sendEmailTo.setBounds(880, 519, 142, 21);
+        sendEmailTo.setBounds(879, 519, 142, 21);
         sendEmailTo.setFont(new Font("Serif", Font.PLAIN, 12));
         getContentPane().add(sendEmailTo);
 
