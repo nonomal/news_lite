@@ -9,10 +9,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9e6d6f99-cebb-4fd8-99d4-ae1b59f22e89" name="Default Changelist" comment="feat: рефакторинг">
+    <list default="true" id="9e6d6f99-cebb-4fd8-99d4-ae1b59f22e89" name="Default Changelist" comment="feat: рефакторинг - цвет шрифтов и бэк">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/gui/Gui.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/gui/Gui.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/main/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/main/Main.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/utils/Common.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/utils/Common.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -169,13 +167,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1616704248449</updated>
-    </task>
-    <task id="LOCAL-00212" summary="feat: отображение долгого времени поиска в консоли">
-      <created>1648196418888</created>
-      <option name="number" value="00212" />
-      <option name="presentableId" value="LOCAL-00212" />
-      <option name="project" value="LOCAL" />
-      <updated>1648196418891</updated>
     </task>
     <task id="LOCAL-00213" summary="info: оптимизация работы с БД">
       <created>1648826332453</created>
@@ -513,7 +504,14 @@
       <option name="project" value="LOCAL" />
       <updated>1651851322171</updated>
     </task>
-    <option name="localTasksCounter" value="261" />
+    <task id="LOCAL-00261" summary="feat: рефакторинг - цвет шрифтов и бэк">
+      <created>1652101159640</created>
+      <option name="number" value="00261" />
+      <option name="presentableId" value="LOCAL-00261" />
+      <option name="project" value="LOCAL" />
+      <updated>1652101159640</updated>
+    </task>
+    <option name="localTasksCounter" value="262" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -531,7 +529,6 @@
     <ignored-roots>
       <path value="$PROJECT_DIR$" />
     </ignored-roots>
-    <MESSAGE value="fix: refactor" />
     <MESSAGE value="feat: дополнен readme" />
     <MESSAGE value="feat: рефактор" />
     <MESSAGE value="feat: отображение долгого времени поиска в консоли" />
@@ -556,7 +553,8 @@
     <MESSAGE value="feat: логирование" />
     <MESSAGE value="feat: таблица анализа" />
     <MESSAGE value="feat: рефакторинг" />
-    <option name="LAST_COMMIT_MESSAGE" value="feat: рефакторинг" />
+    <MESSAGE value="feat: рефакторинг - цвет шрифтов и бэк" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat: рефакторинг - цвет шрифтов и бэк" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

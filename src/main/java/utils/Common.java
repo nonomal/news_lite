@@ -169,36 +169,35 @@ public class Common {
             }
 
             for (String[] f : lines) {
-                for (int j = 0; j < 1; j++) {
-                    switch (f[0]) {
-                        case "interval":
-                            if (f[1].equals("1h")) {
-                                Gui.newsIntervalCbox.setSelectedItem(f[1].replace("h", "") + " hour");
-                            } else if (f[1].equals("1m") || f[1].equals("5m") || f[1].equals("15m")
-                                    || f[1].equals("30m") || f[1].equals("45m")) {
-                                Gui.newsIntervalCbox.setSelectedItem(f[1].replace("m", "") + " min");
-                            } else {
-                                Gui.newsIntervalCbox.setSelectedItem(f[1].replace("h", "") + " hours");
-                            }
-                            break;
-                        case "email":
-                            Gui.sendEmailTo.setText(f[1].trim());
-                            break;
-                        case "keyword":
-                            Gui.keywordsCbox.addItem(f[1]);
-                            keywordsList.add(f[1]);
-                            break;
-                        case "checkbox:todayOrNotChbx":
-                            Gui.todayOrNotCbx.setState(Boolean.parseBoolean(f[1]));
-                            break;
-                        case "checkbox:filterNewsChbx":
-                            Gui.filterNewsChbx.setState(Boolean.parseBoolean(f[1]));
-                            break;
-                        case "checkbox:autoSendChbx":
-                            Gui.autoSendMessage.setState(Boolean.parseBoolean(f[1]));
-                            break;
-                    }
+                switch (f[0]) {
+                    case "interval":
+                        if (f[1].equals("1h")) {
+                            Gui.newsIntervalCbox.setSelectedItem(f[1].replace("h", "") + " hour");
+                        } else if (f[1].equals("1m") || f[1].equals("5m") || f[1].equals("15m")
+                                || f[1].equals("30m") || f[1].equals("45m")) {
+                            Gui.newsIntervalCbox.setSelectedItem(f[1].replace("m", "") + " min");
+                        } else {
+                            Gui.newsIntervalCbox.setSelectedItem(f[1].replace("h", "") + " hours");
+                        }
+                        break;
+                    case "email":
+                        Gui.sendEmailTo.setText(f[1].trim());
+                        break;
+                    case "keyword":
+                        Gui.keywordsCbox.addItem(f[1]);
+                        keywordsList.add(f[1]);
+                        break;
+                    case "checkbox:todayOrNotChbx":
+                        Gui.todayOrNotCbx.setState(Boolean.parseBoolean(f[1]));
+                        break;
+                    case "checkbox:filterNewsChbx":
+                        Gui.filterNewsChbx.setState(Boolean.parseBoolean(f[1]));
+                        break;
+                    case "checkbox:autoSendChbx":
+                        Gui.autoSendMessage.setState(Boolean.parseBoolean(f[1]));
+                        break;
                 }
+
             }
         } catch (IOException e) {
             e.printStackTrace();
