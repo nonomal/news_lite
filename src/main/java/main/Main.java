@@ -22,12 +22,8 @@ public class Main {
     public static String directoryPath = System.getProperty("user.home") + File.separator + "News" + File.separator;
     public static String settingsPath = directoryPath + "config.txt";
     public static Calendar minPubDate = Calendar.getInstance();
-    public static int fontRed;
-    public static int fontGreen;
-    public static int fontBlue;
-    public static int backRed;
-    public static int backGreen;
-    public static int backBlue;
+    public static int [] guiFont = new int[3];
+    public static int [] guiBackground = new int[3];
     // Console search
     public static AtomicBoolean isConsoleSearch = new AtomicBoolean(false);
     public static String emailToFromConsole;
@@ -79,15 +75,17 @@ public class Main {
             UIManager.put("ProgressBar.arc", 6);
             UIManager.put("Button.arc", 8);
             Common.getColorsSettingsFromFile();
-            UIManager.put("Table.background", new Color(backRed, backGreen, backBlue));
+            UIManager.put("Table.background", new Color(guiBackground[0], guiBackground[1], guiBackground[2]));
             UIManager.put("Table.alternateRowColor", new Color(59, 59, 59));
-            UIManager.put("Table.foreground", new Color(fontRed, fontGreen, fontBlue));
+            UIManager.put("Table.foreground", new Color(guiFont[0], guiFont[1], guiFont[2]));
             UIManager.put("TextField.background", Color.GRAY);
             UIManager.put("TextField.foreground", Color.BLACK);
             FlatHiberbeeDarkIJTheme.setup();
 
             new Gui();
+            // загрузка конфигураций из файла config.txt
             Common.getSettingsFromFile();
+            System.out.println(Arrays.toString(guiFont) + "\n" + Arrays.toString(guiBackground));
             Gui.newsIntervalCbox.setVisible(Gui.todayOrNotCbx.getState());
             Gui.isOnlyLastNews = Gui.filterNewsChbx.getState();
             sqlite.openSQLiteConnection();

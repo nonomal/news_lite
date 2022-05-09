@@ -55,7 +55,7 @@ public class Gui extends JFrame {
     public static final ImageIcon DELETE_ICO = new ImageIcon(Toolkit.getDefaultToolkit().createImage(Gui.class.getResource("/icons/delete.png")));
     public static final ImageIcon FONT_ICO = new ImageIcon(Toolkit.getDefaultToolkit().createImage(Gui.class.getResource("/icons/font.png")));
     public static final ImageIcon BG_ICO = new ImageIcon(Toolkit.getDefaultToolkit().createImage(Gui.class.getResource("/icons/bg.png")));
-    public static int q = 1;
+    public static int newsCount = 1;
     public static boolean isOnlyLastNews = false;
     public static boolean isInKeywords = false;
     public static String findWord = "";
@@ -460,8 +460,8 @@ public class Gui extends JFrame {
                 Search.j = 1;
                 model.setRowCount(0);
                 modelForAnalysis.setRowCount(0);
-                q = 0;
-                labelSum.setText("" + q);
+                newsCount = 0;
+                labelSum.setText("" + newsCount);
                 Common.console("status: clear");
             } catch (Exception t) {
                 Common.console(t.getMessage());

@@ -220,27 +220,25 @@ public class Common {
             }
 
             for (String[] f : lines) {
-                for (int j = 0; j < 1; j++) {
-                    switch (f[0]) {
-                        case "fontColorRed":
-                            Main.fontRed = Integer.parseInt(f[1].trim());
-                            break;
-                        case "fontColorGreen":
-                            Main.fontGreen = Integer.parseInt(f[1].trim());
-                            break;
-                        case "fontColorBlue":
-                            Main.fontBlue = Integer.parseInt(f[1].trim());
-                            break;
-                        case "backgroundColorRed":
-                            Main.backRed = Integer.parseInt(f[1].trim());
-                            break;
-                        case "backgroundColorGreen":
-                            Main.backGreen = Integer.parseInt(f[1].trim());
-                            break;
-                        case "backgroundColorBlue":
-                            Main.backBlue = Integer.parseInt(f[1].trim());
-                            break;
-                    }
+                switch (f[0]) {
+                    case "fontColorRed":
+                        Main.guiFont[0] = Integer.parseInt(f[1].trim());
+                        break;
+                    case "fontColorGreen":
+                        Main.guiFont[1] = Integer.parseInt(f[1].trim());
+                        break;
+                    case "fontColorBlue":
+                        Main.guiFont[2] = Integer.parseInt(f[1].trim());
+                        break;
+                    case "backgroundColorRed":
+                        Main.guiBackground[0] = Integer.parseInt(f[1].trim());
+                        break;
+                    case "backgroundColorGreen":
+                        Main.guiBackground[1] = Integer.parseInt(f[1].trim());
+                        break;
+                    case "backgroundColorBlue":
+                        Main.guiBackground[2] = Integer.parseInt(f[1].trim());
+                        break;
                 }
             }
         } catch (IOException e) {
