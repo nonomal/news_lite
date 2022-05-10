@@ -62,7 +62,13 @@ public class Main {
         }
     }
 
-    public static void main(String[] args) throws IOException { //args1 = email, args2 = interval, args3 = keyword1,.., argsN = keywordN
+    /**
+     * Main arguments:
+     * args1 = email
+     * args2 = interval in minutes
+     * args3 = keyword1, keyword2 ... argsN = search keywords
+     */
+    public static void main(String[] args) throws IOException {
         keywordsFromConsole = new String[args.length];
         SQLite sqlite = new SQLite();
         if (args.length == 0) {

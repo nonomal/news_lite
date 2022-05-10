@@ -9,18 +9,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9e6d6f99-cebb-4fd8-99d4-ae1b59f22e89" name="Default Changelist" comment="feat: рефакторинг - убрать лишний цикл">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/database/SQLite.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/database/SQLite.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/email/EmailSender.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/email/EmailSender.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/gui/ButtonColumn.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/gui/ButtonColumn.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/gui/Dialogs.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/gui/Dialogs.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/gui/Gui.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/gui/Gui.java" afterDir="false" />
+    <list default="true" id="9e6d6f99-cebb-4fd8-99d4-ae1b59f22e89" name="Default Changelist" comment="feat: рефакторинг общий">
       <change beforePath="$PROJECT_DIR$/src/main/java/main/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/main/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/search/Search.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/search/Search.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/search/SyndParser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/search/Parser.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/utils/Common.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/utils/Common.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/utils/ExportToExcel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/utils/ExportToExcel.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -180,27 +170,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1616704248449</updated>
-    </task>
-    <task id="LOCAL-00214" summary="info: время поиска">
-      <created>1648906899583</created>
-      <option name="number" value="00214" />
-      <option name="presentableId" value="LOCAL-00214" />
-      <option name="project" value="LOCAL" />
-      <updated>1648906899583</updated>
-    </task>
-    <task id="LOCAL-00215" summary="feat: добавлен тест проверки соединения с интернетом">
-      <created>1649409544158</created>
-      <option name="number" value="00215" />
-      <option name="presentableId" value="LOCAL-00215" />
-      <option name="project" value="LOCAL" />
-      <updated>1649409544159</updated>
-    </task>
-    <task id="LOCAL-00216" summary="feat: добавлен тест">
-      <created>1649409807158</created>
-      <option name="number" value="00216" />
-      <option name="presentableId" value="LOCAL-00216" />
-      <option name="project" value="LOCAL" />
-      <updated>1649409807158</updated>
     </task>
     <task id="LOCAL-00217" summary="feat: добавлен тест">
       <created>1649409823612</created>
@@ -524,7 +493,28 @@
       <option name="project" value="LOCAL" />
       <updated>1652101493032</updated>
     </task>
-    <option name="localTasksCounter" value="263" />
+    <task id="LOCAL-00263" summary="feat: рефакторинг общий">
+      <created>1652183080938</created>
+      <option name="number" value="00263" />
+      <option name="presentableId" value="LOCAL-00263" />
+      <option name="project" value="LOCAL" />
+      <updated>1652183080938</updated>
+    </task>
+    <task id="LOCAL-00264" summary="feat: рефакторинг общий">
+      <created>1652183118019</created>
+      <option name="number" value="00264" />
+      <option name="presentableId" value="LOCAL-00264" />
+      <option name="project" value="LOCAL" />
+      <updated>1652183118019</updated>
+    </task>
+    <task id="LOCAL-00265" summary="feat: рефакторинг общий">
+      <created>1652183143415</created>
+      <option name="number" value="00265" />
+      <option name="presentableId" value="LOCAL-00265" />
+      <option name="project" value="LOCAL" />
+      <updated>1652183143415</updated>
+    </task>
+    <option name="localTasksCounter" value="266" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -542,7 +532,6 @@
     <ignored-roots>
       <path value="$PROJECT_DIR$" />
     </ignored-roots>
-    <MESSAGE value="feat: рефактор" />
     <MESSAGE value="feat: отображение долгого времени поиска в консоли" />
     <MESSAGE value="info: оптимизация работы с БД" />
     <MESSAGE value="info: время поиска" />
@@ -567,7 +556,8 @@
     <MESSAGE value="feat: рефакторинг" />
     <MESSAGE value="feat: рефакторинг - цвет шрифтов и бэк" />
     <MESSAGE value="feat: рефакторинг - убрать лишний цикл" />
-    <option name="LAST_COMMIT_MESSAGE" value="feat: рефакторинг - убрать лишний цикл" />
+    <MESSAGE value="feat: рефакторинг общий" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat: рефакторинг общий" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
