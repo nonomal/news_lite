@@ -37,8 +37,8 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 public class Gui extends JFrame {
     private static final Logger log = LoggerFactory.getLogger(Gui.class);
-    SQLite sqlite = new SQLite();
-    Search search = new Search();
+    final SQLite sqlite = new SQLite();
+    final Search search = new Search();
     private static final Font GUI_FONT = new Font("Tahoma", Font.PLAIN, 11);
     private static final String[] INTERVALS = {"1 min", "5 min", "15 min", "30 min", "45 min", "1 hour", "2 hours",
             "4 hours", "8 hours", "12 hours", "24 hours", "48 hours"};
@@ -59,7 +59,7 @@ public class Gui extends JFrame {
     public static boolean isOnlyLastNews = false;
     public static boolean isInKeywords = false;
     public static String findWord = "";
-    public static String sendTo;
+    //public static String sendTo;
     public static JScrollPane scrollPane;
     public static JTable table;
     public static JTable tableForAnalysis;
@@ -69,11 +69,11 @@ public class Gui extends JFrame {
     public static JTextField sendEmailTo;
     public static JTextField addKeywordToList;
     public static JTextArea consoleTextArea;
-    public static JComboBox<String> keywordsCbox;
-    public static JComboBox<String> newsIntervalCbox;
+    public static JComboBox<String> keywords;
+    public static JComboBox<String> newsInterval;
     public static JLabel labelSign;
     public static JLabel labelSum;
-    public static JLabel labelInfo;
+    //public static JLabel labelInfo;
     public static JLabel lblLogSourceSqlite;
     public static JButton searchBtnTop;
     public static JButton searchBtnBottom;
@@ -87,12 +87,12 @@ public class Gui extends JFrame {
     public static Checkbox autoUpdateNewsTop;
     public static Checkbox autoUpdateNewsBottom;
     public static Checkbox autoSendMessage;
-    public static Checkbox filterNewsChbx;
+    public static Checkbox onlyNewNews;
     public static JProgressBar progressBar;
     public static Timer timer;
     public static TimerTask timerTask;
-    public static AtomicBoolean wasClickInTableForAnalysis = new AtomicBoolean(false);
-    public static AtomicBoolean guiInTray = new AtomicBoolean(false);
+    public static final AtomicBoolean WAS_CLICK_IN_TABLE_FOR_ANALYSIS = new AtomicBoolean(false);
+    public static final AtomicBoolean GUI_IN_TRAY = new AtomicBoolean(false);
 
     public Gui() {
         setResizable(false);
@@ -119,14 +119,14 @@ public class Gui extends JFrame {
             // сворачивание в трей
             @Override
             public void windowIconified(WindowEvent pEvent) {
-                guiInTray.set(true);
+                GUI_IN_TRAY.set(true);
                 setVisible(false);
                 if (autoUpdateNewsBottom.getState()) consoleTextArea.setText("");
             }
 
             // разворачивание из трея
             public void windowDeiconified(WindowEvent pEvent) {
-                guiInTray.set(false);
+                GUI_IN_TRAY.set(false);
             }
         });
 
@@ -318,7 +318,7 @@ public class Gui extends JFrame {
                     if (col == 0) {
                         Gui.topKeyword.setText((String) tableForAnalysis.getModel().getValueAt(row, 0));
                         searchBtnTop.doClick();
-                        wasClickInTableForAnalysis.set(true);
+                        WAS_CLICK_IN_TABLE_FOR_ANALYSIS.set(true);
                     }
                 }
             }
@@ -456,7 +456,7 @@ public class Gui extends JFrame {
                     Common.console("status: no data to clear");
                     return;
                 }
-                labelInfo.setText("");
+                //labelInfo.setText("");
                 Search.j = 1;
                 model.setRowCount(0);
                 modelForAnalysis.setRowCount(0);
@@ -492,8 +492,8 @@ public class Gui extends JFrame {
         btnAddKeywordToList.addActionListener(e -> {
             if (addKeywordToList.getText().length() > 0) {
                 String word = addKeywordToList.getText();
-                for (int i = 0; i < keywordsCbox.getItemCount(); i++) {
-                    if (word.equals(keywordsCbox.getItemAt(i))) {
+                for (int i = 0; i < keywords.getItemCount(); i++) {
+                    if (word.equals(keywords.getItemAt(i))) {
                         Common.console("info: список ключевых слов уже содержит: " + word);
                         isInKeywords = true;
                     } else {
@@ -502,7 +502,7 @@ public class Gui extends JFrame {
                 }
                 if (!isInKeywords) {
                     Common.writeToConfig(word, "keyword");
-                    keywordsCbox.addItem(word);
+                    keywords.addItem(word);
                     isInKeywords = false;
                 }
                 addKeywordToList.setText("");
@@ -514,10 +514,10 @@ public class Gui extends JFrame {
         //Delete from combo box
         JButton btnDelFromList = new JButton("");
         btnDelFromList.addActionListener(e -> {
-            if (keywordsCbox.getItemCount() > 0) {
+            if (keywords.getItemCount() > 0) {
                 try {
-                    String item = (String) keywordsCbox.getSelectedItem();
-                    keywordsCbox.removeItem(item);
+                    String item = (String) keywords.getSelectedItem();
+                    keywords.removeItem(item);
                     Common.delSettings("keyword=" + Objects.requireNonNull(item));
                 } catch (IOException io) {
                     io.printStackTrace();
@@ -531,12 +531,12 @@ public class Gui extends JFrame {
         getContentPane().add(btnDelFromList);
 
         //Keywords combo box
-        keywordsCbox = new JComboBox<>();
-        keywordsCbox.setFont(GUI_FONT);
-        keywordsCbox.setModel(new DefaultComboBoxModel<>());
-        keywordsCbox.setEditable(false);
-        keywordsCbox.setBounds(165, 561, 90, 22);
-        getContentPane().add(keywordsCbox);
+        keywords = new JComboBox<>();
+        keywords.setFont(GUI_FONT);
+        keywords.setModel(new DefaultComboBoxModel<>());
+        keywords.setEditable(false);
+        keywords.setBounds(165, 561, 90, 22);
+        getContentPane().add(keywords);
 
         //Bottom search by keywords
         searchBtnBottom = new JButton("");
@@ -651,10 +651,10 @@ public class Gui extends JFrame {
         getContentPane().add(progressBar);
 
         // Интервалы для поиска новостей
-        newsIntervalCbox = new JComboBox<>(INTERVALS);
-        newsIntervalCbox.setFont(GUI_FONT);
-        newsIntervalCbox.setBounds(516, 10, 75, 20);
-        getContentPane().add(newsIntervalCbox);
+        newsInterval = new JComboBox<>(INTERVALS);
+        newsInterval.setFont(GUI_FONT);
+        newsInterval.setBounds(516, 10, 75, 20);
+        getContentPane().add(newsInterval);
 
         // Today or not
         todayOrNotCbx = new Checkbox("in the last");
@@ -663,7 +663,7 @@ public class Gui extends JFrame {
         todayOrNotCbx.setForeground(Color.WHITE);
         todayOrNotCbx.setFont(GUI_FONT);
         todayOrNotCbx.setBounds(449, 10, 64, 20);
-        todayOrNotCbx.addItemListener(e -> newsIntervalCbox.setVisible(todayOrNotCbx.getState()));
+        todayOrNotCbx.addItemListener(e -> newsInterval.setVisible(todayOrNotCbx.getState()));
         getContentPane().add(todayOrNotCbx);
 
         // Автозапуск поиска по слову каждые 60 секунд
@@ -749,8 +749,8 @@ public class Gui extends JFrame {
         sendEmailBtn.addActionListener(e -> {
             if (model.getRowCount() > 0 && sendEmailTo.getText().contains("@")) {
                 Common.console("status: sending e-mail");
-                sendTo = sendEmailTo.getText();
-                Common.isSending.set(false);
+                //sendTo = sendEmailTo.getText();
+                Common.IS_SENDING.set(false);
                 new Thread(Common::fill).start();
                 EmailSender email = new EmailSender();
                 new Thread(email::sendMessage).start();
@@ -912,7 +912,7 @@ public class Gui extends JFrame {
         settingsDirectoryBtn.addActionListener(e -> {
             if (Desktop.isDesktopSupported() && Desktop.getDesktop().isSupported(Desktop.Action.OPEN)) {
                 try {
-                    Desktop.getDesktop().open(new File(Main.directoryPath));
+                    Desktop.getDesktop().open(new File(Main.DIRECTORY_PATH));
                 } catch (IOException io) {
                     io.printStackTrace();
                 }
@@ -949,15 +949,15 @@ public class Gui extends JFrame {
         getContentPane().add(queryTableBox);
 
         // latest news
-        filterNewsChbx = new Checkbox("only new");
-        filterNewsChbx.setState(false);
-        filterNewsChbx.setFocusable(false);
-        filterNewsChbx.setForeground(Color.WHITE);
-        filterNewsChbx.setFont(GUI_FONT);
-        filterNewsChbx.setBounds(230, 10, 65, 20);
-        getContentPane().add(filterNewsChbx);
-        filterNewsChbx.addItemListener(e -> {
-            isOnlyLastNews = filterNewsChbx.getState();
+        onlyNewNews = new Checkbox("only new");
+        onlyNewNews.setState(false);
+        onlyNewNews.setFocusable(false);
+        onlyNewNews.setForeground(Color.WHITE);
+        onlyNewNews.setFont(GUI_FONT);
+        onlyNewNews.setBounds(230, 10, 65, 20);
+        getContentPane().add(onlyNewNews);
+        onlyNewNews.addItemListener(e -> {
+            isOnlyLastNews = onlyNewNews.getState();
             if (!isOnlyLastNews) {
                 sqlite.deleteFrom256();
             }

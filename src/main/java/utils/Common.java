@@ -25,17 +25,17 @@ import java.util.stream.Stream;
 
 public class Common {
     private static final Logger log = LoggerFactory.getLogger(Common.class);
-    public static AtomicBoolean isSending = new AtomicBoolean(true);
-    static ArrayList<String> keywordsList = new ArrayList<>();
-    public static int smi_number = 0;
-    public static ArrayList<String> smi_link = new ArrayList<>();
-    public static ArrayList<String> smi_source = new ArrayList<>();
-    public static ArrayList<Boolean> smi_is_active = new ArrayList<>();
-    public static ArrayList<String> excludedWords = new ArrayList<>();
+    public static final AtomicBoolean IS_SENDING = new AtomicBoolean(true);
+    public static final ArrayList<String> KEYWORDS_LIST = new ArrayList<>();
+    public static int SMI_ID = 0;
+    public static final ArrayList<String> SMI_LINK = new ArrayList<>();
+    public static final ArrayList<String> SMI_SOURCE = new ArrayList<>();
+    public static final ArrayList<Boolean> SMI_IS_ACTIVE = new ArrayList<>();
+    public static final ArrayList<String> EXCLUDED_WORDS = new ArrayList<>();
 
     // Запись конфигураций приложения
     public static void writeToConfig(String p_word, String p_type) {
-        try (OutputStreamWriter writer = new OutputStreamWriter(new FileOutputStream(Main.settingsPath, true), StandardCharsets.UTF_8)) {
+        try (OutputStreamWriter writer = new OutputStreamWriter(new FileOutputStream(Main.SETTINGS_PATH, true), StandardCharsets.UTF_8)) {
             switch (p_type) {
                 case "keyword": {
                     String text = "keyword=" + p_word + "\n";
@@ -109,7 +109,7 @@ public class Common {
                             text = "checkbox:" + p_word + "=" + Gui.todayOrNotCbx.getState() + "\n";
                             break;
                         case "filterNewsChbx":
-                            text = "checkbox:" + p_word + "=" + Gui.filterNewsChbx.getState() + "\n";
+                            text = "checkbox:" + p_word + "=" + Gui.onlyNewNews.getState() + "\n";
                             break;
                         case "autoSendChbx":
                             text = "checkbox:" + p_word + "=" + Gui.autoSendMessage.getState() + "\n";
@@ -130,7 +130,7 @@ public class Common {
     public static List<String> getKeywordsFromFile() {
         List<String> keywords = new ArrayList<>();
         try {
-            for (String s : Files.readAllLines(Paths.get(Main.settingsPath))) {
+            for (String s : Files.readAllLines(Paths.get(Main.SETTINGS_PATH))) {
                 if (s.startsWith("keyword="))
                     keywords.add(s.replace("keyword=", ""));
             }
@@ -144,7 +144,7 @@ public class Common {
     public static List<String> getExcludeWordsFromFile() {
         List<String> excludeWords = new ArrayList<>();
         try {
-            for (String s : Files.readAllLines(Paths.get(Main.settingsPath))) {
+            for (String s : Files.readAllLines(Paths.get(Main.SETTINGS_PATH))) {
                 if (s.startsWith("exclude="))
                     excludeWords.add(s.replace("exclude=", ""));
             }
@@ -156,11 +156,11 @@ public class Common {
 
     // Считывание настроек из файла в массив строк
     public static void getSettingsFromFile() {
-        int linesAmount = Common.countLines(Main.settingsPath);
+        int linesAmount = Common.countLines();
         String[][] lines = new String[linesAmount][];
 
         try (BufferedReader reader = new BufferedReader(
-                new InputStreamReader(Files.newInputStream(Paths.get(Main.settingsPath)), StandardCharsets.UTF_8))) {
+                new InputStreamReader(Files.newInputStream(Paths.get(Main.SETTINGS_PATH)), StandardCharsets.UTF_8))) {
             String line;
             int i = 0;
 
@@ -172,26 +172,26 @@ public class Common {
                 switch (f[0]) {
                     case "interval":
                         if (f[1].equals("1h")) {
-                            Gui.newsIntervalCbox.setSelectedItem(f[1].replace("h", "") + " hour");
+                            Gui.newsInterval.setSelectedItem(f[1].replace("h", "") + " hour");
                         } else if (f[1].equals("1m") || f[1].equals("5m") || f[1].equals("15m")
                                 || f[1].equals("30m") || f[1].equals("45m")) {
-                            Gui.newsIntervalCbox.setSelectedItem(f[1].replace("m", "") + " min");
+                            Gui.newsInterval.setSelectedItem(f[1].replace("m", "") + " min");
                         } else {
-                            Gui.newsIntervalCbox.setSelectedItem(f[1].replace("h", "") + " hours");
+                            Gui.newsInterval.setSelectedItem(f[1].replace("h", "") + " hours");
                         }
                         break;
                     case "email":
                         Gui.sendEmailTo.setText(f[1].trim());
                         break;
                     case "keyword":
-                        Gui.keywordsCbox.addItem(f[1]);
-                        keywordsList.add(f[1]);
+                        Gui.keywords.addItem(f[1]);
+                        KEYWORDS_LIST.add(f[1]);
                         break;
                     case "checkbox:todayOrNotChbx":
                         Gui.todayOrNotCbx.setState(Boolean.parseBoolean(f[1]));
                         break;
                     case "checkbox:filterNewsChbx":
-                        Gui.filterNewsChbx.setState(Boolean.parseBoolean(f[1]));
+                        Gui.onlyNewNews.setState(Boolean.parseBoolean(f[1]));
                         break;
                     case "checkbox:autoSendChbx":
                         Gui.autoSendMessage.setState(Boolean.parseBoolean(f[1]));
@@ -206,11 +206,11 @@ public class Common {
 
     // Считывание сохранённого цвета шрифта из файла
     public static void getColorsSettingsFromFile() {
-        int linesAmount = Common.countLines(Main.settingsPath);
+        int linesAmount = Common.countLines();
         String[][] lines = new String[linesAmount][];
 
         try (BufferedReader reader = new BufferedReader(
-                new InputStreamReader(Files.newInputStream(Paths.get(Main.settingsPath)), StandardCharsets.UTF_8))) {
+                new InputStreamReader(Files.newInputStream(Paths.get(Main.SETTINGS_PATH)), StandardCharsets.UTF_8))) {
             String line;
             int i = 0;
 
@@ -221,22 +221,22 @@ public class Common {
             for (String[] f : lines) {
                 switch (f[0]) {
                     case "fontColorRed":
-                        Main.guiFont[0] = Integer.parseInt(f[1].trim());
+                        Main.GUI_FONT[0] = Integer.parseInt(f[1].trim());
                         break;
                     case "fontColorGreen":
-                        Main.guiFont[1] = Integer.parseInt(f[1].trim());
+                        Main.GUI_FONT[1] = Integer.parseInt(f[1].trim());
                         break;
                     case "fontColorBlue":
-                        Main.guiFont[2] = Integer.parseInt(f[1].trim());
+                        Main.GUI_FONT[2] = Integer.parseInt(f[1].trim());
                         break;
                     case "backgroundColorRed":
-                        Main.guiBackground[0] = Integer.parseInt(f[1].trim());
+                        Main.GUI_BACKGROUND[0] = Integer.parseInt(f[1].trim());
                         break;
                     case "backgroundColorGreen":
-                        Main.guiBackground[1] = Integer.parseInt(f[1].trim());
+                        Main.GUI_BACKGROUND[1] = Integer.parseInt(f[1].trim());
                         break;
                     case "backgroundColorBlue":
-                        Main.guiBackground[2] = Integer.parseInt(f[1].trim());
+                        Main.GUI_BACKGROUND[2] = Integer.parseInt(f[1].trim());
                         break;
                 }
             }
@@ -258,7 +258,7 @@ public class Common {
         }
         // write new values
         Common.writeToConfig(Gui.sendEmailTo.getText(), "email");
-        Common.writeToConfig(String.valueOf(Gui.newsIntervalCbox.getSelectedItem()), "interval");
+        Common.writeToConfig(String.valueOf(Gui.newsInterval.getSelectedItem()), "interval");
         Common.writeToConfig("todayOrNotChbx", "checkbox");
         Common.writeToConfig("checkTitle", "checkbox");
         Common.writeToConfig("checkLink", "checkbox");
@@ -298,10 +298,10 @@ public class Common {
 
     // Считывание настроек почты из файла
     public static void getEmailSettingsFromFile() {
-        int linesAmount = Common.countLines(Main.settingsPath);
+        int linesAmount = Common.countLines();
         String[][] lines = new String[linesAmount][];
         try (BufferedReader reader = new BufferedReader(
-                new InputStreamReader(Files.newInputStream(Paths.get(Main.settingsPath)), StandardCharsets.UTF_8))) {
+                new InputStreamReader(Files.newInputStream(Paths.get(Main.SETTINGS_PATH)), StandardCharsets.UTF_8))) {
             String line;
             int i = 0;
 
@@ -327,9 +327,9 @@ public class Common {
     }
 
     // Подсчет количества строк в файле
-    static int countLines(String p_path) {
+    static int countLines() {
         try {
-            LineNumberReader reader = new LineNumberReader(new FileReader(p_path));
+            LineNumberReader reader = new LineNumberReader(new FileReader(Main.SETTINGS_PATH));
             int cnt;
             while (true) {
                 if (reader.readLine() == null) break;
@@ -345,7 +345,7 @@ public class Common {
 
     // Удаление ключевого слова из combo box
     public static void delSettings(String s) throws IOException {
-        Path input = Paths.get(Main.settingsPath);
+        Path input = Paths.get(Main.SETTINGS_PATH);
         Path temp = Files.createTempFile("temp", ".txt");
         try (Stream<String> lines = Files.lines(input)) {
             try (BufferedWriter writer = Files.newBufferedWriter(temp)) {
@@ -381,8 +381,8 @@ public class Common {
     // Шкала прогресса
     public static void fill() {
         int counter = 0;
-        while (!Search.isSearchFinished.get() || !isSending.get()) {
-            if (!isSending.get()) Gui.progressBar.setForeground(new Color(255, 115, 0));
+        while (!Search.isSearchFinished.get() || !IS_SENDING.get()) {
+            if (!IS_SENDING.get()) Gui.progressBar.setForeground(new Color(255, 115, 0));
             else Gui.progressBar.setForeground(new Color(10, 255, 41));
             if (counter == 99) {
                 counter = 0;
@@ -400,13 +400,13 @@ public class Common {
     // Интервал поиска/таймера в секундах
     static int getInterval() {
         int minutes;
-        if (Objects.requireNonNull(Gui.newsIntervalCbox.getSelectedItem()).toString().contains(" min")) {
-            minutes = Integer.parseInt(Objects.requireNonNull(Gui.newsIntervalCbox
+        if (Objects.requireNonNull(Gui.newsInterval.getSelectedItem()).toString().contains(" min")) {
+            minutes = Integer.parseInt(Objects.requireNonNull(Gui.newsInterval
                             .getSelectedItem())
                     .toString()
                     .replace(" min", ""));
         } else {
-            minutes = Integer.parseInt(Objects.requireNonNull(Gui.newsIntervalCbox
+            minutes = Integer.parseInt(Objects.requireNonNull(Gui.newsInterval
                             .getSelectedItem())
                     .toString()
                     .replace(" hour", "")
@@ -415,10 +415,10 @@ public class Common {
         return minutes;
     }
 
-    // Сравнение дат для отображения новостей по интервалу (Gui.newsIntervalCbox)
+    // Сравнение дат для отображения новостей по интервалу (Gui.newsInterval)
     public static int compareDatesOnly(Date p_now, Date p_in) {
         int minutes;
-        if (Main.isConsoleSearch.get()) minutes = Main.minutesIntervalForConsoleSearch;
+        if (Main.IS_CONSOLE_SEARCH.get()) minutes = Main.minutesIntervalForConsoleSearch;
         else minutes = Common.getInterval();
 
         Calendar minus = Calendar.getInstance();
@@ -440,33 +440,19 @@ public class Common {
             case "smi": {
                 sqlite.selectSources("active_smi");
                 int i = 1;
-                for (String s : Common.smi_source) {
-                    Object[] row = new Object[]{i, s, Common.smi_is_active.get(i - 1)};
+                for (String s : Common.SMI_SOURCE) {
+                    Object[] row = new Object[]{i, s, Common.SMI_IS_ACTIVE.get(i - 1)};
                     Dialogs.model.addRow(row);
                     i++;
                 }
                 break;
             }
             case "log": //TODO перенастроить лог на новый файл
-//                String path = Main.logPath;
-//
-//                try (BufferedReader reader = new BufferedReader(
-//                        new InputStreamReader(Files.newInputStream(Paths.get(path)), StandardCharsets.UTF_8))) {
-//                    String line;
-//                    StringBuilder allTab = new StringBuilder();
-//
-//                    while ((line = reader.readLine()) != null) {
-//                        allTab.append(line).append("\n");
-//                    }
-//                    Dialogs.textAreaForDialogs.setText(allTab.toString());
-//                } catch (IOException e) {
-//                    e.printStackTrace();
-//                }
                 break;
             case "excl": {
                 sqlite.selectSources("excl");
                 int i = 1;
-                for (String s : Common.excludedWords) {
+                for (String s : Common.EXCLUDED_WORDS) {
                     Object[] row = new Object[]{i, s};
                     Dialogs.model.addRow(row);
                     i++;
