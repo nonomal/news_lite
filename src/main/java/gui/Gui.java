@@ -863,7 +863,7 @@ public class Gui extends JFrame {
 
         //SQLite
         JButton sqliteBtn = new JButton();
-        sqliteBtn.setToolTipText("press CTRL+v in SQLite to open the database");
+        sqliteBtn.setToolTipText("press CTRL+V in SQLite to open the database");
         sqliteBtn.setFocusable(false);
         sqliteBtn.setContentAreaFilled(true);
         sqliteBtn.setBorderPainted(false);
