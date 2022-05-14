@@ -873,16 +873,15 @@ public class Gui extends JFrame {
         sqliteBtn.addActionListener(e -> {
             // запуск SQLite
             if (Desktop.isDesktopSupported() && Desktop.getDesktop().isSupported(Desktop.Action.OPEN)) {
-                //Desktop.getDesktop().open(new File("src\\res\\sqlite3.exe"));
                 try {
-                    Desktop.getDesktop().open(new File("C:\\Users\\rps_p\\News\\sqlite3.exe"));
+                    Desktop.getDesktop().open(new File(Main.DIRECTORY_PATH + "sqlite3.exe"));
                 } catch (IOException io) {
                     io.printStackTrace();
                 }
             }
 
             // копируем адрес базы в SQLite в системный буфер для быстрого доступа
-            String pathToBase = ".open C:/Users/rps_p/News/news.db"; //delete from rss_list where id = 0; select * from rss_list;
+            String pathToBase = (".open " + Main.DIRECTORY_PATH + "news.db").replace("\\", "/");
             Toolkit.getDefaultToolkit().getSystemClipboard().setContents(new StringSelection(pathToBase), null);
         });
         sqliteBtn.addMouseListener(new MouseAdapter() {
