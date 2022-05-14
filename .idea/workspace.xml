@@ -9,10 +9,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9e6d6f99-cebb-4fd8-99d4-ae1b59f22e89" name="Default Changelist" comment="feat: рефакторинг">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/gui/Gui.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/gui/Gui.java" afterDir="false" />
-    </list>
+    <list default="true" id="9e6d6f99-cebb-4fd8-99d4-ae1b59f22e89" name="Default Changelist" comment="feat: уточнение пути к БД" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -171,20 +168,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1616704248449</updated>
-    </task>
-    <task id="LOCAL-00218" summary="feat: тест подключения к SQLite">
-      <created>1649410741408</created>
-      <option name="number" value="00218" />
-      <option name="presentableId" value="LOCAL-00218" />
-      <option name="project" value="LOCAL" />
-      <updated>1649410741409</updated>
-    </task>
-    <task id="LOCAL-00219" summary="feat: шире интерфейс">
-      <created>1651238676663</created>
-      <option name="number" value="00219" />
-      <option name="presentableId" value="LOCAL-00219" />
-      <option name="project" value="LOCAL" />
-      <updated>1651238676664</updated>
     </task>
     <task id="LOCAL-00220" summary="feat: шире интерфейс 1.2.">
       <created>1651239688634</created>
@@ -515,7 +498,21 @@
       <option name="project" value="LOCAL" />
       <updated>1652183314260</updated>
     </task>
-    <option name="localTasksCounter" value="267" />
+    <task id="LOCAL-00267" summary="feat: уточнение пути к БД">
+      <created>1652535529056</created>
+      <option name="number" value="00267" />
+      <option name="presentableId" value="LOCAL-00267" />
+      <option name="project" value="LOCAL" />
+      <updated>1652535529056</updated>
+    </task>
+    <task id="LOCAL-00268" summary="feat: уточнение пути к БД">
+      <created>1652535539497</created>
+      <option name="number" value="00268" />
+      <option name="presentableId" value="LOCAL-00268" />
+      <option name="project" value="LOCAL" />
+      <updated>1652535539497</updated>
+    </task>
+    <option name="localTasksCounter" value="269" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -533,7 +530,6 @@
     <ignored-roots>
       <path value="$PROJECT_DIR$" />
     </ignored-roots>
-    <MESSAGE value="feat: отображение долгого времени поиска в консоли" />
     <MESSAGE value="info: оптимизация работы с БД" />
     <MESSAGE value="info: время поиска" />
     <MESSAGE value="feat: добавлен тест проверки соединения с интернетом" />
@@ -558,7 +554,8 @@
     <MESSAGE value="feat: рефакторинг - убрать лишний цикл" />
     <MESSAGE value="feat: рефакторинг общий" />
     <MESSAGE value="feat: рефакторинг" />
-    <option name="LAST_COMMIT_MESSAGE" value="feat: рефакторинг" />
+    <MESSAGE value="feat: уточнение пути к БД" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat: уточнение пути к БД" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
