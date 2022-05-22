@@ -9,7 +9,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9e6d6f99-cebb-4fd8-99d4-ae1b59f22e89" name="Default Changelist" comment="feat: log" />
+    <list default="true" id="9e6d6f99-cebb-4fd8-99d4-ae1b59f22e89" name="Default Changelist" comment="feat: log">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/DifferentTests.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/DifferentTests.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -80,7 +83,7 @@
       <command value="mvn clean" />
     </option>
   </component>
-  <component name="RunManager" selected="Application.Main">
+  <component name="RunManager" selected="JUnit.DifferentTests.shouldOnTest">
     <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="main.Main" />
       <module name="News" />
@@ -119,6 +122,16 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="DifferentTests.shouldOnTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="News" />
+      <option name="PACKAGE_NAME" value="" />
+      <option name="MAIN_CLASS_NAME" value="DifferentTests" />
+      <option name="METHOD_NAME" value="shouldOnTest" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="DifferentTests.shouldOpenSQLiteConnectionTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="News" />
       <extension name="coverage">
@@ -135,29 +148,13 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="DifferentTests.shouldToCheckInternetAvailableTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="News" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value=".*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="" />
-      <option name="MAIN_CLASS_NAME" value="DifferentTests" />
-      <option name="METHOD_NAME" value="shouldToCheckInternetAvailableTest" />
-      <option name="TEST_OBJECT" value="method" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="JUnit.DifferentTests.shouldOnTest" />
         <item itemvalue="Application.Main" />
         <item itemvalue="JUnit.DifferentTests.shouldOpenSQLiteConnectionTest" />
         <item itemvalue="JUnit.DifferentTests.openSQLiteConnection" />
         <item itemvalue="JUnit.DifferentTests" />
-        <item itemvalue="JUnit.DifferentTests.shouldToCheckInternetAvailableTest" />
       </list>
     </recent_temporary>
   </component>
@@ -169,13 +166,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1616704248449</updated>
-    </task>
-    <task id="LOCAL-00232" summary="feat: изменён интерфейс">
-      <created>1651590757810</created>
-      <option name="number" value="00232" />
-      <option name="presentableId" value="LOCAL-00232" />
-      <option name="project" value="LOCAL" />
-      <updated>1651590757811</updated>
     </task>
     <task id="LOCAL-00233" summary="feat: изменён интерфейс">
       <created>1651590787450</created>
@@ -513,7 +503,14 @@
       <option name="project" value="LOCAL" />
       <updated>1653228392177</updated>
     </task>
-    <option name="localTasksCounter" value="281" />
+    <task id="LOCAL-00281" summary="feat: log">
+      <created>1653229177035</created>
+      <option name="number" value="00281" />
+      <option name="presentableId" value="LOCAL-00281" />
+      <option name="project" value="LOCAL" />
+      <updated>1653229177035</updated>
+    </task>
+    <option name="localTasksCounter" value="282" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
