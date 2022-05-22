@@ -40,7 +40,7 @@ public class Main {
         if (!mainDirectory.exists()) mainDirectory.mkdirs();
 
         // log file create
-//        File logIsExists = new File(DIRECTORY_PATH + "app.log"); // TODO заполнять логом файл по этому адресу
+//        File logIsExists = new File(DIRECTORY_PATH + "app.log"); // TODO logback.xml: property "LOG" = DIRECTORY_PATH + "app.log"
 //        if (!logIsExists.exists()) {
 //            try {
 //                logIsExists.createNewFile();
