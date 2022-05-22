@@ -449,21 +449,20 @@ public class Common {
                 break;
             }
             case "log": //TODO перенастроить лог на новый файл
-//                String path = Main.logPath;
-//
-//                try (BufferedReader reader = new BufferedReader(
-//                        new InputStreamReader(Files.newInputStream(Paths.get(path)), StandardCharsets.UTF_8))) {
-//                    String line;
-//                    StringBuilder allTab = new StringBuilder();
-//
-//                    while ((line = reader.readLine()) != null) {
-//                        allTab.append(line).append("\n");
-//                    }
-//                    Dialogs.textAreaForDialogs.setText(allTab.toString());
-//                } catch (IOException e) {
-//                    e.printStackTrace();
-//                }
-                Dialogs.textAreaForDialogs.setText("In progress");
+                String path = "logs/app.log";
+
+                try (BufferedReader reader = new BufferedReader(
+                        new InputStreamReader(Files.newInputStream(Paths.get(path)), StandardCharsets.UTF_8))) {
+                    String line;
+                    StringBuilder allTab = new StringBuilder();
+
+                    while ((line = reader.readLine()) != null) {
+                        allTab.append(line).append("\n");
+                    }
+                    Dialogs.textAreaForDialogs.setText(allTab.toString());
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
                 break;
             case "excl": {
                 sqlite.selectSources("excl");

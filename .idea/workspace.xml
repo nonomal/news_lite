@@ -9,7 +9,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9e6d6f99-cebb-4fd8-99d4-ae1b59f22e89" name="Default Changelist" comment="feat: pom">
+    <list default="true" id="9e6d6f99-cebb-4fd8-99d4-ae1b59f22e89" name="Default Changelist" comment="feat: log">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/utils/Common.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/utils/Common.java" afterDir="false" />
     </list>
@@ -171,13 +171,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1616704248449</updated>
-    </task>
-    <task id="LOCAL-00223" summary="feat: изменение интерфейса">
-      <created>1651496941150</created>
-      <option name="number" value="00223" />
-      <option name="presentableId" value="LOCAL-00223" />
-      <option name="project" value="LOCAL" />
-      <updated>1651496941150</updated>
     </task>
     <task id="LOCAL-00224" summary="feat: изменение интерфейса">
       <created>1651498272402</created>
@@ -515,7 +508,14 @@
       <option name="project" value="LOCAL" />
       <updated>1653207230717</updated>
     </task>
-    <option name="localTasksCounter" value="272" />
+    <task id="LOCAL-00272" summary="feat: log">
+      <created>1653212268462</created>
+      <option name="number" value="00272" />
+      <option name="presentableId" value="LOCAL-00272" />
+      <option name="project" value="LOCAL" />
+      <updated>1653212268463</updated>
+    </task>
+    <option name="localTasksCounter" value="273" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -533,7 +533,6 @@
     <ignored-roots>
       <path value="$PROJECT_DIR$" />
     </ignored-roots>
-    <MESSAGE value="info: время поиска" />
     <MESSAGE value="feat: добавлен тест проверки соединения с интернетом" />
     <MESSAGE value="feat: добавлен тест" />
     <MESSAGE value="feat: тест подключения к SQLite" />
@@ -558,7 +557,8 @@
     <MESSAGE value="feat: рефакторинг" />
     <MESSAGE value="feat: уточнение пути к БД" />
     <MESSAGE value="feat: pom" />
-    <option name="LAST_COMMIT_MESSAGE" value="feat: pom" />
+    <MESSAGE value="feat: log" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat: log" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
