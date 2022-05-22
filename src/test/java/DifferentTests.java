@@ -18,6 +18,12 @@ import static org.junit.jupiter.api.Assertions.*;
 class DifferentTests {
 
     @Test
+    public void shouldFindAndSendResultsToEmail() throws IOException {
+        String[] args = {"rps_project@mail.ru", "30", "а", "е"};
+        Main.main(args);
+    }
+
+    @Test
     void shouldToCheckInternetAvailableTest() throws IOException {
         try (Socket socket = new Socket()) {
             String hostName = "google.com";
@@ -43,11 +49,4 @@ class DifferentTests {
             e.printStackTrace();
         }
     }
-
-    @Test
-    public void shouldFindAndSendResultsToEmail() throws IOException {
-        String[] args = {"rps_project@mail.ru", "30", "а", "е"};
-        Main.main(args);
-    }
-
 }
