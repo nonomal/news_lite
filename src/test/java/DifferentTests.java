@@ -46,7 +46,6 @@ class DifferentTests {
 
     @Test
     public void shouldFindAndSendResultsToEmail() throws IOException {
-        System.out.println("main");
         String[] args = {"rps_project@mail.ru", "30", "а", "е"};
         Main.main(args);
     }
