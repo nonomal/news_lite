@@ -449,7 +449,7 @@ public class Common {
                 break;
             }
             case "log":
-                String path = "logs/app.log";
+                String path = "C:/Users/Public/Documents/app.log"; // TODO dynamic path
 
                 try (BufferedReader reader = new BufferedReader(
                         new InputStreamReader(Files.newInputStream(Paths.get(path)), StandardCharsets.UTF_8))) {

@@ -35,8 +35,19 @@ public class Main {
         MIN_PUB_DATE.set(Calendar.YEAR, 2022);
         MIN_PUB_DATE.set(Calendar.DAY_OF_YEAR, 1);
 
+        // main directory create
         File mainDirectory = new File(DIRECTORY_PATH);
         if (!mainDirectory.exists()) mainDirectory.mkdirs();
+
+        // log file create
+//        File logIsExists = new File(DIRECTORY_PATH + "app.log");
+//        if (!logIsExists.exists()) {
+//            try {
+//                logIsExists.createNewFile();
+//            } catch (IOException e) {
+//                log.error("log create failed");
+//            }
+//        }
 
         // создание файлов программы
         File sqliteExeIsExists = new File(DIRECTORY_PATH + "sqlite3.exe");
