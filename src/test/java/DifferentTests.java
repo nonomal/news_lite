@@ -2,10 +2,7 @@ import main.Main;
 import org.junit.jupiter.api.Test;
 import utils.InternetAvailabilityChecker;
 
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.net.UnknownHostException;

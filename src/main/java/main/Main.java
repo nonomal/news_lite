@@ -73,7 +73,7 @@ public class Main {
     }
 
     /**
-     * Main arguments:
+     * Main arguments for console search:
      * args1 = email
      * args2 = interval in minutes
      * args3 = keyword1, keyword2 ... argsN = search keywords
@@ -84,7 +84,7 @@ public class Main {
         if (args.length == 0) {
             log.info("Application started");
 
-            // Применяем тему FlatLaf для GUI
+            // FlatLaf theme
             // https://github.com/JFormDesigner/FlatLaf
             // https://docs.oracle.com/javase/tutorial/uiswing/lookandfeel/_nimbusDefaults.html
             UIManager.put("Component.arc", 10);
@@ -99,7 +99,7 @@ public class Main {
             FlatHiberbeeDarkIJTheme.setup();
 
             new Gui();
-            // загрузка конфигураций из файла config.txt
+            // load config.txt
             Common.getSettingsFromFile();
             Gui.newsInterval.setVisible(Gui.todayOrNotCbx.getState());
             Gui.isOnlyLastNews = Gui.onlyNewNews.getState();
@@ -117,7 +117,7 @@ public class Main {
             sqlite.closeSQLiteConnection();
         }
 
-        // проверка подключения к интернету
+        // check internet
         if (!InternetAvailabilityChecker.isInternetAvailable()) {
             Common.console("status: no internet connection");
         }
