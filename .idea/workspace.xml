@@ -9,9 +9,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9e6d6f99-cebb-4fd8-99d4-ae1b59f22e89" name="Default Changelist" comment="feat: console search and sender test">
-      <change beforePath="$PROJECT_DIR$/src/test/java/DifferentTests.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/DifferentTests.java" afterDir="false" />
-    </list>
+    <list default="true" id="9e6d6f99-cebb-4fd8-99d4-ae1b59f22e89" name="Default Changelist" comment="feat: console search and sender test" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -137,20 +135,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1616704248449</updated>
-    </task>
-    <task id="LOCAL-00235" summary="feat: изменён интерфейс">
-      <created>1651591565063</created>
-      <option name="number" value="00235" />
-      <option name="presentableId" value="LOCAL-00235" />
-      <option name="project" value="LOCAL" />
-      <updated>1651591565063</updated>
-    </task>
-    <task id="LOCAL-00236" summary="feat: изменён интерфейс">
-      <created>1651755423762</created>
-      <option name="number" value="00236" />
-      <option name="presentableId" value="LOCAL-00236" />
-      <option name="project" value="LOCAL" />
-      <updated>1651755423763</updated>
     </task>
     <task id="LOCAL-00237" summary="feat: изменён интерфейс">
       <created>1651755444655</created>
@@ -481,7 +465,21 @@
       <option name="project" value="LOCAL" />
       <updated>1653230237456</updated>
     </task>
-    <option name="localTasksCounter" value="284" />
+    <task id="LOCAL-00284" summary="feat: console search and sender test">
+      <created>1653230313128</created>
+      <option name="number" value="00284" />
+      <option name="presentableId" value="LOCAL-00284" />
+      <option name="project" value="LOCAL" />
+      <updated>1653230313128</updated>
+    </task>
+    <task id="LOCAL-00285" summary="feat: console search and sender test">
+      <created>1653230773942</created>
+      <option name="number" value="00285" />
+      <option name="presentableId" value="LOCAL-00285" />
+      <option name="project" value="LOCAL" />
+      <updated>1653230773942</updated>
+    </task>
+    <option name="localTasksCounter" value="286" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">

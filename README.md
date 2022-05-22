@@ -1,9 +1,7 @@
 # Avandy news founder
 
----
 **Search all news in RSS (open source)**
 
-----
 
 ![image](https://github.com/mrprogre/news_lite/blob/master/Gui.png)
 
