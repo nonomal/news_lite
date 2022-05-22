@@ -448,7 +448,7 @@ public class Common {
                 }
                 break;
             }
-            case "log": //TODO перенастроить лог на новый файл
+            case "log":
                 String path = "logs/app.log";
 
                 try (BufferedReader reader = new BufferedReader(
