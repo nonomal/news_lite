@@ -24,6 +24,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.stream.Stream;
 
 public class Common {
+    public static final String SETTINGS_PATH = Main.DIRECTORY_PATH + "config.txt";
     private static final Logger log = LoggerFactory.getLogger(Common.class);
     public static final AtomicBoolean IS_SENDING = new AtomicBoolean(true);
     public static final ArrayList<String> KEYWORDS_LIST = new ArrayList<>();
@@ -35,7 +36,7 @@ public class Common {
 
     // Запись конфигураций приложения
     public static void writeToConfig(String p_word, String p_type) {
-        try (OutputStreamWriter writer = new OutputStreamWriter(new FileOutputStream(Main.SETTINGS_PATH, true), StandardCharsets.UTF_8)) {
+        try (OutputStreamWriter writer = new OutputStreamWriter(new FileOutputStream(SETTINGS_PATH, true), StandardCharsets.UTF_8)) {
             switch (p_type) {
                 case "keyword": {
                     String text = "keyword=" + p_word + "\n";
@@ -130,7 +131,7 @@ public class Common {
     public static List<String> getKeywordsFromFile() {
         List<String> keywords = new ArrayList<>();
         try {
-            for (String s : Files.readAllLines(Paths.get(Main.SETTINGS_PATH))) {
+            for (String s : Files.readAllLines(Paths.get(SETTINGS_PATH))) {
                 if (s.startsWith("keyword="))
                     keywords.add(s.replace("keyword=", ""));
             }
@@ -144,7 +145,7 @@ public class Common {
     public static List<String> getExcludeWordsFromFile() {
         List<String> excludeWords = new ArrayList<>();
         try {
-            for (String s : Files.readAllLines(Paths.get(Main.SETTINGS_PATH))) {
+            for (String s : Files.readAllLines(Paths.get(SETTINGS_PATH))) {
                 if (s.startsWith("exclude="))
                     excludeWords.add(s.replace("exclude=", ""));
             }
@@ -160,7 +161,7 @@ public class Common {
         String[][] lines = new String[linesAmount][];
 
         try (BufferedReader reader = new BufferedReader(
-                new InputStreamReader(Files.newInputStream(Paths.get(Main.SETTINGS_PATH)), StandardCharsets.UTF_8))) {
+                new InputStreamReader(Files.newInputStream(Paths.get(SETTINGS_PATH)), StandardCharsets.UTF_8))) {
             String line;
             int i = 0;
 
@@ -210,7 +211,7 @@ public class Common {
         String[][] lines = new String[linesAmount][];
 
         try (BufferedReader reader = new BufferedReader(
-                new InputStreamReader(Files.newInputStream(Paths.get(Main.SETTINGS_PATH)), StandardCharsets.UTF_8))) {
+                new InputStreamReader(Files.newInputStream(Paths.get(SETTINGS_PATH)), StandardCharsets.UTF_8))) {
             String line;
             int i = 0;
 
@@ -301,7 +302,7 @@ public class Common {
         int linesAmount = Common.countLines();
         String[][] lines = new String[linesAmount][];
         try (BufferedReader reader = new BufferedReader(
-                new InputStreamReader(Files.newInputStream(Paths.get(Main.SETTINGS_PATH)), StandardCharsets.UTF_8))) {
+                new InputStreamReader(Files.newInputStream(Paths.get(SETTINGS_PATH)), StandardCharsets.UTF_8))) {
             String line;
             int i = 0;
 
@@ -329,7 +330,7 @@ public class Common {
     // Подсчет количества строк в файле
     static int countLines() {
         try {
-            LineNumberReader reader = new LineNumberReader(new FileReader(Main.SETTINGS_PATH));
+            LineNumberReader reader = new LineNumberReader(new FileReader(SETTINGS_PATH));
             int cnt;
             while (true) {
                 if (reader.readLine() == null) break;
@@ -345,7 +346,7 @@ public class Common {
 
     // Удаление ключевого слова из combo box
     public static void delSettings(String s) throws IOException {
-        Path input = Paths.get(Main.SETTINGS_PATH);
+        Path input = Paths.get(SETTINGS_PATH);
         Path temp = Files.createTempFile("temp", ".txt");
         try (Stream<String> lines = Files.lines(input)) {
             try (BufferedWriter writer = Files.newBufferedWriter(temp)) {
