@@ -21,7 +21,7 @@ public class SQLite {
             Class.forName("org.sqlite.JDBC");
             connection = DriverManager.getConnection("jdbc:sqlite:" + Main.DIRECTORY_PATH + "news.db");
             isConnectionToSQLite = true;
-            log.warn("Connected to SQLite");
+            log.info("Connected to SQLite");
             Thread.sleep(1000L);
         } catch (Exception e) {
             e.printStackTrace();
@@ -181,7 +181,7 @@ public class SQLite {
                     st.close();
 
                     Common.console("status: source added");
-                    log.warn("New source added");
+                    log.info("New source added");
                 } else {
                     Common.console("status: adding source canceled");
                 }
@@ -203,7 +203,7 @@ public class SQLite {
                 st.close();
 
                 Common.console("status: word \"" + pWord + "\" excluded from analysis");
-                log.warn("New word excluded from analysis");
+                log.info("New word excluded from analysis");
             } catch (Exception e) {
                 e.printStackTrace();
                 Common.console("status: " + e.getMessage());
@@ -341,7 +341,7 @@ public class SQLite {
         try {
             if (isConnectionToSQLite) {
                 connection.close();
-                log.warn("Connection closed");
+                log.info("Connection closed");
             }
         } catch (Exception e) {
             System.out.println(e.getMessage());

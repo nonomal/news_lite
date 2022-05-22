@@ -278,7 +278,7 @@ public class Search {
                         }
                     } catch (Exception e) {
                         Common.console("status: to many news.. please restart the application!");
-                        log.warn("status: restart the application please!");
+                        log.warn("error: restart the application!");
                         isStop.set(true);
                     }
                 }
