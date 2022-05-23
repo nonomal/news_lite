@@ -80,7 +80,7 @@
       <command value="mvn clean" />
     </option>
   </component>
-  <component name="RunManager" selected="JUnit.DifferentTests.shouldOpenSQLiteConnectionTest">
+  <component name="RunManager" selected="JUnit.DifferentTests.shouldFindAndSendResultsToEmail">
     <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="main.Main" />
       <module name="News" />
@@ -104,6 +104,16 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="DifferentTests.shouldFindAndSendResultsToEmail" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="News" />
+      <option name="PACKAGE_NAME" value="" />
+      <option name="MAIN_CLASS_NAME" value="DifferentTests" />
+      <option name="METHOD_NAME" value="shouldFindAndSendResultsToEmail" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="DifferentTests.shouldOpenSQLiteConnectionTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="News" />
       <option name="PACKAGE_NAME" value="" />
@@ -116,11 +126,13 @@
     </configuration>
     <list>
       <item itemvalue="Application.Main" />
+      <item itemvalue="JUnit.DifferentTests.shouldFindAndSendResultsToEmail" />
       <item itemvalue="JUnit.DifferentTests.shouldOpenSQLiteConnectionTest" />
       <item itemvalue="JUnit.DifferentTests" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="JUnit.DifferentTests.shouldFindAndSendResultsToEmail" />
         <item itemvalue="JUnit.DifferentTests.shouldOpenSQLiteConnectionTest" />
         <item itemvalue="Application.Main" />
         <item itemvalue="JUnit.DifferentTests" />
