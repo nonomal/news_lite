@@ -187,8 +187,6 @@ public class SQLite {
                     st.setString(2, source_name.getText());
                     st.setString(3, rss_link.getText());
                     st.setInt(4, 1);
-
-                    //Statement st = connection.createStatement();
                     st.executeUpdate();
                     st.close();
 
@@ -242,7 +240,7 @@ public class SQLite {
     public void insertAllTitles(String pTitle, String pDate) {
         if (isConnectionToSQLite) {
             try {
-                String query = "INSERT INTO all_news(title, news_date) VALUES (?, ?)";
+                String query = "INSERT INTO ALL_NEWS(TITLE, NEWS_DATE) VALUES (?, ?)";
                 PreparedStatement st = connection.prepareStatement(query);
                 st.setString(1, pTitle);
                 st.setString(2, pDate);
