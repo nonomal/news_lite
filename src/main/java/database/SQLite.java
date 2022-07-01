@@ -56,7 +56,7 @@ public class SQLite {
     public void deleteTitles() {
         try {
             Statement st = connection.createStatement();
-            String query = "delete from news_dual";
+            String query = "DELETE FROM NEWS_DUAL";
             st.executeUpdate(query);
             st.close();
         } catch (Exception e) {
@@ -68,7 +68,7 @@ public class SQLite {
     public void deleteFrom256() {
         try {
             Statement st = connection.createStatement();
-            String query = "delete from titles256";
+            String query = "DELETE FROM TITLES256";
             st.executeUpdate(query);
             st.close();
         } catch (Exception e) {
@@ -175,9 +175,15 @@ public class SQLite {
                 if (result == JOptionPane.YES_OPTION) {
 
                     //запись в БД
-                    String query = "INSERT INTO rss_list(id, source, link, is_active) " + "VALUES (" + new_id + ", '" + source_name.getText() + "', '" + rss_link.getText() + "', " + 1 +")";
-                    Statement st = connection.createStatement();
-                    st.executeUpdate(query);
+                    String query = "INSERT INTO RSS_LIST(ID, SOURCE, LINK, IS_ACTIVE) VALUES (?, ?, ?, ?)";
+                    PreparedStatement st = connection.prepareStatement(query);
+                    st.setInt(1, new_id);
+                    st.setString(2, source_name.getText());
+                    st.setString(3, rss_link.getText());
+                    st.setInt(4, 1);
+
+                    //Statement st = connection.createStatement();
+                    st.executeUpdate();
                     st.close();
 
                     Common.console("status: source added");
@@ -196,10 +202,10 @@ public class SQLite {
     public void insertNewExcludedWord(String pWord) {
         if (isConnectionToSQLite) {
             try {
-                //запись в БД
-                String query = "INSERT INTO exclude(word) " + "VALUES ('" + pWord + "')";
-                Statement st = connection.createStatement();
-                st.executeUpdate(query);
+                String query = "INSERT INTO exclude(word) " + "VALUES (?)";
+                PreparedStatement st = connection.prepareStatement(query);
+                st.setString(1, pWord);
+                st.executeUpdate();
                 st.close();
 
                 Common.console("status: word \"" + pWord + "\" excluded from analysis");
@@ -215,9 +221,10 @@ public class SQLite {
     public void insertTitleIn256(String pTitle) {
         if (isConnectionToSQLite) {
             try {
-                String query256 = "INSERT INTO titles256(title) VALUES ('" + pTitle + "')";
-                Statement st256 = connection.createStatement();
-                st256.executeUpdate(query256);
+                String query256 = "INSERT INTO titles256(title) VALUES (?)";
+                PreparedStatement st256 = connection.prepareStatement(query256);
+                st256.setString(1, pTitle);
+                st256.executeUpdate();
                 st256.close();
             } catch (SQLException t) {
                 t.printStackTrace();
@@ -229,9 +236,11 @@ public class SQLite {
     public void insertAllTitles(String pTitle, String pDate) {
         if (isConnectionToSQLite) {
             try {
-                String q = "INSERT INTO all_news(title, news_date) VALUES ('" + pTitle + "', '" + pDate + "')";
-                Statement st = connection.createStatement();
-                st.executeUpdate(q);
+                String query = "INSERT INTO all_news(title, news_date) VALUES (?, ?)";
+                PreparedStatement st = connection.prepareStatement(query);
+                st.setString(1, pTitle);
+                st.setString(2, pDate);
+                st.executeUpdate();
                 st.close();
             } catch (SQLException ignored) {
             }

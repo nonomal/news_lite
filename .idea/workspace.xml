@@ -9,7 +9,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9e6d6f99-cebb-4fd8-99d4-ae1b59f22e89" name="Default Changelist" comment="feat: console search and sender test" />
+    <list default="true" id="9e6d6f99-cebb-4fd8-99d4-ae1b59f22e89" name="Default Changelist" comment="feat: refactor">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/database/SQLite.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/database/SQLite.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -47,19 +50,25 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;ASKED_MARK_IGNORED_FILES_AS_EXCLUDED&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;D:/Downloads/!work/Seafile/files/java&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Artifacts&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
-    &quot;run.code.analysis.last.selected.profile&quot;: &quot;pProject Default&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ASKED_MARK_IGNORED_FILES_AS_EXCLUDED": "true",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "last_opened_file_path": "D:/Downloads/!work/Seafile/files/java",
+    "project.structure.last.edited": "Artifacts",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.2",
+    "run.code.analysis.last.selected.profile": "pProject Default",
+    "settings.editor.selected.configurable": "preferences.pluginManager"
+  },
+  "keyToStringList": {
+    "DatabaseDriversLRU": [
+      "sqlite"
+    ]
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CreateTestDialog.Recents.Supers">
       <recent name="" />
@@ -126,15 +135,15 @@
     </configuration>
     <list>
       <item itemvalue="Application.Main" />
+      <item itemvalue="JUnit.DifferentTests" />
       <item itemvalue="JUnit.DifferentTests.shouldFindAndSendResultsToEmail" />
       <item itemvalue="JUnit.DifferentTests.shouldOpenSQLiteConnectionTest" />
-      <item itemvalue="JUnit.DifferentTests" />
     </list>
     <recent_temporary>
       <list>
         <item itemvalue="Application.Main" />
-        <item itemvalue="JUnit.DifferentTests.shouldFindAndSendResultsToEmail" />
         <item itemvalue="JUnit.DifferentTests.shouldOpenSQLiteConnectionTest" />
+        <item itemvalue="JUnit.DifferentTests.shouldFindAndSendResultsToEmail" />
         <item itemvalue="JUnit.DifferentTests" />
       </list>
     </recent_temporary>
@@ -147,13 +156,11 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1616704248449</updated>
-    </task>
-    <task id="LOCAL-00237" summary="feat: изменён интерфейс">
-      <created>1651755444655</created>
-      <option name="number" value="00237" />
-      <option name="presentableId" value="LOCAL-00237" />
-      <option name="project" value="LOCAL" />
-      <updated>1651755444655</updated>
+      <workItem from="1653395367849" duration="185000" />
+      <workItem from="1653985861182" duration="36000" />
+      <workItem from="1653985992133" duration="96000" />
+      <workItem from="1653986101735" duration="194000" />
+      <workItem from="1656679180755" duration="457000" />
     </task>
     <task id="LOCAL-00238" summary="feat: доработан интерфейс">
       <created>1651755831904</created>
@@ -491,8 +498,18 @@
       <option name="project" value="LOCAL" />
       <updated>1653230773942</updated>
     </task>
-    <option name="localTasksCounter" value="286" />
+    <task id="LOCAL-00286" summary="feat: refactor">
+      <created>1653395467088</created>
+      <option name="number" value="00286" />
+      <option name="presentableId" value="LOCAL-00286" />
+      <option name="project" value="LOCAL" />
+      <updated>1653395467088</updated>
+    </task>
+    <option name="localTasksCounter" value="287" />
     <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
     <option name="TAB_STATES">
@@ -509,7 +526,6 @@
     <ignored-roots>
       <path value="$PROJECT_DIR$" />
     </ignored-roots>
-    <MESSAGE value="feat: добавлен тест" />
     <MESSAGE value="feat: тест подключения к SQLite" />
     <MESSAGE value="feat: шире интерфейс" />
     <MESSAGE value="feat: шире интерфейс 1.2." />
@@ -534,7 +550,8 @@
     <MESSAGE value="feat: pom" />
     <MESSAGE value="feat: log" />
     <MESSAGE value="feat: console search and sender test" />
-    <option name="LAST_COMMIT_MESSAGE" value="feat: console search and sender test" />
+    <MESSAGE value="feat: refactor" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat: refactor" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
