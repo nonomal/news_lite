@@ -143,7 +143,7 @@ public class DatabaseQueries {
         if (SQLite.isConnectionToSQLite) {
             try {
                 // Диалоговое окно добавления источника новостей в базу данных
-                RSSInfoFromUI rssInfoFromUI = dbUtil.getRssInfoFromUi();
+                RssInfoFromUi rssInfoFromUI = dbUtil.getRssInfoFromUi();
 
                 if (rssInfoFromUI.getResult() == JOptionPane.YES_OPTION) {
                     String query = "INSERT INTO RSS_LIST(ID, SOURCE, LINK, IS_ACTIVE) VALUES (?, ?, ?, ?)";
