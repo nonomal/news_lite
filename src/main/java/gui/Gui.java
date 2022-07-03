@@ -1,5 +1,6 @@
 package gui;
 
+import database.DatabaseQueries;
 import database.SQLite;
 import email.EmailSender;
 import main.Main;
@@ -37,7 +38,8 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 public class Gui extends JFrame {
     private static final Logger log = LoggerFactory.getLogger(Gui.class);
-    final SQLite sqlite = new SQLite();
+    final SQLite sqLite = new SQLite();
+    final DatabaseQueries databaseQueries = new DatabaseQueries();
     final Search search = new Search();
     private static final Font GUI_FONT = new Font("Tahoma", Font.PLAIN, 11);
     private static final String[] INTERVALS = {"1 min", "5 min", "15 min", "30 min", "45 min", "1 hour", "2 hours",
@@ -113,7 +115,7 @@ public class Gui extends JFrame {
                 SQLite.isConnectionToSQLite = false;
                 Common.saveState();
                 log.info("Application closed");
-                if (SQLite.isConnectionToSQLite) sqlite.closeSQLiteConnection();
+                if (SQLite.isConnectionToSQLite) sqLite.closeSQLiteConnection();
             }
 
             // сворачивание в трей
@@ -819,7 +821,7 @@ public class Gui extends JFrame {
         addNewSource.setBackground(new Color(243, 229, 255));
         addNewSource.setBounds(902, 479, 14, 14);
         getContentPane().add(addNewSource);
-        addNewSource.addActionListener(e -> sqlite.insertNewSource());
+        addNewSource.addActionListener(e -> databaseQueries.insertNewSource(SQLite.connection));
         addNewSource.addMouseListener(new MouseAdapter() {
             // наведение мышки на кнопку
             @Override
@@ -861,9 +863,9 @@ public class Gui extends JFrame {
             }
         });
 
-        //SQLite
+        //DatabaseQueries
         JButton sqliteBtn = new JButton();
-        sqliteBtn.setToolTipText("press CTRL+V in SQLite to open the database");
+        sqliteBtn.setToolTipText("press CTRL+V in DatabaseQueries to open the database");
         sqliteBtn.setFocusable(false);
         sqliteBtn.setContentAreaFilled(true);
         sqliteBtn.setBorderPainted(false);
@@ -871,7 +873,7 @@ public class Gui extends JFrame {
         sqliteBtn.setBounds(940, 479, 14, 14);
         getContentPane().add(sqliteBtn);
         sqliteBtn.addActionListener(e -> {
-            // запуск SQLite
+            // запуск DatabaseQueries
             if (Desktop.isDesktopSupported() && Desktop.getDesktop().isSupported(Desktop.Action.OPEN)) {
                 try {
                     Desktop.getDesktop().open(new File(Main.DIRECTORY_PATH + "sqlite3.exe"));
@@ -880,7 +882,7 @@ public class Gui extends JFrame {
                 }
             }
 
-            // копируем адрес базы в SQLite в системный буфер для быстрого доступа
+            // копируем адрес базы в DatabaseQueries в системный буфер для быстрого доступа
             String pathToBase = (".open " + Main.DIRECTORY_PATH + "news.db").replace("\\", "/");
             Toolkit.getDefaultToolkit().getSystemClipboard().setContents(new StringSelection(pathToBase), null);
         });
@@ -958,7 +960,7 @@ public class Gui extends JFrame {
         onlyNewNews.addItemListener(e -> {
             isOnlyLastNews = onlyNewNews.getState();
             if (!isOnlyLastNews) {
-                sqlite.deleteFrom256();
+                databaseQueries.deleteFrom256(SQLite.connection);
             }
         });
 

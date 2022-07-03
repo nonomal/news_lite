@@ -6,10 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.swing.*;
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 
 @Slf4j
 public class Utilities {
@@ -24,9 +21,10 @@ public class Utilities {
     }
 
     public int getNextMaxId(Connection connection) throws SQLException {
-        Statement maxIdSt = connection.createStatement();
-        ResultSet rs = maxIdSt.executeQuery("SELECT MAX(ID) AS ID FROM RSS_LIST");
         int maxIdInSource = 0;
+        PreparedStatement maxIdSt = connection.prepareStatement("SELECT MAX(ID) AS ID FROM RSS_LIST");
+
+        ResultSet rs = maxIdSt.executeQuery();
         while (rs.next()) {
             maxIdInSource = rs.getInt("ID");
         }

@@ -1,5 +1,6 @@
 package gui;
 
+import database.DatabaseQueries;
 import database.SQLite;
 
 import javax.swing.*;
@@ -61,7 +62,7 @@ public class ButtonColumn extends AbstractCellEditor implements TableCellRendere
     }
 
     public void actionPerformed(ActionEvent e) {
-        SQLite sqlite = new SQLite();
+        DatabaseQueries sqlite = new DatabaseQueries();
         fireEditingStopped();
         int rowWithSource = table.getSelectedRow();
         int rowWithExcludeWord = Gui.tableForAnalysis.getSelectedRow();
@@ -88,7 +89,7 @@ public class ButtonColumn extends AbstractCellEditor implements TableCellRendere
             // удаление из диалогового окна
             Gui.modelForAnalysis.removeRow(rowWithExcludeWord);
             // добавление в базу данных и файл excluded.txt
-            sqlite.insertNewExcludedWord(source);
+            sqlite.insertNewExcludedWord(source, SQLite.connection);
         }
 
         // окно источников RSS
@@ -97,10 +98,7 @@ public class ButtonColumn extends AbstractCellEditor implements TableCellRendere
             String source = (String) Dialogs.model.getValueAt(rowWithSource, 1);
             // удаление из диалогового окна
             Dialogs.model.removeRow(rowWithSource);
-            // удаление из файла sources.txt
-            //Common.delLine(source, Main.sourcesPath);
-            // удаление из базы данных
-            sqlite.deleteSource(source);
+            sqlite.deleteSource(source, SQLite.connection);
         }
 
         // окно с исключенными из анализа слов (удаляем из базы)
@@ -109,10 +107,7 @@ public class ButtonColumn extends AbstractCellEditor implements TableCellRendere
             String source = (String) Dialogs.model.getValueAt(delRowWithExcludeWord, 1);
             // удаление из диалогового окна
             Dialogs.model.removeRow(delRowWithExcludeWord);
-            // удаление из файла excluded.txt
-            //Common.delLine(source, Main.excludedPath);
-            // удаление из базы данных
-            sqlite.deleteExcluded(source);
+            sqlite.deleteExcluded(source, SQLite.connection);
         }
 
     }
