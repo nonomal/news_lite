@@ -13,7 +13,6 @@ import utils.Common;
 
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.text.SimpleDateFormat;
 import java.time.Duration;
 import java.time.LocalDateTime;
@@ -25,7 +24,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-public class Search {
+public class Search extends SearchUtils implements SearchInterface {
     private static final Logger log = LoggerFactory.getLogger(Search.class);
     public static List<String> excludeFromSearch;
     public static AtomicBoolean isStop;
@@ -54,8 +53,12 @@ public class Search {
     Duration searchTime;
 
     //Main search
+    @Override
     public void mainSearch(String pSearchType) {
         SQLite sqlite = new SQLite();
+        boolean isWord = pSearchType.equals("word");
+        boolean isWords = pSearchType.equals("words");
+
         if (!isSearchNow.get()) {
             int modelRowCount = Gui.model.getRowCount();
             dataForEmail.clear();
@@ -71,10 +74,10 @@ public class Search {
             Search.isStop.set(false);
             Gui.findWord = Gui.topKeyword.getText().toLowerCase();
 
-            if (pSearchType.equals("word")) {
+            if (isWord) {
                 Gui.searchBtnTop.setVisible(false);
                 Gui.stopBtnTop.setVisible(true);
-            } else if (pSearchType.equals("words")) {
+            } else if (isWords) {
                 Gui.searchBtnBottom.setVisible(false);
                 Gui.stopBtnBottom.setVisible(true);
             }
@@ -83,12 +86,8 @@ public class Search {
             Gui.sendEmailBtn.setIcon(Gui.SEND);
             new Thread(Common::fill).start();
             try {
-                // начало транзакции
-                PreparedStatement st = SQLite.connection.prepareStatement("insert into news_dual(title) values (?)");
-                String q_begin = "BEGIN TRANSACTION";
-                Statement st_begin = SQLite.connection.createStatement();
-                st_begin.execute(q_begin);
-                st_begin.close();
+                transactionCommand("BEGIN TRANSACTION");
+                PreparedStatement st = SQLite.connection.prepareStatement("INSERT INTO NEWS_DUAL(TITLE) VALUES (?)");
 
                 Parser parser = new Parser();
                 for (Common.SMI_ID = 0; Common.SMI_ID < Common.SMI_LINK.size(); Common.SMI_ID++) {
@@ -108,16 +107,7 @@ public class Search {
                                         .replace("<p>", "")
                                         .replace("</p>", "")
                                         .replace("<br />", "");
-                                if (newsDescribe.contains("<img")
-                                        || newsDescribe.contains("href")
-                                        || newsDescribe.contains("<div")
-                                        || newsDescribe.contains("&#34")
-                                        || newsDescribe.contains("<p lang")
-                                        || newsDescribe.contains("&quot")
-                                        || newsDescribe.contains("<span")
-                                        || newsDescribe.contains("<ol")
-                                        || newsDescribe.equals("")
-                                ) newsDescribe = title;
+                                if (isHref(newsDescribe)) newsDescribe = title;
                                 Date pubDate = entry.getPublishedDate();
                                 String dateToEmail = date_format.format(pubDate);
                                 String link = entry.getLink();
@@ -126,7 +116,7 @@ public class Search {
                                 if (pubDate.after(minDate)) checkDate = 1;
                                 else checkDate = 0;
 
-                                if (pSearchType.equals("word")) {
+                                if (isWord) {
                                     if (title.toLowerCase().contains(Gui.findWord.toLowerCase())
                                             && title.length() > 15 && checkDate == 1
                                             && !title.toLowerCase().contains(excludeFromSearch.get(0))
@@ -146,60 +136,9 @@ public class Search {
                                         // вставка всех новостей в архив (ощутимо замедляет общий поиск)
                                         sqlite.insertAllTitles(title, pubDate.toString());
 
-                                        if (Gui.todayOrNotCbx.getState() && (date_diff != 0)) {
-                                            newsCount++;
-                                            Gui.labelSum.setText(String.valueOf(newsCount));
-                                            dataForEmail.add(newsCount + ") " + title + "\n" + link + "\n" + newsDescribe + "\n" +
-                                                    smi_source + " - " + dateToEmail);
-
-                                            Object[] row = new Object[]{
-                                                    newsCount,
-                                                    smi_source,
-                                                    title,
-                                                    dateFormatHoursFirst.format(pubDate),
-                                                    link
-                                            };
-                                            Gui.model.addRow(row);
-
-                                            //SQLite
-                                            String[] subStr = title.split(" ");
-                                            for (String s : subStr) {
-                                                if (s.length() > 3) {
-                                                    assert st != null;
-                                                    st.setString(1, Common.delNoLetter(s).toLowerCase());
-                                                    st.executeUpdate();
-                                                }
-                                            }
-                                            sqlite.insertTitleIn256(Common.sha256(title + pubDate));
-
-                                        } else if (!Gui.todayOrNotCbx.getState()) {
-                                            newsCount++;
-                                            Gui.labelSum.setText(String.valueOf(newsCount));
-                                            dataForEmail.add(newsCount + ") " + title + "\n" + link + "\n" + newsDescribe + "\n" +
-                                                    smi_source + " - " + dateToEmail);
-
-                                            Object[] row = new Object[]{
-                                                    newsCount,
-                                                    smi_source,
-                                                    title,
-                                                    dateFormatHoursFirst.format(pubDate),
-                                                    link
-                                            };
-                                            Gui.model.addRow(row);
-
-                                            // SQLite
-                                            String[] subStr = title.split(" ");
-                                            for (String s : subStr) {
-                                                if (s.length() > 3) {
-                                                    assert st != null;
-                                                    st.setString(1, Common.delNoLetter(s).toLowerCase());
-                                                    st.executeUpdate();
-                                                }
-                                            }
-                                            sqlite.insertTitleIn256(Common.sha256(title + pubDate));
-                                        }
+                                        maimSearchProcess(sqlite, st, smi_source, title, newsDescribe, pubDate, dateToEmail, link, date_diff);
                                     }
-                                } else if (pSearchType.equals("words")) {
+                                } else if (isWords) {
                                     for (String it : Common.getKeywordsFromFile()) {
                                         if (title.toLowerCase().contains(it.toLowerCase()) && title.length() > 15 && checkDate == 1) {
 
@@ -212,57 +151,7 @@ public class Search {
                                             Date currentDate = new Date();
                                             int date_diff = Common.compareDatesOnly(currentDate, pubDate);
 
-                                            if (Gui.todayOrNotCbx.getState() && (date_diff != 0)) {
-                                                newsCount++;
-                                                Gui.labelSum.setText(String.valueOf(newsCount));
-                                                dataForEmail.add(newsCount + ") " + title + "\n" + link + "\n" + newsDescribe + "\n" +
-                                                        smi_source + " - " + dateToEmail);
-
-                                                Object[] row = new Object[]{
-                                                        newsCount,
-                                                        smi_source,
-                                                        title,
-                                                        dateFormatHoursFirst.format(pubDate),
-                                                        link
-                                                };
-                                                Gui.model.addRow(row);
-
-                                                //SQLite
-                                                String[] subStr = title.split(" ");
-                                                for (String s : subStr) {
-                                                    if (s.length() > 3) {
-                                                        assert st != null;
-                                                        st.setString(1, Common.delNoLetter(s).toLowerCase());
-                                                        st.executeUpdate();
-                                                    }
-                                                }
-                                                sqlite.insertTitleIn256(Common.sha256(title + pubDate));
-                                            } else if (!Gui.todayOrNotCbx.getState()) {
-                                                newsCount++;
-                                                Gui.labelSum.setText(String.valueOf(newsCount));
-                                                dataForEmail.add(newsCount + ") " + title + "\n" + link + "\n" + newsDescribe + "\n" +
-                                                        smi_source + " - " + dateToEmail);
-
-                                                Object[] row = new Object[]{
-                                                        newsCount,
-                                                        smi_source,
-                                                        title,
-                                                        dateFormatHoursFirst.format(pubDate),
-                                                        link
-                                                };
-                                                Gui.model.addRow(row);
-
-                                                //SQLite
-                                                String[] subStr = title.split(" ");
-                                                for (String s : subStr) {
-                                                    if (s.length() > 3) {
-                                                        assert st != null;
-                                                        st.setString(1, Common.delNoLetter(s).toLowerCase());
-                                                        st.executeUpdate();
-                                                    }
-                                                }
-                                                sqlite.insertTitleIn256(Common.sha256(title + pubDate));
-                                            }
+                                            maimSearchProcess(sqlite, st, smi_source, title, newsDescribe, pubDate, dateToEmail, link, date_diff);
                                         }
                                     }
                                 }
@@ -302,25 +191,19 @@ public class Search {
                     Common.trayMessage("News found: " + newsCount);
                 log.info("News found: " + newsCount);
 
-                if (pSearchType.equals("word")) {
+                if (isWord) {
                     Gui.searchBtnTop.setVisible(true);
                     Gui.stopBtnTop.setVisible(false);
-                } else if (pSearchType.equals("words")) {
+                } else if (isWords) {
                     Gui.searchBtnBottom.setVisible(true);
                     Gui.stopBtnBottom.setVisible(false);
                 }
 
                 // коммит транзакции
-                String q_commit = "COMMIT";
-                Statement st_commit = SQLite.connection.createStatement();
-                st_commit.execute(q_commit);
-                st_commit.close();
+                transactionCommand("COMMIT");
 
                 // удаляем все пустые строки
-                String q_del = "delete from news_dual where title = ''";
-                Statement st_del = SQLite.connection.createStatement();
-                st_del.executeUpdate(q_del);
-                st_del.close();
+                deleteEmptyRows();
 
                 // Заполняем таблицу анализа
                 if (!Gui.WAS_CLICK_IN_TABLE_FOR_ANALYSIS.get()) sqlite.selectSqlite();
@@ -332,16 +215,13 @@ public class Search {
 
                 sqlite.deleteDuplicates();
                 Gui.WAS_CLICK_IN_TABLE_FOR_ANALYSIS.set(false);
-                if (pSearchType.equals("word"))
+                if (isWord)
                     Common.console("info: number of news items in the archive = " + sqlite.archiveNewsCount());
                 log.info("number of news items in the archive = " + sqlite.archiveNewsCount());
             } catch (Exception e) {
                 log.warn(e.getMessage());
                 try {
-                    String q_begin = "ROLLBACK";
-                    Statement st_begin = SQLite.connection.createStatement();
-                    st_begin.execute(q_begin);
-                    st_begin.close();
+                    transactionCommand("ROLLBACK");
                 } catch (SQLException i) {
                     log.warn(i.getMessage());
                 }
@@ -350,7 +230,63 @@ public class Search {
         }
     }
 
+    private void maimSearchProcess(SQLite sqlite, PreparedStatement st, String smi_source, String title, String newsDescribe, Date pubDate, String dateToEmail, String link, int date_diff) throws SQLException {
+        if (Gui.todayOrNotCbx.getState() && (date_diff != 0)) {
+            newsCount++;
+            Gui.labelSum.setText(String.valueOf(newsCount));
+            dataForEmail.add(newsCount + ") " + title + "\n" + link + "\n" + newsDescribe + "\n" +
+                    smi_source + " - " + dateToEmail);
+
+            Object[] row = new Object[]{
+                    newsCount,
+                    smi_source,
+                    title,
+                    dateFormatHoursFirst.format(pubDate),
+                    link
+            };
+            Gui.model.addRow(row);
+
+            //SQLite
+            String[] subStr = title.split(" ");
+            for (String s : subStr) {
+                if (s.length() > 3) {
+                    assert st != null;
+                    st.setString(1, Common.delNoLetter(s).toLowerCase());
+                    st.executeUpdate();
+                }
+            }
+            sqlite.insertTitleIn256(Common.sha256(title + pubDate));
+
+        } else if (!Gui.todayOrNotCbx.getState()) {
+            newsCount++;
+            Gui.labelSum.setText(String.valueOf(newsCount));
+            dataForEmail.add(newsCount + ") " + title + "\n" + link + "\n" + newsDescribe + "\n" +
+                    smi_source + " - " + dateToEmail);
+
+            Object[] row = new Object[]{
+                    newsCount,
+                    smi_source,
+                    title,
+                    dateFormatHoursFirst.format(pubDate),
+                    link
+            };
+            Gui.model.addRow(row);
+
+            // SQLite
+            String[] subStr = title.split(" ");
+            for (String s : subStr) {
+                if (s.length() > 3) {
+                    assert st != null;
+                    st.setString(1, Common.delNoLetter(s).toLowerCase());
+                    st.executeUpdate();
+                }
+            }
+            sqlite.insertTitleIn256(Common.sha256(title + pubDate));
+        }
+    }
+
     //Console search
+    @Override
     public void searchByConsole() {
         SQLite sqlite = new SQLite();
         if (!isSearchNow.get()) {
@@ -362,9 +298,7 @@ public class Search {
 
             try {
                 // начало транзакции
-                String q_begin = "BEGIN TRANSACTION";
-                Statement st_begin = SQLite.connection.createStatement();
-                st_begin.executeUpdate(q_begin);
+                transactionCommand("BEGIN TRANSACTION");
 
                 Parser parser = new Parser();
                 for (Common.SMI_ID = 0; Common.SMI_ID < Common.SMI_LINK.size(); Common.SMI_ID++) {
@@ -384,16 +318,7 @@ public class Search {
                                         .replace("<p>", "")
                                         .replace("</p>", "")
                                         .replace("<br />", "");
-                                if (newsDescribe.contains("<img")
-                                        || newsDescribe.contains("href")
-                                        || newsDescribe.contains("<div")
-                                        || newsDescribe.contains("&#34")
-                                        || newsDescribe.contains("<p lang")
-                                        || newsDescribe.contains("&quot")
-                                        || newsDescribe.contains("<span")
-                                        || newsDescribe.contains("<ol")
-                                        || newsDescribe.equals("")
-                                ) newsDescribe = title;
+                                if (isHref(newsDescribe)) newsDescribe = title;
                                 Date pubDate = entry.getPublishedDate();
                                 String dateToEmail = date_format.format(pubDate);
                                 String link = entry.getLink();
@@ -438,14 +363,10 @@ public class Search {
                 isSearchNow.set(false);
 
                 // коммит транзакции
-                String q_commit = "COMMIT";
-                Statement st_commit = SQLite.connection.createStatement();
-                st_commit.execute(q_commit);
+                transactionCommand("COMMIT");
 
                 // удаляем все пустые строки
-                String q_del = "delete from news_dual where title = ''";
-                Statement st_del = SQLite.connection.createStatement();
-                st_del.executeUpdate(q_del);
+                deleteEmptyRows();
 
                 // Автоматическая отправка результатов
                 if (dataForEmail.size() > 0) {
@@ -458,9 +379,7 @@ public class Search {
             } catch (Exception e) {
                 e.printStackTrace();
                 try {
-                    String q_begin = "ROLLBACK";
-                    Statement st_begin = SQLite.connection.createStatement();
-                    st_begin.execute(q_begin);
+                    transactionCommand("ROLLBACK");
                 } catch (SQLException sql) {
                     sql.printStackTrace();
                 }
