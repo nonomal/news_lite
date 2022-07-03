@@ -1,16 +1,16 @@
 package database;
 
 import gui.Gui;
+import lombok.extern.slf4j.Slf4j;
 import main.Main;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import utils.Common;
 
 import javax.swing.*;
 import java.sql.*;
 
+@Slf4j
 public class SQLite {
-    private static final Logger log = LoggerFactory.getLogger(SQLite.class);
+    private final Utilities dbUtil = new Utilities();
     public static Connection connection;
     public static boolean isConnectionToSQLite;
     private static final int WORD_FREQ_MATCHES = 2;
@@ -155,43 +155,22 @@ public class SQLite {
     // вставка нового источника
     public void insertNewSource() {
         if (isConnectionToSQLite) {
-            int max_id_in_source = 0;
-            int new_id;
             try {
-                String max_id_query = "SELECT MAX(ID) AS ID FROM RSS_LIST";
-                PreparedStatement max_id_st = connection.prepareStatement(max_id_query);
-
-                ResultSet rs = max_id_st.executeQuery();
-                while (rs.next()) {
-                    max_id_in_source = rs.getInt("ID");
-                }
-                rs.close();
-                max_id_st.close();
-                new_id = max_id_in_source + 1;
-
+                RSSInfoFromUI rssInfoFromUI = dbUtil.getRssInfoFromUi();
                 // Диалоговое окно добавления источника новостей в базу данных
-                JTextField source_name = new JTextField();
-                JTextField rss_link = new JTextField();
-                Object[] new_source = {
-                        "Source:", source_name,
-                        "Link to rss:", rss_link
-                };
-
-                int result = JOptionPane.showConfirmDialog(Gui.scrollPane, new_source, "New source", JOptionPane.OK_CANCEL_OPTION);
-                if (result == JOptionPane.YES_OPTION) {
-
+                if (rssInfoFromUI.getResult() == JOptionPane.YES_OPTION) {
                     //запись в БД
                     String query = "INSERT INTO RSS_LIST(ID, SOURCE, LINK, IS_ACTIVE) VALUES (?, ?, ?, ?)";
                     PreparedStatement st = connection.prepareStatement(query);
-                    st.setInt(1, new_id);
-                    st.setString(2, source_name.getText());
-                    st.setString(3, rss_link.getText());
+                    st.setInt(1, dbUtil.getNextMaxId(connection));
+                    st.setString(2, rssInfoFromUI.getSourceName().getText());
+                    st.setString(3, rssInfoFromUI.getRssLink().getText());
                     st.setInt(4, 1);
                     st.executeUpdate();
                     st.close();
 
                     Common.console("status: source added");
-                    log.info("New source added");
+                    log.info("New source added: " + rssInfoFromUI.getSourceName().getText());
                 } else {
                     Common.console("status: adding source canceled");
                 }
