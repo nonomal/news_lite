@@ -5,14 +5,15 @@ import main.Main;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 
 @Slf4j
 public class SQLite {
     public static Connection connection;
     public static boolean isConnectionToSQLite;
 
-    // Открытие соединения с базой данных
-    public void openSQLiteConnection() {
+    public void openConnection() {
         try {
             Class.forName("org.sqlite.JDBC");
             connection = DriverManager.getConnection("jdbc:sqlite:" + Main.DIRECTORY_PATH + "news.db");
@@ -24,8 +25,7 @@ public class SQLite {
         }
     }
 
-    // закрытие соединения DatabaseQueries
-    public void closeSQLiteConnection() {
+    public void closeConnection() {
         try {
             if (isConnectionToSQLite) {
                 connection.close();
@@ -34,5 +34,11 @@ public class SQLite {
         } catch (Exception e) {
             log.error("Connection closed failed:\n" + e.getMessage());
         }
+    }
+
+    public void transactionCommand(String command) throws SQLException {
+        PreparedStatement statement = connection.prepareStatement(command);
+        statement.execute();
+        statement.close();
     }
 }

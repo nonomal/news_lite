@@ -318,4 +318,11 @@ public class DatabaseQueries {
             }
         }
     }
+
+    // удаляем все пустые строки
+    public void deleteEmptyRows(Connection connection) throws SQLException {
+        String query = "DELETE FROM NEWS_DUAL WHERE TITLE = ''";
+        PreparedStatement delete = connection.prepareStatement(query);
+        delete.executeUpdate();
+    }
 }

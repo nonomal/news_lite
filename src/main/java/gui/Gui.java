@@ -115,7 +115,7 @@ public class Gui extends JFrame {
                 SQLite.isConnectionToSQLite = false;
                 Common.saveState();
                 log.info("Application closed");
-                if (SQLite.isConnectionToSQLite) sqLite.closeSQLiteConnection();
+                if (SQLite.isConnectionToSQLite) sqLite.closeConnection();
             }
 
             // сворачивание в трей
@@ -360,9 +360,7 @@ public class Gui extends JFrame {
                 stopBtnTop.setVisible(false);
                 Search.isSearchNow.set(false);
                 try {
-                    String q_begin = "ROLLBACK";
-                    Statement st_begin = SQLite.connection.createStatement();
-                    st_begin.executeUpdate(q_begin);
+                    sqLite.transactionCommand("ROLLBACK");
                 } catch (SQLException ignored) {
                 }
             } catch (Exception t) {
@@ -564,9 +562,7 @@ public class Gui extends JFrame {
                 stopBtnBottom.setVisible(false);
                 Search.isSearchNow.set(false);
                 try {
-                    String q_begin = "ROLLBACK";
-                    Statement st_begin = SQLite.connection.createStatement();
-                    st_begin.executeUpdate(q_begin);
+                    sqLite.transactionCommand("ROLLBACK");
                 } catch (SQLException ignored) {
                 }
             } catch (Exception t) {

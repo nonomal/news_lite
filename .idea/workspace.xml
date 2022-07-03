@@ -9,17 +9,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9e6d6f99-cebb-4fd8-99d4-ae1b59f22e89" name="Default Changelist" comment="info: new source refactor">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    <list default="true" id="9e6d6f99-cebb-4fd8-99d4-ae1b59f22e89" name="Default Changelist" comment="info: SQLite refactor">
+      <change beforePath="$PROJECT_DIR$/src/main/java/database/DatabaseQueries.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/database/DatabaseQueries.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/database/SQLite.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/database/SQLite.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/database/Utilities.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/database/Utilities.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/gui/ButtonColumn.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/gui/ButtonColumn.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/gui/CheckBoxEditor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/gui/CheckBoxEditor.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/gui/Gui.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/gui/Gui.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/main/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/main/Main.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/search/Search.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/search/Search.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/search/SearchUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/search/SearchUtils.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/utils/Common.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/utils/Common.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -183,21 +179,7 @@
       <workItem from="1656680830060" duration="420000" />
       <workItem from="1656766197448" duration="117000" />
       <workItem from="1656861724607" duration="1923000" />
-      <workItem from="1656877727734" duration="3671000" />
-    </task>
-    <task id="LOCAL-00247" summary="feat: запись интервалов">
-      <created>1651831419073</created>
-      <option name="number" value="00247" />
-      <option name="presentableId" value="LOCAL-00247" />
-      <option name="project" value="LOCAL" />
-      <updated>1651831419073</updated>
-    </task>
-    <task id="LOCAL-00248" summary="feat: добавлено логирование">
-      <created>1651834245337</created>
-      <option name="number" value="00248" />
-      <option name="presentableId" value="LOCAL-00248" />
-      <option name="project" value="LOCAL" />
-      <updated>1651834245337</updated>
+      <workItem from="1656877727734" duration="4390000" />
     </task>
     <task id="LOCAL-00249" summary="feat: добавлено логирование">
       <created>1651834268096</created>
@@ -528,7 +510,21 @@
       <option name="project" value="LOCAL" />
       <updated>1656880444653</updated>
     </task>
-    <option name="localTasksCounter" value="296" />
+    <task id="LOCAL-00296" summary="info: SQLite refactor">
+      <created>1656881676449</created>
+      <option name="number" value="00296" />
+      <option name="presentableId" value="LOCAL-00296" />
+      <option name="project" value="LOCAL" />
+      <updated>1656881676449</updated>
+    </task>
+    <task id="LOCAL-00297" summary="info: SQLite refactor">
+      <created>1656881684256</created>
+      <option name="number" value="00297" />
+      <option name="presentableId" value="LOCAL-00297" />
+      <option name="project" value="LOCAL" />
+      <updated>1656881684257</updated>
+    </task>
+    <option name="localTasksCounter" value="298" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -549,7 +545,6 @@
     <ignored-roots>
       <path value="$PROJECT_DIR$" />
     </ignored-roots>
-    <MESSAGE value="feat: шире интерфейс 1.4" />
     <MESSAGE value="feat: изменение интерфейса" />
     <MESSAGE value="feat: изменение порядка столбцов таблицы" />
     <MESSAGE value="feat: добавлена view, соединяющая все слова исключения" />
@@ -574,7 +569,8 @@
     <MESSAGE value="fix: Statement --&gt; PreparedStatement" />
     <MESSAGE value="info: search refactor" />
     <MESSAGE value="info: new source refactor" />
-    <option name="LAST_COMMIT_MESSAGE" value="info: new source refactor" />
+    <MESSAGE value="info: SQLite refactor" />
+    <option name="LAST_COMMIT_MESSAGE" value="info: SQLite refactor" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
