@@ -46,10 +46,10 @@ public class Gui extends JFrame {
     private static final String[] INTERVALS = {"1 min", "5 min", "15 min", "30 min", "45 min", "1 hour", "2 hours",
             "4 hours", "8 hours", "12 hours", "24 hours", "48 hours"};
     private static final long AUTO_START_TIMER = 60000L; // 60 секунд
-    public static final ImageIcon LOGO_ICO = new ImageIcon(Toolkit.getDefaultToolkit().createImage(Gui.class.getResource("/icons/logo.png")));
+    public static final ImageIcon LOGO_ICON = new ImageIcon(Toolkit.getDefaultToolkit().createImage(Gui.class.getResource("/icons/logo.png")));
     public static final ImageIcon SEND_EMAIL_ICON = new ImageIcon(Toolkit.getDefaultToolkit().createImage(Gui.class.getResource("/icons/send.png")));
-    public static final ImageIcon SEND_2 = new ImageIcon(Toolkit.getDefaultToolkit().createImage(Gui.class.getResource("/icons/send2.png")));
-    public static final ImageIcon SEND_3 = new ImageIcon(Toolkit.getDefaultToolkit().createImage(Gui.class.getResource("/icons/send3.png")));
+    public static final ImageIcon WHEN_MOUSE_ON_SEND_ICON = new ImageIcon(Toolkit.getDefaultToolkit().createImage(Gui.class.getResource("/icons/send2.png")));
+    public static final ImageIcon WHEN_SENT_ICON = new ImageIcon(Toolkit.getDefaultToolkit().createImage(Gui.class.getResource("/icons/send3.png")));
     public static final ImageIcon SEARCH_KEYWORDS_ICON = new ImageIcon(Toolkit.getDefaultToolkit().createImage(Gui.class.getResource("/icons/search.png")));
     public static final ImageIcon STOP_SEARCH_ICON = new ImageIcon(Toolkit.getDefaultToolkit().createImage(Gui.class.getResource("/icons/stop.png")));
     public static final ImageIcon CLEAR_BUTTON_ICON = new ImageIcon(Toolkit.getDefaultToolkit().createImage(Gui.class.getResource("/icons/clear.png")));
@@ -57,7 +57,7 @@ public class Gui extends JFrame {
     public static final ImageIcon ADD_KEYWORD_ICON = new ImageIcon(Toolkit.getDefaultToolkit().createImage(Gui.class.getResource("/icons/create.png")));
     public static final ImageIcon DELETE_FROM_KEYWORDS_ICON = new ImageIcon(Toolkit.getDefaultToolkit().createImage(Gui.class.getResource("/icons/delete.png")));
     public static final ImageIcon FONT_COLOR_BUTTON_ICON = new ImageIcon(Toolkit.getDefaultToolkit().createImage(Gui.class.getResource("/icons/font.png")));
-    public static final ImageIcon BACK_GROUND_COLOR_BUTTON = new ImageIcon(Toolkit.getDefaultToolkit().createImage(Gui.class.getResource("/icons/bg.png")));
+    public static final ImageIcon BACK_GROUND_COLOR_ICON = new ImageIcon(Toolkit.getDefaultToolkit().createImage(Gui.class.getResource("/icons/bg.png")));
     public static int newsCount = 1;
     public static boolean isOnlyLastNews = false;
     public static boolean isInKeywords = false;
@@ -101,7 +101,7 @@ public class Gui extends JFrame {
         setResizable(false);
         getContentPane().setBackground(new Color(42, 42, 42));
         setTitle("Avandy News");
-        setIconImage(LOGO_ICO.getImage());
+        setIconImage(LOGO_ICON.getImage());
         setFont(GUI_FONT);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setBounds(340, 100, 1195, 634);
@@ -379,7 +379,7 @@ public class Gui extends JFrame {
         /* Top-Right buttons */
         // Выбор цвета фона
         JButton backgroundColorBtn = new JButton();
-        SetButton setButton = new SetButton(BACK_GROUND_COLOR_BUTTON, new Color(189, 189, 189), 1035, 9);
+        SetButton setButton = new SetButton(BACK_GROUND_COLOR_ICON, new Color(189, 189, 189), 1035, 9);
         setButton.buttonSetting(backgroundColorBtn, "Background color");
 
         backgroundColorBtn.addActionListener(e -> {
@@ -743,14 +743,14 @@ public class Gui extends JFrame {
             @Override
             public void mouseEntered(MouseEvent e) {
                 if (sendEmailBtn.getIcon() == SEND_EMAIL_ICON) {
-                    sendEmailBtn.setIcon(SEND_2);
+                    sendEmailBtn.setIcon(WHEN_MOUSE_ON_SEND_ICON);
                 }
             }
 
             @Override
             // убрали мышку с письма
             public void mouseExited(MouseEvent e) {
-                if (sendEmailBtn.getIcon() == SEND_2) {
+                if (sendEmailBtn.getIcon() == WHEN_MOUSE_ON_SEND_ICON) {
                     sendEmailBtn.setIcon(SEND_EMAIL_ICON);
                 }
             }
