@@ -4,6 +4,7 @@ import database.DatabaseQueries;
 import database.SQLite;
 import email.EmailSender;
 import gui.buttons.SetButton;
+import gui.checkboxes.SetCheckbox;
 import lombok.extern.slf4j.Slf4j;
 import main.Main;
 import search.Search;
@@ -62,7 +63,6 @@ public class Gui extends JFrame {
     public static boolean isOnlyLastNews = false;
     public static boolean isInKeywords = false;
     public static String findWord = "";
-    //public static String sendTo;
     public static JScrollPane scrollPane;
     public static JTable table;
     public static JTable tableForAnalysis;
@@ -76,7 +76,6 @@ public class Gui extends JFrame {
     public static JComboBox<String> newsInterval;
     public static JLabel labelSign;
     public static JLabel labelSum;
-    //public static JLabel labelInfo;
     public static JLabel lblLogSourceSqlite;
     public static JButton searchBtnTop;
     public static JButton searchBtnBottom;
@@ -560,11 +559,8 @@ public class Gui extends JFrame {
 
         // Автозапуск поиска по ключевым словам каждые 30 секунд
         autoUpdateNewsBottom = new Checkbox("auto update");
-        autoUpdateNewsBottom.setState(false);
-        autoUpdateNewsBottom.setFocusable(false);
-        autoUpdateNewsBottom.setForeground(Color.WHITE);
-        autoUpdateNewsBottom.setFont(GUI_FONT);
-        autoUpdateNewsBottom.setBounds(297, 561, 75, 20);
+        SetCheckbox setCheckbox1 = new SetCheckbox(297, 561, 75);
+        setCheckbox1.checkBoxSetting(autoUpdateNewsBottom);
         getContentPane().add(autoUpdateNewsBottom);
         autoUpdateNewsBottom.addItemListener(e -> {
             if (autoUpdateNewsBottom.getState()) {
@@ -642,21 +638,17 @@ public class Gui extends JFrame {
 
         // Today or not
         todayOrNotCbx = new Checkbox("in the last");
+        setCheckbox1 = new SetCheckbox(449, 10, 64);
+        setCheckbox1.checkBoxSetting(todayOrNotCbx);
         todayOrNotCbx.setState(true);
-        todayOrNotCbx.setFocusable(false);
-        todayOrNotCbx.setForeground(Color.WHITE);
-        todayOrNotCbx.setFont(GUI_FONT);
-        todayOrNotCbx.setBounds(449, 10, 64, 20);
         todayOrNotCbx.addItemListener(e -> newsInterval.setVisible(todayOrNotCbx.getState()));
         getContentPane().add(todayOrNotCbx);
 
         // Автозапуск поиска по слову каждые 60 секунд
         autoUpdateNewsTop = new Checkbox("auto update");
-        autoUpdateNewsTop.setState(false);
-        autoUpdateNewsTop.setFocusable(false);
-        autoUpdateNewsTop.setForeground(Color.WHITE);
-        autoUpdateNewsTop.setFont(GUI_FONT);
-        autoUpdateNewsTop.setBounds(297, 10, 75, 20);
+        setCheckbox1 = new SetCheckbox(297, 10, 75);
+        setCheckbox1.checkBoxSetting(autoUpdateNewsTop);
+
         getContentPane().add(autoUpdateNewsTop);
         autoUpdateNewsTop.addItemListener(e -> {
             if (autoUpdateNewsTop.getState()) {
@@ -760,11 +752,8 @@ public class Gui extends JFrame {
 
         // Автоматическая отправка письма с результатами
         autoSendMessage = new Checkbox("auto send");
-        autoSendMessage.setState(false);
-        autoSendMessage.setFocusable(false);
-        autoSendMessage.setForeground(Color.WHITE);
-        autoSendMessage.setFont(GUI_FONT);
-        autoSendMessage.setBounds(378, 10, 66, 20);
+        SetCheckbox setCheckbox = new SetCheckbox(378, 10, 66);
+        setCheckbox.checkBoxSetting(autoSendMessage);
         getContentPane().add(autoSendMessage);
 
         // Диалоговое окно со списком источников "sources"
@@ -931,11 +920,8 @@ public class Gui extends JFrame {
 
         // latest news
         onlyNewNews = new Checkbox("only new");
-        onlyNewNews.setState(false);
-        onlyNewNews.setFocusable(false);
-        onlyNewNews.setForeground(Color.WHITE);
-        onlyNewNews.setFont(GUI_FONT);
-        onlyNewNews.setBounds(230, 10, 65, 20);
+        setCheckbox = new SetCheckbox(230, 10, 65);
+        setCheckbox.checkBoxSetting(onlyNewNews);
         getContentPane().add(onlyNewNews);
         onlyNewNews.addItemListener(e -> {
             isOnlyLastNews = onlyNewNews.getState();
