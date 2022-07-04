@@ -26,6 +26,12 @@ public class ConsoleSearch extends SearchUtils {
     public static AtomicBoolean isStop;
     public static AtomicBoolean isSearchNow;
     public static AtomicBoolean isSearchFinished;
+    public static int j = 1;
+    final SimpleDateFormat date_format = new SimpleDateFormat("dd.MM.yyyy HH:mm");
+    public static final ArrayList<String> dataForEmail = new ArrayList<>();
+    int newsCount = 0;
+    final Date minDate = Main.MIN_PUB_DATE.getTime();
+    int checkDate;
 
     public ConsoleSearch() {
         excludeFromSearch = Common.getExcludeWordsFromFile();
@@ -33,13 +39,6 @@ public class ConsoleSearch extends SearchUtils {
         isSearchNow = new AtomicBoolean(false);
         isSearchFinished = new AtomicBoolean(false);
     }
-
-    public static int j = 1;
-    final SimpleDateFormat date_format = new SimpleDateFormat("dd.MM.yyyy HH:mm");
-    public static final ArrayList<String> dataForEmail = new ArrayList<>();
-    int newsCount = 0;
-    final Date minDate = Main.MIN_PUB_DATE.getTime();
-    int checkDate;
 
     public void searchByConsole() {
         DatabaseQueries sqlite = new DatabaseQueries();
@@ -87,7 +86,8 @@ public class ConsoleSearch extends SearchUtils {
 
                                     if (title.toLowerCase().contains(it.toLowerCase()) && title.length() > 15 && checkDate == 1) {
                                         // отсеиваем новости которые были обнаружены ранее
-                                        if (sqlite.isTitleExists(Common.sha256(title + pubDate), SQLite.connection) && SQLite.isConnectionToSQLite) {
+                                        if (sqlite.isTitleExists(Common.sha256(title + pubDate), SQLite.connection)
+                                                && SQLite.isConnectionToSQLite) {
                                             continue;
                                         }
 

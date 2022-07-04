@@ -9,12 +9,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9e6d6f99-cebb-4fd8-99d4-ae1b59f22e89" name="Default Changelist" comment="info: refactor checkboxes">
+    <list default="true" id="9e6d6f99-cebb-4fd8-99d4-ae1b59f22e89" name="Default Changelist" comment="info: search refactor">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/gui/checkboxes/CheckBoxFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/gui/checkboxes/CheckBoxFactory.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/main/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/main/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/search/ConsoleSearch.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/search/ConsoleSearch.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/search/Search.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/search/Search.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/search/SearchInterface.java" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -54,26 +52,27 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;ASKED_MARK_IGNORED_FILES_AS_EXCLUDED&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;extract.method.default.visibility&quot;: &quot;private&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/rps_p/IdeaProjects/news_lite/src/main/java/gui&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Artifacts&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
-    &quot;run.code.analysis.last.selected.profile&quot;: &quot;pProject Default&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ASKED_MARK_IGNORED_FILES_AS_EXCLUDED": "true",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "extract.method.default.visibility": "private",
+    "last_opened_file_path": "C:/Users/rps_p/IdeaProjects/news_lite/src/main/java/gui",
+    "nodejs_package_manager_path": "npm",
+    "project.structure.last.edited": "Artifacts",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.2",
+    "run.code.analysis.last.selected.profile": "pProject Default",
+    "settings.editor.selected.configurable": "preferences.pluginManager"
   },
-  &quot;keyToStringList&quot;: {
-    &quot;DatabaseDriversLRU&quot;: [
-      &quot;sqlite&quot;
+  "keyToStringList": {
+    "DatabaseDriversLRU": [
+      "sqlite"
     ]
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\rps_p\IdeaProjects\news_lite\src\main\java\gui" />
@@ -184,14 +183,9 @@
       <workItem from="1656916021127" duration="4120000" />
       <workItem from="1656920758000" duration="1326000" />
       <workItem from="1656925952874" duration="76000" />
-      <workItem from="1656941295914" duration="1357000" />
-    </task>
-    <task id="LOCAL-00257" summary="feat: рефакторинг">
-      <created>1651850613145</created>
-      <option name="number" value="00257" />
-      <option name="presentableId" value="LOCAL-00257" />
-      <option name="project" value="LOCAL" />
-      <updated>1651850613145</updated>
+      <workItem from="1656941295914" duration="1498000" />
+      <workItem from="1656942845943" duration="19000" />
+      <workItem from="1656942965337" duration="701000" />
     </task>
     <task id="LOCAL-00258" summary="feat: рефакторинг">
       <created>1651851000625</created>
@@ -529,7 +523,14 @@
       <option name="project" value="LOCAL" />
       <updated>1656922087237</updated>
     </task>
-    <option name="localTasksCounter" value="306" />
+    <task id="LOCAL-00306" summary="info: search refactor">
+      <created>1656942782438</created>
+      <option name="number" value="00306" />
+      <option name="presentableId" value="LOCAL-00306" />
+      <option name="project" value="LOCAL" />
+      <updated>1656942782438</updated>
+    </task>
+    <option name="localTasksCounter" value="307" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -569,13 +570,13 @@
     <MESSAGE value="feat: refactor" />
     <MESSAGE value="feat: переделаны INSERTs на PreparedStatement" />
     <MESSAGE value="fix: Statement --&gt; PreparedStatement" />
-    <MESSAGE value="info: search refactor" />
     <MESSAGE value="info: new source refactor" />
     <MESSAGE value="info: SQLite refactor" />
     <MESSAGE value="info: refactor" />
     <MESSAGE value="info: refactor Gui, buttons" />
     <MESSAGE value="info: refactor checkboxes" />
-    <option name="LAST_COMMIT_MESSAGE" value="info: refactor checkboxes" />
+    <MESSAGE value="info: search refactor" />
+    <option name="LAST_COMMIT_MESSAGE" value="info: search refactor" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -592,12 +593,12 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/search/Search.java</url>
-          <line>137</line>
+          <line>135</line>
           <option name="timeStamp" value="12" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/search/Search.java</url>
-          <line>152</line>
+          <line>150</line>
           <option name="timeStamp" value="13" />
         </line-breakpoint>
       </breakpoints>

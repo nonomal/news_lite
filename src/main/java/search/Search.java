@@ -5,7 +5,6 @@ import com.sun.syndication.feed.synd.SyndEntry;
 import com.sun.syndication.feed.synd.SyndFeed;
 import database.DatabaseQueries;
 import database.SQLite;
-import email.EmailSender;
 import gui.Gui;
 import lombok.extern.slf4j.Slf4j;
 import main.Main;
@@ -31,14 +30,6 @@ public class Search extends SearchUtils {
     public static AtomicBoolean isStop;
     public static AtomicBoolean isSearchNow;
     public static AtomicBoolean isSearchFinished;
-
-    public Search() {
-        excludeFromSearch = Common.getExcludeWordsFromFile();
-        isStop = new AtomicBoolean(false);
-        isSearchNow = new AtomicBoolean(false);
-        isSearchFinished = new AtomicBoolean(false);
-    }
-
     public static int j = 1;
     final DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm");
     final LocalDateTime now = LocalDateTime.now();
@@ -52,6 +43,13 @@ public class Search extends SearchUtils {
     LocalTime timeStart;
     LocalTime timeEnd;
     Duration searchTime;
+
+    public Search() {
+        excludeFromSearch = Common.getExcludeWordsFromFile();
+        isStop = new AtomicBoolean(false);
+        isSearchNow = new AtomicBoolean(false);
+        isSearchFinished = new AtomicBoolean(false);
+    }
 
     public void mainSearch(String pSearchType) {
         DatabaseQueries databaseQueries = new DatabaseQueries();
