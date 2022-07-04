@@ -3,9 +3,9 @@ package gui;
 import database.DatabaseQueries;
 import database.SQLite;
 import email.EmailSender;
+import gui.buttons.SetButton;
+import lombok.extern.slf4j.Slf4j;
 import main.Main;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import search.Search;
 import utils.Common;
 import utils.ExportToExcel;
@@ -30,33 +30,34 @@ import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.Objects;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.concurrent.atomic.AtomicBoolean;
 
+@Slf4j
 public class Gui extends JFrame {
-    private static final Logger log = LoggerFactory.getLogger(Gui.class);
     final SQLite sqLite = new SQLite();
     final DatabaseQueries databaseQueries = new DatabaseQueries();
     final Search search = new Search();
     private static final Font GUI_FONT = new Font("Tahoma", Font.PLAIN, 11);
+    private final Object[] mainTableHeaders = {"Num", "Source", "Title (double click to open the link)", "Date", "Link"};
+    private final String[] tableForAnalyzeHeaders = {"top 10", "freq.", " "};
     private static final String[] INTERVALS = {"1 min", "5 min", "15 min", "30 min", "45 min", "1 hour", "2 hours",
             "4 hours", "8 hours", "12 hours", "24 hours", "48 hours"};
     private static final long AUTO_START_TIMER = 60000L; // 60 секунд
     public static final ImageIcon LOGO_ICO = new ImageIcon(Toolkit.getDefaultToolkit().createImage(Gui.class.getResource("/icons/logo.png")));
-    public static final ImageIcon SEND = new ImageIcon(Toolkit.getDefaultToolkit().createImage(Gui.class.getResource("/icons/send.png")));
+    public static final ImageIcon SEND_EMAIL_ICON = new ImageIcon(Toolkit.getDefaultToolkit().createImage(Gui.class.getResource("/icons/send.png")));
     public static final ImageIcon SEND_2 = new ImageIcon(Toolkit.getDefaultToolkit().createImage(Gui.class.getResource("/icons/send2.png")));
     public static final ImageIcon SEND_3 = new ImageIcon(Toolkit.getDefaultToolkit().createImage(Gui.class.getResource("/icons/send3.png")));
-    public static final ImageIcon SEARCH_ICO = new ImageIcon(Toolkit.getDefaultToolkit().createImage(Gui.class.getResource("/icons/search.png")));
-    public static final ImageIcon STOP_ICO = new ImageIcon(Toolkit.getDefaultToolkit().createImage(Gui.class.getResource("/icons/stop.png")));
-    public static final ImageIcon CLEAR_ICO = new ImageIcon(Toolkit.getDefaultToolkit().createImage(Gui.class.getResource("/icons/clear.png")));
-    public static final ImageIcon EXCEL_ICO = new ImageIcon(Toolkit.getDefaultToolkit().createImage(Gui.class.getResource("/icons/excel.png")));
-    public static final ImageIcon CREATE_ICO = new ImageIcon(Toolkit.getDefaultToolkit().createImage(Gui.class.getResource("/icons/create.png")));
-    public static final ImageIcon DELETE_ICO = new ImageIcon(Toolkit.getDefaultToolkit().createImage(Gui.class.getResource("/icons/delete.png")));
-    public static final ImageIcon FONT_ICO = new ImageIcon(Toolkit.getDefaultToolkit().createImage(Gui.class.getResource("/icons/font.png")));
-    public static final ImageIcon BG_ICO = new ImageIcon(Toolkit.getDefaultToolkit().createImage(Gui.class.getResource("/icons/bg.png")));
+    public static final ImageIcon SEARCH_KEYWORDS_ICON = new ImageIcon(Toolkit.getDefaultToolkit().createImage(Gui.class.getResource("/icons/search.png")));
+    public static final ImageIcon STOP_SEARCH_ICON = new ImageIcon(Toolkit.getDefaultToolkit().createImage(Gui.class.getResource("/icons/stop.png")));
+    public static final ImageIcon CLEAR_BUTTON_ICON = new ImageIcon(Toolkit.getDefaultToolkit().createImage(Gui.class.getResource("/icons/clear.png")));
+    public static final ImageIcon EXCEL_BUTTON_ICON = new ImageIcon(Toolkit.getDefaultToolkit().createImage(Gui.class.getResource("/icons/excel.png")));
+    public static final ImageIcon ADD_KEYWORD_ICON = new ImageIcon(Toolkit.getDefaultToolkit().createImage(Gui.class.getResource("/icons/create.png")));
+    public static final ImageIcon DELETE_FROM_KEYWORDS_ICON = new ImageIcon(Toolkit.getDefaultToolkit().createImage(Gui.class.getResource("/icons/delete.png")));
+    public static final ImageIcon FONT_COLOR_BUTTON_ICON = new ImageIcon(Toolkit.getDefaultToolkit().createImage(Gui.class.getResource("/icons/font.png")));
+    public static final ImageIcon BACK_GROUND_COLOR_BUTTON = new ImageIcon(Toolkit.getDefaultToolkit().createImage(Gui.class.getResource("/icons/bg.png")));
     public static int newsCount = 1;
     public static boolean isOnlyLastNews = false;
     public static boolean isInKeywords = false;
@@ -183,9 +184,8 @@ public class Gui extends JFrame {
         scrollPane = new JScrollPane();
         scrollPane.setBounds(10, 40, 860, 500);
         getContentPane().add(scrollPane);
-        Object[] columns = {"Num", "Source", "Title (double click to open the link)", "Date", "Link"};
         model = new DefaultTableModel(new Object[][]{
-        }, columns) {
+        }, mainTableHeaders) {
             final boolean[] columnEditable = new boolean[]{
                     false, false, false, false, false
             };
@@ -274,8 +274,7 @@ public class Gui extends JFrame {
         scrollForAnalysis.setBounds(880, 40, 290, 236);
         getContentPane().add(scrollForAnalysis);
 
-        String[] columnsForAnalysis = {"top 10", "freq.", " "};
-        modelForAnalysis = new DefaultTableModel(new Object[][]{}, columnsForAnalysis) {
+        modelForAnalysis = new DefaultTableModel(new Object[][]{}, tableForAnalyzeHeaders) {
             final boolean[] column_for_analysis = new boolean[]{false, false, true};
 
             public boolean isCellEditable(int row, int column) {
@@ -334,7 +333,7 @@ public class Gui extends JFrame {
 
         //Search addNewSource
         searchBtnTop = new JButton("");
-        searchBtnTop.setIcon(SEARCH_ICO);
+        searchBtnTop.setIcon(SEARCH_KEYWORDS_ICON);
         searchBtnTop.setToolTipText("Без заголовков со словами " + Search.excludeFromSearch);
         searchBtnTop.setBackground(new Color(154, 237, 196));
         searchBtnTop.setFont(new Font("Tahoma", Font.BOLD, 10));
@@ -348,7 +347,7 @@ public class Gui extends JFrame {
 
         //Stop addNewSource
         stopBtnTop = new JButton("");
-        stopBtnTop.setIcon(STOP_ICO);
+        stopBtnTop.setIcon(STOP_SEARCH_ICON);
         stopBtnTop.setBackground(new Color(255, 208, 202));
         stopBtnTop.setBounds(192, 9, 30, 22);
         stopBtnTop.addActionListener(e -> {
@@ -380,10 +379,9 @@ public class Gui extends JFrame {
         /* Top-Right buttons */
         // Выбор цвета фона
         JButton backgroundColorBtn = new JButton();
-        backgroundColorBtn.setToolTipText("Background color");
-        backgroundColorBtn.setBackground(new Color(189, 189, 189));
-        backgroundColorBtn.setIcon(BG_ICO);
-        backgroundColorBtn.setBounds(1035, 9, 30, 22);
+        SetButton setButton = new SetButton(BACK_GROUND_COLOR_BUTTON, new Color(189, 189, 189), 1035, 9);
+        setButton.buttonSetting(backgroundColorBtn, "Background color");
+
         backgroundColorBtn.addActionListener(e -> {
             Color color = JColorChooser.showDialog(null, "Color", Color.black);
             if (color != null) {
@@ -404,10 +402,9 @@ public class Gui extends JFrame {
 
         // Выбор цвета шрифта в таблице
         JButton fontColorBtn = new JButton();
-        fontColorBtn.setToolTipText("Font color");
-        fontColorBtn.setBackground(new Color(190, 225, 255));
-        fontColorBtn.setIcon(FONT_ICO);
-        fontColorBtn.setBounds(1070, 9, 30, 22);
+        setButton = new SetButton(FONT_COLOR_BUTTON_ICON, new Color(190, 225, 255), 1070, 9);
+        setButton.buttonSetting(fontColorBtn, "Font color");
+
         fontColorBtn.addActionListener(e -> {
             Color color = JColorChooser.showDialog(null, "Color", Color.black);
             if (color != null) {
@@ -429,10 +426,8 @@ public class Gui extends JFrame {
 
         //Export to excel
         JButton exportBtn = new JButton();
-        exportBtn.setIcon(EXCEL_ICO);
-        exportBtn.setToolTipText("Export news to excel");
-        exportBtn.setBackground(new Color(255, 251, 183));
-        exportBtn.setBounds(1105, 9, 30, 22);
+        setButton = new SetButton(EXCEL_BUTTON_ICON, new Color(255, 251, 183), 1105, 9);
+        setButton.buttonSetting(exportBtn, "Export news to excel");
         exportBtn.addActionListener(e -> {
             if (model.getRowCount() != 0) {
                 new Thread(new ExportToExcel()::exportResultsToExcel).start();
@@ -443,20 +438,16 @@ public class Gui extends JFrame {
         });
         getContentPane().add(exportBtn);
 
-        //Clear addNewSource
+        // Clear
         JButton clearBtnTop = new JButton();
-        clearBtnTop.setToolTipText("Clear the list");
-        clearBtnTop.setBackground(new Color(250, 128, 114));
-        clearBtnTop.setIcon(CLEAR_ICO);
-        clearBtnTop.setBounds(1140, 9, 30, 22);
-
+        setButton = new SetButton(CLEAR_BUTTON_ICON, new Color(250, 128, 114), 1140, 9);
+        setButton.buttonSetting(clearBtnTop, "Clear the list");
         clearBtnTop.addActionListener(e -> {
             try {
                 if (model.getRowCount() == 0) {
                     Common.console("status: no data to clear");
                     return;
                 }
-                //labelInfo.setText("");
                 Search.j = 1;
                 model.setRowCount(0);
                 modelForAnalysis.setRowCount(0);
@@ -487,7 +478,9 @@ public class Gui extends JFrame {
         getContentPane().add(addKeywordToList);
 
         //Add to keywords combo box
-        JButton btnAddKeywordToList = new JButton("");
+        JButton btnAddKeywordToList = new JButton();
+        setButton = new SetButton(ADD_KEYWORD_ICON, null, 95, 561);
+        setButton.buttonSetting(btnAddKeywordToList, "Add keyword");
         getContentPane().add(btnAddKeywordToList);
         btnAddKeywordToList.addActionListener(e -> {
             if (addKeywordToList.getText().length() > 0) {
@@ -508,11 +501,11 @@ public class Gui extends JFrame {
                 addKeywordToList.setText("");
             }
         });
-        btnAddKeywordToList.setIcon(CREATE_ICO);
-        btnAddKeywordToList.setBounds(95, 561, 30, 22);
 
         //Delete from combo box
-        JButton btnDelFromList = new JButton("");
+        JButton btnDelFromList = new JButton();
+        setButton = new SetButton(DELETE_FROM_KEYWORDS_ICON, null, 130, 561);
+        setButton.buttonSetting(btnDelFromList, "Delete word from list");
         btnDelFromList.addActionListener(e -> {
             if (keywords.getItemCount() > 0) {
                 try {
@@ -524,10 +517,8 @@ public class Gui extends JFrame {
                     log.warn(io.getMessage());
                 }
             }
-
         });
-        btnDelFromList.setIcon(DELETE_ICO);
-        btnDelFromList.setBounds(130, 561, 30, 22);
+
         getContentPane().add(btnDelFromList);
 
         //Keywords combo box
@@ -539,20 +530,16 @@ public class Gui extends JFrame {
         getContentPane().add(keywords);
 
         //Bottom search by keywords
-        searchBtnBottom = new JButton("");
-        searchBtnBottom.setIcon(SEARCH_ICO);
-        searchBtnBottom.setFont(new Font("Tahoma", Font.BOLD, 10));
-        searchBtnBottom.setBackground(new Color(154, 237, 196));
-        searchBtnBottom.setBounds(261, 561, 30, 22);
-        //searchBtnBottom.addActionListener(e -> new Thread(Search::keywordsSearch).start());
+        searchBtnBottom = new JButton();
+        setButton = new SetButton(SEARCH_KEYWORDS_ICON, new Color(154, 237, 196), 261, 561);
+        setButton.buttonSetting(searchBtnBottom, "Search by keywords");
         searchBtnBottom.addActionListener(e -> new Thread(() -> search.mainSearch("words")).start());
         getContentPane().add(searchBtnBottom);
 
         //Stop addNewSource (bottom)
-        stopBtnBottom = new JButton("");
-        stopBtnBottom.setIcon(STOP_ICO);
-        stopBtnBottom.setBackground(new Color(255, 208, 202));
-        stopBtnBottom.setBounds(261, 561, 30, 22);
+        stopBtnBottom = new JButton();
+        setButton = new SetButton(STOP_SEARCH_ICON, new Color(255, 208, 202), 261, 561);
+        setButton.buttonSetting(stopBtnBottom, null);
         stopBtnBottom.addActionListener(e -> {
             try {
                 Search.isSearchFinished.set(true);
@@ -631,7 +618,6 @@ public class Gui extends JFrame {
 
         // Clear console
         JButton clearConsoleBtn = new JButton();
-        //clearConsoleBtn.setIcon(clearIco);
         clearConsoleBtn.setToolTipText("Clear the console");
         clearConsoleBtn.setBackground(new Color(0, 52, 96));
         clearConsoleBtn.setBounds(1155, 448, 14, 14);
@@ -737,13 +723,11 @@ public class Gui extends JFrame {
 
         //Send current results e-mail
         sendEmailBtn = new JButton();
-        sendEmailBtn.setIcon(SEND);
-        sendEmailBtn.setToolTipText("send the current result");
+        setButton = new SetButton(SEND_EMAIL_ICON, new Color(255, 255, 153), 1020, 518);
+        setButton.buttonSetting(sendEmailBtn, "Send current search results");
         sendEmailBtn.setFocusable(false);
         sendEmailBtn.setContentAreaFilled(false);
         sendEmailBtn.setBorderPainted(false);
-        sendEmailBtn.setBackground(new Color(255, 255, 153));
-        sendEmailBtn.setBounds(1020, 518, 32, 23);
         sendEmailBtn.addActionListener(e -> {
             if (model.getRowCount() > 0 && sendEmailTo.getText().contains("@")) {
                 Common.console("status: sending e-mail");
@@ -758,7 +742,7 @@ public class Gui extends JFrame {
             // наведение мышки на письмо
             @Override
             public void mouseEntered(MouseEvent e) {
-                if (sendEmailBtn.getIcon() == SEND) {
+                if (sendEmailBtn.getIcon() == SEND_EMAIL_ICON) {
                     sendEmailBtn.setIcon(SEND_2);
                 }
             }
@@ -767,7 +751,7 @@ public class Gui extends JFrame {
             // убрали мышку с письма
             public void mouseExited(MouseEvent e) {
                 if (sendEmailBtn.getIcon() == SEND_2) {
-                    sendEmailBtn.setIcon(SEND);
+                    sendEmailBtn.setIcon(SEND_EMAIL_ICON);
                 }
             }
 
@@ -859,9 +843,9 @@ public class Gui extends JFrame {
             }
         });
 
-        //DatabaseQueries
+        // SQLite
         JButton sqliteBtn = new JButton();
-        sqliteBtn.setToolTipText("press CTRL+V in DatabaseQueries to open the database");
+        sqliteBtn.setToolTipText("Press CTRL+V in SQLite to open the database");
         sqliteBtn.setFocusable(false);
         sqliteBtn.setContentAreaFilled(true);
         sqliteBtn.setBorderPainted(false);

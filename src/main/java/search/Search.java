@@ -85,7 +85,7 @@ public class Search implements SearchInterface {
             }
 
             isSearchFinished = new AtomicBoolean(false);
-            Gui.sendEmailBtn.setIcon(Gui.SEND);
+            Gui.sendEmailBtn.setIcon(Gui.SEND_EMAIL_ICON);
             new Thread(Common::fill).start();
             try {
                 sqLite.transactionCommand("BEGIN TRANSACTION");
