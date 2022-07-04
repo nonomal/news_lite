@@ -6,7 +6,6 @@ import java.awt.*;
 
 @Getter
 public abstract class CheckBoxFactory {
-    //    protected Color _color;
     protected Font font;
     protected int x;
     protected int y;

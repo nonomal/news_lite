@@ -25,9 +25,8 @@ import java.util.Locale;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 @Slf4j
-public class Search implements SearchInterface {
+public class Search extends SearchUtils {
     SQLite sqLite = new SQLite();
-    DatabaseQueries databaseQueries = new DatabaseQueries();
     public static List<String> excludeFromSearch;
     public static AtomicBoolean isStop;
     public static AtomicBoolean isSearchNow;
@@ -54,8 +53,6 @@ public class Search implements SearchInterface {
     LocalTime timeEnd;
     Duration searchTime;
 
-    //Main search
-    @Override
     public void mainSearch(String pSearchType) {
         DatabaseQueries databaseQueries = new DatabaseQueries();
         boolean isWord = pSearchType.equals("word");
@@ -159,7 +156,8 @@ public class Search implements SearchInterface {
                                 }
                                 if (isStop.get()) return;
                             }
-                            if (!Gui.isOnlyLastNews && SQLite.isConnectionToSQLite) databaseQueries.deleteFrom256(SQLite.connection);
+                            if (!Gui.isOnlyLastNews && SQLite.isConnectionToSQLite)
+                                databaseQueries.deleteFrom256(SQLite.connection);
                         } catch (Exception no_rss) {
                             String smi = Common.SMI_LINK.get(Common.SMI_ID)
                                     .replaceAll(("https://|http://|www."), "");
@@ -232,49 +230,19 @@ public class Search implements SearchInterface {
         }
     }
 
-    private void maimSearchProcess(DatabaseQueries sqlite, PreparedStatement st, String smi_source, String title, String newsDescribe, Date pubDate, String dateToEmail, String link, int date_diff) throws SQLException {
+    private void maimSearchProcess(DatabaseQueries sqlite, PreparedStatement st, String smi_source, String title,
+                                   String newsDescribe, Date pubDate, String dateToEmail, String link,
+                                   int date_diff) throws SQLException {
         if (Gui.todayOrNotCbx.getState() && (date_diff != 0)) {
             newsCount++;
             Gui.labelSum.setText(String.valueOf(newsCount));
             dataForEmail.add(newsCount + ") " + title + "\n" + link + "\n" + newsDescribe + "\n" +
                     smi_source + " - " + dateToEmail);
 
-            Object[] row = new Object[]{
-                    newsCount,
-                    smi_source,
-                    title,
-                    dateFormatHoursFirst.format(pubDate),
-                    link
-            };
-            Gui.model.addRow(row);
+            Gui.model.addRow(new Object[] {
+                    newsCount, smi_source, title, dateFormatHoursFirst.format(pubDate), link
+            });
 
-            //DatabaseQueries
-            String[] subStr = title.split(" ");
-            for (String s : subStr) {
-                if (s.length() > 3) {
-                    assert st != null;
-                    st.setString(1, Common.delNoLetter(s).toLowerCase());
-                    st.executeUpdate();
-                }
-            }
-            sqlite.insertTitleIn256(Common.sha256(title + pubDate), SQLite.connection);
-
-        } else if (!Gui.todayOrNotCbx.getState()) {
-            newsCount++;
-            Gui.labelSum.setText(String.valueOf(newsCount));
-            dataForEmail.add(newsCount + ") " + title + "\n" + link + "\n" + newsDescribe + "\n" +
-                    smi_source + " - " + dateToEmail);
-
-            Object[] row = new Object[]{
-                    newsCount,
-                    smi_source,
-                    title,
-                    dateFormatHoursFirst.format(pubDate),
-                    link
-            };
-            Gui.model.addRow(row);
-
-            // DatabaseQueries
             String[] subStr = title.split(" ");
             for (String s : subStr) {
                 if (s.length() > 3) {
@@ -285,119 +253,5 @@ public class Search implements SearchInterface {
             }
             sqlite.insertTitleIn256(Common.sha256(title + pubDate), SQLite.connection);
         }
-    }
-
-    //Console search
-    @Override
-    public void searchByConsole() {
-        DatabaseQueries sqlite = new DatabaseQueries();
-        if (!isSearchNow.get()) {
-            dataForEmail.clear();
-            sqlite.selectSources("smi", SQLite.connection);
-            isSearchNow.set(true);
-            Search.j = 1;
-            newsCount = 0;
-
-            try {
-                // начало транзакции
-                sqLite.transactionCommand("BEGIN TRANSACTION");
-
-                Parser parser = new Parser();
-                for (Common.SMI_ID = 0; Common.SMI_ID < Common.SMI_LINK.size(); Common.SMI_ID++) {
-                    try {
-                        try {
-                            if (isStop.get()) return;
-                            SyndFeed feed = parser.parseFeed(Common.SMI_LINK.get(Common.SMI_ID));
-                            for (Object message : feed.getEntries()) {
-                                j++;
-                                SyndEntry entry = (SyndEntry) message;
-                                SyndContent content = entry.getDescription();
-                                String smi_source = Common.SMI_SOURCE.get(Common.SMI_ID);
-                                String title = entry.getTitle();
-                                assert content != null;
-                                String newsDescribe = content.getValue()
-                                        .trim()
-                                        .replace("<p>", "")
-                                        .replace("</p>", "")
-                                        .replace("<br />", "");
-                                if (isHref(newsDescribe)) newsDescribe = title;
-                                Date pubDate = entry.getPublishedDate();
-                                String dateToEmail = date_format.format(pubDate);
-                                String link = entry.getLink();
-
-                                // отсеиваем новости ранее 01.01.2021
-                                if (pubDate.after(minDate)) checkDate = 1;
-                                else checkDate = 0;
-
-                                for (String it : Main.keywordsFromConsole) {
-                                    if (it.equals(Main.keywordsFromConsole[0]) || it.equals(Main.keywordsFromConsole[1]))
-                                        continue;
-
-                                    if (title.toLowerCase().contains(it.toLowerCase()) && title.length() > 15 && checkDate == 1) {
-                                        // отсеиваем новости которые были обнаружены ранее
-                                        if (sqlite.isTitleExists(Common.sha256(title + pubDate), SQLite.connection) && SQLite.isConnectionToSQLite) {
-                                            continue;
-                                        }
-
-                                        //Data for a table
-                                        Date currentDate = new Date();
-                                        int date_diff = Common.compareDatesOnly(currentDate, pubDate);
-
-                                        if (date_diff != 0) { // если новость between Main.minutesIntervalForConsoleSearch and currentDate
-                                            newsCount++;
-                                            dataForEmail.add(newsCount + ") " + title + "\n" + link + "\n" + newsDescribe + "\n" +
-                                                    smi_source + " - " + dateToEmail);
-                                            /**/
-                                            System.out.println(newsCount + ") " + title);
-                                            /**/
-                                            sqlite.insertTitleIn256(Common.sha256(title + pubDate), SQLite.connection);
-                                        }
-                                    }
-                                }
-                            }
-                            // удалять новости, чтобы были вообще все, даже те, которые уже были обнаружены
-                            //sqlite.deleteFrom256();
-                        } catch (Exception ignored) {
-                        }
-                    } catch (Exception ignored) {
-                    }
-                }
-                isSearchNow.set(false);
-
-                // коммит транзакции
-                sqLite.transactionCommand("COMMIT");
-
-                // удаляем все пустые строки
-                databaseQueries.deleteEmptyRows(SQLite.connection);
-
-                // Автоматическая отправка результатов
-                if (dataForEmail.size() > 0) {
-                    Common.IS_SENDING.set(false);
-                    EmailSender email = new EmailSender();
-                    email.sendMessage();
-                }
-                sqlite.deleteDuplicates(SQLite.connection);
-                Gui.WAS_CLICK_IN_TABLE_FOR_ANALYSIS.set(false);
-            } catch (Exception e) {
-                e.printStackTrace();
-                try {
-                    sqLite.transactionCommand("ROLLBACK");
-                } catch (SQLException sql) {
-                    sql.printStackTrace();
-                }
-            }
-        }
-    }
-
-    private boolean isHref(String newsDescribe) {
-        return newsDescribe.contains("<img")
-                || newsDescribe.contains("href")
-                || newsDescribe.contains("<div")
-                || newsDescribe.contains("&#34")
-                || newsDescribe.contains("<p lang")
-                || newsDescribe.contains("&quot")
-                || newsDescribe.contains("<span")
-                || newsDescribe.contains("<ol")
-                || newsDescribe.equals("");
     }
 }

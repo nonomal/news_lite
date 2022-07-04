@@ -5,7 +5,7 @@ import database.SQLite;
 import gui.Gui;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import search.Search;
+import search.ConsoleSearch;
 import utils.Common;
 import utils.InternetAvailabilityChecker;
 
@@ -112,8 +112,8 @@ public class Main {
             sqlite.openConnection();
             System.arraycopy(args, 0, keywordsFromConsole, 0, args.length);
             System.out.println(Arrays.toString(keywordsFromConsole)); //***
-            Search search = new Search();
-            search.searchByConsole();
+            ConsoleSearch consoleSearch = new ConsoleSearch();
+            consoleSearch.searchByConsole();
             sqlite.closeConnection();
         }
 
