@@ -1,9 +1,8 @@
 package email;
 
 import gui.Gui;
+import lombok.extern.slf4j.Slf4j;
 import main.Main;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import search.ConsoleSearch;
 import search.Search;
 import utils.Common;
@@ -11,8 +10,8 @@ import utils.Common;
 import javax.mail.MessagingException;
 import java.io.IOException;
 
+@Slf4j
 public class EmailSender {
-    private static final Logger log = LoggerFactory.getLogger(EmailSender.class);
     public static String from;
     public static String from_pwd;
     private final String subject = ("News (" + new Search().today + ")");

@@ -18,7 +18,6 @@ public class DatabaseQueries {
     // Заполняем таблицу анализа
     public void selectSqlite(Connection connection) {
         try {
-
             String query = "SELECT SUM, TITLE FROM V_NEWS_DUAL WHERE SUM > ? " +
                     "AND TITLE NOT IN (SELECT WORD FROM ALL_TITLES_TO_EXCLUDE) " +
                     "ORDER BY SUM DESC";

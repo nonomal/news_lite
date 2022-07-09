@@ -25,8 +25,8 @@
     <orderEntry type="library" name="Maven: org.xerial:sqlite-jdbc:3.36.0.3" level="project" />
     <orderEntry type="library" name="Maven: rome:rome:1.0" level="project" />
     <orderEntry type="library" name="Maven: jdom:jdom:1.0" level="project" />
-    <orderEntry type="library" name="Maven: com.formdev:flatlaf:2.2" level="project" />
-    <orderEntry type="library" name="Maven: com.formdev:flatlaf-intellij-themes:2.2" level="project" />
+    <orderEntry type="library" name="Maven: com.formdev:flatlaf:2.3" level="project" />
+    <orderEntry type="library" name="Maven: com.formdev:flatlaf-intellij-themes:2.3" level="project" />
     <orderEntry type="library" scope="TEST" name="Maven: org.junit.jupiter:junit-jupiter-engine:5.8.2" level="project" />
     <orderEntry type="library" scope="TEST" name="Maven: org.junit.platform:junit-platform-engine:1.8.2" level="project" />
     <orderEntry type="library" scope="TEST" name="Maven: org.apiguardian:apiguardian-api:1.1.2" level="project" />

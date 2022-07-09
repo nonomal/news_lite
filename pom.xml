@@ -27,6 +27,12 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-logging</artifactId>
             <version>2.6.7</version>
+            <exclusions>
+                <exclusion>
+                    <artifactId>slf4j-api</artifactId>
+                    <groupId>org.slf4j</groupId>
+                </exclusion>
+            </exclusions>
         </dependency>
 
         <dependency>
@@ -56,13 +62,13 @@
         <dependency>
             <groupId>com.formdev</groupId>
             <artifactId>flatlaf</artifactId>
-            <version>2.2</version>
+            <version>2.3</version>
         </dependency>
 
         <dependency>
             <groupId>com.formdev</groupId>
             <artifactId>flatlaf-intellij-themes</artifactId>
-            <version>2.2</version>
+            <version>2.3</version>
         </dependency>
 
         <dependency>
@@ -123,6 +129,7 @@
             </plugin>
         </plugins>
     </build>
+
     <repositories>
         <repository>
             <id>maven_central</id>
