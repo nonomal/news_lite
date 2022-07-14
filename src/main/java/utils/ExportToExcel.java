@@ -5,10 +5,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.poi.common.usermodel.HyperlinkType;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.*;
-import org.apache.poi.ss.util.CellRangeAddress;
-import org.apache.poi.ss.util.RegionUtil;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
@@ -18,21 +14,25 @@ import java.nio.file.Files;
 
 @Slf4j
 public class ExportToExcel {
+    private static final String[] HEADERS = {"Number", "Source", "Title", "Date", "Link"};
+    private static final String SHEET_FONT = "Arial";
+    private static final short SHEET_FONT_SIZE = (short) 13;
+    private static final short SHEET_ROWS_HEIGHT =  (short) 400;
+    private final Workbook workbook = new HSSFWorkbook();
+    private final Sheet sheet = workbook.createSheet("Avandy-news");
 
     public void exportResultsToExcel() {
         try {
-            //Save file to
-            FileNameExtensionFilter filter = new FileNameExtensionFilter("*.xls", "*.xls", "*.XLS", "*.*");
-            JFileChooser save_to = new JFileChooser();
-            save_to.setFileFilter(filter);
-            save_to.setCurrentDirectory(new File
+            // Save file to
+            FileNameExtensionFilter filter = new FileNameExtensionFilter("*.xls",
+                    "*.xls", "*.XLS", "*.*");
+            JFileChooser saveToDirectory = new JFileChooser();
+            saveToDirectory.setFileFilter(filter);
+            saveToDirectory.setCurrentDirectory(new File
                     (System.getProperty("user.home") + System.getProperty("file.separator") + "Desktop"));
-            int ret = save_to.showDialog(null, "Save");
+            int ret = saveToDirectory.showDialog(null, "Save");
             if (ret == JFileChooser.APPROVE_OPTION) {
-                File file = new File(save_to.getSelectedFile() + ".xls");
-
-                Workbook workbook = new HSSFWorkbook();
-                Sheet sheet = workbook.createSheet("Avandy-news");
+                File file = new File(saveToDirectory.getSelectedFile() + ".xls");
 
                 sheet.setColumnWidth(0, 3000);
                 sheet.setColumnWidth(1, 4000);
@@ -42,7 +42,7 @@ public class ExportToExcel {
 
                 // Headers
                 Row headerRow = sheet.createRow(0);
-                headerRow.setHeight((short) 400);
+                headerRow.setHeight(SHEET_ROWS_HEIGHT);
 
                 CellStyle headerStyle = workbook.createCellStyle();
                 headerStyle.setAlignment(HorizontalAlignment.CENTER);
@@ -55,8 +55,8 @@ public class ExportToExcel {
                 headerStyle.setBorderBottom(BorderStyle.THIN);
 
                 Font headersFont = workbook.createFont();
-                headersFont.setFontName("Arial");
-                headersFont.setFontHeightInPoints((short) 13);
+                headersFont.setFontName(SHEET_FONT);
+                headersFont.setFontHeightInPoints(SHEET_FONT_SIZE);
                 headersFont.setBold(true);
                 headerStyle.setFont(headersFont);
 
@@ -77,22 +77,21 @@ public class ExportToExcel {
                 leftCellStyle.setVerticalAlignment(VerticalAlignment.CENTER);
 
                 Font cellFont = workbook.createFont();
-                cellFont.setFontName("Arial");
-                cellFont.setFontHeightInPoints((short) 13);
+                cellFont.setFontName(SHEET_FONT);
+                cellFont.setFontHeightInPoints(SHEET_FONT_SIZE);
 
                 cellStyle.setFont(cellFont);
                 leftCellStyle.setFont(cellFont);
 
-                String[] headers = {"Number", "Source", "Title", "Date", "Link"};
-                for (int i = 0; i < headers.length; i++) {
+                for (int i = 0; i < HEADERS.length; i++) {
                     Cell header = headerRow.createCell(i);
-                    header.setCellValue(headers[i]);
+                    header.setCellValue(HEADERS[i]);
                     header.setCellStyle(headerStyle);
                 }
 
                 for (int i = 0; i < Gui.model.getRowCount(); i++) {
                     Row row = sheet.createRow(i + 1);
-                    row.setHeight((short) 400);
+                    row.setHeight(SHEET_ROWS_HEIGHT);
 
                     // "Number"
                     Cell number = row.createCell(0);
