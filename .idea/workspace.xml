@@ -10,11 +10,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="9e6d6f99-cebb-4fd8-99d4-ae1b59f22e89" name="Default Changelist" comment="info: refactor">
+      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/News.iml" beforeDir="false" afterPath="$PROJECT_DIR$/News.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/database/DatabaseQueries.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/database/DatabaseQueries.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/email/EmailSender.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/email/EmailSender.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/gui/Gui.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/gui/Gui.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -37,6 +37,18 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
     <option name="RESET_MODE" value="HARD" />
   </component>
+  <component name="JpbToolWindowState">
+    <option name="myId2FirstActivated">
+      <map>
+        <entry key="com.haulmont.jpb.jpaStructure" value="true" />
+      </map>
+    </option>
+    <option name="myId2Visible">
+      <map>
+        <entry key="com.haulmont.jpb.jpaStructure" value="false" />
+      </map>
+    </option>
+  </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
@@ -57,11 +69,15 @@
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
     "ASKED_MARK_IGNORED_FILES_AS_EXCLUDED": "true",
+    "RequestMappingsPanelOrder0": "0",
+    "RequestMappingsPanelOrder1": "1",
+    "RequestMappingsPanelWidth0": "75",
+    "RequestMappingsPanelWidth1": "75",
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "WebServerToolWindowFactoryState": "false",
     "extract.method.default.visibility": "private",
-    "last_opened_file_path": "C:/Users/rps_p/IdeaProjects/news_lite/src/main/resources",
+    "last_opened_file_path": "C:/Users/rps_p/IdeaProjects/news_lite/src/main",
     "nodejs_package_manager_path": "npm",
     "project.structure.last.edited": "Artifacts",
     "project.structure.proportion": "0.15",
@@ -77,12 +93,16 @@
 }]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\rps_p\IdeaProjects\news_lite\src\main" />
       <recent name="C:\Users\rps_p\IdeaProjects\news_lite\src\main\resources" />
       <recent name="C:\Users\rps_p\IdeaProjects\news_lite\src\main\java\gui" />
       <recent name="C:\Users\rps_p\IdeaProjects\news_lite\src\main\java\database" />
     </key>
     <key name="CreateTestDialog.Recents.Supers">
       <recent name="" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\rps_p\IdeaProjects\news_lite\src\main\java" />
     </key>
     <key name="ExtractSuperBase.RECENT_KEYS">
       <recent name="search" />
@@ -107,7 +127,7 @@
       <command value="mvn clean" />
     </option>
   </component>
-  <component name="RunManager" selected="Application.Main">
+  <component name="RunManager" selected="JUnit.DifferentTests.shouldFindAndSendResultsToEmail">
     <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="main.Main" />
       <module name="News" />
@@ -159,9 +179,9 @@
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="JUnit.DifferentTests.shouldFindAndSendResultsToEmail" />
         <item itemvalue="Application.Main" />
         <item itemvalue="JUnit.DifferentTests.shouldOpenSQLiteConnectionTest" />
-        <item itemvalue="JUnit.DifferentTests.shouldFindAndSendResultsToEmail" />
         <item itemvalue="JUnit.DifferentTests" />
       </list>
     </recent_temporary>
@@ -192,14 +212,8 @@
       <workItem from="1656967946951" duration="726000" />
       <workItem from="1657012109964" duration="3000" />
       <workItem from="1657039663445" duration="136000" />
-      <workItem from="1657388359054" duration="1060000" />
-    </task>
-    <task id="LOCAL-00259" summary="feat: рефакторинг">
-      <created>1651851286619</created>
-      <option name="number" value="00259" />
-      <option name="presentableId" value="LOCAL-00259" />
-      <option name="project" value="LOCAL" />
-      <updated>1651851286619</updated>
+      <workItem from="1657388359054" duration="1198000" />
+      <workItem from="1657793591061" duration="940000" />
     </task>
     <task id="LOCAL-00260" summary="feat: рефакторинг">
       <created>1651851322171</created>
@@ -537,7 +551,14 @@
       <option name="project" value="LOCAL" />
       <updated>1656943962189</updated>
     </task>
-    <option name="localTasksCounter" value="308" />
+    <task id="LOCAL-00308" summary="info: refactor">
+      <created>1657389526987</created>
+      <option name="number" value="00308" />
+      <option name="presentableId" value="LOCAL-00308" />
+      <option name="project" value="LOCAL" />
+      <updated>1657389526987</updated>
+    </task>
+    <option name="localTasksCounter" value="309" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
