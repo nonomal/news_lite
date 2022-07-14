@@ -40,9 +40,10 @@ public class ExportToExcel {
                 sheet.setColumnWidth(3, 4000);
                 sheet.setColumnWidth(4, 3000);
 
+                // Headers
                 Row headerRow = sheet.createRow(0);
                 headerRow.setHeight((short) 400);
-                // Headers
+
                 CellStyle headerStyle = workbook.createCellStyle();
                 headerStyle.setAlignment(HorizontalAlignment.CENTER);
                 headerStyle.setVerticalAlignment(VerticalAlignment.CENTER);
@@ -67,7 +68,7 @@ public class ExportToExcel {
                 cellStyle.setAlignment(HorizontalAlignment.CENTER);
                 cellStyle.setVerticalAlignment(VerticalAlignment.CENTER);
 
-                // Titles
+                // Sources, Titles
                 CellStyle leftCellStyle = workbook.createCellStyle();
                 leftCellStyle.setBorderLeft(BorderStyle.THIN);
                 leftCellStyle.setBorderRight(BorderStyle.THIN);
