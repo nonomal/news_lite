@@ -308,6 +308,7 @@ public class Gui extends JFrame {
         tableForAnalysis.getColumnModel().getColumn(2).setMaxWidth(30);
         scrollForAnalysis.setViewportView(tableForAnalysis);
 
+        /* TOP-LEFT ACTION PANEL */
         // запуск поиска по слову из таблицы анализа
         tableForAnalysis.addMouseListener(new MouseAdapter() {
             @Override
@@ -367,15 +368,6 @@ public class Gui extends JFrame {
         });
         getContentPane().add(stopBtnTop);
 
-        //Amount of news
-        labelSum = new JLabel();
-        labelSum.setBounds(880, 278, 120, 13);
-        labelSum.setFont(GUI_FONT);
-        labelSum.setForeground(new Color(255, 255, 153));
-        labelSum.setBackground(new Color(240, 255, 240));
-        getContentPane().add(labelSum);
-
-        /* Top-Left action panel */
         int topActionY = 9;
         // Интервалы для поиска новостей
         newsInterval = new JComboBox<>(INTERVALS);
@@ -923,6 +915,14 @@ public class Gui extends JFrame {
         queryTableBox.setBorder(new BevelBorder(BevelBorder.RAISED, null, null, null, null));
         queryTableBox.setBounds(879, 473, 290, 26);
         getContentPane().add(queryTableBox);
+
+        //Amount of news
+        labelSum = new JLabel();
+        labelSum.setBounds(880, 278, 120, 13);
+        labelSum.setFont(GUI_FONT);
+        labelSum.setForeground(new Color(255, 255, 153));
+        labelSum.setBackground(new Color(240, 255, 240));
+        getContentPane().add(labelSum);
 
         //My sign
         labelSign = new JLabel("mrPro");

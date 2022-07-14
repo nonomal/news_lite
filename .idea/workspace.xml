@@ -9,7 +9,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9e6d6f99-cebb-4fd8-99d4-ae1b59f22e89" name="Default Changelist" comment="info: удалён чекбокс периода, добавлены интервалы all и 72 часа" />
+    <list default="true" id="9e6d6f99-cebb-4fd8-99d4-ae1b59f22e89" name="Default Changelist" comment="info: refactor">
+      <change beforePath="$PROJECT_DIR$/src/main/java/gui/Gui.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/gui/Gui.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -212,20 +214,7 @@
       <workItem from="1657803743230" duration="8077000" />
       <workItem from="1657813782976" duration="508000" />
       <workItem from="1657816195390" duration="3867000" />
-    </task>
-    <task id="LOCAL-00268" summary="feat: уточнение пути к БД">
-      <created>1652535539497</created>
-      <option name="number" value="00268" />
-      <option name="presentableId" value="LOCAL-00268" />
-      <option name="project" value="LOCAL" />
-      <updated>1652535539497</updated>
-    </task>
-    <task id="LOCAL-00269" summary="feat: уточнение пути к БД">
-      <created>1652535573786</created>
-      <option name="number" value="00269" />
-      <option name="presentableId" value="LOCAL-00269" />
-      <option name="project" value="LOCAL" />
-      <updated>1652535573786</updated>
+      <workItem from="1657824256164" duration="396000" />
     </task>
     <task id="LOCAL-00270" summary="feat: уточнение пути к БД">
       <created>1652535610316</created>
@@ -556,7 +545,21 @@
       <option name="project" value="LOCAL" />
       <updated>1657823415311</updated>
     </task>
-    <option name="localTasksCounter" value="317" />
+    <task id="LOCAL-00317" summary="info: gui">
+      <created>1657824309870</created>
+      <option name="number" value="00317" />
+      <option name="presentableId" value="LOCAL-00317" />
+      <option name="project" value="LOCAL" />
+      <updated>1657824309870</updated>
+    </task>
+    <task id="LOCAL-00318" summary="info: refactor">
+      <created>1657824608730</created>
+      <option name="number" value="00318" />
+      <option name="presentableId" value="LOCAL-00318" />
+      <option name="project" value="LOCAL" />
+      <updated>1657824608730</updated>
+    </task>
+    <option name="localTasksCounter" value="319" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -577,7 +580,6 @@
     <ignored-roots>
       <path value="$PROJECT_DIR$" />
     </ignored-roots>
-    <MESSAGE value="feat: запись интервалов" />
     <MESSAGE value="feat: добавлено логирование" />
     <MESSAGE value="feat: логирование" />
     <MESSAGE value="feat: таблица анализа" />
@@ -600,9 +602,10 @@
     <MESSAGE value="fix: console email sender" />
     <MESSAGE value="info: refactor + change test dependencies + spring boot" />
     <MESSAGE value="info: change jxl to apache poi" />
-    <MESSAGE value="info: refactor" />
     <MESSAGE value="info: удалён чекбокс периода, добавлены интервалы all и 72 часа" />
-    <option name="LAST_COMMIT_MESSAGE" value="info: удалён чекбокс периода, добавлены интервалы all и 72 часа" />
+    <MESSAGE value="info: gui" />
+    <MESSAGE value="info: refactor" />
+    <option name="LAST_COMMIT_MESSAGE" value="info: refactor" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -626,26 +629,6 @@
           <url>file://$PROJECT_DIR$/src/main/java/search/Search.java</url>
           <line>150</line>
           <option name="timeStamp" value="13" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/gui/Gui.java</url>
-          <line>636</line>
-          <option name="timeStamp" value="15" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/gui/Gui.java</url>
-          <line>653</line>
-          <option name="timeStamp" value="17" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/gui/Gui.java</url>
-          <line>676</line>
-          <option name="timeStamp" value="20" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/gui/Gui.java</url>
-          <line>641</line>
-          <option name="timeStamp" value="21" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
