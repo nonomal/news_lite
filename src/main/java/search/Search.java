@@ -133,7 +133,7 @@ public class Search extends SearchUtils {
                                         // вставка всех новостей в архив (ощутимо замедляет общий поиск)
                                         databaseQueries.insertAllTitles(title, pubDate.toString(), SQLite.connection);
 
-                                        maimSearchProcess(databaseQueries, st, smi_source, title, newsDescribe, pubDate, dateToEmail, link, date_diff);
+                                        mainSearchProcess(databaseQueries, st, smi_source, title, newsDescribe, pubDate, dateToEmail, link, date_diff);
                                     }
                                 } else if (isWords) {
                                     for (String it : Common.getKeywordsFromFile()) {
@@ -148,7 +148,7 @@ public class Search extends SearchUtils {
                                             Date currentDate = new Date();
                                             int date_diff = Common.compareDatesOnly(currentDate, pubDate);
 
-                                            maimSearchProcess(databaseQueries, st, smi_source, title, newsDescribe, pubDate, dateToEmail, link, date_diff);
+                                            mainSearchProcess(databaseQueries, st, smi_source, title, newsDescribe, pubDate, dateToEmail, link, date_diff);
                                         }
                                     }
                                 }
@@ -228,10 +228,10 @@ public class Search extends SearchUtils {
         }
     }
 
-    private void maimSearchProcess(DatabaseQueries sqlite, PreparedStatement st, String smi_source, String title,
+    private void mainSearchProcess(DatabaseQueries sqlite, PreparedStatement st, String smi_source, String title,
                                    String newsDescribe, Date pubDate, String dateToEmail, String link,
                                    int date_diff) throws SQLException {
-        if (Gui.todayOrNotCbx.getState() && (date_diff != 0)) {
+        if (date_diff != 0) {
             newsCount++;
             Gui.labelSum.setText(String.valueOf(newsCount));
             dataForEmail.add(newsCount + ") " + title + "\n" + link + "\n" + newsDescribe + "\n" +

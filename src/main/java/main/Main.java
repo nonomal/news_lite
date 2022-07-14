@@ -101,7 +101,6 @@ public class Main {
             new Gui();
             // load config.txt
             Common.getSettingsFromFile();
-            Gui.newsInterval.setVisible(Gui.todayOrNotCbx.getState());
             Gui.isOnlyLastNews = Gui.onlyNewNews.getState();
             sqlite.openConnection();
         } else {

@@ -107,9 +107,6 @@ public class Common {
                 case "checkbox": {
                     String text = null;
                     switch (p_word) {
-                        case "todayOrNotChbx":
-                            text = "checkbox:" + p_word + "=" + Gui.todayOrNotCbx.getState() + "\n";
-                            break;
                         case "filterNewsChbx":
                             text = "checkbox:" + p_word + "=" + Gui.onlyNewNews.getState() + "\n";
                             break;
@@ -173,13 +170,23 @@ public class Common {
             for (String[] f : lines) {
                 switch (f[0]) {
                     case "interval":
-                        if (f[1].equals("1h")) {
-                            Gui.newsInterval.setSelectedItem(f[1].replace("h", "") + " hour");
-                        } else if (f[1].equals("1m") || f[1].equals("5m") || f[1].equals("15m")
-                                || f[1].equals("30m") || f[1].equals("45m")) {
-                            Gui.newsInterval.setSelectedItem(f[1].replace("m", "") + " min");
-                        } else {
-                            Gui.newsInterval.setSelectedItem(f[1].replace("h", "") + " hours");
+                        switch (f[1]) {
+                            case "1h":
+                                Gui.newsInterval.setSelectedItem(f[1].replace("h", "") + " hour");
+                                break;
+                            case "1m":
+                            case "5m":
+                            case "15m":
+                            case "30m":
+                            case "45m":
+                                Gui.newsInterval.setSelectedItem(f[1].replace("m", "") + " min");
+                                break;
+                            case "all":
+                                Gui.newsInterval.setSelectedItem("all");
+                                break;
+                            default:
+                                Gui.newsInterval.setSelectedItem(f[1].replace("h", "") + " hours");
+                                break;
                         }
                         break;
                     case "email":
@@ -188,9 +195,6 @@ public class Common {
                     case "keyword":
                         Gui.keywords.addItem(f[1]);
                         KEYWORDS_LIST.add(f[1]);
-                        break;
-                    case "checkbox:todayOrNotChbx":
-                        Gui.todayOrNotCbx.setState(Boolean.parseBoolean(f[1]));
                         break;
                     case "checkbox:filterNewsChbx":
                         Gui.onlyNewNews.setState(Boolean.parseBoolean(f[1]));
@@ -407,6 +411,8 @@ public class Common {
                             .getSelectedItem())
                     .toString()
                     .replace(" min", ""));
+        } else if (Objects.requireNonNull(Gui.newsInterval.getSelectedItem()).toString().contains("all")) {
+            minutes = 240000;
         } else {
             minutes = Integer.parseInt(Objects.requireNonNull(Gui.newsInterval
                             .getSelectedItem())

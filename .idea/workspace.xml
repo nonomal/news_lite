@@ -11,8 +11,11 @@
   <component name="ChangeListManager">
     <list default="true" id="9e6d6f99-cebb-4fd8-99d4-ae1b59f22e89" name="Default Changelist" comment="info: refactor">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/News.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/utils/ExportToExcel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/utils/ExportToExcel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/gui/Gui.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/gui/Gui.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/main/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/main/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/search/Search.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/search/Search.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/utils/Common.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/utils/Common.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/config.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/config.txt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -64,32 +67,32 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "ASKED_MARK_IGNORED_FILES_AS_EXCLUDED": "true",
-    "RequestMappingsPanelOrder0": "0",
-    "RequestMappingsPanelOrder1": "1",
-    "RequestMappingsPanelWidth0": "75",
-    "RequestMappingsPanelWidth1": "75",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "extract.method.default.visibility": "private",
-    "last_opened_file_path": "C:/Users/rps_p/IdeaProjects/news_lite/src/main",
-    "nodejs_package_manager_path": "npm",
-    "project.structure.last.edited": "Artifacts",
-    "project.structure.proportion": "0.15",
-    "project.structure.side.proportion": "0.2",
-    "run.code.analysis.last.selected.profile": "pProject Default",
-    "settings.editor.selected.configurable": "preferences.pluginManager",
-    "spring.configuration.checksum": "dd1ba1872df91985ed1ca4cde2dfe669"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ASKED_MARK_IGNORED_FILES_AS_EXCLUDED&quot;: &quot;true&quot;,
+    &quot;RequestMappingsPanelOrder0&quot;: &quot;0&quot;,
+    &quot;RequestMappingsPanelOrder1&quot;: &quot;1&quot;,
+    &quot;RequestMappingsPanelWidth0&quot;: &quot;75&quot;,
+    &quot;RequestMappingsPanelWidth1&quot;: &quot;75&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;extract.method.default.visibility&quot;: &quot;private&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/rps_p/IdeaProjects/news_lite/src/main&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Artifacts&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
+    &quot;run.code.analysis.last.selected.profile&quot;: &quot;pProject Default&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
+    &quot;spring.configuration.checksum&quot;: &quot;dd1ba1872df91985ed1ca4cde2dfe669&quot;
   },
-  "keyToStringList": {
-    "DatabaseDriversLRU": [
-      "sqlite"
+  &quot;keyToStringList&quot;: {
+    &quot;DatabaseDriversLRU&quot;: [
+      &quot;sqlite&quot;
     ]
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\rps_p\IdeaProjects\news_lite\src\main" />
@@ -213,14 +216,9 @@
       <workItem from="1657039663445" duration="136000" />
       <workItem from="1657388359054" duration="1198000" />
       <workItem from="1657793591061" duration="1228000" />
-      <workItem from="1657803743230" duration="8018000" />
-    </task>
-    <task id="LOCAL-00266" summary="feat: рефакторинг">
-      <created>1652183314260</created>
-      <option name="number" value="00266" />
-      <option name="presentableId" value="LOCAL-00266" />
-      <option name="project" value="LOCAL" />
-      <updated>1652183314260</updated>
+      <workItem from="1657803743230" duration="8077000" />
+      <workItem from="1657813782976" duration="508000" />
+      <workItem from="1657816195390" duration="3541000" />
     </task>
     <task id="LOCAL-00267" summary="feat: уточнение пути к БД">
       <created>1652535529056</created>
@@ -558,7 +556,14 @@
       <option name="project" value="LOCAL" />
       <updated>1657811295570</updated>
     </task>
-    <option name="localTasksCounter" value="315" />
+    <task id="LOCAL-00315" summary="info: refactor">
+      <created>1657811889051</created>
+      <option name="number" value="00315" />
+      <option name="presentableId" value="LOCAL-00315" />
+      <option name="project" value="LOCAL" />
+      <updated>1657811889051</updated>
+    </task>
+    <option name="localTasksCounter" value="316" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -628,6 +633,26 @@
           <url>file://$PROJECT_DIR$/src/main/java/search/Search.java</url>
           <line>150</line>
           <option name="timeStamp" value="13" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/gui/Gui.java</url>
+          <line>635</line>
+          <option name="timeStamp" value="15" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/gui/Gui.java</url>
+          <line>652</line>
+          <option name="timeStamp" value="17" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/gui/Gui.java</url>
+          <line>676</line>
+          <option name="timeStamp" value="20" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/gui/Gui.java</url>
+          <line>640</line>
+          <option name="timeStamp" value="21" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

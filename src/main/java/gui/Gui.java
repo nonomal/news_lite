@@ -41,11 +41,12 @@ public class Gui extends JFrame {
     final SQLite sqLite = new SQLite();
     final DatabaseQueries databaseQueries = new DatabaseQueries();
     final Search search = new Search();
+
     private static final Font GUI_FONT = new Font("Tahoma", Font.PLAIN, 11);
-    private final Object[] mainTableHeaders = {"Num", "Source", "Title (double click to open the link)", "Date", "Link"};
-    private final String[] tableForAnalyzeHeaders = {"top 10", "freq.", " "};
     private static final String[] INTERVALS = {"1 min", "5 min", "15 min", "30 min", "45 min", "1 hour", "2 hours",
-            "4 hours", "8 hours", "12 hours", "24 hours", "48 hours"};
+            "4 hours", "8 hours", "12 hours", "24 hours", "48 hours", "72 hours", "all"};
+    private static final Object[] MAIN_TABLE_HEADERS = {"Num", "Source", "Title (double click to open the link)", "Date", "Link"};
+    private static final String[] TABLE_FOR_ANALYZE_HEADERS = {"top 10", "freq.", " "};
     private static final long AUTO_START_TIMER = 60000L; // 60 секунд
     public static final ImageIcon LOGO_ICON = new ImageIcon(Toolkit.getDefaultToolkit().createImage(Gui.class.getResource("/icons/logo.png")));
     public static final ImageIcon SEND_EMAIL_ICON = new ImageIcon(Toolkit.getDefaultToolkit().createImage(Gui.class.getResource("/icons/send.png")));
@@ -59,6 +60,8 @@ public class Gui extends JFrame {
     public static final ImageIcon DELETE_FROM_KEYWORDS_ICON = new ImageIcon(Toolkit.getDefaultToolkit().createImage(Gui.class.getResource("/icons/delete.png")));
     public static final ImageIcon FONT_COLOR_BUTTON_ICON = new ImageIcon(Toolkit.getDefaultToolkit().createImage(Gui.class.getResource("/icons/font.png")));
     public static final ImageIcon BACK_GROUND_COLOR_ICON = new ImageIcon(Toolkit.getDefaultToolkit().createImage(Gui.class.getResource("/icons/bg.png")));
+    public static final AtomicBoolean WAS_CLICK_IN_TABLE_FOR_ANALYSIS = new AtomicBoolean(false);
+    public static final AtomicBoolean GUI_IN_TRAY = new AtomicBoolean(false);
     public static int newsCount = 1;
     public static boolean isOnlyLastNews = false;
     public static boolean isInKeywords = false;
@@ -85,7 +88,6 @@ public class Gui extends JFrame {
     public static JButton smiBtn;
     public static JButton logBtn;
     public static JButton exclBtn;
-    public static Checkbox todayOrNotCbx;
     public static Checkbox autoUpdateNewsTop;
     public static Checkbox autoUpdateNewsBottom;
     public static Checkbox autoSendMessage;
@@ -93,8 +95,6 @@ public class Gui extends JFrame {
     public static JProgressBar progressBar;
     public static Timer timer;
     public static TimerTask timerTask;
-    public static final AtomicBoolean WAS_CLICK_IN_TABLE_FOR_ANALYSIS = new AtomicBoolean(false);
-    public static final AtomicBoolean GUI_IN_TRAY = new AtomicBoolean(false);
 
     public Gui() {
         setResizable(false);
@@ -184,7 +184,7 @@ public class Gui extends JFrame {
         scrollPane.setBounds(10, 40, 860, 500);
         getContentPane().add(scrollPane);
         model = new DefaultTableModel(new Object[][]{
-        }, mainTableHeaders) {
+        }, MAIN_TABLE_HEADERS) {
             final boolean[] columnEditable = new boolean[]{
                     false, false, false, false, false
             };
@@ -273,7 +273,7 @@ public class Gui extends JFrame {
         scrollForAnalysis.setBounds(880, 40, 290, 236);
         getContentPane().add(scrollForAnalysis);
 
-        modelForAnalysis = new DefaultTableModel(new Object[][]{}, tableForAnalyzeHeaders) {
+        modelForAnalysis = new DefaultTableModel(new Object[][]{}, TABLE_FOR_ANALYZE_HEADERS) {
             final boolean[] column_for_analysis = new boolean[]{false, false, true};
 
             public boolean isCellEditable(int row, int column) {
@@ -336,7 +336,7 @@ public class Gui extends JFrame {
         searchBtnTop.setToolTipText("Без заголовков со словами " + Search.excludeFromSearch);
         searchBtnTop.setBackground(new Color(154, 237, 196));
         searchBtnTop.setFont(new Font("Tahoma", Font.BOLD, 10));
-        searchBtnTop.setBounds(192, 9, 30, 22);
+        searchBtnTop.setBounds(192, 8, 30, 22);
         getContentPane().add(searchBtnTop);
         // Search by Enter
         getRootPane().setDefaultButton(searchBtnTop);
@@ -348,7 +348,7 @@ public class Gui extends JFrame {
         stopBtnTop = new JButton("");
         stopBtnTop.setIcon(STOP_SEARCH_ICON);
         stopBtnTop.setBackground(new Color(255, 208, 202));
-        stopBtnTop.setBounds(192, 9, 30, 22);
+        stopBtnTop.setBounds(192, 8, 30, 22);
         stopBtnTop.addActionListener(e -> {
             try {
                 Search.isSearchFinished.set(true);
@@ -557,7 +557,7 @@ public class Gui extends JFrame {
         });
         getContentPane().add(stopBtnBottom);
 
-        // Автозапуск поиска по ключевым словам каждые 30 секунд
+        // Автозапуск поиска по ключевым словам каждые 60 секунд
         autoUpdateNewsBottom = new Checkbox("auto update");
         SetCheckbox setCheckbox1 = new SetCheckbox(297, 561, 75);
         setCheckbox1.checkBoxSetting(autoUpdateNewsBottom);
@@ -630,23 +630,28 @@ public class Gui extends JFrame {
         progressBar.setBounds(10, 37, 860, 1);
         getContentPane().add(progressBar);
 
+        int topY = 9;
         // Интервалы для поиска новостей
         newsInterval = new JComboBox<>(INTERVALS);
         newsInterval.setFont(GUI_FONT);
-        newsInterval.setBounds(516, 10, 75, 20);
+        newsInterval.setBounds(230, topY, 75, 20); //516
         getContentPane().add(newsInterval);
 
-        // Today or not
-        todayOrNotCbx = new Checkbox("in the last");
-        setCheckbox1 = new SetCheckbox(449, 10, 64);
-        setCheckbox1.checkBoxSetting(todayOrNotCbx);
-        todayOrNotCbx.setState(true);
-        todayOrNotCbx.addItemListener(e -> newsInterval.setVisible(todayOrNotCbx.getState()));
-        getContentPane().add(todayOrNotCbx);
+        // latest news
+        onlyNewNews = new Checkbox("only new");
+        SetCheckbox setCheckbox = new SetCheckbox(315, topY, 65);
+        setCheckbox.checkBoxSetting(onlyNewNews);
+        getContentPane().add(onlyNewNews);
+        onlyNewNews.addItemListener(e -> {
+            isOnlyLastNews = onlyNewNews.getState();
+            if (!isOnlyLastNews) {
+                databaseQueries.deleteFrom256(SQLite.connection);
+            }
+        });
 
         // Автозапуск поиска по слову каждые 60 секунд
         autoUpdateNewsTop = new Checkbox("auto update");
-        setCheckbox1 = new SetCheckbox(297, 10, 75);
+        setCheckbox1 = new SetCheckbox(383, topY, 75);
         setCheckbox1.checkBoxSetting(autoUpdateNewsTop);
 
         getContentPane().add(autoUpdateNewsTop);
@@ -666,6 +671,12 @@ public class Gui extends JFrame {
                 stopBtnTop.doClick();
             }
         });
+
+        // Автоматическая отправка письма с результатами
+        autoSendMessage = new Checkbox("auto send");
+        setCheckbox = new SetCheckbox(463, topY, 66);
+        setCheckbox.checkBoxSetting(autoSendMessage);
+        getContentPane().add(autoSendMessage);
 
         // Диалоговое окно со списком исключенных слов из анализа
         exclBtn = new JButton();
@@ -749,12 +760,6 @@ public class Gui extends JFrame {
 
         });
         getContentPane().add(sendEmailBtn);
-
-        // Автоматическая отправка письма с результатами
-        autoSendMessage = new Checkbox("auto send");
-        SetCheckbox setCheckbox = new SetCheckbox(378, 10, 66);
-        setCheckbox.checkBoxSetting(autoSendMessage);
-        getContentPane().add(autoSendMessage);
 
         // Диалоговое окно со списком источников "sources"
         smiBtn = new JButton();
@@ -917,18 +922,6 @@ public class Gui extends JFrame {
         queryTableBox.setBorder(new BevelBorder(BevelBorder.RAISED, null, null, null, null));
         queryTableBox.setBounds(879, 473, 290, 26);
         getContentPane().add(queryTableBox);
-
-        // latest news
-        onlyNewNews = new Checkbox("only new");
-        setCheckbox = new SetCheckbox(230, 10, 65);
-        setCheckbox.checkBoxSetting(onlyNewNews);
-        getContentPane().add(onlyNewNews);
-        onlyNewNews.addItemListener(e -> {
-            isOnlyLastNews = onlyNewNews.getState();
-            if (!isOnlyLastNews) {
-                databaseQueries.deleteFrom256(SQLite.connection);
-            }
-        });
 
         //My sign
         labelSign = new JLabel("mrPro");
