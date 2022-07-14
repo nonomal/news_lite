@@ -9,7 +9,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9e6d6f99-cebb-4fd8-99d4-ae1b59f22e89" name="Default Changelist" comment="info: change jxl to apache poi">
+    <list default="true" id="9e6d6f99-cebb-4fd8-99d4-ae1b59f22e89" name="Default Changelist" comment="info: refactor">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/News.jar" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/utils/ExportToExcel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/utils/ExportToExcel.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -211,14 +213,7 @@
       <workItem from="1657039663445" duration="136000" />
       <workItem from="1657388359054" duration="1198000" />
       <workItem from="1657793591061" duration="1228000" />
-      <workItem from="1657803743230" duration="7361000" />
-    </task>
-    <task id="LOCAL-00265" summary="feat: рефакторинг общий">
-      <created>1652183143415</created>
-      <option name="number" value="00265" />
-      <option name="presentableId" value="LOCAL-00265" />
-      <option name="project" value="LOCAL" />
-      <updated>1652183143415</updated>
+      <workItem from="1657803743230" duration="8018000" />
     </task>
     <task id="LOCAL-00266" summary="feat: рефакторинг">
       <created>1652183314260</created>
@@ -556,7 +551,14 @@
       <option name="project" value="LOCAL" />
       <updated>1657810918792</updated>
     </task>
-    <option name="localTasksCounter" value="314" />
+    <task id="LOCAL-00314" summary="info: refactor">
+      <created>1657811295570</created>
+      <option name="number" value="00314" />
+      <option name="presentableId" value="LOCAL-00314" />
+      <option name="project" value="LOCAL" />
+      <updated>1657811295570</updated>
+    </task>
+    <option name="localTasksCounter" value="315" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -599,10 +601,10 @@
     <MESSAGE value="info: refactor checkboxes" />
     <MESSAGE value="info: search refactor" />
     <MESSAGE value="fix: console email sender" />
-    <MESSAGE value="info: refactor" />
     <MESSAGE value="info: refactor + change test dependencies + spring boot" />
     <MESSAGE value="info: change jxl to apache poi" />
-    <option name="LAST_COMMIT_MESSAGE" value="info: change jxl to apache poi" />
+    <MESSAGE value="info: refactor" />
+    <option name="LAST_COMMIT_MESSAGE" value="info: refactor" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

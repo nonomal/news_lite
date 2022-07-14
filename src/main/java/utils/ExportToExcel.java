@@ -10,6 +10,7 @@ import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import java.io.File;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.nio.file.Files;
 
 @Slf4j
@@ -34,6 +35,7 @@ public class ExportToExcel {
             if (ret == JFileChooser.APPROVE_OPTION) {
                 File file = new File(saveToDirectory.getSelectedFile() + ".xls");
 
+                sheet.createFreezePane(0, 1);
                 sheet.setColumnWidth(0, 3000);
                 sheet.setColumnWidth(1, 4000);
                 sheet.setColumnWidth(2, 30000);
@@ -123,11 +125,17 @@ public class ExportToExcel {
                 }
 
                 // write to file
-                workbook.write(Files.newOutputStream(file.toPath()));
+                OutputStream outputStream = Files.newOutputStream(file.toPath());
+                workbook.write(outputStream);
                 workbook.close();
+                outputStream.close();
+                Common.console("info: export is done");
+            } else {
+                Common.console("info: export canceled");
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            Common.console("info: export is done");
+            log.error("export to excel error:\n" + e.getMessage());
         }
     }
 }
