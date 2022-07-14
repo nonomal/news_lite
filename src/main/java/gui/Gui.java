@@ -308,7 +308,6 @@ public class Gui extends JFrame {
         tableForAnalysis.getColumnModel().getColumn(2).setMaxWidth(30);
         scrollForAnalysis.setViewportView(tableForAnalysis);
 
-        /* TOP-LEFT ACTION PANEL */
         // запуск поиска по слову из таблицы анализа
         tableForAnalysis.addMouseListener(new MouseAdapter() {
             @Override
@@ -325,19 +324,23 @@ public class Gui extends JFrame {
             }
         });
 
+
+        /* TOP-LEFT ACTION PANEL */
+        int topLeftActionY = 9;
+
         //Keyword field
         topKeyword = new JTextField(findWord);
-        topKeyword.setBounds(87, 9, 99, 21);
+        topKeyword.setBounds(87, topLeftActionY, 100, 22);
         topKeyword.setFont(new Font("Tahoma", Font.BOLD, 13));
         getContentPane().add(topKeyword);
 
         //Search addNewSource
-        searchBtnTop = new JButton("");
+        searchBtnTop = new JButton();
         searchBtnTop.setIcon(SEARCH_KEYWORDS_ICON);
         searchBtnTop.setToolTipText("Без заголовков со словами " + Search.excludeFromSearch);
         searchBtnTop.setBackground(new Color(154, 237, 196));
         searchBtnTop.setFont(new Font("Tahoma", Font.BOLD, 10));
-        searchBtnTop.setBounds(192, 8, 30, 22);
+        searchBtnTop.setBounds(192, topLeftActionY, 30, 22);
         getContentPane().add(searchBtnTop);
         // Search by Enter
         getRootPane().setDefaultButton(searchBtnTop);
@@ -349,7 +352,7 @@ public class Gui extends JFrame {
         stopBtnTop = new JButton("");
         stopBtnTop.setIcon(STOP_SEARCH_ICON);
         stopBtnTop.setBackground(new Color(255, 208, 202));
-        stopBtnTop.setBounds(192, 8, 30, 22);
+        stopBtnTop.setBounds(192, topLeftActionY, 30, 22);
         stopBtnTop.addActionListener(e -> {
             try {
                 Search.isSearchFinished.set(true);
@@ -368,16 +371,15 @@ public class Gui extends JFrame {
         });
         getContentPane().add(stopBtnTop);
 
-        int topActionY = 9;
         // Интервалы для поиска новостей
         newsInterval = new JComboBox<>(INTERVALS);
         newsInterval.setFont(GUI_FONT);
-        newsInterval.setBounds(230, topActionY, 75, 20); //516
+        newsInterval.setBounds(230, topLeftActionY, 75, 20); //516
         getContentPane().add(newsInterval);
 
         // latest news
         onlyNewNews = new Checkbox("only new");
-        SetCheckbox setCheckbox = new SetCheckbox(315, topActionY, 65);
+        SetCheckbox setCheckbox = new SetCheckbox(315, topLeftActionY, 65);
         setCheckbox.checkBoxSetting(onlyNewNews);
         getContentPane().add(onlyNewNews);
         onlyNewNews.addItemListener(e -> {
@@ -389,7 +391,7 @@ public class Gui extends JFrame {
 
         // Автозапуск поиска по слову каждые 60 секунд
         autoUpdateNewsTop = new Checkbox("auto update");
-        SetCheckbox setCheckbox1 = new SetCheckbox(383, topActionY, 75);
+        SetCheckbox setCheckbox1 = new SetCheckbox(383, topLeftActionY, 75);
         setCheckbox1.checkBoxSetting(autoUpdateNewsTop);
 
         getContentPane().add(autoUpdateNewsTop);
@@ -412,7 +414,7 @@ public class Gui extends JFrame {
 
         // Автоматическая отправка письма с результатами
         autoSendMessage = new Checkbox("auto send");
-        setCheckbox = new SetCheckbox(463, topActionY, 66);
+        setCheckbox = new SetCheckbox(463, topLeftActionY, 66);
         setCheckbox.checkBoxSetting(autoSendMessage);
         getContentPane().add(autoSendMessage);
 
