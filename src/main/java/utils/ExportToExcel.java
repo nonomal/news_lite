@@ -1,11 +1,12 @@
 package utils;
 
 import gui.Gui;
-import jxl.Workbook;
-import jxl.format.Alignment;
-import jxl.format.Colour;
-import jxl.format.UnderlineStyle;
-import jxl.write.*;
+import lombok.extern.slf4j.Slf4j;
+import org.apache.poi.common.usermodel.HyperlinkType;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.ss.usermodel.*;
+import org.apache.poi.ss.util.CellRangeAddress;
+import org.apache.poi.ss.util.RegionUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -13,10 +14,10 @@ import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import java.io.File;
 import java.io.IOException;
-import java.net.URL;
+import java.nio.file.Files;
 
+@Slf4j
 public class ExportToExcel {
-    private static final Logger log = LoggerFactory.getLogger(ExportToExcel.class);
 
     public void exportResultsToExcel() {
         try {
@@ -25,103 +26,108 @@ public class ExportToExcel {
             JFileChooser save_to = new JFileChooser();
             save_to.setFileFilter(filter);
             save_to.setCurrentDirectory(new File
-                    (System.getProperty("user.home") + System.getProperty("file.separator")+ "Desktop"));
-            int ret = save_to.showDialog(null,"Save");
+                    (System.getProperty("user.home") + System.getProperty("file.separator") + "Desktop"));
+            int ret = save_to.showDialog(null, "Save");
             if (ret == JFileChooser.APPROVE_OPTION) {
                 File file = new File(save_to.getSelectedFile() + ".xls");
 
-                WritableWorkbook new_excel = Workbook.createWorkbook(file);
-                WritableSheet page = new_excel.createSheet("001", 0);
-                page.getSettings().setShowGridLines(true);
-                page.setColumnView(0, 10);
-                page.setColumnView(1, 16);
-                page.setColumnView(2, 100);
-                page.setColumnView(3, 30);
-                page.setColumnView(4, 120);
-                page.setRowView(0, 600);
+                Workbook workbook = new HSSFWorkbook();
+                Sheet sheet = workbook.createSheet("Avandy-news");
 
-                //no bold
-                WritableFont wf = new WritableFont(WritableFont.ARIAL, 11,
-                        WritableFont.NO_BOLD, false, UnderlineStyle.NO_UNDERLINE,
-                        jxl.format.Colour.BLACK);
+                sheet.setColumnWidth(0, 3000);
+                sheet.setColumnWidth(1, 4000);
+                sheet.setColumnWidth(2, 30000);
+                sheet.setColumnWidth(3, 4000);
+                sheet.setColumnWidth(4, 3000);
 
-                //bold
-                WritableFont wf_bold = new WritableFont(WritableFont.ARIAL, 11,
-                        WritableFont.BOLD, false, UnderlineStyle.NO_UNDERLINE,
-                        jxl.format.Colour.BLACK);
+                Row headerRow = sheet.createRow(0);
+                headerRow.setHeight((short) 400);
+                // Headers
+                CellStyle headerStyle = workbook.createCellStyle();
+                headerStyle.setAlignment(HorizontalAlignment.CENTER);
+                headerStyle.setVerticalAlignment(VerticalAlignment.CENTER);
+                headerStyle.setFillForegroundColor(IndexedColors.LEMON_CHIFFON.getIndex());
+                headerStyle.setFillPattern(FillPatternType.SOLID_FOREGROUND);
+                headerStyle.setBorderTop(BorderStyle.THIN);
+                headerStyle.setBorderLeft(BorderStyle.THIN);
+                headerStyle.setBorderRight(BorderStyle.THIN);
+                headerStyle.setBorderBottom(BorderStyle.THIN);
 
-                //Hyperlinks
-                WritableFont wf_link = new WritableFont(WritableFont.ARIAL, 11, WritableFont.NO_BOLD);
-                wf_link.setColour(Colour.DARK_GREEN);
-                WritableCellFormat wcf_link = new WritableCellFormat(wf_link);
-                wcf_link.setBorder(jxl.format.Border.ALL, jxl.format.BorderLineStyle.THIN, jxl.format.Colour.BLACK);
-                wcf_link.setVerticalAlignment(jxl.format.VerticalAlignment.CENTRE);
-                wcf_link.setWrap(true);
+                Font headersFont = workbook.createFont();
+                headersFont.setFontName("Arial");
+                headersFont.setFontHeightInPoints((short) 13);
+                headersFont.setBold(true);
+                headerStyle.setFont(headersFont);
 
-                //WritableCellFormat wcf_no_border = new WritableCellFormat(wf);
+                // Cells
+                CellStyle cellStyle = workbook.createCellStyle();
+                cellStyle.setBorderLeft(BorderStyle.THIN);
+                cellStyle.setBorderRight(BorderStyle.THIN);
+                cellStyle.setBorderBottom(BorderStyle.THIN);
+                cellStyle.setAlignment(HorizontalAlignment.CENTER);
+                cellStyle.setVerticalAlignment(VerticalAlignment.CENTER);
 
-                WritableCellFormat wcf = new WritableCellFormat(wf);
-                wcf.setBorder(jxl.format.Border.ALL, jxl.format.BorderLineStyle.THIN, jxl.format.Colour.BLACK);
-                wcf.setVerticalAlignment(jxl.format.VerticalAlignment.CENTRE);
-                wcf.setWrap(true);
+                // Titles
+                CellStyle leftCellStyle = workbook.createCellStyle();
+                leftCellStyle.setBorderLeft(BorderStyle.THIN);
+                leftCellStyle.setBorderRight(BorderStyle.THIN);
+                leftCellStyle.setBorderBottom(BorderStyle.THIN);
+                leftCellStyle.setAlignment(HorizontalAlignment.LEFT);
+                leftCellStyle.setVerticalAlignment(VerticalAlignment.CENTER);
 
-                WritableCellFormat wcf_centre_no_bold = new WritableCellFormat(wf);
-                wcf_centre_no_bold.setBorder(jxl.format.Border.ALL, jxl.format.BorderLineStyle.THIN, jxl.format.Colour.BLACK);
-                wcf_centre_no_bold.setVerticalAlignment(jxl.format.VerticalAlignment.CENTRE);
-                wcf_centre_no_bold.setAlignment(Alignment.CENTRE);
+                Font cellFont = workbook.createFont();
+                cellFont.setFontName("Arial");
+                cellFont.setFontHeightInPoints((short) 13);
 
-                //no bold
-                WritableCellFormat wcf_centre = new WritableCellFormat(wf);
-                wcf_centre.setAlignment(jxl.format.Alignment.CENTRE);
-                wcf_centre.setVerticalAlignment(jxl.format.VerticalAlignment.CENTRE);
-                wcf_centre.setBorder(jxl.format.Border.ALL, jxl.format.BorderLineStyle.THIN, jxl.format.Colour.BLACK);
-                wcf_centre.setVerticalAlignment(jxl.format.VerticalAlignment.CENTRE);
-
-                //HEADERS: color, bold
-                WritableCellFormat wcf_centre_bold = new WritableCellFormat(wf_bold);
-                wcf_centre_bold.setAlignment(jxl.format.Alignment.CENTRE);
-                wcf_centre_bold.setBorder(jxl.format.Border.ALL, jxl.format.BorderLineStyle.THIN, jxl.format.Colour.BLACK);
-                wcf_centre_bold.setVerticalAlignment(jxl.format.VerticalAlignment.CENTRE);
-                wcf_centre_bold.setBackground(Colour.LIGHT_GREEN);
-
-                //DATE: no bold
-                DateFormat dateFormat = new DateFormat("dd-MM-yyyy HH:mm") ;
-                WritableCellFormat wcf_date = new WritableCellFormat(dateFormat);
-                wcf_date.setAlignment(jxl.format.Alignment.CENTRE);
-                wcf_date.setVerticalAlignment(jxl.format.VerticalAlignment.CENTRE);
-                wcf_date.setBorder(jxl.format.Border.ALL, jxl.format.BorderLineStyle.THIN, jxl.format.Colour.BLACK);
-                wcf_date.setVerticalAlignment(jxl.format.VerticalAlignment.CENTRE);
-                wcf_date.setAlignment(Alignment.CENTRE);
+                cellStyle.setFont(cellFont);
+                leftCellStyle.setFont(cellFont);
 
                 String[] headers = {"Number", "Source", "Title", "Date", "Link"};
-                for (int s = 0; s < headers.length; s++) {
-                    Label x = new Label(s, 0, headers[s], wcf_centre_bold);
-                    page.addCell(x);
+                for (int i = 0; i < headers.length; i++) {
+                    Cell header = headerRow.createCell(i);
+                    header.setCellValue(headers[i]);
+                    header.setCellStyle(headerStyle);
                 }
 
-                for (int z = 0; z < Gui.model.getRowCount(); z++) {
-                    jxl.write.Number y1 = new jxl.write.Number(0, z + 1, Integer.parseInt(Gui.model.getValueAt(z, 0).toString()), wcf_centre_no_bold); //num
-                    Label y2 = new Label(1, z + 1, Gui.model.getValueAt(z, 1).toString(), wcf_centre_no_bold); //Source
-                    Label y3 = new Label(2, z + 1, Gui.model.getValueAt(z, 2).toString(), wcf); //Title
-                    Label y4 = new Label(3, z + 1, Gui.model.getValueAt(z, 3).toString(), wcf_date); //Date
-                    //Link
-                    Label y5 = new Label(4, z + 1, Gui.model.getValueAt(z, 4).toString(), wcf_link);
-                    WritableHyperlink hl = new WritableHyperlink(4, z + 1, new URL(Gui.model.getValueAt(z, 4).toString()));
-                    page.addHyperlink(hl);
-                    page.addCell(y1);
-                    page.addCell(y2);
-                    page.addCell(y3);
-                    page.addCell(y4);
-                    page.addCell(y5);
-                    page.setRowView(z + 1, 600);
+                for (int i = 0; i < Gui.model.getRowCount(); i++) {
+                    Row row = sheet.createRow(i + 1);
+                    row.setHeight((short) 400);
+
+                    // "Number"
+                    Cell number = row.createCell(0);
+                    number.setCellValue((Integer) Gui.model.getValueAt(i, 0));
+                    number.setCellStyle(cellStyle);
+
+                    // "Source"
+                    Cell source = row.createCell(1);
+                    source.setCellValue(Gui.model.getValueAt(i, 1).toString());
+                    source.setCellStyle(leftCellStyle);
+
+                    // "Title"
+                    Cell title = row.createCell(2);
+                    title.setCellValue(Gui.model.getValueAt(i, 2).toString());
+                    title.setCellStyle(leftCellStyle);
+
+                    // "Date"
+                    Cell date = row.createCell(3);
+                    date.setCellValue(Gui.model.getValueAt(i, 3).toString());
+                    date.setCellStyle(cellStyle);
+
+                    // "Link"
+                    Hyperlink hyperlink = workbook.getCreationHelper().createHyperlink(HyperlinkType.URL);
+                    hyperlink.setAddress(Gui.model.getValueAt(i, 4).toString());
+                    Cell link = row.createCell(4);
+                    link.setCellValue("⟶");
+                    link.setHyperlink(hyperlink);
+                    link.setCellStyle(cellStyle);
                 }
-                new_excel.write();
-                new_excel.close();
-                Common.console("status: export is done");
-            } else Common.console("status: export canceled");
-        } catch (WriteException | IOException e) {
-            Common.console("status: export exception");
-            log.warn("export exception");
+
+                // write to file
+                workbook.write(Files.newOutputStream(file.toPath()));
+                workbook.close();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 }

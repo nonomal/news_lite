@@ -9,12 +9,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9e6d6f99-cebb-4fd8-99d4-ae1b59f22e89" name="Default Changelist" comment="info: refactor">
-      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
+    <list default="true" id="9e6d6f99-cebb-4fd8-99d4-ae1b59f22e89" name="Default Changelist" comment="info: refactor + change test dependencies + spring boot">
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__log4j_log4j_1_2_14.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__net_sourceforge_jexcelapi_jxl_2_6_12.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/News.iml" beforeDir="false" afterPath="$PROJECT_DIR$/News.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/gui/Gui.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/gui/Gui.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/utils/ExportToExcel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/utils/ExportToExcel.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -83,7 +84,8 @@
     "project.structure.proportion": "0.15",
     "project.structure.side.proportion": "0.2",
     "run.code.analysis.last.selected.profile": "pProject Default",
-    "settings.editor.selected.configurable": "preferences.pluginManager"
+    "settings.editor.selected.configurable": "preferences.pluginManager",
+    "spring.configuration.checksum": "dd1ba1872df91985ed1ca4cde2dfe669"
   },
   "keyToStringList": {
     "DatabaseDriversLRU": [
@@ -127,7 +129,7 @@
       <command value="mvn clean" />
     </option>
   </component>
-  <component name="RunManager" selected="JUnit.DifferentTests.shouldFindAndSendResultsToEmail">
+  <component name="RunManager" selected="Application.Main">
     <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="main.Main" />
       <module name="News" />
@@ -179,8 +181,8 @@
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="JUnit.DifferentTests.shouldFindAndSendResultsToEmail" />
         <item itemvalue="Application.Main" />
+        <item itemvalue="JUnit.DifferentTests.shouldFindAndSendResultsToEmail" />
         <item itemvalue="JUnit.DifferentTests.shouldOpenSQLiteConnectionTest" />
         <item itemvalue="JUnit.DifferentTests" />
       </list>
@@ -213,14 +215,8 @@
       <workItem from="1657012109964" duration="3000" />
       <workItem from="1657039663445" duration="136000" />
       <workItem from="1657388359054" duration="1198000" />
-      <workItem from="1657793591061" duration="940000" />
-    </task>
-    <task id="LOCAL-00260" summary="feat: рефакторинг">
-      <created>1651851322171</created>
-      <option name="number" value="00260" />
-      <option name="presentableId" value="LOCAL-00260" />
-      <option name="project" value="LOCAL" />
-      <updated>1651851322171</updated>
+      <workItem from="1657793591061" duration="1228000" />
+      <workItem from="1657803743230" duration="6889000" />
     </task>
     <task id="LOCAL-00261" summary="feat: рефакторинг - цвет шрифтов и бэк">
       <created>1652101159640</created>
@@ -558,7 +554,14 @@
       <option name="project" value="LOCAL" />
       <updated>1657389526987</updated>
     </task>
-    <option name="localTasksCounter" value="309" />
+    <task id="LOCAL-00309" summary="info: refactor + change test dependencies + spring boot">
+      <created>1657794821181</created>
+      <option name="number" value="00309" />
+      <option name="presentableId" value="LOCAL-00309" />
+      <option name="project" value="LOCAL" />
+      <updated>1657794821181</updated>
+    </task>
+    <option name="localTasksCounter" value="310" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -579,7 +582,6 @@
     <ignored-roots>
       <path value="$PROJECT_DIR$" />
     </ignored-roots>
-    <MESSAGE value="feat: доработан интерфейс" />
     <MESSAGE value="feat: доработка интерфейса" />
     <MESSAGE value="feat: доработка конфига" />
     <MESSAGE value="feat: запись интервалов" />
@@ -604,7 +606,8 @@
     <MESSAGE value="info: search refactor" />
     <MESSAGE value="fix: console email sender" />
     <MESSAGE value="info: refactor" />
-    <option name="LAST_COMMIT_MESSAGE" value="info: refactor" />
+    <MESSAGE value="info: refactor + change test dependencies + spring boot" />
+    <option name="LAST_COMMIT_MESSAGE" value="info: refactor + change test dependencies + spring boot" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
