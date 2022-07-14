@@ -126,7 +126,7 @@
       <command value="mvn clean" />
     </option>
   </component>
-  <component name="RunManager" selected="JUnit.DifferentTests.shouldOpenSQLiteConnectionTest">
+  <component name="RunManager" selected="Application.Main">
     <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="main.Main" />
       <module name="News" />
@@ -178,9 +178,9 @@
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="JUnit.DifferentTests.shouldOpenSQLiteConnectionTest" />
         <item itemvalue="Application.Main" />
         <item itemvalue="JUnit.DifferentTests.shouldFindAndSendResultsToEmail" />
+        <item itemvalue="JUnit.DifferentTests.shouldOpenSQLiteConnectionTest" />
         <item itemvalue="JUnit.DifferentTests" />
       </list>
     </recent_temporary>
