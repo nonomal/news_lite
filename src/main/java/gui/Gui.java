@@ -375,7 +375,56 @@ public class Gui extends JFrame {
         labelSum.setBackground(new Color(240, 255, 240));
         getContentPane().add(labelSum);
 
-        /* Top-Right buttons */
+        /* Top-Left action panel */
+        int topActionY = 9;
+        // Интервалы для поиска новостей
+        newsInterval = new JComboBox<>(INTERVALS);
+        newsInterval.setFont(GUI_FONT);
+        newsInterval.setBounds(230, topActionY, 75, 20); //516
+        getContentPane().add(newsInterval);
+
+        // latest news
+        onlyNewNews = new Checkbox("only new");
+        SetCheckbox setCheckbox = new SetCheckbox(315, topActionY, 65);
+        setCheckbox.checkBoxSetting(onlyNewNews);
+        getContentPane().add(onlyNewNews);
+        onlyNewNews.addItemListener(e -> {
+            isOnlyLastNews = onlyNewNews.getState();
+            if (!isOnlyLastNews) {
+                databaseQueries.deleteFrom256(SQLite.connection);
+            }
+        });
+
+        // Автозапуск поиска по слову каждые 60 секунд
+        autoUpdateNewsTop = new Checkbox("auto update");
+        SetCheckbox setCheckbox1 = new SetCheckbox(383, topActionY, 75);
+        setCheckbox1.checkBoxSetting(autoUpdateNewsTop);
+
+        getContentPane().add(autoUpdateNewsTop);
+        autoUpdateNewsTop.addItemListener(e -> {
+            if (autoUpdateNewsTop.getState()) {
+                timer = new Timer(true);
+                timerTask = new MyTimerTask();
+                timer.scheduleAtFixedRate(timerTask, 0, AUTO_START_TIMER);
+                searchBtnTop.setVisible(false);
+                stopBtnTop.setVisible(true);
+                autoUpdateNewsBottom.setVisible(false);
+            } else {
+                timer.cancel();
+                searchBtnTop.setVisible(true);
+                stopBtnTop.setVisible(false);
+                autoUpdateNewsBottom.setVisible(true);
+                stopBtnTop.doClick();
+            }
+        });
+
+        // Автоматическая отправка письма с результатами
+        autoSendMessage = new Checkbox("auto send");
+        setCheckbox = new SetCheckbox(463, topActionY, 66);
+        setCheckbox.checkBoxSetting(autoSendMessage);
+        getContentPane().add(autoSendMessage);
+
+        /* Top-Right action panel */
         // Выбор цвета фона
         JButton backgroundColorBtn = new JButton();
         SetButton setButton = new SetButton(BACK_GROUND_COLOR_ICON, new Color(189, 189, 189), 1035, 9);
@@ -461,7 +510,7 @@ public class Gui extends JFrame {
         });
         getContentPane().add(clearBtnTop);
 
-        /* KEYWORDS SEARCH */
+        /* KEYWORDS BOTTOM SEARCH */
         // label
         JLabel lblKeywordsSearch = new JLabel();
         lblKeywordsSearch.setText("search by keywords");
@@ -559,7 +608,7 @@ public class Gui extends JFrame {
 
         // Автозапуск поиска по ключевым словам каждые 60 секунд
         autoUpdateNewsBottom = new Checkbox("auto update");
-        SetCheckbox setCheckbox1 = new SetCheckbox(297, 561, 75);
+        setCheckbox1 = new SetCheckbox(297, 561, 75);
         setCheckbox1.checkBoxSetting(autoUpdateNewsBottom);
         getContentPane().add(autoUpdateNewsBottom);
         autoUpdateNewsBottom.addItemListener(e -> {
@@ -629,54 +678,6 @@ public class Gui extends JFrame {
         progressBar.setBackground(new Color(1, 1, 1));
         progressBar.setBounds(10, 37, 860, 1);
         getContentPane().add(progressBar);
-
-        int topY = 9;
-        // Интервалы для поиска новостей
-        newsInterval = new JComboBox<>(INTERVALS);
-        newsInterval.setFont(GUI_FONT);
-        newsInterval.setBounds(230, topY, 75, 20); //516
-        getContentPane().add(newsInterval);
-
-        // latest news
-        onlyNewNews = new Checkbox("only new");
-        SetCheckbox setCheckbox = new SetCheckbox(315, topY, 65);
-        setCheckbox.checkBoxSetting(onlyNewNews);
-        getContentPane().add(onlyNewNews);
-        onlyNewNews.addItemListener(e -> {
-            isOnlyLastNews = onlyNewNews.getState();
-            if (!isOnlyLastNews) {
-                databaseQueries.deleteFrom256(SQLite.connection);
-            }
-        });
-
-        // Автозапуск поиска по слову каждые 60 секунд
-        autoUpdateNewsTop = new Checkbox("auto update");
-        setCheckbox1 = new SetCheckbox(383, topY, 75);
-        setCheckbox1.checkBoxSetting(autoUpdateNewsTop);
-
-        getContentPane().add(autoUpdateNewsTop);
-        autoUpdateNewsTop.addItemListener(e -> {
-            if (autoUpdateNewsTop.getState()) {
-                timer = new Timer(true);
-                timerTask = new MyTimerTask();
-                timer.scheduleAtFixedRate(timerTask, 0, AUTO_START_TIMER);
-                searchBtnTop.setVisible(false);
-                stopBtnTop.setVisible(true);
-                autoUpdateNewsBottom.setVisible(false);
-            } else {
-                timer.cancel();
-                searchBtnTop.setVisible(true);
-                stopBtnTop.setVisible(false);
-                autoUpdateNewsBottom.setVisible(true);
-                stopBtnTop.doClick();
-            }
-        });
-
-        // Автоматическая отправка письма с результатами
-        autoSendMessage = new Checkbox("auto send");
-        setCheckbox = new SetCheckbox(463, topY, 66);
-        setCheckbox.checkBoxSetting(autoSendMessage);
-        getContentPane().add(autoSendMessage);
 
         // Диалоговое окно со списком исключенных слов из анализа
         exclBtn = new JButton();
