@@ -9,7 +9,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9e6d6f99-cebb-4fd8-99d4-ae1b59f22e89" name="Default Changelist" comment="info: refactor">
+    <list default="true" id="9e6d6f99-cebb-4fd8-99d4-ae1b59f22e89" name="Default Changelist" comment="info: +spring-core -spring-boot">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/News.iml" beforeDir="false" afterPath="$PROJECT_DIR$/News.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
@@ -219,14 +219,7 @@
       <workItem from="1657824256164" duration="623000" />
       <workItem from="1657834169288" duration="3838000" />
       <workItem from="1657868260078" duration="1416000" />
-      <workItem from="1657889546195" duration="311000" />
-    </task>
-    <task id="LOCAL-00275" summary="feat: log">
-      <created>1653218824943</created>
-      <option name="number" value="00275" />
-      <option name="presentableId" value="LOCAL-00275" />
-      <option name="project" value="LOCAL" />
-      <updated>1653218824943</updated>
+      <workItem from="1657889546195" duration="1777000" />
     </task>
     <task id="LOCAL-00276" summary="feat: log">
       <created>1653218865755</created>
@@ -564,7 +557,14 @@
       <option name="project" value="LOCAL" />
       <updated>1657838028381</updated>
     </task>
-    <option name="localTasksCounter" value="324" />
+    <task id="LOCAL-00324" summary="info: +spring-core -spring-boot">
+      <created>1657889932026</created>
+      <option name="number" value="00324" />
+      <option name="presentableId" value="LOCAL-00324" />
+      <option name="project" value="LOCAL" />
+      <updated>1657889932026</updated>
+    </task>
+    <option name="localTasksCounter" value="325" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -585,7 +585,6 @@
     <ignored-roots>
       <path value="$PROJECT_DIR$" />
     </ignored-roots>
-    <MESSAGE value="feat: добавлено логирование" />
     <MESSAGE value="feat: логирование" />
     <MESSAGE value="feat: таблица анализа" />
     <MESSAGE value="feat: рефакторинг - цвет шрифтов и бэк" />
@@ -610,7 +609,8 @@
     <MESSAGE value="info: удалён чекбокс периода, добавлены интервалы all и 72 часа" />
     <MESSAGE value="info: gui" />
     <MESSAGE value="info: refactor" />
-    <option name="LAST_COMMIT_MESSAGE" value="info: refactor" />
+    <MESSAGE value="info: +spring-core -spring-boot" />
+    <option name="LAST_COMMIT_MESSAGE" value="info: +spring-core -spring-boot" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
