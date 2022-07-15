@@ -324,7 +324,6 @@ public class Gui extends JFrame {
             }
         });
 
-
         /* TOP-LEFT ACTION PANEL */
         int topLeftActionY = 9;
 
@@ -389,9 +388,15 @@ public class Gui extends JFrame {
             }
         });
 
+        // Автоматическая отправка письма с результатами
+        autoSendMessage = new Checkbox("auto send");
+        setCheckbox = new SetCheckbox(383, topLeftActionY, 66);
+        setCheckbox.checkBoxSetting(autoSendMessage);
+        getContentPane().add(autoSendMessage);
+
         // Автозапуск поиска по слову каждые 60 секунд
         autoUpdateNewsTop = new Checkbox("auto update");
-        SetCheckbox setCheckbox1 = new SetCheckbox(383, topLeftActionY, 75);
+        SetCheckbox setCheckbox1 = new SetCheckbox(455, topLeftActionY, 66);
         setCheckbox1.checkBoxSetting(autoUpdateNewsTop);
 
         getContentPane().add(autoUpdateNewsTop);
@@ -411,12 +416,6 @@ public class Gui extends JFrame {
                 stopBtnTop.doClick();
             }
         });
-
-        // Автоматическая отправка письма с результатами
-        autoSendMessage = new Checkbox("auto send");
-        setCheckbox = new SetCheckbox(463, topLeftActionY, 66);
-        setCheckbox.checkBoxSetting(autoSendMessage);
-        getContentPane().add(autoSendMessage);
 
         /* Top-Right action panel */
         // Выбор цвета фона

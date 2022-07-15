@@ -11,8 +11,6 @@
   <component name="ChangeListManager">
     <list default="true" id="9e6d6f99-cebb-4fd8-99d4-ae1b59f22e89" name="Default Changelist" comment="info: +spring-core -spring-boot">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/News.iml" beforeDir="false" afterPath="$PROJECT_DIR$/News.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -219,14 +217,7 @@
       <workItem from="1657824256164" duration="623000" />
       <workItem from="1657834169288" duration="3838000" />
       <workItem from="1657868260078" duration="1416000" />
-      <workItem from="1657889546195" duration="1777000" />
-    </task>
-    <task id="LOCAL-00276" summary="feat: log">
-      <created>1653218865755</created>
-      <option name="number" value="00276" />
-      <option name="presentableId" value="LOCAL-00276" />
-      <option name="project" value="LOCAL" />
-      <updated>1653218865755</updated>
+      <workItem from="1657889546195" duration="2376000" />
     </task>
     <task id="LOCAL-00277" summary="feat: log">
       <created>1653218894875</created>
@@ -564,7 +555,14 @@
       <option name="project" value="LOCAL" />
       <updated>1657889932026</updated>
     </task>
-    <option name="localTasksCounter" value="325" />
+    <task id="LOCAL-00325" summary="info: +spring-core -spring-boot">
+      <created>1657891344715</created>
+      <option name="number" value="00325" />
+      <option name="presentableId" value="LOCAL-00325" />
+      <option name="project" value="LOCAL" />
+      <updated>1657891344715</updated>
+    </task>
+    <option name="localTasksCounter" value="326" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
