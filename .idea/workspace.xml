@@ -9,9 +9,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9e6d6f99-cebb-4fd8-99d4-ae1b59f22e89" name="Default Changelist" comment="info: +spring-core -spring-boot">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-    </list>
+    <list default="true" id="9e6d6f99-cebb-4fd8-99d4-ae1b59f22e89" name="Default Changelist" comment="info: поменял чекбоксы местами" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -218,20 +216,7 @@
       <workItem from="1657834169288" duration="3838000" />
       <workItem from="1657868260078" duration="1416000" />
       <workItem from="1657889546195" duration="2376000" />
-    </task>
-    <task id="LOCAL-00277" summary="feat: log">
-      <created>1653218894875</created>
-      <option name="number" value="00277" />
-      <option name="presentableId" value="LOCAL-00277" />
-      <option name="project" value="LOCAL" />
-      <updated>1653218894875</updated>
-    </task>
-    <task id="LOCAL-00278" summary="feat: log">
-      <created>1653227894988</created>
-      <option name="number" value="00278" />
-      <option name="presentableId" value="LOCAL-00278" />
-      <option name="project" value="LOCAL" />
-      <updated>1653227894988</updated>
+      <workItem from="1657893694876" duration="270000" />
     </task>
     <task id="LOCAL-00279" summary="feat: log">
       <created>1653227930564</created>
@@ -562,7 +547,21 @@
       <option name="project" value="LOCAL" />
       <updated>1657891344715</updated>
     </task>
-    <option name="localTasksCounter" value="326" />
+    <task id="LOCAL-00326" summary="info: поменял чекбоксы местами">
+      <created>1657893918536</created>
+      <option name="number" value="00326" />
+      <option name="presentableId" value="LOCAL-00326" />
+      <option name="project" value="LOCAL" />
+      <updated>1657893918536</updated>
+    </task>
+    <task id="LOCAL-00327" summary="info: поменял чекбоксы местами">
+      <created>1657893955929</created>
+      <option name="number" value="00327" />
+      <option name="presentableId" value="LOCAL-00327" />
+      <option name="project" value="LOCAL" />
+      <updated>1657893955930</updated>
+    </task>
+    <option name="localTasksCounter" value="328" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -583,7 +582,6 @@
     <ignored-roots>
       <path value="$PROJECT_DIR$" />
     </ignored-roots>
-    <MESSAGE value="feat: логирование" />
     <MESSAGE value="feat: таблица анализа" />
     <MESSAGE value="feat: рефакторинг - цвет шрифтов и бэк" />
     <MESSAGE value="feat: рефакторинг - убрать лишний цикл" />
@@ -608,7 +606,8 @@
     <MESSAGE value="info: gui" />
     <MESSAGE value="info: refactor" />
     <MESSAGE value="info: +spring-core -spring-boot" />
-    <option name="LAST_COMMIT_MESSAGE" value="info: +spring-core -spring-boot" />
+    <MESSAGE value="info: поменял чекбоксы местами" />
+    <option name="LAST_COMMIT_MESSAGE" value="info: поменял чекбоксы местами" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

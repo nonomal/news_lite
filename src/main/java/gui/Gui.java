@@ -396,7 +396,7 @@ public class Gui extends JFrame {
 
         // Автозапуск поиска по слову каждые 60 секунд
         autoUpdateNewsTop = new Checkbox("auto update");
-        SetCheckbox setCheckbox1 = new SetCheckbox(455, topLeftActionY, 66);
+        SetCheckbox setCheckbox1 = new SetCheckbox(455, topLeftActionY, 75);
         setCheckbox1.checkBoxSetting(autoUpdateNewsTop);
 
         getContentPane().add(autoUpdateNewsTop);
