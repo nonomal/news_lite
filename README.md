@@ -1,6 +1,6 @@
 # Avandy news founder
 
-**Search all news in RSS (open source)**
+**Search all news in RSS (open source: jdbc, swing, sqlite)**
 
 
 ![image](https://github.com/mrprogre/news_lite/blob/master/Gui.png)
@@ -27,7 +27,8 @@ Program features:
 
 
 ----
-Поисковик новостей по RSS потокам популярных новостных источников (*Открыто для доработок! open source*). 
+Поисковик новостей по RSS потокам популярных новостных источников (*Открыто для доработок! open source*).
+Проект делал долго, изучая Java с нуля, поэтому использованы Swing и SQLite с JDBC.
 
 Особенность программы в удобном, автоматическом поиске новостей по нескольким ключевым словам с отправкой результатов поиска на электронную почту.
 
