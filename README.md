@@ -1,4 +1,4 @@
-# Avandy news founder
+# Avandy News
 
 **Search all news in RSS (open source: jdbc, swing, sqlite)**
 
