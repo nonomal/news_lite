@@ -207,7 +207,6 @@ public class Common {
                         break;
                     case "translate-url":
                         SCRIPT_URL = f[1];
-                        System.out.println("SCRIPT_URL: " + SCRIPT_URL);
                 }
 
             }

@@ -15,7 +15,7 @@ public class Translator {
         if (!scriptUrl.equals("#")) {
             try {
                 String urlStr = scriptUrl +
-                        "?q=" + URLEncoder.encode(text, "UTF-8") +
+                        "?q=" + URLEncoder.encode(text, "UTF-16") +
                         "&target=" + langTo +
                         "&source=" + langFrom;
                 URL url = new URL(urlStr);

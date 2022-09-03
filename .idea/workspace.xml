@@ -2,18 +2,22 @@
 <project version="4">
   <component name="ArtifactsWorkspaceSettings">
     <artifacts-to-build>
-      <artifact name="News:jar" />
+      <artifact name="news:jar" />
     </artifacts-to-build>
   </component>
   <component name="AutoImportSettings">
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9e6d6f99-cebb-4fd8-99d4-ae1b59f22e89" name="Default Changelist" comment="info: refactor">
+    <list default="true" id="9e6d6f99-cebb-4fd8-99d4-ae1b59f22e89" name="Default Changelist" comment="info: добавлен перевод заголовков с английского">
+      <change beforePath="$PROJECT_DIR$/.idea/artifacts/News_jar.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/News.iml" beforeDir="false" afterPath="$PROJECT_DIR$/news.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/gui/Gui.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/gui/Gui.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/utils/Common.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/utils/Common.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/config.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/config.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/utils/Translator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/utils/Translator.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -33,6 +37,7 @@
     </option>
   </component>
   <component name="Git.Settings">
+    <option name="PUSH_AUTO_UPDATE" value="true" />
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
     <option name="RESET_MODE" value="HARD" />
   </component>
@@ -85,7 +90,7 @@
     &quot;extract.method.default.visibility&quot;: &quot;private&quot;,
     &quot;last_opened_file_path&quot;: &quot;C:/Users/rps_p/IdeaProjects/news_lite/src/main/resources&quot;,
     &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Artifacts&quot;,
     &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
     &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
     &quot;run.code.analysis.last.selected.profile&quot;: &quot;pProject Default&quot;,
@@ -137,13 +142,13 @@
   <component name="RunManager" selected="Application.Main">
     <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="main.Main" />
-      <module name="News" />
+      <module name="news" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
     <configuration name="DifferentTests" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="News" />
+      <module name="news" />
       <extension name="coverage">
         <pattern>
           <option name="PATTERN" value=".*" />
@@ -159,7 +164,7 @@
       </method>
     </configuration>
     <configuration name="DifferentTests.shouldFindAndSendResultsToEmail" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="News" />
+      <module name="news" />
       <option name="PACKAGE_NAME" value="" />
       <option name="MAIN_CLASS_NAME" value="DifferentTests" />
       <option name="METHOD_NAME" value="shouldFindAndSendResultsToEmail" />
@@ -169,7 +174,7 @@
       </method>
     </configuration>
     <configuration name="DifferentTests.shouldOpenSQLiteConnectionTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="News" />
+      <module name="news" />
       <option name="PACKAGE_NAME" value="" />
       <option name="MAIN_CLASS_NAME" value="DifferentTests" />
       <option name="METHOD_NAME" value="shouldOpenSQLiteConnectionTest" />
@@ -229,14 +234,9 @@
       <workItem from="1657868260078" duration="1416000" />
       <workItem from="1657889546195" duration="2376000" />
       <workItem from="1657893694876" duration="270000" />
-      <workItem from="1662202103310" duration="894000" />
-    </task>
-    <task id="LOCAL-00279" summary="feat: log">
-      <created>1653227930564</created>
-      <option name="number" value="00279" />
-      <option name="presentableId" value="LOCAL-00279" />
-      <option name="project" value="LOCAL" />
-      <updated>1653227930564</updated>
+      <workItem from="1662202103310" duration="1166000" />
+      <workItem from="1662210818261" duration="1262000" />
+      <workItem from="1662212096478" duration="510000" />
     </task>
     <task id="LOCAL-00280" summary="feat: log">
       <created>1653228392177</created>
@@ -574,7 +574,14 @@
       <option name="project" value="LOCAL" />
       <updated>1657893955930</updated>
     </task>
-    <option name="localTasksCounter" value="328" />
+    <task id="LOCAL-00328" summary="info: добавлен перевод заголовков с английского">
+      <created>1662203231397</created>
+      <option name="number" value="00328" />
+      <option name="presentableId" value="LOCAL-00328" />
+      <option name="project" value="LOCAL" />
+      <updated>1662203231398</updated>
+    </task>
+    <option name="localTasksCounter" value="329" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -595,7 +602,6 @@
     <ignored-roots>
       <path value="$PROJECT_DIR$" />
     </ignored-roots>
-    <MESSAGE value="feat: таблица анализа" />
     <MESSAGE value="feat: рефакторинг - цвет шрифтов и бэк" />
     <MESSAGE value="feat: рефакторинг - убрать лишний цикл" />
     <MESSAGE value="feat: рефакторинг общий" />
@@ -620,7 +626,8 @@
     <MESSAGE value="info: refactor" />
     <MESSAGE value="info: +spring-core -spring-boot" />
     <MESSAGE value="info: поменял чекбоксы местами" />
-    <option name="LAST_COMMIT_MESSAGE" value="info: поменял чекбоксы местами" />
+    <MESSAGE value="info: добавлен перевод заголовков с английского" />
+    <option name="LAST_COMMIT_MESSAGE" value="info: добавлен перевод заголовков с английского" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -644,11 +651,6 @@
           <url>file://$PROJECT_DIR$/src/main/java/search/Search.java</url>
           <line>150</line>
           <option name="timeStamp" value="13" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/gui/Gui.java</url>
-          <line>219</line>
-          <option name="timeStamp" value="29" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-method">
           <url>file://$PROJECT_DIR$/src/main/java/utils/Common.java</url>

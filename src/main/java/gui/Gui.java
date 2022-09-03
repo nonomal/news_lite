@@ -217,9 +217,9 @@ public class Gui extends JFrame {
                 if (tip.length() > 80) {
                     return tip;
                 }
-                else if (!tip.contains("а-я")) {
-                    return Translator.translate("en", "ru", tip);
-                }
+//                else if (!tip.contains("а-я")) {
+//                    return Translator.translate("en", "ru", tip);
+//                }
                 else {
                     return null;
                 }
