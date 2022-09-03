@@ -4,6 +4,7 @@ from_adr=no_adr
 interval=24h
 checkbox:filterNewsChbx=false
 checkbox:autoSendChbx=false
+translator-url=#
 fontColorRed=0
 fontColorGreen=0
 fontColorBlue=0

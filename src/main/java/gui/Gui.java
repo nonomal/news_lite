@@ -11,6 +11,7 @@ import search.Search;
 import utils.Common;
 import utils.ExportToExcel;
 import utils.MyTimerTask;
+import utils.Translator;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -42,11 +43,11 @@ public class Gui extends JFrame {
     final DatabaseQueries databaseQueries = new DatabaseQueries();
     final Search search = new Search();
 
+    private static final Object[] MAIN_TABLE_HEADERS = {"Num", "Source", "Title", "Date", "Link"};
+    private static final String[] TABLE_FOR_ANALYZE_HEADERS = {"top 10", "freq.", " "};
     private static final Font GUI_FONT = new Font("Tahoma", Font.PLAIN, 11);
     private static final String[] INTERVALS = {"1 min", "5 min", "15 min", "30 min", "45 min", "1 hour", "2 hours",
             "4 hours", "8 hours", "12 hours", "24 hours", "48 hours", "72 hours", "all"};
-    private static final Object[] MAIN_TABLE_HEADERS = {"Num", "Source", "Title (double click to open the link)", "Date", "Link"};
-    private static final String[] TABLE_FOR_ANALYZE_HEADERS = {"top 10", "freq.", " "};
     private static final long AUTO_START_TIMER = 60000L; // 60 секунд
     public static final ImageIcon LOGO_ICON = new ImageIcon(Toolkit.getDefaultToolkit().createImage(Gui.class.getResource("/icons/logo.png")));
     public static final ImageIcon SEND_EMAIL_ICON = new ImageIcon(Toolkit.getDefaultToolkit().createImage(Gui.class.getResource("/icons/send.png")));
@@ -215,7 +216,13 @@ public class Gui extends JFrame {
                 assert tip != null;
                 if (tip.length() > 80) {
                     return tip;
-                } else return null;
+                }
+                else if (!tip.contains("а-я")) {
+                    return Translator.translate("en", "ru", tip);
+                }
+                else {
+                    return null;
+                }
             }
         };
         //headers

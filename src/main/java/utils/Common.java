@@ -5,6 +5,7 @@ import database.SQLite;
 import email.EmailSender;
 import gui.Dialogs;
 import gui.Gui;
+import lombok.experimental.UtilityClass;
 import main.Main;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,19 +25,21 @@ import java.util.*;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.stream.Stream;
 
+@UtilityClass
 public class Common {
-    public static final String SETTINGS_PATH = Main.DIRECTORY_PATH + "config.txt";
-    private static final Logger log = LoggerFactory.getLogger(Common.class);
-    public static final AtomicBoolean IS_SENDING = new AtomicBoolean(true);
-    public static final ArrayList<String> KEYWORDS_LIST = new ArrayList<>();
-    public static int SMI_ID = 0;
-    public static final ArrayList<String> SMI_LINK = new ArrayList<>();
-    public static final ArrayList<String> SMI_SOURCE = new ArrayList<>();
-    public static final ArrayList<Boolean> SMI_IS_ACTIVE = new ArrayList<>();
-    public static final ArrayList<String> EXCLUDED_WORDS = new ArrayList<>();
+    public final String SETTINGS_PATH = Main.DIRECTORY_PATH + "config.txt";
+    private final Logger log = LoggerFactory.getLogger(Common.class);
+    public final AtomicBoolean IS_SENDING = new AtomicBoolean(true);
+    public final ArrayList<String> KEYWORDS_LIST = new ArrayList<>();
+    public int SMI_ID = 0;
+    public final ArrayList<String> SMI_LINK = new ArrayList<>();
+    public final ArrayList<String> SMI_SOURCE = new ArrayList<>();
+    public final ArrayList<Boolean> SMI_IS_ACTIVE = new ArrayList<>();
+    public final ArrayList<String> EXCLUDED_WORDS = new ArrayList<>();
+    public String SCRIPT_URL = null;
 
     // Запись конфигураций приложения
-    public static void writeToConfig(String p_word, String p_type) {
+    public void writeToConfig(String p_word, String p_type) {
         try (OutputStreamWriter writer = new OutputStreamWriter(new FileOutputStream(SETTINGS_PATH, true), StandardCharsets.UTF_8)) {
             switch (p_type) {
                 case "keyword": {
@@ -126,7 +129,7 @@ public class Common {
     }
 
     // Считывание ключевых слов при добавлении/удалении в комбобоксе
-    public static List<String> getKeywordsFromFile() {
+    public List<String> getKeywordsFromFile() {
         List<String> keywords = new ArrayList<>();
         try {
             for (String s : Files.readAllLines(Paths.get(SETTINGS_PATH))) {
@@ -140,7 +143,7 @@ public class Common {
     }
 
     // Считывание слов исключений для поиска по одному слову
-    public static List<String> getExcludeWordsFromFile() {
+    public List<String> getExcludeWordsFromFile() {
         List<String> excludeWords = new ArrayList<>();
         try {
             for (String s : Files.readAllLines(Paths.get(SETTINGS_PATH))) {
@@ -154,7 +157,7 @@ public class Common {
     }
 
     // Считывание настроек из файла в массив строк
-    public static void getSettingsFromFile() {
+    public void getSettingsFromFile() {
         int linesAmount = Common.countLines();
         String[][] lines = new String[linesAmount][];
 
@@ -202,6 +205,9 @@ public class Common {
                     case "checkbox:autoSendChbx":
                         Gui.autoSendMessage.setState(Boolean.parseBoolean(f[1]));
                         break;
+                    case "translate-url":
+                        SCRIPT_URL = f[1];
+                        System.out.println("SCRIPT_URL: " + SCRIPT_URL);
                 }
 
             }
@@ -211,7 +217,7 @@ public class Common {
     }
 
     // Считывание сохранённого цвета шрифта из файла
-    public static void getColorsSettingsFromFile() {
+    public void getColorsSettingsFromFile() {
         int linesAmount = Common.countLines();
         String[][] lines = new String[linesAmount][];
 
@@ -252,7 +258,7 @@ public class Common {
     }
 
     // сохранение состояния окна в config.txt
-    public static void saveState() {
+    public void saveState() {
         // delete old values
         try {
             Common.delSettings("interval");
@@ -273,7 +279,7 @@ public class Common {
     }
 
     // определение SMTP исходящей почты
-    public static String getSmtp() {
+    public String getSmtp() {
         String smtp = "";
         String serviceName = EmailSender.from.substring(EmailSender.from.indexOf(64) + 1);
         switch (serviceName) {
@@ -303,7 +309,7 @@ public class Common {
     }
 
     // Считывание настроек почты из файла
-    public static void getEmailSettingsFromFile() {
+    public void getEmailSettingsFromFile() {
         int linesAmount = Common.countLines();
         String[][] lines = new String[linesAmount][];
         try (BufferedReader reader = new BufferedReader(
@@ -333,7 +339,7 @@ public class Common {
     }
 
     // Подсчет количества строк в файле
-    static int countLines() {
+    int countLines() {
         try {
             LineNumberReader reader = new LineNumberReader(new FileReader(SETTINGS_PATH));
             int cnt;
@@ -350,7 +356,7 @@ public class Common {
     }
 
     // Удаление ключевого слова из combo box
-    public static void delSettings(String s) throws IOException {
+    public void delSettings(String s) throws IOException {
         Path input = Paths.get(SETTINGS_PATH);
         Path temp = Files.createTempFile("temp", ".txt");
         try (Stream<String> lines = Files.lines(input)) {
@@ -374,7 +380,7 @@ public class Common {
     }
 
     //Console
-    public static void console(String p_console) {
+    public void console(String p_console) {
         try {
             Thread.sleep(100);
             Gui.consoleTextArea.setText(Gui.consoleTextArea.getText() + p_console + "\n");
@@ -385,7 +391,7 @@ public class Common {
     }
 
     // Шкала прогресса
-    public static void fill() {
+    public void fill() {
         int counter = 0;
         while (!Search.isSearchFinished.get() || !IS_SENDING.get()) {
             if (!IS_SENDING.get()) Gui.progressBar.setForeground(new Color(255, 115, 0));
@@ -404,7 +410,7 @@ public class Common {
     }
 
     // Интервал поиска/таймера в секундах
-    static int getInterval() {
+    int getInterval() {
         int minutes;
         if (Objects.requireNonNull(Gui.newsInterval.getSelectedItem()).toString().contains(" min")) {
             minutes = Integer.parseInt(Objects.requireNonNull(Gui.newsInterval
@@ -424,7 +430,7 @@ public class Common {
     }
 
     // Сравнение дат для отображения новостей по интервалу (Gui.newsInterval)
-    public static int compareDatesOnly(Date p_now, Date p_in) {
+    public int compareDatesOnly(Date p_now, Date p_in) {
         int minutes;
         if (Main.IS_CONSOLE_SEARCH.get()) minutes = Main.minutesIntervalForConsoleSearch;
         else minutes = Common.getInterval();
@@ -442,7 +448,7 @@ public class Common {
     }
 
     // Заполнение диалоговых окон лога и СМИ
-    public static void showDialog(String p_file) {
+    public void showDialog(String p_file) {
         DatabaseQueries sqlite = new DatabaseQueries();
         switch (p_file) {
             case "smi": {
@@ -485,7 +491,7 @@ public class Common {
     }
 
     // Копирование файлов из jar
-    public static void copyFiles(URL p_file, String copy_to) {
+    public void copyFiles(URL p_file, String copy_to) {
         File copied = new File(copy_to);
         try (InputStream in = p_file.openStream();
              OutputStream out = new BufferedOutputStream(Files.newOutputStream(copied.toPath()))) {
@@ -501,7 +507,7 @@ public class Common {
     }
 
     // Оставляет только буквы
-    public static String delNoLetter(String s) {
+    public String delNoLetter(String s) {
         StringBuilder sb = new StringBuilder();
         for (int i = 0; i < s.length(); i++) {
             if (Character.isLetter(s.charAt(i)))
@@ -511,7 +517,7 @@ public class Common {
     }
 
     // преобразование строки в строку с хэш кодом
-    public static String sha256(String base) {
+    public String sha256(String base) {
         try {
             MessageDigest digest = MessageDigest.getInstance("SHA-256");
             byte[] hash = digest.digest(base.getBytes(StandardCharsets.UTF_8));
@@ -528,7 +534,7 @@ public class Common {
     }
 
     // Уведомление в трее
-    public static void trayMessage(String pMessage) {
+    public void trayMessage(String pMessage) {
         if (SystemTray.isSupported()) {
             PopupMenu popup = new PopupMenu();
             MenuItem exitItem = new MenuItem("Close");
