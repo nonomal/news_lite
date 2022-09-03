@@ -1,9 +1,9 @@
-# Avandy news founder
+# Avandy News
 
 **Search all news in RSS (open source: jdbc, swing, sqlite)**
 
 
-![image](https://github.com/mrprogre/news_lite/blob/master/Gui.png)
+![image](https://github.com/mrprogre/news_lite/blob/master/gui.png)
 
 Program features:
 - keyword search
