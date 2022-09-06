@@ -1,6 +1,7 @@
 package email;
 
 import gui.Gui;
+import gui.buttons.Icons;
 import lombok.extern.slf4j.Slf4j;
 import main.Main;
 import search.ConsoleSearch;
@@ -40,7 +41,7 @@ public class EmailSender {
                 new Sender().send(subject, text.toString(), from, from_pwd, to);
                 Common.console("status: e-mail sent successfully");
                 log.info("Email has been sent");
-                Gui.sendEmailBtn.setIcon(Gui.WHEN_SENT_ICON);
+                Gui.sendEmailBtn.setIcon(Icons.WHEN_SENT_ICON);
                 Common.IS_SENDING.set(true);
                 Search.isSearchFinished.set(true);
                 Gui.progressBar.setValue(100);

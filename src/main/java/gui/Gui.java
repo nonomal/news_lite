@@ -3,6 +3,7 @@ package gui;
 import database.DatabaseQueries;
 import database.SQLite;
 import email.EmailSender;
+import gui.buttons.Icons;
 import gui.buttons.SetButton;
 import gui.checkboxes.SetCheckbox;
 import lombok.extern.slf4j.Slf4j;
@@ -40,30 +41,22 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import static java.awt.GraphicsDevice.WindowTranslucency.TRANSLUCENT;
+
 @Slf4j
 public class Gui extends JFrame {
     final SQLite sqLite = new SQLite();
     final DatabaseQueries databaseQueries = new DatabaseQueries();
     final Search search = new Search();
 
+    private static final float OPACITY = 0.90f;
     private static final Object[] MAIN_TABLE_HEADERS = {"Num", "Source", "Title", "Date", "Link"};
     private static final String[] TABLE_FOR_ANALYZE_HEADERS = {"top 10", "freq.", " "};
     private static final Font GUI_FONT = new Font("Tahoma", Font.PLAIN, 11);
     private static final String[] INTERVALS = {"1 min", "5 min", "15 min", "30 min", "45 min", "1 hour", "2 hours",
             "4 hours", "8 hours", "12 hours", "24 hours", "48 hours", "72 hours", "all"};
     private static final long AUTO_START_TIMER = 60000L; // 60 секунд
-    public static final ImageIcon LOGO_ICON = new ImageIcon(Toolkit.getDefaultToolkit().createImage(Gui.class.getResource("/icons/logo.png")));
-    public static final ImageIcon SEND_EMAIL_ICON = new ImageIcon(Toolkit.getDefaultToolkit().createImage(Gui.class.getResource("/icons/send.png")));
-    public static final ImageIcon WHEN_MOUSE_ON_SEND_ICON = new ImageIcon(Toolkit.getDefaultToolkit().createImage(Gui.class.getResource("/icons/send2.png")));
-    public static final ImageIcon WHEN_SENT_ICON = new ImageIcon(Toolkit.getDefaultToolkit().createImage(Gui.class.getResource("/icons/send3.png")));
-    public static final ImageIcon SEARCH_KEYWORDS_ICON = new ImageIcon(Toolkit.getDefaultToolkit().createImage(Gui.class.getResource("/icons/search.png")));
-    public static final ImageIcon STOP_SEARCH_ICON = new ImageIcon(Toolkit.getDefaultToolkit().createImage(Gui.class.getResource("/icons/stop.png")));
-    public static final ImageIcon CLEAR_BUTTON_ICON = new ImageIcon(Toolkit.getDefaultToolkit().createImage(Gui.class.getResource("/icons/clear.png")));
-    public static final ImageIcon EXCEL_BUTTON_ICON = new ImageIcon(Toolkit.getDefaultToolkit().createImage(Gui.class.getResource("/icons/excel.png")));
-    public static final ImageIcon ADD_KEYWORD_ICON = new ImageIcon(Toolkit.getDefaultToolkit().createImage(Gui.class.getResource("/icons/create.png")));
-    public static final ImageIcon DELETE_FROM_KEYWORDS_ICON = new ImageIcon(Toolkit.getDefaultToolkit().createImage(Gui.class.getResource("/icons/delete.png")));
-    public static final ImageIcon FONT_COLOR_BUTTON_ICON = new ImageIcon(Toolkit.getDefaultToolkit().createImage(Gui.class.getResource("/icons/font.png")));
-    public static final ImageIcon BACK_GROUND_COLOR_ICON = new ImageIcon(Toolkit.getDefaultToolkit().createImage(Gui.class.getResource("/icons/bg.png")));
+
     public static final AtomicBoolean WAS_CLICK_IN_TABLE_FOR_ANALYSIS = new AtomicBoolean(false);
     public static final AtomicBoolean GUI_IN_TRAY = new AtomicBoolean(false);
     public static int newsCount = 1;
@@ -104,11 +97,20 @@ public class Gui extends JFrame {
         setResizable(false);
         getContentPane().setBackground(new Color(42, 42, 42));
         setTitle("Avandy News");
-        setIconImage(LOGO_ICON.getImage());
+        setIconImage(Icons.LOGO_ICON.getImage());
         setFont(GUI_FONT);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setBounds(340, 100, 1195, 634);
+        setBounds(340, 100, 1180, 590);
         getContentPane().setLayout(null);
+
+        // Прозрачность и оформление окна
+        this.setUndecorated(true);
+        // Проверка поддерживает ли операционная система прозрачность окон
+        GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
+
+        GraphicsDevice gd = ge.getDefaultScreenDevice();
+        boolean isUniformTranslucencySupported = gd.isWindowTranslucencySupported(TRANSLUCENT);
+        if (isUniformTranslucencySupported) this.setOpacity(OPACITY);
 
         //Action Listener for EXIT_ON_CLOSE
         addWindowListener(new WindowAdapter() {
@@ -135,45 +137,6 @@ public class Gui extends JFrame {
                 GUI_IN_TRAY.set(false);
             }
         });
-
-        // Сворачивание приложения в трей
-        try {
-            BufferedImage Icon = ImageIO.read(Objects.requireNonNull(Gui.class.getResourceAsStream("/icons/logo.png")));
-            final TrayIcon trayIcon = new TrayIcon(Icon, "Avandy News");
-            SystemTray systemTray = SystemTray.getSystemTray();
-            systemTray.add(trayIcon);
-
-            final PopupMenu trayMenu = new PopupMenu();
-            MenuItem itemShow = new MenuItem("Show");
-            itemShow.addActionListener(e -> {
-                setVisible(true);
-                setExtendedState(JFrame.NORMAL);
-            });
-            trayMenu.add(itemShow);
-
-            MenuItem itemClose = new MenuItem("Close");
-            itemClose.addActionListener(e -> System.exit(0));
-            trayMenu.add(itemClose);
-
-            trayIcon.addMouseListener(new MouseAdapter() {
-                @Override
-                public void mouseClicked(MouseEvent e) {
-                    if (SwingUtilities.isLeftMouseButton(e)) {
-                        setVisible(true);
-                        setExtendedState(JFrame.NORMAL);
-                    }
-                }
-
-                @Override
-                public void mouseReleased(MouseEvent e) {
-                    if (SwingUtilities.isRightMouseButton(e)) {
-                        trayIcon.setPopupMenu(trayMenu);
-                    }
-                }
-            });
-        } catch (IOException | AWTException e) {
-            e.printStackTrace();
-        }
 
         //Input keyword
         JLabel lblNewLabel = new JLabel("Keyword:");
@@ -345,7 +308,7 @@ public class Gui extends JFrame {
 
         //Search addNewSource
         searchBtnTop = new JButton();
-        searchBtnTop.setIcon(SEARCH_KEYWORDS_ICON);
+        searchBtnTop.setIcon(Icons.SEARCH_KEYWORDS_ICON);
         searchBtnTop.setToolTipText("Без заголовков со словами " + Search.excludeFromSearch);
         searchBtnTop.setBackground(new Color(154, 237, 196));
         searchBtnTop.setFont(new Font("Tahoma", Font.BOLD, 10));
@@ -358,8 +321,8 @@ public class Gui extends JFrame {
         searchBtnTop.addActionListener(e -> new Thread(() -> search.mainSearch("word")).start());
 
         //Stop addNewSource
-        stopBtnTop = new JButton("");
-        stopBtnTop.setIcon(STOP_SEARCH_ICON);
+        stopBtnTop = new JButton();
+        stopBtnTop.setIcon(Icons.STOP_SEARCH_ICON);
         stopBtnTop.setBackground(new Color(255, 208, 202));
         stopBtnTop.setBounds(192, topLeftActionY, 30, 22);
         stopBtnTop.addActionListener(e -> {
@@ -428,9 +391,12 @@ public class Gui extends JFrame {
         });
 
         /* Top-Right action panel */
+        int topRightX = 965;
+        int topRightY = 9;
+
         // Выбор цвета фона
         JButton backgroundColorBtn = new JButton();
-        SetButton setButton = new SetButton(BACK_GROUND_COLOR_ICON, new Color(189, 189, 189), 1035, 9);
+        SetButton setButton = new SetButton(Icons.BACK_GROUND_COLOR_ICON, new Color(189, 189, 189), topRightX, topRightY);
         setButton.buttonSetting(backgroundColorBtn, "Background color");
 
         backgroundColorBtn.addActionListener(e -> {
@@ -453,7 +419,7 @@ public class Gui extends JFrame {
 
         // Выбор цвета шрифта в таблице
         JButton fontColorBtn = new JButton();
-        setButton = new SetButton(FONT_COLOR_BUTTON_ICON, new Color(190, 225, 255), 1070, 9);
+        setButton = new SetButton(Icons.FONT_COLOR_BUTTON_ICON, new Color(190, 225, 255), topRightX + 35, topRightY);
         setButton.buttonSetting(fontColorBtn, "Font color");
 
         fontColorBtn.addActionListener(e -> {
@@ -477,7 +443,7 @@ public class Gui extends JFrame {
 
         //Export to excel
         JButton exportBtn = new JButton();
-        setButton = new SetButton(EXCEL_BUTTON_ICON, new Color(255, 251, 183), 1105, 9);
+        setButton = new SetButton(Icons.EXCEL_BUTTON_ICON, new Color(255, 251, 183), topRightX + 70, topRightY);
         setButton.buttonSetting(exportBtn, "Export news to excel");
         exportBtn.addActionListener(e -> {
             if (model.getRowCount() != 0) {
@@ -491,7 +457,7 @@ public class Gui extends JFrame {
 
         // Clear
         JButton clearBtnTop = new JButton();
-        setButton = new SetButton(CLEAR_BUTTON_ICON, new Color(250, 128, 114), 1140, 9);
+        setButton = new SetButton(Icons.CLEAR_BUTTON_ICON, new Color(250, 128, 114), topRightX + 105, topRightY);
         setButton.buttonSetting(clearBtnTop, "Clear the list");
         clearBtnTop.addActionListener(e -> {
             try {
@@ -513,6 +479,69 @@ public class Gui extends JFrame {
         });
         getContentPane().add(clearBtnTop);
 
+        /* Сворачивание в трей */
+        JButton toTrayBtn = new JButton(Icons.TRAY_BUTTON_ICON);
+        toTrayBtn.setToolTipText("to tray");
+        toTrayBtn.setFocusable(false);
+        toTrayBtn.setContentAreaFilled(false);
+        toTrayBtn.setBorderPainted(false);
+        toTrayBtn.setBounds(topRightX + 150, topRightY, 24, 22);
+        if (SystemTray.isSupported()) {
+            getContentPane().add(toTrayBtn);
+        }
+        toTrayBtn.addActionListener(e -> setVisible(false));
+        animation(toTrayBtn, Icons.TRAY_BUTTON_ICON, Icons.WHEN_MOUSE_ON_TRAY_BUTTON_ICON);
+
+        // Сворачивание приложения в трей
+        try {
+            BufferedImage Icon = ImageIO.read(Objects.requireNonNull(Icons.APP_IN_TRAY_BUTTON_ICON));
+            final TrayIcon trayIcon = new TrayIcon(Icon, "Avandy News");
+            SystemTray systemTray = SystemTray.getSystemTray();
+            systemTray.add(trayIcon);
+
+            final PopupMenu trayMenu = new PopupMenu();
+            MenuItem itemShow = new MenuItem("Show");
+            itemShow.addActionListener(e -> {
+                setVisible(true);
+                setExtendedState(JFrame.NORMAL);
+            });
+            trayMenu.add(itemShow);
+
+            MenuItem itemClose = new MenuItem("Close");
+            itemClose.addActionListener(e -> System.exit(0));
+            trayMenu.add(itemClose);
+
+            trayIcon.addMouseListener(new MouseAdapter() {
+                @Override
+                public void mouseClicked(MouseEvent e) {
+                    if (SwingUtilities.isLeftMouseButton(e)) {
+                        setVisible(true);
+                        setExtendedState(JFrame.NORMAL);
+                    }
+                }
+
+                @Override
+                public void mouseReleased(MouseEvent e) {
+                    if (SwingUtilities.isRightMouseButton(e)) {
+                        trayIcon.setPopupMenu(trayMenu);
+                    }
+                }
+            });
+        } catch (IOException | AWTException e) {
+            e.printStackTrace();
+        }
+
+        // Exit button
+        JButton exitBtn = new JButton(Icons.EXIT_BUTTON_ICON);
+        exitBtn.setToolTipText("exit");
+        exitBtn.setBounds(topRightX + 175, topRightY, 24, 22);
+        exitBtn.setContentAreaFilled(false);
+        exitBtn.setBorderPainted(false);
+        exitBtn.setFocusable(false);
+        getContentPane().add(exitBtn);
+        exitBtn.addActionListener((e) -> System.exit(0));
+        animation(exitBtn, Icons.EXIT_BUTTON_ICON, Icons.WHEN_MOUSE_ON_EXIT_BUTTON_ICON);
+
         /* KEYWORDS BOTTOM SEARCH */
         // label
         JLabel lblKeywordsSearch = new JLabel();
@@ -530,7 +559,7 @@ public class Gui extends JFrame {
 
         //Add to keywords combo box
         JButton btnAddKeywordToList = new JButton();
-        setButton = new SetButton(ADD_KEYWORD_ICON, null, 95, 561);
+        setButton = new SetButton(Icons.ADD_KEYWORD_ICON, null, 95, 561);
         setButton.buttonSetting(btnAddKeywordToList, "Add keyword");
         getContentPane().add(btnAddKeywordToList);
         btnAddKeywordToList.addActionListener(e -> {
@@ -555,7 +584,7 @@ public class Gui extends JFrame {
 
         //Delete from combo box
         JButton btnDelFromList = new JButton();
-        setButton = new SetButton(DELETE_FROM_KEYWORDS_ICON, null, 130, 561);
+        setButton = new SetButton(Icons.DELETE_FROM_KEYWORDS_ICON, null, 130, 561);
         setButton.buttonSetting(btnDelFromList, "Delete word from list");
         btnDelFromList.addActionListener(e -> {
             if (keywords.getItemCount() > 0) {
@@ -582,14 +611,14 @@ public class Gui extends JFrame {
 
         //Bottom search by keywords
         searchBtnBottom = new JButton();
-        setButton = new SetButton(SEARCH_KEYWORDS_ICON, new Color(154, 237, 196), 261, 561);
+        setButton = new SetButton(Icons.SEARCH_KEYWORDS_ICON, new Color(154, 237, 196), 261, 561);
         setButton.buttonSetting(searchBtnBottom, "Search by keywords");
         searchBtnBottom.addActionListener(e -> new Thread(() -> search.mainSearch("words")).start());
         getContentPane().add(searchBtnBottom);
 
         //Stop addNewSource (bottom)
         stopBtnBottom = new JButton();
-        setButton = new SetButton(STOP_SEARCH_ICON, new Color(255, 208, 202), 261, 561);
+        setButton = new SetButton(Icons.STOP_SEARCH_ICON, new Color(255, 208, 202), 261, 561);
         setButton.buttonSetting(stopBtnBottom, null);
         stopBtnBottom.addActionListener(e -> {
             try {
@@ -730,7 +759,7 @@ public class Gui extends JFrame {
 
         //Send current results e-mail
         sendEmailBtn = new JButton();
-        setButton = new SetButton(SEND_EMAIL_ICON, new Color(255, 255, 153), 1020, 518);
+        setButton = new SetButton(Icons.SEND_EMAIL_ICON, new Color(255, 255, 153), 1020, 518);
         setButton.buttonSetting(sendEmailBtn, "Send current search results");
         sendEmailBtn.setFocusable(false);
         sendEmailBtn.setContentAreaFilled(false);
@@ -749,16 +778,16 @@ public class Gui extends JFrame {
             // наведение мышки на письмо
             @Override
             public void mouseEntered(MouseEvent e) {
-                if (sendEmailBtn.getIcon() == SEND_EMAIL_ICON) {
-                    sendEmailBtn.setIcon(WHEN_MOUSE_ON_SEND_ICON);
+                if (sendEmailBtn.getIcon() == Icons.SEND_EMAIL_ICON) {
+                    sendEmailBtn.setIcon(Icons.WHEN_MOUSE_ON_SEND_ICON);
                 }
             }
 
             @Override
             // убрали мышку с письма
             public void mouseExited(MouseEvent e) {
-                if (sendEmailBtn.getIcon() == WHEN_MOUSE_ON_SEND_ICON) {
-                    sendEmailBtn.setIcon(SEND_EMAIL_ICON);
+                if (sendEmailBtn.getIcon() == Icons.WHEN_MOUSE_ON_SEND_ICON) {
+                    sendEmailBtn.setIcon(Icons.SEND_EMAIL_ICON);
                 }
             }
 
@@ -936,11 +965,11 @@ public class Gui extends JFrame {
         getContentPane().add(labelSum);
 
         //My sign
-        labelSign = new JLabel("mrPro");
+        labelSign = new JLabel("mrprogre");
         labelSign.setForeground(new Color(255, 160, 122));
         labelSign.setEnabled(false);
         labelSign.setFont(new Font("Tahoma", Font.BOLD, 11));
-        labelSign.setBounds(995, 14, 57, 14);
+        labelSign.setBounds(1110, 567, 57, 14);
         getContentPane().add(labelSign);
         labelSign.addMouseListener(new MouseAdapter() {
             // наведение мышки на письмо
@@ -1053,5 +1082,33 @@ public class Gui extends JFrame {
         });
 
         setVisible(true);
+    }
+
+    private void animation(JButton exitBtn, ImageIcon off, ImageIcon on) {
+        exitBtn.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                exitBtn.setIcon(on);
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+                exitBtn.setIcon(off);
+            }
+        });
+    }
+
+    private void animation(JLabel label) {
+        label.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                label.setForeground(new Color(255, 236, 13));
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+                label.setForeground(new Color(0, 0, 0));
+            }
+        });
     }
 }

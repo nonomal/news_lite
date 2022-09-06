@@ -6,6 +6,7 @@ import com.sun.syndication.feed.synd.SyndFeed;
 import database.DatabaseQueries;
 import database.SQLite;
 import gui.Gui;
+import gui.buttons.Icons;
 import lombok.extern.slf4j.Slf4j;
 import main.Main;
 import utils.Common;
@@ -80,7 +81,7 @@ public class Search extends SearchUtils {
             }
 
             isSearchFinished = new AtomicBoolean(false);
-            Gui.sendEmailBtn.setIcon(Gui.SEND_EMAIL_ICON);
+            Gui.sendEmailBtn.setIcon(Icons.SEND_EMAIL_ICON);
             new Thread(Common::fill).start();
             try {
                 sqLite.transactionCommand("BEGIN TRANSACTION");

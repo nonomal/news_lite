@@ -2,6 +2,7 @@ package gui;
 
 import database.DatabaseQueries;
 import database.SQLite;
+import gui.buttons.Icons;
 
 import javax.swing.*;
 import javax.swing.table.TableCellEditor;
@@ -35,15 +36,15 @@ public class ButtonColumn extends AbstractCellEditor implements TableCellRendere
         if (hasFocus) {
             renderButton.setForeground(table.getForeground());
             renderButton.setBackground(UIManager.getColor("Button.background"));
-            renderButton.setIcon(Gui.DELETE_FROM_KEYWORDS_ICON);
+            renderButton.setIcon(Icons.DELETE_FROM_KEYWORDS_ICON);
         } else if (isSelected) {
             renderButton.setForeground(table.getSelectionForeground());
             //renderButton.setBackground(table.getSelectionBackground());
-            renderButton.setIcon(Gui.DELETE_FROM_KEYWORDS_ICON);
+            renderButton.setIcon(Icons.DELETE_FROM_KEYWORDS_ICON);
         } else {
             renderButton.setForeground(table.getForeground());
             renderButton.setBackground(UIManager.getColor("Button.background"));
-            renderButton.setIcon(Gui.DELETE_FROM_KEYWORDS_ICON);
+            renderButton.setIcon(Icons.DELETE_FROM_KEYWORDS_ICON);
         }
         //renderButton.setText((value == null) ? ";" : value.toString() );
         return renderButton;

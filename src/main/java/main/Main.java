@@ -2,6 +2,7 @@ package main;
 
 import com.formdev.flatlaf.intellijthemes.FlatHiberbeeDarkIJTheme;
 import database.SQLite;
+import gui.FrameDragListener;
 import gui.Gui;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -98,7 +99,14 @@ public class Main {
             UIManager.put("TextField.foreground", Color.BLACK);
             FlatHiberbeeDarkIJTheme.setup();
 
-            new Gui();
+            Gui gui = new Gui();
+            Runnable runnable = () -> {
+                FrameDragListener frameDragListener = new FrameDragListener(gui);
+                gui.addMouseListener(frameDragListener);
+                gui.addMouseMotionListener(frameDragListener);
+            };
+            SwingUtilities.invokeLater(runnable);
+
             // load config.txt
             Common.getSettingsFromFile();
             Gui.isOnlyLastNews = Gui.onlyNewNews.getState();

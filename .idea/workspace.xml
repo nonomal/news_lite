@@ -9,10 +9,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9e6d6f99-cebb-4fd8-99d4-ae1b59f22e89" name="Default Changelist" comment="info: рефакторинг">
+    <list default="true" id="9e6d6f99-cebb-4fd8-99d4-ae1b59f22e89" name="Default Changelist" comment="info: перевод английских заголовков">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/gui/Gui.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/gui/Gui.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/utils/Translator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/utils/Translator.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/main/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/main/Main.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -66,6 +66,7 @@
   </component>
   <component name="ProjectId" id="1qGS5IV7TPgs9jHTXa9TO0udiNX" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <OptionsSetting value="false" id="Update" />
     <ConfirmationsSetting value="1" id="Add" />
   </component>
   <component name="ProjectViewState">
@@ -121,6 +122,7 @@
       <recent name="utils" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="gui" />
       <recent name="search" />
       <recent name="gui.buttons" />
     </key>
@@ -248,14 +250,10 @@
       <workItem from="1662210818261" duration="1262000" />
       <workItem from="1662212096478" duration="945000" />
       <workItem from="1662445294746" duration="1813000" />
-      <workItem from="1662452872302" duration="2980000" />
-    </task>
-    <task id="LOCAL-00282" summary="feat: console search and sender test">
-      <created>1653230226889</created>
-      <option name="number" value="00282" />
-      <option name="presentableId" value="LOCAL-00282" />
-      <option name="project" value="LOCAL" />
-      <updated>1653230226890</updated>
+      <workItem from="1662452872302" duration="3081000" />
+      <workItem from="1662456115201" duration="16000" />
+      <workItem from="1662493132103" duration="1574000" />
+      <workItem from="1662494947585" duration="2071000" />
     </task>
     <task id="LOCAL-00283" summary="feat: console search and sender test">
       <created>1653230237456</created>
@@ -593,7 +591,14 @@
       <option name="project" value="LOCAL" />
       <updated>1662212954964</updated>
     </task>
-    <option name="localTasksCounter" value="331" />
+    <task id="LOCAL-00331" summary="info: перевод английских заголовков">
+      <created>1662455927206</created>
+      <option name="number" value="00331" />
+      <option name="presentableId" value="LOCAL-00331" />
+      <option name="project" value="LOCAL" />
+      <updated>1662455927206</updated>
+    </task>
+    <option name="localTasksCounter" value="332" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -614,7 +619,6 @@
     <ignored-roots>
       <path value="$PROJECT_DIR$" />
     </ignored-roots>
-    <MESSAGE value="feat: рефакторинг - убрать лишний цикл" />
     <MESSAGE value="feat: рефакторинг общий" />
     <MESSAGE value="feat: рефакторинг" />
     <MESSAGE value="feat: уточнение пути к БД" />
@@ -639,7 +643,8 @@
     <MESSAGE value="info: поменял чекбоксы местами" />
     <MESSAGE value="info: добавлен перевод заголовков с английского" />
     <MESSAGE value="info: рефакторинг" />
-    <option name="LAST_COMMIT_MESSAGE" value="info: рефакторинг" />
+    <MESSAGE value="info: перевод английских заголовков" />
+    <option name="LAST_COMMIT_MESSAGE" value="info: перевод английских заголовков" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -663,6 +668,11 @@
           <url>file://$PROJECT_DIR$/src/main/java/search/Search.java</url>
           <line>150</line>
           <option name="timeStamp" value="13" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/gui/Gui.java</url>
+          <line>513</line>
+          <option name="timeStamp" value="32" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-method">
           <url>file://$PROJECT_DIR$/src/main/java/utils/Common.java</url>
