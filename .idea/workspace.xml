@@ -9,13 +9,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9e6d6f99-cebb-4fd8-99d4-ae1b59f22e89" name="Default Changelist" comment="info: добавлен перевод заголовков с английского">
-      <change beforePath="$PROJECT_DIR$/.idea/artifacts/News_jar.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+    <list default="true" id="9e6d6f99-cebb-4fd8-99d4-ae1b59f22e89" name="Default Changelist" comment="info: рефакторинг">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/News.iml" beforeDir="false" afterPath="$PROJECT_DIR$/news.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/gui/Gui.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/gui/Gui.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/utils/Translator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/utils/Translator.java" afterDir="false" />
     </list>
@@ -147,6 +142,19 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="Translator" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="utils.Translator" />
+      <module name="news" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="utils.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="DifferentTests" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="news" />
       <extension name="coverage">
@@ -184,6 +192,7 @@
       </method>
     </configuration>
     <list>
+      <item itemvalue="Application.Translator" />
       <item itemvalue="Application.Main" />
       <item itemvalue="JUnit.DifferentTests" />
       <item itemvalue="JUnit.DifferentTests.shouldFindAndSendResultsToEmail" />
@@ -192,6 +201,7 @@
     <recent_temporary>
       <list>
         <item itemvalue="Application.Main" />
+        <item itemvalue="Application.Translator" />
         <item itemvalue="JUnit.DifferentTests.shouldFindAndSendResultsToEmail" />
         <item itemvalue="JUnit.DifferentTests.shouldOpenSQLiteConnectionTest" />
         <item itemvalue="JUnit.DifferentTests" />
@@ -236,21 +246,9 @@
       <workItem from="1657893694876" duration="270000" />
       <workItem from="1662202103310" duration="1166000" />
       <workItem from="1662210818261" duration="1262000" />
-      <workItem from="1662212096478" duration="510000" />
-    </task>
-    <task id="LOCAL-00280" summary="feat: log">
-      <created>1653228392177</created>
-      <option name="number" value="00280" />
-      <option name="presentableId" value="LOCAL-00280" />
-      <option name="project" value="LOCAL" />
-      <updated>1653228392177</updated>
-    </task>
-    <task id="LOCAL-00281" summary="feat: log">
-      <created>1653229177035</created>
-      <option name="number" value="00281" />
-      <option name="presentableId" value="LOCAL-00281" />
-      <option name="project" value="LOCAL" />
-      <updated>1653229177035</updated>
+      <workItem from="1662212096478" duration="945000" />
+      <workItem from="1662445294746" duration="1813000" />
+      <workItem from="1662452872302" duration="2980000" />
     </task>
     <task id="LOCAL-00282" summary="feat: console search and sender test">
       <created>1653230226889</created>
@@ -581,7 +579,21 @@
       <option name="project" value="LOCAL" />
       <updated>1662203231398</updated>
     </task>
-    <option name="localTasksCounter" value="329" />
+    <task id="LOCAL-00329" summary="info: рефакторинг">
+      <created>1662212847966</created>
+      <option name="number" value="00329" />
+      <option name="presentableId" value="LOCAL-00329" />
+      <option name="project" value="LOCAL" />
+      <updated>1662212847966</updated>
+    </task>
+    <task id="LOCAL-00330" summary="info: рефакторинг">
+      <created>1662212954964</created>
+      <option name="number" value="00330" />
+      <option name="presentableId" value="LOCAL-00330" />
+      <option name="project" value="LOCAL" />
+      <updated>1662212954964</updated>
+    </task>
+    <option name="localTasksCounter" value="331" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -602,7 +614,6 @@
     <ignored-roots>
       <path value="$PROJECT_DIR$" />
     </ignored-roots>
-    <MESSAGE value="feat: рефакторинг - цвет шрифтов и бэк" />
     <MESSAGE value="feat: рефакторинг - убрать лишний цикл" />
     <MESSAGE value="feat: рефакторинг общий" />
     <MESSAGE value="feat: рефакторинг" />
@@ -627,7 +638,8 @@
     <MESSAGE value="info: +spring-core -spring-boot" />
     <MESSAGE value="info: поменял чекбоксы местами" />
     <MESSAGE value="info: добавлен перевод заголовков с английского" />
-    <option name="LAST_COMMIT_MESSAGE" value="info: добавлен перевод заголовков с английского" />
+    <MESSAGE value="info: рефакторинг" />
+    <option name="LAST_COMMIT_MESSAGE" value="info: рефакторинг" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

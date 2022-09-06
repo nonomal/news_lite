@@ -21,6 +21,7 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 import javax.swing.text.DefaultCaret;
 import java.awt.*;
+import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.StringSelection;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -36,6 +37,8 @@ import java.util.Objects;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 @Slf4j
 public class Gui extends JFrame {
@@ -974,6 +977,77 @@ public class Gui extends JFrame {
                         ex.printStackTrace();
                         log.warn(ex.getMessage());
                     }
+                }
+            }
+        });
+
+        // Mouse right click menu
+        final JPopupMenu popup = new JPopupMenu();
+
+        // Copy (menu)
+        JMenuItem menuCopy = new JMenuItem("Copy");
+        menuCopy.addActionListener((e) -> {
+            StringBuilder sbf = new StringBuilder();
+            int cols = table.getSelectedColumnCount();
+            int rows = table.getSelectedRowCount();
+            int[] selectedRows = table.getSelectedRows();
+            int[] selectedColumns = table.getSelectedColumns();
+            for (int i = 0; i < rows; ++i) {
+                for (int j = 0; j < cols; ++j) {
+                    sbf.append(table.getValueAt(selectedRows[i], selectedColumns[j]));
+                    if (j < cols - 1) {
+                        sbf.append("\t");
+                    }
+                }
+                sbf.append("\n");
+            }
+            StringSelection stsel = new StringSelection(sbf.toString());
+            Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
+            clipboard.setContents(stsel, stsel);
+        });
+        popup.add(menuCopy);
+
+        // Delete rows (menu)
+        JMenuItem menuDeleteRow = new JMenuItem("Delete");
+        menuDeleteRow.addActionListener((e) -> {
+            int[] rows = table.getSelectedRows();
+            for (int i = rows.length - 1; i >= 0; --i) {
+                model.removeRow(rows[i]);
+            }
+        });
+        popup.add(menuDeleteRow);
+
+        // Translate from ENG to RUS (menu)
+        JMenuItem menuTranslate = new JMenuItem("Translate");
+        menuTranslate.setVisible(false);
+        menuTranslate.addActionListener((e) -> {
+            int rowIndex = table.getSelectedRow();
+            int colIndex = 2;
+            String tip = (String) table.getValueAt(rowIndex, colIndex);
+
+            new Thread(() -> Common.console(Translator.translate("en", "ru", tip))).start();
+        });
+        popup.add(menuTranslate);
+
+        // Mouse right click listener
+        table.addMouseListener(new MouseAdapter() {
+            public void mouseReleased(MouseEvent e) {
+                if (e.isPopupTrigger()) {
+                    JTable source = (JTable) e.getSource();
+                    //int row = source.rowAtPoint(e.getPoint());
+                    int row = source.convertRowIndexToModel(source.rowAtPoint(e.getPoint()));
+                    int column = source.columnAtPoint(e.getPoint());
+                    if (!source.isRowSelected(row)) {
+                        source.changeSelection(row, column, false, false);
+                    }
+
+                    // Показывать кнопку с переводом только для английских заголовков
+                    String tip = (String) model.getValueAt(row, 2);
+                    Pattern pattern = Pattern.compile(".*\\p{InCyrillic}.*");
+                    Matcher matcher = pattern.matcher(tip);
+                    menuTranslate.setVisible(!matcher.find());
+
+                    popup.show(e.getComponent(), e.getX(), e.getY());
                 }
             }
         });
