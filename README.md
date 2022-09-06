@@ -32,7 +32,7 @@ Program features:
 
 Особенность программы в удобном, автоматическом поиске новостей по нескольким ключевым словам с отправкой результатов поиска на электронную почту.
 
-Актуальная версия прграммы: https://github.com/mrprogre/news_lite/raw/master/News.jar
+Актуальная версия прграммы: https://github.com/mrprogre/news_lite/raw/master/news.jar
 
 Для работы приложения на ПК должна быть установлена Java: https://www.java.com/ru/download/
 
