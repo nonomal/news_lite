@@ -2,8 +2,8 @@
 
 **Search all news in RSS (open source: jdbc, swing, sqlite)**
 
+![image](https://user-images.githubusercontent.com/45883640/188739312-ce9d376a-6b6a-48a1-8774-68771f99ef0c.png)
 
-![image](https://github.com/mrprogre/news_lite/blob/master/gui.png)
 
 Program features:
 - keyword search
@@ -75,9 +75,3 @@ Program features:
 **Linux**: home/user/News/config.txt
 
 *Отправка производится с почтовых сервисов: Mail.ru, Gmail, Yandex, Yahoo, Rambler.*
-
-
-----
-Работа в приложении выглядит следующим образом (интерфейс старый):
-
-![Image alt](https://github.com/mrprogre/news_lite/blob/master/gui.gif)
