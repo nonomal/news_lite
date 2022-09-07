@@ -9,7 +9,7 @@ import java.net.URLEncoder;
 
 public class Translator {
 
-    public static String translate(String langFrom, String langTo, String text) {
+    public String translate(String langFrom, String langTo, String text) {
         StringBuilder response;
         String scriptUrl = Common.SCRIPT_URL;
         try {
@@ -32,4 +32,5 @@ public class Translator {
         }
         return response.toString();
     }
+
 }

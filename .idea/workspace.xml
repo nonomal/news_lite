@@ -9,10 +9,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9e6d6f99-cebb-4fd8-99d4-ae1b59f22e89" name="Default Changelist" comment="info: перевод английских заголовков">
+    <list default="true" id="9e6d6f99-cebb-4fd8-99d4-ae1b59f22e89" name="Default Changelist" comment="info: изменён GUI + рефакторинг">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/gui/Gui.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/gui/Gui.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/main/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/main/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/utils/Common.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/utils/Common.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/utils/Translator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/utils/Translator.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/config.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/config.txt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -253,14 +256,11 @@
       <workItem from="1662452872302" duration="3081000" />
       <workItem from="1662456115201" duration="16000" />
       <workItem from="1662493132103" duration="1574000" />
-      <workItem from="1662494947585" duration="2071000" />
-    </task>
-    <task id="LOCAL-00283" summary="feat: console search and sender test">
-      <created>1653230237456</created>
-      <option name="number" value="00283" />
-      <option name="presentableId" value="LOCAL-00283" />
-      <option name="project" value="LOCAL" />
-      <updated>1653230237456</updated>
+      <workItem from="1662494947585" duration="2509000" />
+      <workItem from="1662498914610" duration="807000" />
+      <workItem from="1662501880117" duration="44000" />
+      <workItem from="1662533702366" duration="1862000" />
+      <workItem from="1662544195041" duration="685000" />
     </task>
     <task id="LOCAL-00284" summary="feat: console search and sender test">
       <created>1653230313128</created>
@@ -598,7 +598,14 @@
       <option name="project" value="LOCAL" />
       <updated>1662455927206</updated>
     </task>
-    <option name="localTasksCounter" value="332" />
+    <task id="LOCAL-00332" summary="info: изменён GUI + рефакторинг">
+      <created>1662498688116</created>
+      <option name="number" value="00332" />
+      <option name="presentableId" value="LOCAL-00332" />
+      <option name="project" value="LOCAL" />
+      <updated>1662498688116</updated>
+    </task>
+    <option name="localTasksCounter" value="333" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -619,7 +626,6 @@
     <ignored-roots>
       <path value="$PROJECT_DIR$" />
     </ignored-roots>
-    <MESSAGE value="feat: рефакторинг общий" />
     <MESSAGE value="feat: рефакторинг" />
     <MESSAGE value="feat: уточнение пути к БД" />
     <MESSAGE value="feat: pom" />
@@ -644,7 +650,8 @@
     <MESSAGE value="info: добавлен перевод заголовков с английского" />
     <MESSAGE value="info: рефакторинг" />
     <MESSAGE value="info: перевод английских заголовков" />
-    <option name="LAST_COMMIT_MESSAGE" value="info: перевод английских заголовков" />
+    <MESSAGE value="info: изменён GUI + рефакторинг" />
+    <option name="LAST_COMMIT_MESSAGE" value="info: изменён GUI + рефакторинг" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -661,22 +668,22 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/search/Search.java</url>
-          <line>135</line>
+          <line>136</line>
           <option name="timeStamp" value="12" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/search/Search.java</url>
-          <line>150</line>
+          <line>151</line>
           <option name="timeStamp" value="13" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/gui/Gui.java</url>
-          <line>513</line>
+          <line>394</line>
           <option name="timeStamp" value="32" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-method">
           <url>file://$PROJECT_DIR$/src/main/java/utils/Common.java</url>
-          <line>159</line>
+          <line>171</line>
           <properties class="utils.Common" method="getSettingsFromFile">
             <option name="EMULATED" value="true" />
             <option name="WATCH_EXIT" value="false" />

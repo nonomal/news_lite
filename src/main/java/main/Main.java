@@ -99,6 +99,7 @@ public class Main {
             UIManager.put("TextField.foreground", Color.BLACK);
             FlatHiberbeeDarkIJTheme.setup();
 
+            Common.getOpacity();
             Gui gui = new Gui();
             Runnable runnable = () -> {
                 FrameDragListener frameDragListener = new FrameDragListener(gui);

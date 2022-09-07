@@ -49,14 +49,13 @@ public class Gui extends JFrame {
     final DatabaseQueries databaseQueries = new DatabaseQueries();
     final Search search = new Search();
 
-    private static final float OPACITY = 0.90f;
+    private static final float OPACITY = Common.OPACITY;
     private static final Object[] MAIN_TABLE_HEADERS = {"Num", "Source", "Title", "Date", "Link"};
     private static final String[] TABLE_FOR_ANALYZE_HEADERS = {"top 10", "freq.", " "};
     private static final Font GUI_FONT = new Font("Tahoma", Font.PLAIN, 11);
     private static final String[] INTERVALS = {"1 min", "5 min", "15 min", "30 min", "45 min", "1 hour", "2 hours",
             "4 hours", "8 hours", "12 hours", "24 hours", "48 hours", "72 hours", "all"};
     private static final long AUTO_START_TIMER = 60000L; // 60 секунд
-
     public static final AtomicBoolean WAS_CLICK_IN_TABLE_FOR_ANALYSIS = new AtomicBoolean(false);
     public static final AtomicBoolean GUI_IN_TRAY = new AtomicBoolean(false);
     public static int newsCount = 1;
@@ -94,14 +93,14 @@ public class Gui extends JFrame {
     public static TimerTask timerTask;
 
     public Gui() {
-        setResizable(false);
-        getContentPane().setBackground(new Color(42, 42, 42));
-        setTitle("Avandy News");
-        setIconImage(Icons.LOGO_ICON.getImage());
-        setFont(GUI_FONT);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setBounds(340, 100, 1180, 590);
-        getContentPane().setLayout(null);
+        this.setResizable(false);
+        this.getContentPane().setBackground(new Color(42, 42, 42));
+        this.setTitle("Avandy News");
+        this.setIconImage(Icons.LOGO_ICON.getImage());
+        this.setFont(GUI_FONT);
+        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.setBounds(340, 100, 1180, 590);
+        this.getContentPane().setLayout(null);
 
         // Прозрачность и оформление окна
         this.setUndecorated(true);
@@ -110,7 +109,9 @@ public class Gui extends JFrame {
 
         GraphicsDevice gd = ge.getDefaultScreenDevice();
         boolean isUniformTranslucencySupported = gd.isWindowTranslucencySupported(TRANSLUCENT);
-        if (isUniformTranslucencySupported) this.setOpacity(OPACITY);
+        if (isUniformTranslucencySupported) {
+            this.setOpacity(OPACITY);
+        }
 
         //Action Listener for EXIT_ON_CLOSE
         addWindowListener(new WindowAdapter() {
@@ -485,7 +486,7 @@ public class Gui extends JFrame {
         toTrayBtn.setFocusable(false);
         toTrayBtn.setContentAreaFilled(false);
         toTrayBtn.setBorderPainted(false);
-        toTrayBtn.setBounds(topRightX + 150, topRightY, 24, 22);
+        toTrayBtn.setBounds(1126, 3, 24, 22);
         if (SystemTray.isSupported()) {
             getContentPane().add(toTrayBtn);
         }
@@ -534,7 +535,7 @@ public class Gui extends JFrame {
         // Exit button
         JButton exitBtn = new JButton(Icons.EXIT_BUTTON_ICON);
         exitBtn.setToolTipText("exit");
-        exitBtn.setBounds(topRightX + 175, topRightY, 24, 22);
+        exitBtn.setBounds(1151, 3, 24, 22);
         exitBtn.setContentAreaFilled(false);
         exitBtn.setBorderPainted(false);
         exitBtn.setFocusable(false);
@@ -1053,8 +1054,7 @@ public class Gui extends JFrame {
             int rowIndex = table.getSelectedRow();
             int colIndex = 2;
             String tip = (String) table.getValueAt(rowIndex, colIndex);
-
-            new Thread(() -> Common.console(Translator.translate("en", "ru", tip))).start();
+            new Thread(() -> Common.console(new Translator().translate("en", "ru", tip))).start();
         });
         popup.add(menuTranslate);
 
@@ -1081,7 +1081,7 @@ public class Gui extends JFrame {
             }
         });
 
-        setVisible(true);
+        this.setVisible(true);
     }
 
     private void animation(JButton exitBtn, ImageIcon off, ImageIcon on) {
@@ -1094,20 +1094,6 @@ public class Gui extends JFrame {
             @Override
             public void mouseExited(MouseEvent e) {
                 exitBtn.setIcon(off);
-            }
-        });
-    }
-
-    private void animation(JLabel label) {
-        label.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseEntered(MouseEvent e) {
-                label.setForeground(new Color(255, 236, 13));
-            }
-
-            @Override
-            public void mouseExited(MouseEvent e) {
-                label.setForeground(new Color(0, 0, 0));
             }
         });
     }

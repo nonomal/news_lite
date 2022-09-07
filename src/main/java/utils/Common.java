@@ -37,6 +37,7 @@ public class Common {
     public final ArrayList<Boolean> SMI_IS_ACTIVE = new ArrayList<>();
     public final ArrayList<String> EXCLUDED_WORDS = new ArrayList<>();
     public String SCRIPT_URL = null;
+    public float OPACITY;
 
     // Запись конфигураций приложения
     public void writeToConfig(String p_word, String p_type) {
@@ -156,6 +157,17 @@ public class Common {
         return excludeWords;
     }
 
+    public void getOpacity() {
+        try {
+            for (String s : Files.readAllLines(Paths.get(SETTINGS_PATH))) {
+                if (s.startsWith("opacity="))
+                    OPACITY = Float.parseFloat(s.replace("opacity=", ""));
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     // Считывание настроек из файла в массив строк
     public void getSettingsFromFile() {
         int linesAmount = Common.countLines();
@@ -207,6 +219,7 @@ public class Common {
                         break;
                     case "translate-url":
                         SCRIPT_URL = f[1];
+                        break;
                 }
 
             }
