@@ -26,8 +26,6 @@ import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.StringSelection;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -99,7 +97,7 @@ public class Gui extends JFrame {
         this.setIconImage(Icons.LOGO_ICON.getImage());
         this.setFont(GUI_FONT);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.setBounds(340, 100, 1180, 590);
+        this.setBounds(360, 180, 1181, 592);
         this.getContentPane().setLayout(null);
 
         // Прозрачность и оформление окна
@@ -112,32 +110,6 @@ public class Gui extends JFrame {
         if (isUniformTranslucencySupported) {
             this.setOpacity(OPACITY);
         }
-
-        //Action Listener for EXIT_ON_CLOSE
-        addWindowListener(new WindowAdapter() {
-            // закрытие окна
-            @Override
-            public void windowClosing(WindowEvent e) {
-                Search.isSearchFinished.set(true);
-                SQLite.isConnectionToSQLite = false;
-                Common.saveState();
-                log.info("Application closed");
-                if (SQLite.isConnectionToSQLite) sqLite.closeConnection();
-            }
-
-            // сворачивание в трей
-            @Override
-            public void windowIconified(WindowEvent pEvent) {
-                GUI_IN_TRAY.set(true);
-                setVisible(false);
-                if (autoUpdateNewsBottom.getState()) consoleTextArea.setText("");
-            }
-
-            // разворачивание из трея
-            public void windowDeiconified(WindowEvent pEvent) {
-                GUI_IN_TRAY.set(false);
-            }
-        });
 
         //Input keyword
         JLabel lblNewLabel = new JLabel("Keyword:");
@@ -490,7 +462,11 @@ public class Gui extends JFrame {
         if (SystemTray.isSupported()) {
             getContentPane().add(toTrayBtn);
         }
-        toTrayBtn.addActionListener(e -> setVisible(false));
+        toTrayBtn.addActionListener(e -> {
+            GUI_IN_TRAY.set(true);
+            setVisible(false);
+            if (autoUpdateNewsBottom.getState()) consoleTextArea.setText("");
+        });
         animation(toTrayBtn, Icons.TRAY_BUTTON_ICON, Icons.WHEN_MOUSE_ON_TRAY_BUTTON_ICON);
 
         // Сворачивание приложения в трей
@@ -517,6 +493,7 @@ public class Gui extends JFrame {
                 public void mouseClicked(MouseEvent e) {
                     if (SwingUtilities.isLeftMouseButton(e)) {
                         setVisible(true);
+                        GUI_IN_TRAY.set(false);
                         setExtendedState(JFrame.NORMAL);
                     }
                 }
@@ -540,7 +517,14 @@ public class Gui extends JFrame {
         exitBtn.setBorderPainted(false);
         exitBtn.setFocusable(false);
         getContentPane().add(exitBtn);
-        exitBtn.addActionListener((e) -> System.exit(0));
+        exitBtn.addActionListener((e) -> {
+            Search.isSearchFinished.set(true);
+            SQLite.isConnectionToSQLite = false;
+            Common.saveState();
+            log.info("Application closed");
+            if (SQLite.isConnectionToSQLite) sqLite.closeConnection();
+            System.exit(0);
+        });
         animation(exitBtn, Icons.EXIT_BUTTON_ICON, Icons.WHEN_MOUSE_ON_EXIT_BUTTON_ICON);
 
         /* KEYWORDS BOTTOM SEARCH */

@@ -129,46 +129,7 @@ public class Common {
         }
     }
 
-    // Считывание ключевых слов при добавлении/удалении в комбобоксе
-    public List<String> getKeywordsFromFile() {
-        List<String> keywords = new ArrayList<>();
-        try {
-            for (String s : Files.readAllLines(Paths.get(SETTINGS_PATH))) {
-                if (s.startsWith("keyword="))
-                    keywords.add(s.replace("keyword=", ""));
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return keywords;
-    }
-
-    // Считывание слов исключений для поиска по одному слову
-    public List<String> getExcludeWordsFromFile() {
-        List<String> excludeWords = new ArrayList<>();
-        try {
-            for (String s : Files.readAllLines(Paths.get(SETTINGS_PATH))) {
-                if (s.startsWith("exclude="))
-                    excludeWords.add(s.replace("exclude=", ""));
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return excludeWords;
-    }
-
-    public void getOpacity() {
-        try {
-            for (String s : Files.readAllLines(Paths.get(SETTINGS_PATH))) {
-                if (s.startsWith("opacity="))
-                    OPACITY = Float.parseFloat(s.replace("opacity=", ""));
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    // Считывание настроек из файла в массив строк
+    // Считывание конфигураций
     public void getSettingsFromFile() {
         int linesAmount = Common.countLines();
         String[][] lines = new String[linesAmount][];
@@ -222,6 +183,46 @@ public class Common {
                         break;
                 }
 
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    // Считывание ключевых слов при добавлении/удалении в комбобоксе
+    public List<String> getKeywordsFromFile() {
+        List<String> keywords = new ArrayList<>();
+        try {
+            for (String s : Files.readAllLines(Paths.get(SETTINGS_PATH))) {
+                if (s.startsWith("keyword="))
+                    keywords.add(s.replace("keyword=", ""));
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return keywords;
+    }
+
+    // Считывание слов исключений для поиска по одному слову
+    public List<String> getExcludeWordsFromFile() {
+        List<String> excludeWords = new ArrayList<>();
+        try {
+            for (String s : Files.readAllLines(Paths.get(SETTINGS_PATH))) {
+                if (s.startsWith("exclude="))
+                    excludeWords.add(s.replace("exclude=", ""));
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return excludeWords;
+    }
+
+    // Считывание настройки прозрачности окна
+    public void getOpacity() {
+        try {
+            for (String s : Files.readAllLines(Paths.get(SETTINGS_PATH))) {
+                if (s.startsWith("opacity="))
+                    OPACITY = Float.parseFloat(s.replace("opacity=", ""));
             }
         } catch (IOException e) {
             e.printStackTrace();

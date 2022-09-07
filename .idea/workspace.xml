@@ -9,13 +9,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9e6d6f99-cebb-4fd8-99d4-ae1b59f22e89" name="Default Changelist" comment="info: изменён GUI + рефакторинг">
+    <list default="true" id="9e6d6f99-cebb-4fd8-99d4-ae1b59f22e89" name="Default Changelist" comment="info: перенесена логика закрытия окна и сворачивания">
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__javax_activation_activation_1_1.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/news.jar" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/gui/Gui.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/gui/Gui.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/main/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/main/Main.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/utils/Common.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/utils/Common.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/utils/Translator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/utils/Translator.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/config.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/config.txt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -35,7 +34,11 @@
     </option>
   </component>
   <component name="Git.Settings">
-    <option name="PUSH_AUTO_UPDATE" value="true" />
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="change-to-jdbc-template" />
+      </map>
+    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
     <option name="RESET_MODE" value="HARD" />
   </component>
@@ -61,8 +64,15 @@
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
+  <component name="MavenImportPreferences">
+    <option name="generalSettings">
+      <MavenGeneralSettings>
+        <option name="useMavenConfig" value="true" />
+      </MavenGeneralSettings>
+    </option>
+  </component>
   <component name="ProblemsViewState">
-    <option name="selectedTabId" value="ProjectErrors" />
+    <option name="selectedTabId" value="CurrentFile" />
   </component>
   <component name="ProjectCodeStyleSettingsMigration">
     <option name="version" value="1" />
@@ -94,7 +104,7 @@
     &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
     &quot;run.code.analysis.last.selected.profile&quot;: &quot;pProject Default&quot;,
     &quot;settings.editor.selected.configurable&quot;: &quot;configurable.group.appearance&quot;,
-    &quot;spring.configuration.checksum&quot;: &quot;dd1ba1872df91985ed1ca4cde2dfe669&quot;
+    &quot;spring.configuration.checksum&quot;: &quot;ec9e2a3d82e900b71c1b6cc845c69602&quot;
   },
   &quot;keyToStringList&quot;: {
     &quot;DatabaseDriversLRU&quot;: [
@@ -125,7 +135,7 @@
       <recent name="utils" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
-      <recent name="gui" />
+      <recent name="database" />
       <recent name="search" />
       <recent name="gui.buttons" />
     </key>
@@ -206,10 +216,10 @@
     <recent_temporary>
       <list>
         <item itemvalue="Application.Main" />
-        <item itemvalue="Application.Translator" />
-        <item itemvalue="JUnit.DifferentTests.shouldFindAndSendResultsToEmail" />
         <item itemvalue="JUnit.DifferentTests.shouldOpenSQLiteConnectionTest" />
+        <item itemvalue="JUnit.DifferentTests.shouldFindAndSendResultsToEmail" />
         <item itemvalue="JUnit.DifferentTests" />
+        <item itemvalue="Application.Translator" />
       </list>
     </recent_temporary>
   </component>
@@ -249,18 +259,54 @@
       <workItem from="1657868260078" duration="1416000" />
       <workItem from="1657889546195" duration="2376000" />
       <workItem from="1657893694876" duration="270000" />
-      <workItem from="1662202103310" duration="1166000" />
-      <workItem from="1662210818261" duration="1262000" />
-      <workItem from="1662212096478" duration="945000" />
-      <workItem from="1662445294746" duration="1813000" />
-      <workItem from="1662452872302" duration="3081000" />
-      <workItem from="1662456115201" duration="16000" />
-      <workItem from="1662493132103" duration="1574000" />
-      <workItem from="1662494947585" duration="2509000" />
-      <workItem from="1662498914610" duration="807000" />
-      <workItem from="1662501880117" duration="44000" />
-      <workItem from="1662533702366" duration="1862000" />
-      <workItem from="1662544195041" duration="685000" />
+      <workItem from="1657895568535" duration="63000" />
+      <workItem from="1657963241797" duration="431000" />
+      <workItem from="1657970150698" duration="8275000" />
+      <workItem from="1657989524023" duration="10045000" />
+      <workItem from="1658681141024" duration="251000" />
+      <workItem from="1659365951935" duration="1165000" />
+      <workItem from="1659367909949" duration="221000" />
+      <workItem from="1660471718634" duration="13000" />
+      <workItem from="1661408997743" duration="53000" />
+      <workItem from="1661545763397" duration="2412000" />
+      <workItem from="1661589851865" duration="48000" />
+      <workItem from="1661598154077" duration="620000" />
+      <workItem from="1661619335146" duration="1001000" />
+      <workItem from="1661631464523" duration="6000" />
+      <workItem from="1661631538811" duration="393000" />
+      <workItem from="1661672341325" duration="271000" />
+      <workItem from="1661693678300" duration="2053000" />
+      <workItem from="1661778983808" duration="127000" />
+      <workItem from="1661867541464" duration="655000" />
+      <workItem from="1661873333231" duration="26000" />
+    </task>
+    <task id="LOCAL-00280" summary="feat: log">
+      <created>1653228392177</created>
+      <option name="number" value="00280" />
+      <option name="presentableId" value="LOCAL-00280" />
+      <option name="project" value="LOCAL" />
+      <updated>1653228392177</updated>
+    </task>
+    <task id="LOCAL-00281" summary="feat: log">
+      <created>1653229177035</created>
+      <option name="number" value="00281" />
+      <option name="presentableId" value="LOCAL-00281" />
+      <option name="project" value="LOCAL" />
+      <updated>1653229177035</updated>
+    </task>
+    <task id="LOCAL-00282" summary="feat: console search and sender test">
+      <created>1653230226889</created>
+      <option name="number" value="00282" />
+      <option name="presentableId" value="LOCAL-00282" />
+      <option name="project" value="LOCAL" />
+      <updated>1653230226890</updated>
+    </task>
+    <task id="LOCAL-00283" summary="feat: console search and sender test">
+      <created>1653230237456</created>
+      <option name="number" value="00283" />
+      <option name="presentableId" value="LOCAL-00283" />
+      <option name="project" value="LOCAL" />
+      <updated>1653230237456</updated>
     </task>
     <task id="LOCAL-00284" summary="feat: console search and sender test">
       <created>1653230313128</created>
@@ -570,42 +616,14 @@
       <option name="project" value="LOCAL" />
       <updated>1657893955930</updated>
     </task>
-    <task id="LOCAL-00328" summary="info: добавлен перевод заголовков с английского">
-      <created>1662203231397</created>
+    <task id="LOCAL-00328" summary="info: поменял чекбоксы местами">
+      <created>1657895625438</created>
       <option name="number" value="00328" />
       <option name="presentableId" value="LOCAL-00328" />
       <option name="project" value="LOCAL" />
-      <updated>1662203231398</updated>
+      <updated>1657895625438</updated>
     </task>
-    <task id="LOCAL-00329" summary="info: рефакторинг">
-      <created>1662212847966</created>
-      <option name="number" value="00329" />
-      <option name="presentableId" value="LOCAL-00329" />
-      <option name="project" value="LOCAL" />
-      <updated>1662212847966</updated>
-    </task>
-    <task id="LOCAL-00330" summary="info: рефакторинг">
-      <created>1662212954964</created>
-      <option name="number" value="00330" />
-      <option name="presentableId" value="LOCAL-00330" />
-      <option name="project" value="LOCAL" />
-      <updated>1662212954964</updated>
-    </task>
-    <task id="LOCAL-00331" summary="info: перевод английских заголовков">
-      <created>1662455927206</created>
-      <option name="number" value="00331" />
-      <option name="presentableId" value="LOCAL-00331" />
-      <option name="project" value="LOCAL" />
-      <updated>1662455927206</updated>
-    </task>
-    <task id="LOCAL-00332" summary="info: изменён GUI + рефакторинг">
-      <created>1662498688116</created>
-      <option name="number" value="00332" />
-      <option name="presentableId" value="LOCAL-00332" />
-      <option name="project" value="LOCAL" />
-      <updated>1662498688116</updated>
-    </task>
-    <option name="localTasksCounter" value="333" />
+    <option name="localTasksCounter" value="329" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -626,6 +644,8 @@
     <ignored-roots>
       <path value="$PROJECT_DIR$" />
     </ignored-roots>
+    <MESSAGE value="feat: рефакторинг - убрать лишний цикл" />
+    <MESSAGE value="feat: рефакторинг общий" />
     <MESSAGE value="feat: рефакторинг" />
     <MESSAGE value="feat: уточнение пути к БД" />
     <MESSAGE value="feat: pom" />
@@ -647,11 +667,9 @@
     <MESSAGE value="info: refactor" />
     <MESSAGE value="info: +spring-core -spring-boot" />
     <MESSAGE value="info: поменял чекбоксы местами" />
-    <MESSAGE value="info: добавлен перевод заголовков с английского" />
-    <MESSAGE value="info: рефакторинг" />
-    <MESSAGE value="info: перевод английских заголовков" />
-    <MESSAGE value="info: изменён GUI + рефакторинг" />
-    <option name="LAST_COMMIT_MESSAGE" value="info: изменён GUI + рефакторинг" />
+    <MESSAGE value="info: initial commit" />
+    <MESSAGE value="info: перенесена логика закрытия окна и сворачивания" />
+    <option name="LAST_COMMIT_MESSAGE" value="info: перенесена логика закрытия окна и сворачивания" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -678,17 +696,8 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/gui/Gui.java</url>
-          <line>394</line>
-          <option name="timeStamp" value="32" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-method">
-          <url>file://$PROJECT_DIR$/src/main/java/utils/Common.java</url>
-          <line>171</line>
-          <properties class="utils.Common" method="getSettingsFromFile">
-            <option name="EMULATED" value="true" />
-            <option name="WATCH_EXIT" value="false" />
-          </properties>
-          <option name="timeStamp" value="30" />
+          <line>467</line>
+          <option name="timeStamp" value="38" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
