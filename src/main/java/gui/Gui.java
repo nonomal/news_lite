@@ -47,7 +47,6 @@ public class Gui extends JFrame {
     final DatabaseQueries databaseQueries = new DatabaseQueries();
     final Search search = new Search();
 
-    private static final float OPACITY = Common.OPACITY;
     private static final Object[] MAIN_TABLE_HEADERS = {"Num", "Source", "Title", "Date", "Link"};
     private static final String[] TABLE_FOR_ANALYZE_HEADERS = {"top 10", "freq.", " "};
     private static final Font GUI_FONT = new Font("Tahoma", Font.PLAIN, 11);
@@ -59,33 +58,17 @@ public class Gui extends JFrame {
     public static int newsCount = 1;
     public static boolean isOnlyLastNews = false;
     public static boolean isInKeywords = false;
-    public static String findWord = "";
+    public static String findWord;
     public static JScrollPane scrollPane;
-    public static JTable table;
-    public static JTable tableForAnalysis;
-    public static DefaultTableModel model;
-    public static DefaultTableModel modelForAnalysis;
-    public static JTextField topKeyword;
-    public static JTextField sendEmailTo;
-    public static JTextField addKeywordToList;
+    public static JTable table, tableForAnalysis;
+    public static DefaultTableModel model, modelForAnalysis;
+    public static JTextField topKeyword, sendEmailTo, addKeywordToList;
     public static JTextArea consoleTextArea;
-    public static JComboBox<String> keywords;
-    public static JComboBox<String> newsInterval;
-    public static JLabel labelSign;
-    public static JLabel labelSum;
-    public static JLabel lblLogSourceSqlite;
-    public static JButton searchBtnTop;
-    public static JButton searchBtnBottom;
-    public static JButton stopBtnTop;
-    public static JButton stopBtnBottom;
-    public static JButton sendEmailBtn;
-    public static JButton smiBtn;
-    public static JButton logBtn;
-    public static JButton exclBtn;
-    public static Checkbox autoUpdateNewsTop;
-    public static Checkbox autoUpdateNewsBottom;
-    public static Checkbox autoSendMessage;
-    public static Checkbox onlyNewNews;
+    public static JComboBox<String> keywords, newsInterval;
+    public static JLabel labelSign, labelSum, lblLogSourceSqlite;
+    public static JButton searchBtnTop, searchBtnBottom, stopBtnTop, stopBtnBottom,
+            sendEmailBtn, smiBtn, logBtn, exclBtn;
+    public static Checkbox autoUpdateNewsTop, autoUpdateNewsBottom, autoSendMessage, onlyNewNews;
     public static JProgressBar progressBar;
     public static Timer timer;
     public static TimerTask timerTask;
@@ -96,7 +79,7 @@ public class Gui extends JFrame {
         this.setTitle("Avandy News");
         this.setIconImage(Icons.LOGO_ICON.getImage());
         this.setFont(GUI_FONT);
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        //this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setBounds(360, 180, 1181, 592);
         this.getContentPane().setLayout(null);
 
@@ -108,11 +91,11 @@ public class Gui extends JFrame {
         GraphicsDevice gd = ge.getDefaultScreenDevice();
         boolean isUniformTranslucencySupported = gd.isWindowTranslucencySupported(TRANSLUCENT);
         if (isUniformTranslucencySupported) {
-            this.setOpacity(OPACITY);
+            this.setOpacity(Common.OPACITY);
         }
 
         //Input keyword
-        JLabel lblNewLabel = new JLabel("Keyword:");
+        final JLabel lblNewLabel = new JLabel("Keyword:");
         lblNewLabel.setForeground(new Color(255, 179, 131));
         lblNewLabel.setBounds(10, 9, 71, 19);
         lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 15));
@@ -155,11 +138,7 @@ public class Gui extends JFrame {
                 assert tip != null;
                 if (tip.length() > 80) {
                     return tip;
-                }
-//                else if (!tip.contains("а-я")) {
-//                    return Translator.translate("en", "ru", tip);
-//                }
-                else {
+                } else {
                     return null;
                 }
             }
@@ -1050,7 +1029,7 @@ public class Gui extends JFrame {
                     //int row = source.rowAtPoint(e.getPoint());
                     int row = source.convertRowIndexToModel(source.rowAtPoint(e.getPoint()));
                     int column = source.columnAtPoint(e.getPoint());
-                    if (!source.isRowSelected(row)) {
+                    if (source.isRowSelected(row)) {
                         source.changeSelection(row, column, false, false);
                     }
 
