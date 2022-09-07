@@ -63,7 +63,7 @@ Program features:
 
         java -jar .\news.jar user@mail.ru 180 москв хлеб балаших
         
-![image](https://github.com/mrprogre/news_lite/blob/master/power-shell.png)
+![image](https://user-images.githubusercontent.com/45883640/188851087-8cdc2147-59f9-4d1e-8a3d-242adb972f41.png)
 
 ----
 *Пароль и почту, с которой будет идти отправка, необходимо указывать в файле config.txt после ключей "from_pwd" и "from_adr" соответственно*
