@@ -22,7 +22,6 @@ import java.util.concurrent.atomic.AtomicBoolean;
 @Slf4j
 public class ConsoleSearch extends SearchUtils {
     SQLite sqLite = new SQLite();
-    DatabaseQueries2 databaseQueries2 = new DatabaseQueries2();
     public static List<String> excludeFromSearch;
     public static AtomicBoolean isStop;
     public static AtomicBoolean isSearchNow;
