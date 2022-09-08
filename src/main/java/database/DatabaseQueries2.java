@@ -19,9 +19,15 @@ public class DatabaseQueries2 {
     ApplicationContext context = new ClassPathXmlApplicationContext("context.xml");
     private final JdbcTemplate jdbcTemplate = context.getBean(JdbcTemplate.class);
 
-    public static void main(String[] args) {
-        System.out.println(new DatabaseQueries2().getRssList().get(1).getSource());
-    }
+//    public static void main(String[] args) {
+//        System.out.println(new DatabaseQueries2().getRssList().get(1).getSource());
+//    }
+
+
+    // вставка кода по заголовку для отсеивания ранее обнаруженных новостей TODO
+//    public void insertTitleIn256(String pTitle) {
+//        jdbcTemplate.update("INSERT INTO titles256(title) VALUES (?)", pTitle);
+//    }
 
     // запись данных по актуальным источникам из базы в массивы для поиска
     public void selectSources(@NotNull String pDialog) {

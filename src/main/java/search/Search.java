@@ -234,7 +234,7 @@ public class Search extends SearchUtils {
         }
     }
 
-    private void mainSearchProcess(DatabaseQueries sqlite, PreparedStatement st, String smi_source, String title,
+    private void mainSearchProcess(DatabaseQueries databaseQueries, PreparedStatement st, String smi_source, String title,
                                    String newsDescribe, Date pubDate, String dateToEmail, String link,
                                    int date_diff) throws SQLException {
         if (date_diff != 0) {
@@ -255,7 +255,7 @@ public class Search extends SearchUtils {
                     st.executeUpdate();
                 }
             }
-            sqlite.insertTitleIn256(Common.sha256(title + pubDate), SQLite.connection);
+            databaseQueries.insertTitleIn256(Common.sha256(title + pubDate), SQLite.connection);
         }
     }
 }
