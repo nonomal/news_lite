@@ -19,21 +19,23 @@ public class DatabaseQueries2 {
     ApplicationContext context = new ClassPathXmlApplicationContext("context.xml");
     private final JdbcTemplate jdbcTemplate = context.getBean(JdbcTemplate.class);
 
-//    public static void main(String[] args) {
-//        System.out.println(new DatabaseQueries2().getRssList().get(1).getSource());
-//    }
-
-
     // вставка кода по заголовку для отсеивания ранее обнаруженных новостей TODO
-//    public void insertTitleIn256(String pTitle) {
-//        jdbcTemplate.update("INSERT INTO titles256(title) VALUES (?)", pTitle);
-//    }
+    public void insertTitleIn256(String pTitle) {
+        jdbcTemplate.update("INSERT INTO titles256(title) VALUES (?)", pTitle);
+    }
 
-    // сохранение всех заголовков  TODO
-//    public void insertAllTitles(String pTitle, String pDate) {
-//        String query = "INSERT INTO ALL_NEWS(TITLE, NEWS_DATE) VALUES (?, ?)";
-//        jdbcTemplate.update(query, pTitle, pDate);
-//    }
+    // отсеивание заголовков  TODO
+    public boolean isTitleExists(String pString256) {
+        int isExists = 0;
+
+        String query = "SELECT MAX(1) FROM TITLES256 WHERE EXISTS (SELECT TITLE FROM TITLES256 T WHERE T.TITLE = ?)";
+        Integer exists = jdbcTemplate.queryForObject(query, Integer.class, pString256);
+
+        if (exists != null) {
+            isExists = 1;
+        }
+        return isExists == 1;
+    }
 
     // запись данных по актуальным источникам из базы в массивы для поиска
     public void selectSources(@NotNull String pDialog) {
@@ -78,16 +80,10 @@ public class DatabaseQueries2 {
         }
     }
 
-    // Количество новостей в архиве
-    public Integer archiveNewsCount() {
-        String query = "SELECT COUNT(*) FROM ALL_NEWS";
-        return jdbcTemplate.queryForObject(query, Integer.class);
-    }
-
-    public List<RssSource> getRssList() {
-        String query = "SELECT * FROM RSS_LIST";
-        return jdbcTemplate.query(query, new BeanPropertyRowMapper<>(RssSource.class));
-    }
+//    public List<RssSource> getRssList() {
+//        String query = "SELECT * FROM RSS_LIST";
+//        return jdbcTemplate.query(query, new BeanPropertyRowMapper<>(RssSource.class));
+//    }
 
     // Получить id для нового источника
     public Integer getNewRssId() {
@@ -139,12 +135,6 @@ public class DatabaseQueries2 {
     // удаляем все пустые строки
     public void deleteEmptyRows() {
         jdbcTemplate.update("DELETE FROM NEWS_DUAL WHERE TITLE = ''");
-    }
-
-    // удаление дубликатов новостей
-    public void deleteDuplicates() {
-        jdbcTemplate.update("DELETE FROM ALL_NEWS WHERE ROWID NOT IN (SELECT MIN(ROWID) " +
-                "FROM ALL_NEWS GROUP BY TITLE, NEWS_DATE)");
     }
 
     // обновление статуса чекбокса is_active для ресурсов

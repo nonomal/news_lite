@@ -10,6 +10,7 @@ import gui.Gui;
 import gui.buttons.Icons;
 import lombok.extern.slf4j.Slf4j;
 import main.Main;
+import org.jetbrains.annotations.NotNull;
 import utils.Common;
 
 import java.sql.PreparedStatement;
@@ -53,7 +54,7 @@ public class Search extends SearchUtils {
         isSearchFinished = new AtomicBoolean(false);
     }
 
-    public void mainSearch(String pSearchType) {
+    public void mainSearch(@NotNull String pSearchType) {
         DatabaseQueries databaseQueries = new DatabaseQueries();
         DatabaseQueries2 databaseQueries2 = new DatabaseQueries2();
         boolean isWord = pSearchType.equals("word");
@@ -124,17 +125,14 @@ public class Search extends SearchUtils {
                                             && !title.toLowerCase().contains(excludeFromSearch.get(2))
                                     ) {
                                         //отсеиваем новости, которые уже были найдены ранее
-                                        if (databaseQueries.isTitleExists(Common.sha256(title + pubDate), SQLite.connection)
-                                                && SQLite.isConnectionToSQLite) {
+                                        if (databaseQueries.isTitleExists(Common.sha256(title + pubDate),
+                                                SQLite.connection)) {
                                             continue;
                                         }
 
                                         //Data for a table
                                         Date currentDate = new Date();
                                         int date_diff = Common.compareDatesOnly(currentDate, pubDate);
-
-                                        // вставка всех новостей в архив (ощутимо замедляет общий поиск)
-                                        databaseQueries.insertAllTitles(title, pubDate.toString(), SQLite.connection);
 
                                         mainSearchProcess(databaseQueries, st, smi_source, title, newsDescribe, pubDate, dateToEmail, link, date_diff);
                                     }
@@ -143,7 +141,7 @@ public class Search extends SearchUtils {
                                         if (title.toLowerCase().contains(it.toLowerCase()) && title.length() > 15 && checkDate == 1) {
 
                                             // отсеиваем новости которые были обнаружены ранее
-                                            if (databaseQueries.isTitleExists(Common.sha256(title + pubDate), SQLite.connection) && SQLite.isConnectionToSQLite) {
+                                            if (databaseQueries.isTitleExists(Common.sha256(title + pubDate), SQLite.connection)) {
                                                 continue;
                                             }
 
@@ -157,7 +155,6 @@ public class Search extends SearchUtils {
                                 }
                                 if (isStop.get()) return;
                             }
-
                         } catch (Exception no_rss) {
                             String smi = Common.SMI_LINK.get(Common.SMI_ID)
                                     .replaceAll(("https://|http://|www."), "");
@@ -173,8 +170,8 @@ public class Search extends SearchUtils {
                 }
                 st.close();
 
-                // при убраной галке "только последние новости" очищается временная таблица
-                if (!Gui.isOnlyLastNews) databaseQueries2.deleteFrom256();
+                // при убранной галке "только последние новости" очищается временная таблица
+                //if (!Gui.isOnlyLastNews) databaseQueries2.deleteFrom256();
 
                 //Время поиска
                 timeEnd = LocalTime.now();
@@ -208,6 +205,8 @@ public class Search extends SearchUtils {
 
                 // удаляем все пустые строки
                 databaseQueries2.deleteEmptyRows();
+                // при убранной галке "только последние новости" очищается временная таблица
+                if (!Gui.isOnlyLastNews) databaseQueries2.deleteFrom256();
 
                 // Заполняем таблицу анализа
                 if (!Gui.WAS_CLICK_IN_TABLE_FOR_ANALYSIS.get()) databaseQueries2.selectSqlite();
@@ -217,11 +216,7 @@ public class Search extends SearchUtils {
                     Gui.sendEmailBtn.doClick();
                 }
 
-                databaseQueries2.deleteDuplicates();
                 Gui.WAS_CLICK_IN_TABLE_FOR_ANALYSIS.set(false);
-                if (isWord)
-                    Common.console("info: number of news items in the archive = " + databaseQueries2.archiveNewsCount());
-                log.info("number of news items in the archive = " + databaseQueries2.archiveNewsCount());
             } catch (Exception e) {
                 log.warn(e.getMessage());
                 try {

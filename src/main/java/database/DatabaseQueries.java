@@ -22,21 +22,6 @@ public class DatabaseQueries {
         }
     }
 
-    // сохранение всех заголовков TODO
-    public void insertAllTitles(String pTitle, String pDate, Connection connection) {
-        if (SQLite.isConnectionToSQLite) {
-            try {
-                String query = "INSERT INTO ALL_NEWS(TITLE, NEWS_DATE) VALUES (?, ?)";
-                PreparedStatement st = connection.prepareStatement(query);
-                st.setString(1, pTitle);
-                st.setString(2, pDate);
-                st.executeUpdate();
-                st.close();
-            } catch (SQLException ignored) {
-            }
-        }
-    }
-
     // отсеивание заголовков TODO
     public boolean isTitleExists(String pString256, Connection connection) {
         int isExists = 0;
