@@ -135,7 +135,7 @@ public class DatabaseQueries2 {
                 "FROM ALL_NEWS GROUP BY TITLE, NEWS_DATE)");
     }
 
-    // обновление статуса чекбокса is_active для ресурсов SELECT id, source, link FROM rss_list where is_active = 1  ORDER BY id
+    // обновление статуса чекбокса is_active для ресурсов
     public void updateIsActiveStatus(boolean pBoolean, String pSource) {
         jdbcTemplate.update("UPDATE RSS_LIST SET IS_ACTIVE = ? WHERE SOURCE = ?", pBoolean, pSource);
     }
@@ -146,6 +146,7 @@ public class DatabaseQueries2 {
         Common.console("status: word \"" + pWord + "\" excluded from analysis");
     }
 
+    // Заполнение таблицы анализа
     public void selectSqlite() {
         String query = "SELECT SUM, TITLE FROM V_NEWS_DUAL WHERE SUM > ? " +
                 "AND TITLE NOT IN (SELECT WORD FROM ALL_TITLES_TO_EXCLUDE) ORDER BY SUM DESC";

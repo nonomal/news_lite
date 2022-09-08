@@ -157,8 +157,7 @@ public class Search extends SearchUtils {
                                 }
                                 if (isStop.get()) return;
                             }
-                            if (!Gui.isOnlyLastNews && SQLite.isConnectionToSQLite)
-                                databaseQueries2.deleteFrom256();
+
                         } catch (Exception no_rss) {
                             String smi = Common.SMI_LINK.get(Common.SMI_ID)
                                     .replaceAll(("https://|http://|www."), "");
@@ -173,6 +172,10 @@ public class Search extends SearchUtils {
                     }
                 }
                 st.close();
+
+                // при убраной галке "только последние новости" очищается временная таблица
+                if (!Gui.isOnlyLastNews) databaseQueries2.deleteFrom256();
+
                 //Время поиска
                 timeEnd = LocalTime.now();
                 searchTime = Duration.between(timeStart, timeEnd);
