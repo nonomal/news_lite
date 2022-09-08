@@ -29,6 +29,12 @@ public class DatabaseQueries2 {
 //        jdbcTemplate.update("INSERT INTO titles256(title) VALUES (?)", pTitle);
 //    }
 
+    // сохранение всех заголовков  TODO
+//    public void insertAllTitles(String pTitle, String pDate) {
+//        String query = "INSERT INTO ALL_NEWS(TITLE, NEWS_DATE) VALUES (?, ?)";
+//        jdbcTemplate.update(query, pTitle, pDate);
+//    }
+
     // запись данных по актуальным источникам из базы в массивы для поиска
     public void selectSources(@NotNull String pDialog) {
         switch (pDialog) {
