@@ -130,7 +130,6 @@ public class ConsoleSearch extends SearchUtils {
                     EmailSender email = new EmailSender();
                     email.sendMessage();
                 }
-                databaseQueries2.deleteDuplicates();
                 Gui.WAS_CLICK_IN_TABLE_FOR_ANALYSIS.set(false);
             } catch (Exception e) {
                 e.printStackTrace();
