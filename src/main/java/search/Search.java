@@ -4,6 +4,7 @@ import com.sun.syndication.feed.synd.SyndContent;
 import com.sun.syndication.feed.synd.SyndEntry;
 import com.sun.syndication.feed.synd.SyndFeed;
 import database.DatabaseQueries;
+import database.DatabaseQueries2;
 import database.SQLite;
 import gui.Gui;
 import gui.buttons.Icons;
@@ -54,6 +55,7 @@ public class Search extends SearchUtils {
 
     public void mainSearch(String pSearchType) {
         DatabaseQueries databaseQueries = new DatabaseQueries();
+        DatabaseQueries2 databaseQueries2 = new DatabaseQueries2();
         boolean isWord = pSearchType.equals("word");
         boolean isWords = pSearchType.equals("words");
 
@@ -61,7 +63,7 @@ public class Search extends SearchUtils {
             int modelRowCount = Gui.model.getRowCount();
             dataForEmail.clear();
             //выборка актуальных источников перед поиском из БД
-            databaseQueries.selectSources("smi", SQLite.connection);
+            databaseQueries2.selectSources("smi");
             isSearchNow.set(true);
             timeStart = LocalTime.now();
             Search.j = 1;
@@ -156,7 +158,7 @@ public class Search extends SearchUtils {
                                 if (isStop.get()) return;
                             }
                             if (!Gui.isOnlyLastNews && SQLite.isConnectionToSQLite)
-                                databaseQueries.deleteFrom256(SQLite.connection);
+                                databaseQueries2.deleteFrom256();
                         } catch (Exception no_rss) {
                             String smi = Common.SMI_LINK.get(Common.SMI_ID)
                                     .replaceAll(("https://|http://|www."), "");
@@ -202,21 +204,21 @@ public class Search extends SearchUtils {
                 sqLite.transactionCommand("COMMIT");
 
                 // удаляем все пустые строки
-                databaseQueries.deleteEmptyRows(SQLite.connection);
+                databaseQueries2.deleteEmptyRows();
 
                 // Заполняем таблицу анализа
-                if (!Gui.WAS_CLICK_IN_TABLE_FOR_ANALYSIS.get()) databaseQueries.selectSqlite(SQLite.connection);
+                if (!Gui.WAS_CLICK_IN_TABLE_FOR_ANALYSIS.get()) databaseQueries2.selectSqlite();
 
                 // Автоматическая отправка результатов
                 if (Gui.autoSendMessage.getState() && (Gui.model.getRowCount() > 0)) {
                     Gui.sendEmailBtn.doClick();
                 }
 
-                databaseQueries.deleteDuplicates(SQLite.connection);
+                databaseQueries2.deleteDuplicates();
                 Gui.WAS_CLICK_IN_TABLE_FOR_ANALYSIS.set(false);
                 if (isWord)
-                    Common.console("info: number of news items in the archive = " + databaseQueries.archiveNewsCount(SQLite.connection));
-                log.info("number of news items in the archive = " + databaseQueries.archiveNewsCount(SQLite.connection));
+                    Common.console("info: number of news items in the archive = " + databaseQueries2.archiveNewsCount());
+                log.info("number of news items in the archive = " + databaseQueries2.archiveNewsCount());
             } catch (Exception e) {
                 log.warn(e.getMessage());
                 try {
@@ -238,7 +240,7 @@ public class Search extends SearchUtils {
             dataForEmail.add(newsCount + ") " + title + "\n" + link + "\n" + newsDescribe + "\n" +
                     smi_source + " - " + dateToEmail);
 
-            Gui.model.addRow(new Object[] {
+            Gui.model.addRow(new Object[]{
                     newsCount, smi_source, title, dateFormatHoursFirst.format(pubDate), link
             });
 

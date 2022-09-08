@@ -4,6 +4,7 @@ import com.sun.syndication.feed.synd.SyndContent;
 import com.sun.syndication.feed.synd.SyndEntry;
 import com.sun.syndication.feed.synd.SyndFeed;
 import database.DatabaseQueries;
+import database.DatabaseQueries2;
 import database.SQLite;
 import email.EmailSender;
 import gui.Gui;
@@ -21,7 +22,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 @Slf4j
 public class ConsoleSearch extends SearchUtils {
     SQLite sqLite = new SQLite();
-    DatabaseQueries databaseQueries = new DatabaseQueries();
+    DatabaseQueries2 databaseQueries2 = new DatabaseQueries2();
     public static List<String> excludeFromSearch;
     public static AtomicBoolean isStop;
     public static AtomicBoolean isSearchNow;
@@ -42,9 +43,10 @@ public class ConsoleSearch extends SearchUtils {
 
     public void searchByConsole() {
         DatabaseQueries sqlite = new DatabaseQueries();
+        DatabaseQueries2 databaseQueries2 = new DatabaseQueries2();
         if (!isSearchNow.get()) {
             dataForEmail.clear();
-            sqlite.selectSources("smi", SQLite.connection);
+            databaseQueries2.selectSources("smi");
             isSearchNow.set(true);
             ConsoleSearch.j = 1;
             newsCount = 0;
@@ -120,7 +122,7 @@ public class ConsoleSearch extends SearchUtils {
                 sqLite.transactionCommand("COMMIT");
 
                 // удаляем все пустые строки
-                databaseQueries.deleteEmptyRows(SQLite.connection);
+                databaseQueries2.deleteEmptyRows();
 
                 // Автоматическая отправка результатов
                 if (dataForEmail.size() > 0) {
@@ -128,7 +130,7 @@ public class ConsoleSearch extends SearchUtils {
                     EmailSender email = new EmailSender();
                     email.sendMessage();
                 }
-                sqlite.deleteDuplicates(SQLite.connection);
+                databaseQueries2.deleteDuplicates();
                 Gui.WAS_CLICK_IN_TABLE_FOR_ANALYSIS.set(false);
             } catch (Exception e) {
                 e.printStackTrace();

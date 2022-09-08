@@ -1,6 +1,6 @@
 package gui;
 
-import database.DatabaseQueries;
+import database.DatabaseQueries2;
 import database.SQLite;
 import email.EmailSender;
 import gui.buttons.Icons;
@@ -8,6 +8,7 @@ import gui.buttons.SetButton;
 import gui.checkboxes.SetCheckbox;
 import lombok.extern.slf4j.Slf4j;
 import main.Main;
+import org.jetbrains.annotations.NotNull;
 import search.Search;
 import utils.Common;
 import utils.ExportToExcel;
@@ -44,7 +45,7 @@ import static java.awt.GraphicsDevice.WindowTranslucency.TRANSLUCENT;
 @Slf4j
 public class Gui extends JFrame {
     final SQLite sqLite = new SQLite();
-    final DatabaseQueries databaseQueries = new DatabaseQueries();
+    final DatabaseQueries2 databaseQueries2 = new DatabaseQueries2();
     final Search search = new Search();
 
     private static final Object[] MAIN_TABLE_HEADERS = {"Num", "Source", "Title", "Date", "Link"};
@@ -126,7 +127,7 @@ public class Gui extends JFrame {
         };
         table = new JTable(model) {
             // tooltips
-            public String getToolTipText(MouseEvent e) {
+            public String getToolTipText(@NotNull MouseEvent e) {
                 String tip = null;
                 java.awt.Point p = e.getPoint();
                 int rowIndex = rowAtPoint(p);
@@ -309,7 +310,7 @@ public class Gui extends JFrame {
         onlyNewNews.addItemListener(e -> {
             isOnlyLastNews = onlyNewNews.getState();
             if (!isOnlyLastNews) {
-                databaseQueries.deleteFrom256(SQLite.connection);
+                databaseQueries2.deleteFrom256();
             }
         });
 
@@ -792,7 +793,7 @@ public class Gui extends JFrame {
         addNewSource.setBackground(new Color(243, 229, 255));
         addNewSource.setBounds(902, 479, 14, 14);
         getContentPane().add(addNewSource);
-        addNewSource.addActionListener(e -> databaseQueries.insertNewSource(SQLite.connection));
+        addNewSource.addActionListener(e -> databaseQueries2.insertNewSource());
         addNewSource.addMouseListener(new MouseAdapter() {
             // наведение мышки на кнопку
             @Override

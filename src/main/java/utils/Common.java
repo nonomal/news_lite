@@ -1,7 +1,6 @@
 package utils;
 
-import database.DatabaseQueries;
-import database.SQLite;
+import database.DatabaseQueries2;
 import email.EmailSender;
 import gui.Dialogs;
 import gui.Gui;
@@ -462,10 +461,10 @@ public class Common {
 
     // Заполнение диалоговых окон лога и СМИ
     public void showDialog(String p_file) {
-        DatabaseQueries sqlite = new DatabaseQueries();
+        DatabaseQueries2 databaseQueries2 = new DatabaseQueries2();
         switch (p_file) {
             case "smi": {
-                sqlite.selectSources("active_smi", SQLite.connection);
+                databaseQueries2.selectSources("active_smi");
                 int i = 1;
                 for (String s : Common.SMI_SOURCE) {
                     Object[] row = new Object[]{i, s, Common.SMI_IS_ACTIVE.get(i - 1)};
@@ -491,7 +490,7 @@ public class Common {
                 }
                 break;
             case "excl": {
-                sqlite.selectSources("excl", SQLite.connection);
+                databaseQueries2.selectSources("excl");
                 int i = 1;
                 for (String s : Common.EXCLUDED_WORDS) {
                     Object[] row = new Object[]{i, s};

@@ -1,7 +1,6 @@
 package gui;
 
-import database.DatabaseQueries;
-import database.SQLite;
+import database.DatabaseQueries2;
 
 import javax.swing.*;
 import java.awt.*;
@@ -26,10 +25,10 @@ public class CheckBoxEditor extends DefaultCellEditor implements ItemListener {
     }
 
     public void itemStateChanged(ItemEvent e) {
-        DatabaseQueries sqlite = new DatabaseQueries();
+        DatabaseQueries2 databaseQueries2 = new DatabaseQueries2();
         this.fireEditingStopped();
         String source = (String) Dialogs.model.getValueAt(row, 1);
-        sqlite.updateIsActiveStatus(checkBox.isSelected(), source, SQLite.connection);
+        databaseQueries2.updateIsActiveStatus(checkBox.isSelected(), source);
     }
 
 }

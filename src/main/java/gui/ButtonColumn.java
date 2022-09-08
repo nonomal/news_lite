@@ -1,9 +1,9 @@
 package gui;
 
-import database.DatabaseQueries;
-import database.SQLite;
+import database.DatabaseQueries2;
 import gui.buttons.Icons;
 
+import javax.swing.FocusManager;
 import javax.swing.*;
 import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableCellRenderer;
@@ -63,7 +63,7 @@ public class ButtonColumn extends AbstractCellEditor implements TableCellRendere
     }
 
     public void actionPerformed(ActionEvent e) {
-        DatabaseQueries sqlite = new DatabaseQueries();
+        DatabaseQueries2 databaseQueries2 = new DatabaseQueries2();
         fireEditingStopped();
         int rowWithSource = table.getSelectedRow();
         int rowWithExcludeWord = Gui.tableForAnalysis.getSelectedRow();
@@ -90,7 +90,7 @@ public class ButtonColumn extends AbstractCellEditor implements TableCellRendere
             // удаление из диалогового окна
             Gui.modelForAnalysis.removeRow(rowWithExcludeWord);
             // добавление в базу данных и файл excluded.txt
-            sqlite.insertNewExcludedWord(source, SQLite.connection);
+            databaseQueries2.insertNewExcludedWord(source);
         }
 
         // окно источников RSS
@@ -99,7 +99,7 @@ public class ButtonColumn extends AbstractCellEditor implements TableCellRendere
             String source = (String) Dialogs.model.getValueAt(rowWithSource, 1);
             // удаление из диалогового окна
             Dialogs.model.removeRow(rowWithSource);
-            sqlite.deleteSource(source, SQLite.connection);
+            databaseQueries2.deleteSource(source);
         }
 
         // окно с исключенными из анализа слов (удаляем из базы)
@@ -108,7 +108,7 @@ public class ButtonColumn extends AbstractCellEditor implements TableCellRendere
             String source = (String) Dialogs.model.getValueAt(delRowWithExcludeWord, 1);
             // удаление из диалогового окна
             Dialogs.model.removeRow(delRowWithExcludeWord);
-            sqlite.deleteExcluded(source, SQLite.connection);
+            databaseQueries2.deleteExcluded(source);
         }
 
     }
