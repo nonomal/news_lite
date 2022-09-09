@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.List;
 
 public class DatabaseQueries {
 
@@ -19,6 +20,25 @@ public class DatabaseQueries {
             } catch (SQLException t) {
                 t.printStackTrace();
             }
+        }
+    }
+
+    public void insertTitleIn256(List<String> titles, Connection connection) {
+        if (SQLite.isConnectionToSQLite) {
+            String query256 = "INSERT INTO titles256(title) VALUES (?)";
+            PreparedStatement st256;
+
+            for (String title : titles) {
+                try {
+                    st256 = connection.prepareStatement(query256);
+                    st256.setString(1, title);
+                    st256.executeUpdate();
+                } catch (SQLException t) {
+                    t.printStackTrace();
+                }
+            }
+
+
         }
     }
 

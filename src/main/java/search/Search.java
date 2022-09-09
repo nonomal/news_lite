@@ -3,6 +3,7 @@ package search;
 import com.sun.syndication.feed.synd.SyndContent;
 import com.sun.syndication.feed.synd.SyndEntry;
 import com.sun.syndication.feed.synd.SyndFeed;
+import database.DatabaseQueries;
 import database.DatabaseQueries2;
 import database.SQLite;
 import gui.Gui;
@@ -55,6 +56,7 @@ public class Search extends SearchUtils {
     }
 
     public void mainSearch(@NotNull String pSearchType) {
+        DatabaseQueries databaseQueries = new DatabaseQueries();
         DatabaseQueries2 databaseQueries2 = new DatabaseQueries2();
         boolean isWord = pSearchType.equals("word");
         boolean isWords = pSearchType.equals("words");
@@ -124,7 +126,10 @@ public class Search extends SearchUtils {
                                             && !title.toLowerCase().contains(excludeFromSearch.get(2))
                                     ) {
                                         //отсеиваем новости, которые уже были найдены ранее
-                                        if (titlesList.contains(title)) continue;
+                                        //if (titlesList.contains(title)) continue;
+                                        if (databaseQueries.isTitleExists(title, SQLite.connection)) {
+                                            continue;
+                                        }
 
                                         //Data for a table
                                         Date currentDate = new Date();
@@ -136,7 +141,10 @@ public class Search extends SearchUtils {
                                     for (String it : Common.getKeywordsFromFile()) {
                                         if (title.toLowerCase().contains(it.toLowerCase()) && title.length() > 15 && checkDate == 1) {
 
-                                            if (titlesList.contains(title)) continue;
+                                            //if (titlesList.contains(title)) continue;
+                                            if (databaseQueries.isTitleExists(title, SQLite.connection)) {
+                                                continue;
+                                            }
 
                                             //Data for a table
                                             Date currentDate = new Date();
@@ -162,6 +170,7 @@ public class Search extends SearchUtils {
                     }
                 }
                 st.close();
+                databaseQueries.insertTitleIn256(titlesList, SQLite.connection);
 
                 //Время поиска
                 timeEnd = LocalTime.now();
@@ -195,9 +204,12 @@ public class Search extends SearchUtils {
 
                 // удаляем все пустые строки
                 databaseQueries2.deleteEmptyRows();
-                // при убранной галке "только последние новости" очищается временная таблица
-                if (!Gui.isOnlyLastNews) titlesList.clear();
 
+                // при убранной галке "только последние новости" очищается временная таблица
+                if (!Gui.isOnlyLastNews) {
+                    titlesList.clear();
+                    databaseQueries2.deleteFrom256();
+                }
 
                 // Заполняем таблицу анализа
                 if (!Gui.WAS_CLICK_IN_TABLE_FOR_ANALYSIS.get()) databaseQueries2.selectSqlite();
@@ -242,6 +254,7 @@ public class Search extends SearchUtils {
                 }
             }
             titlesList.add(title);
+            //databaseQueries.insertTitleIn256(title, SQLite.connection);
         }
     }
 }

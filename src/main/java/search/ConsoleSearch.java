@@ -85,9 +85,9 @@ public class ConsoleSearch extends SearchUtils {
                                         continue;
 
                                     if (title.toLowerCase().contains(it.toLowerCase()) && title.length() > 15 && checkDate == 1) {
+
                                         // отсеиваем новости которые были обнаружены ранее
-                                        if (sqlite.isTitleExists(Common.sha256(title), SQLite.connection)
-                                                && SQLite.isConnectionToSQLite) {
+                                        if (sqlite.isTitleExists(title, SQLite.connection) && SQLite.isConnectionToSQLite) {
                                             continue;
                                         }
 
@@ -102,7 +102,7 @@ public class ConsoleSearch extends SearchUtils {
                                             /**/
                                             System.out.println(newsCount + ") " + title);
                                             /**/
-                                            sqlite.insertTitleIn256(Common.sha256(title), SQLite.connection);
+                                            sqlite.insertTitleIn256(title, SQLite.connection);
                                         }
                                     }
                                 }
