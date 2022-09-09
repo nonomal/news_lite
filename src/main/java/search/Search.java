@@ -170,7 +170,7 @@ public class Search extends SearchUtils {
                     }
                 }
                 st.close();
-                jdbcQueries.insertTitleIn256(titlesList, SQLite.connection);
+                jdbcQueries.insertTitles(titlesList, SQLite.connection);
 
                 //Время поиска
                 timeEnd = LocalTime.now();

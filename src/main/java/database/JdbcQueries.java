@@ -9,28 +9,14 @@ import java.util.List;
 public class JdbcQueries {
     public static final String NEWS_DUAL_QUERY = "INSERT INTO NEWS_DUAL(TITLE) VALUES (?)";
 
-    // вставка кода по заголовку для отсеивания ранее обнаруженных новостей TODO
-    public void insertTitleIn256(String pTitle, Connection connection) {
+    // вставка кода по заголовку для отсеивания ранее обнаруженных новостей
+    public void insertTitles(List<String> titles, Connection connection) {
         if (SQLite.isConnectionToSQLite) {
-            try {
-                String query256 = "INSERT INTO titles256(title) VALUES (?)";
-                PreparedStatement st256 = connection.prepareStatement(query256);
-                st256.setString(1, pTitle);
-                st256.executeUpdate();
-                st256.close();
-            } catch (SQLException t) {
-                t.printStackTrace();
-            }
-        }
-    }
-
-    public void insertTitleIn256(List<String> titles, Connection connection) {
-        if (SQLite.isConnectionToSQLite) {
-            String query256 = "INSERT INTO titles256(title) VALUES (?)";
+            String query = "INSERT INTO titles256(title) VALUES (?)";
 
             for (String title : titles) {
                 try {
-                    PreparedStatement ps = connection.prepareStatement(query256);
+                    PreparedStatement ps = connection.prepareStatement(query);
                     ps.setString(1, title);
                     ps.executeUpdate();
                 } catch (SQLException t) {
@@ -40,7 +26,7 @@ public class JdbcQueries {
         }
     }
 
-    // отсеивание заголовков TODO
+    // отсеивание заголовков
     public boolean isTitleExists(String pString256, Connection connection) {
         int isExists = 0;
         if (SQLite.isConnectionToSQLite) {

@@ -20,7 +20,10 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 @Slf4j
 public class ConsoleSearch extends SearchUtils {
-    SQLite sqLite = new SQLite();
+    private final SQLite sqLite = new SQLite();
+    private final JdbcQueries jdbcQueries = new JdbcQueries();
+    private final JdbcTemplateQueries jdbcTemplateQueries = new JdbcTemplateQueries();
+
     public static List<String> excludeFromSearch;
     public static AtomicBoolean isStop;
     public static AtomicBoolean isSearchNow;
@@ -31,6 +34,7 @@ public class ConsoleSearch extends SearchUtils {
     int newsCount = 0;
     final Date minDate = Main.MIN_PUB_DATE.getTime();
     int checkDate;
+    public static List<String> titlesList = new ArrayList<>();
 
     public ConsoleSearch() {
         excludeFromSearch = Common.getExcludeWordsFromFile();
@@ -40,8 +44,6 @@ public class ConsoleSearch extends SearchUtils {
     }
 
     public void searchByConsole() {
-        JdbcQueries sqlite = new JdbcQueries();
-        JdbcTemplateQueries jdbcTemplateQueries = new JdbcTemplateQueries();
         if (!isSearchNow.get()) {
             dataForEmail.clear();
             jdbcTemplateQueries.selectSources("smi");
@@ -87,7 +89,7 @@ public class ConsoleSearch extends SearchUtils {
                                     if (title.toLowerCase().contains(it.toLowerCase()) && title.length() > 15 && checkDate == 1) {
 
                                         // отсеиваем новости которые были обнаружены ранее
-                                        if (sqlite.isTitleExists(title, SQLite.connection) && SQLite.isConnectionToSQLite) {
+                                        if (jdbcQueries.isTitleExists(title, SQLite.connection) && SQLite.isConnectionToSQLite) {
                                             continue;
                                         }
 
@@ -102,7 +104,8 @@ public class ConsoleSearch extends SearchUtils {
                                             /**/
                                             System.out.println(newsCount + ") " + title);
                                             /**/
-                                            sqlite.insertTitleIn256(title, SQLite.connection);
+                                            //jdbcQueries.insertTitles(title, SQLite.connection);
+                                            titlesList.add(title);
                                         }
                                     }
                                 }
@@ -115,6 +118,7 @@ public class ConsoleSearch extends SearchUtils {
                     }
                 }
                 isSearchNow.set(false);
+                jdbcQueries.insertTitles(titlesList, SQLite.connection);
 
                 // коммит транзакции
                 sqLite.transactionCommand("COMMIT");
