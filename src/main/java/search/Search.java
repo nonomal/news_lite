@@ -3,8 +3,8 @@ package search;
 import com.sun.syndication.feed.synd.SyndContent;
 import com.sun.syndication.feed.synd.SyndEntry;
 import com.sun.syndication.feed.synd.SyndFeed;
-import database.DatabaseQueries;
-import database.DatabaseQueries2;
+import database.JdbcQueries;
+import database.JdbcTemplateQueries;
 import database.SQLite;
 import gui.Gui;
 import gui.buttons.Icons;
@@ -56,8 +56,8 @@ public class Search extends SearchUtils {
     }
 
     public void mainSearch(@NotNull String pSearchType) {
-        DatabaseQueries databaseQueries = new DatabaseQueries();
-        DatabaseQueries2 databaseQueries2 = new DatabaseQueries2();
+        JdbcQueries jdbcQueries = new JdbcQueries();
+        JdbcTemplateQueries jdbcTemplateQueries = new JdbcTemplateQueries();
         boolean isWord = pSearchType.equals("word");
         boolean isWords = pSearchType.equals("words");
 
@@ -65,7 +65,7 @@ public class Search extends SearchUtils {
             int modelRowCount = Gui.model.getRowCount();
             dataForEmail.clear();
             //выборка актуальных источников перед поиском из БД
-            databaseQueries2.selectSources("smi");
+            jdbcTemplateQueries.selectSources("smi");
             isSearchNow.set(true);
             timeStart = LocalTime.now();
             Search.j = 1;
@@ -88,8 +88,8 @@ public class Search extends SearchUtils {
             Gui.sendEmailBtn.setIcon(Icons.SEND_EMAIL_ICON);
             new Thread(Common::fill).start();
             try {
+                PreparedStatement st = SQLite.connection.prepareStatement(JdbcQueries.NEWS_DUAL_QUERY);
                 sqLite.transactionCommand("BEGIN TRANSACTION");
-                PreparedStatement st = SQLite.connection.prepareStatement("INSERT INTO NEWS_DUAL(TITLE) VALUES (?)");
 
                 Parser parser = new Parser();
                 for (Common.SMI_ID = 0; Common.SMI_ID < Common.SMI_LINK.size(); Common.SMI_ID++) {
@@ -127,7 +127,7 @@ public class Search extends SearchUtils {
                                     ) {
                                         //отсеиваем новости, которые уже были найдены ранее
                                         //if (titlesList.contains(title)) continue;
-                                        if (databaseQueries.isTitleExists(title, SQLite.connection)) {
+                                        if (jdbcQueries.isTitleExists(title, SQLite.connection)) {
                                             continue;
                                         }
 
@@ -142,7 +142,7 @@ public class Search extends SearchUtils {
                                         if (title.toLowerCase().contains(it.toLowerCase()) && title.length() > 15 && checkDate == 1) {
 
                                             //if (titlesList.contains(title)) continue;
-                                            if (databaseQueries.isTitleExists(title, SQLite.connection)) {
+                                            if (jdbcQueries.isTitleExists(title, SQLite.connection)) {
                                                 continue;
                                             }
 
@@ -170,7 +170,7 @@ public class Search extends SearchUtils {
                     }
                 }
                 st.close();
-                databaseQueries.insertTitleIn256(titlesList, SQLite.connection);
+                jdbcQueries.insertTitleIn256(titlesList, SQLite.connection);
 
                 //Время поиска
                 timeEnd = LocalTime.now();
@@ -203,16 +203,16 @@ public class Search extends SearchUtils {
                 sqLite.transactionCommand("COMMIT");
 
                 // удаляем все пустые строки
-                databaseQueries2.deleteEmptyRows();
+                jdbcTemplateQueries.deleteEmptyRows();
 
                 // при убранной галке "только последние новости" очищается временная таблица
                 if (!Gui.isOnlyLastNews) {
                     titlesList.clear();
-                    databaseQueries2.deleteFrom256();
+                    jdbcTemplateQueries.deleteFrom256();
                 }
 
                 // Заполняем таблицу анализа
-                if (!Gui.WAS_CLICK_IN_TABLE_FOR_ANALYSIS.get()) databaseQueries2.selectSqlite();
+                if (!Gui.WAS_CLICK_IN_TABLE_FOR_ANALYSIS.get()) jdbcTemplateQueries.selectSqlite();
 
                 // Автоматическая отправка результатов
                 if (Gui.autoSendMessage.getState() && (Gui.model.getRowCount() > 0)) {
@@ -232,17 +232,17 @@ public class Search extends SearchUtils {
         }
     }
 
-    private void mainSearchProcess(PreparedStatement st, String smi_source, String title,
-                                   String newsDescribe, Date pubDate, String dateToEmail, String link,
-                                   int date_diff) throws SQLException {
-        if (date_diff != 0) {
+    private void mainSearchProcess(PreparedStatement st, String source, String title,
+                                   String describe, Date pubDate, String dateToEmail, String link,
+                                   int dateDiff) throws SQLException {
+        if (dateDiff != 0) {
             newsCount++;
             Gui.labelSum.setText(String.valueOf(newsCount));
-            dataForEmail.add(newsCount + ") " + title + "\n" + link + "\n" + newsDescribe + "\n" +
-                    smi_source + " - " + dateToEmail);
+            dataForEmail.add(newsCount + ") " + title + "\n" + link + "\n" + describe + "\n" +
+                    source + " - " + dateToEmail);
 
             Gui.model.addRow(new Object[]{
-                    newsCount, smi_source, title, dateFormatHoursFirst.format(pubDate), link
+                    newsCount, source, title, dateFormatHoursFirst.format(pubDate), link
             });
 
             String[] subStr = title.split(" ");

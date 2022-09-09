@@ -1,6 +1,6 @@
 package utils;
 
-import database.DatabaseQueries2;
+import database.JdbcTemplateQueries;
 import email.EmailSender;
 import gui.Dialogs;
 import gui.Gui;
@@ -18,7 +18,6 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
-import java.security.MessageDigest;
 import java.util.List;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -461,10 +460,10 @@ public class Common {
 
     // Заполнение диалоговых окон лога и СМИ
     public void showDialog(String p_file) {
-        DatabaseQueries2 databaseQueries2 = new DatabaseQueries2();
+        JdbcTemplateQueries jdbcTemplateQueries = new JdbcTemplateQueries();
         switch (p_file) {
             case "smi": {
-                databaseQueries2.selectSources("active_smi");
+                jdbcTemplateQueries.selectSources("active_smi");
                 int i = 1;
                 for (String s : Common.SMI_SOURCE) {
                     Object[] row = new Object[]{i, s, Common.SMI_IS_ACTIVE.get(i - 1)};
@@ -490,7 +489,7 @@ public class Common {
                 }
                 break;
             case "excl": {
-                databaseQueries2.selectSources("excl");
+                jdbcTemplateQueries.selectSources("excl");
                 int i = 1;
                 for (String s : Common.EXCLUDED_WORDS) {
                     Object[] row = new Object[]{i, s};
@@ -526,23 +525,6 @@ public class Common {
                 sb.append(s.charAt(i));
         }
         return sb.toString();
-    }
-
-    // преобразование строки в строку с хэш кодом
-    public String sha256(String base) {
-        try {
-            MessageDigest digest = MessageDigest.getInstance("MD5");
-            byte[] hash = digest.digest(base.getBytes(StandardCharsets.UTF_8));
-            StringBuilder hexString = new StringBuilder();
-            for (byte b : hash) {
-                String hex = Integer.toHexString(0xff & b);
-                if (hex.length() == 1) hexString.append('0');
-                hexString.append(hex);
-            }
-            return hexString.toString();
-        } catch (Exception ex) {
-            throw new RuntimeException(ex);
-        }
     }
 
     // Уведомление в трее

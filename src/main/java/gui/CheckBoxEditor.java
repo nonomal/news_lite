@@ -1,6 +1,6 @@
 package gui;
 
-import database.DatabaseQueries2;
+import database.JdbcTemplateQueries;
 
 import javax.swing.*;
 import java.awt.*;
@@ -25,10 +25,10 @@ public class CheckBoxEditor extends DefaultCellEditor implements ItemListener {
     }
 
     public void itemStateChanged(ItemEvent e) {
-        DatabaseQueries2 databaseQueries2 = new DatabaseQueries2();
+        JdbcTemplateQueries jdbcTemplateQueries = new JdbcTemplateQueries();
         this.fireEditingStopped();
         String source = (String) Dialogs.model.getValueAt(row, 1);
-        databaseQueries2.updateIsActiveStatus(checkBox.isSelected(), source);
+        jdbcTemplateQueries.updateIsActiveStatus(checkBox.isSelected(), source);
     }
 
 }

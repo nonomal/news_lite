@@ -14,28 +14,28 @@ import utils.Common;
 import javax.swing.*;
 import java.util.List;
 
-public class DatabaseQueries2 {
+public class JdbcTemplateQueries {
     private static final int WORD_FREQ_MATCHES = 2;
     ApplicationContext context = new ClassPathXmlApplicationContext("context.xml");
     private final JdbcTemplate jdbcTemplate = context.getBean(JdbcTemplate.class);
 
     // вставка кода по заголовку для отсеивания ранее обнаруженных новостей TODO
-    public void insertTitleIn256(String pTitle) {
-        jdbcTemplate.update("INSERT INTO titles256(title) VALUES (?)", pTitle);
-    }
+//    public void insertTitleIn256(String pTitle) {
+//        jdbcTemplate.update("INSERT INTO titles256(title) VALUES (?)", pTitle);
+//    }
 
     // отсеивание заголовков  TODO
-    public boolean isTitleExists(String pString256) {
-        int isExists = 0;
-
-        String query = "SELECT MAX(1) FROM TITLES256 WHERE EXISTS (SELECT TITLE FROM TITLES256 T WHERE T.TITLE = ?)";
-        Integer exists = jdbcTemplate.queryForObject(query, Integer.class, pString256);
-
-        if (exists != null) {
-            isExists = 1;
-        }
-        return isExists == 1;
-    }
+//    public boolean isTitleExists(String pString256) {
+//        int isExists = 0;
+//
+//        String query = "SELECT MAX(1) FROM TITLES256 WHERE EXISTS (SELECT TITLE FROM TITLES256 T WHERE T.TITLE = ?)";
+//        Integer exists = jdbcTemplate.queryForObject(query, Integer.class, pString256);
+//
+//        if (exists != null) {
+//            isExists = 1;
+//        }
+//        return isExists == 1;
+//    }
 
     // запись данных по актуальным источникам из базы в массивы для поиска
     public void selectSources(@NotNull String pDialog) {

@@ -1,6 +1,6 @@
 package gui;
 
-import database.DatabaseQueries2;
+import database.JdbcTemplateQueries;
 import database.SQLite;
 import email.EmailSender;
 import gui.buttons.Icons;
@@ -45,7 +45,7 @@ import static java.awt.GraphicsDevice.WindowTranslucency.TRANSLUCENT;
 @Slf4j
 public class Gui extends JFrame {
     final SQLite sqLite = new SQLite();
-    final DatabaseQueries2 databaseQueries2 = new DatabaseQueries2();
+    final JdbcTemplateQueries jdbcTemplateQueries = new JdbcTemplateQueries();
     final Search search = new Search();
 
     private static final Object[] MAIN_TABLE_HEADERS = {"Num", "Source", "Title", "Date", "Link"};
@@ -310,7 +310,7 @@ public class Gui extends JFrame {
         onlyNewNews.addItemListener(e -> {
             isOnlyLastNews = onlyNewNews.getState();
             if (!isOnlyLastNews) {
-                databaseQueries2.deleteFrom256();
+                jdbcTemplateQueries.deleteFrom256();
                 Search.titlesList.clear();
             }
         });
@@ -794,7 +794,7 @@ public class Gui extends JFrame {
         addNewSource.setBackground(new Color(243, 229, 255));
         addNewSource.setBounds(902, 479, 14, 14);
         getContentPane().add(addNewSource);
-        addNewSource.addActionListener(e -> databaseQueries2.insertNewSource());
+        addNewSource.addActionListener(e -> jdbcTemplateQueries.insertNewSource());
         addNewSource.addMouseListener(new MouseAdapter() {
             // наведение мышки на кнопку
             @Override
@@ -846,7 +846,7 @@ public class Gui extends JFrame {
         sqliteBtn.setBounds(940, 479, 14, 14);
         getContentPane().add(sqliteBtn);
         sqliteBtn.addActionListener(e -> {
-            // запуск DatabaseQueries
+            // запуск JdbcQueries
             if (Desktop.isDesktopSupported() && Desktop.getDesktop().isSupported(Desktop.Action.OPEN)) {
                 try {
                     Desktop.getDesktop().open(new File(Main.DIRECTORY_PATH + "sqlite3.exe"));
@@ -855,7 +855,7 @@ public class Gui extends JFrame {
                 }
             }
 
-            // копируем адрес базы в DatabaseQueries в системный буфер для быстрого доступа
+            // копируем адрес базы в JdbcQueries в системный буфер для быстрого доступа
             String pathToBase = (".open " + Main.DIRECTORY_PATH + "news.db").replace("\\", "/");
             Toolkit.getDefaultToolkit().getSystemClipboard().setContents(new StringSelection(pathToBase), null);
         });

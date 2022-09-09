@@ -3,8 +3,8 @@ package search;
 import com.sun.syndication.feed.synd.SyndContent;
 import com.sun.syndication.feed.synd.SyndEntry;
 import com.sun.syndication.feed.synd.SyndFeed;
-import database.DatabaseQueries;
-import database.DatabaseQueries2;
+import database.JdbcQueries;
+import database.JdbcTemplateQueries;
 import database.SQLite;
 import email.EmailSender;
 import gui.Gui;
@@ -40,11 +40,11 @@ public class ConsoleSearch extends SearchUtils {
     }
 
     public void searchByConsole() {
-        DatabaseQueries sqlite = new DatabaseQueries();
-        DatabaseQueries2 databaseQueries2 = new DatabaseQueries2();
+        JdbcQueries sqlite = new JdbcQueries();
+        JdbcTemplateQueries jdbcTemplateQueries = new JdbcTemplateQueries();
         if (!isSearchNow.get()) {
             dataForEmail.clear();
-            databaseQueries2.selectSources("smi");
+            jdbcTemplateQueries.selectSources("smi");
             isSearchNow.set(true);
             ConsoleSearch.j = 1;
             newsCount = 0;
@@ -120,7 +120,7 @@ public class ConsoleSearch extends SearchUtils {
                 sqLite.transactionCommand("COMMIT");
 
                 // удаляем все пустые строки
-                databaseQueries2.deleteEmptyRows();
+                jdbcTemplateQueries.deleteEmptyRows();
 
                 // Автоматическая отправка результатов
                 if (dataForEmail.size() > 0) {

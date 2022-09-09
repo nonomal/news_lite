@@ -1,6 +1,6 @@
 package gui;
 
-import database.DatabaseQueries2;
+import database.JdbcTemplateQueries;
 import gui.buttons.Icons;
 
 import javax.swing.FocusManager;
@@ -63,7 +63,7 @@ public class ButtonColumn extends AbstractCellEditor implements TableCellRendere
     }
 
     public void actionPerformed(ActionEvent e) {
-        DatabaseQueries2 databaseQueries2 = new DatabaseQueries2();
+        JdbcTemplateQueries jdbcTemplateQueries = new JdbcTemplateQueries();
         fireEditingStopped();
         int rowWithSource = table.getSelectedRow();
         int rowWithExcludeWord = Gui.tableForAnalysis.getSelectedRow();
@@ -90,7 +90,7 @@ public class ButtonColumn extends AbstractCellEditor implements TableCellRendere
             // удаление из диалогового окна
             Gui.modelForAnalysis.removeRow(rowWithExcludeWord);
             // добавление в базу данных и файл excluded.txt
-            databaseQueries2.insertNewExcludedWord(source);
+            jdbcTemplateQueries.insertNewExcludedWord(source);
         }
 
         // окно источников RSS
@@ -99,7 +99,7 @@ public class ButtonColumn extends AbstractCellEditor implements TableCellRendere
             String source = (String) Dialogs.model.getValueAt(rowWithSource, 1);
             // удаление из диалогового окна
             Dialogs.model.removeRow(rowWithSource);
-            databaseQueries2.deleteSource(source);
+            jdbcTemplateQueries.deleteSource(source);
         }
 
         // окно с исключенными из анализа слов (удаляем из базы)
@@ -108,7 +108,7 @@ public class ButtonColumn extends AbstractCellEditor implements TableCellRendere
             String source = (String) Dialogs.model.getValueAt(delRowWithExcludeWord, 1);
             // удаление из диалогового окна
             Dialogs.model.removeRow(delRowWithExcludeWord);
-            databaseQueries2.deleteExcluded(source);
+            jdbcTemplateQueries.deleteExcluded(source);
         }
 
     }

@@ -6,7 +6,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
-public class DatabaseQueries {
+public class JdbcQueries {
+    public static final String NEWS_DUAL_QUERY = "INSERT INTO NEWS_DUAL(TITLE) VALUES (?)";
 
     // вставка кода по заголовку для отсеивания ранее обнаруженных новостей TODO
     public void insertTitleIn256(String pTitle, Connection connection) {
@@ -26,19 +27,16 @@ public class DatabaseQueries {
     public void insertTitleIn256(List<String> titles, Connection connection) {
         if (SQLite.isConnectionToSQLite) {
             String query256 = "INSERT INTO titles256(title) VALUES (?)";
-            PreparedStatement st256;
 
             for (String title : titles) {
                 try {
-                    st256 = connection.prepareStatement(query256);
-                    st256.setString(1, title);
-                    st256.executeUpdate();
+                    PreparedStatement ps = connection.prepareStatement(query256);
+                    ps.setString(1, title);
+                    ps.executeUpdate();
                 } catch (SQLException t) {
                     t.printStackTrace();
                 }
             }
-
-
         }
     }
 
