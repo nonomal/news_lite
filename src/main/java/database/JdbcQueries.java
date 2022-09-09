@@ -27,13 +27,13 @@ public class JdbcQueries {
     }
 
     // отсеивание заголовков
-    public boolean isTitleExists(String pString256, Connection connection) {
+    public boolean isTitleExists(String title, Connection connection) {
         int isExists = 0;
         if (SQLite.isConnectionToSQLite) {
             try {
                 String query = "SELECT MAX(1) FROM TITLES256 WHERE EXISTS (SELECT TITLE FROM TITLES256 T WHERE T.TITLE = ?)";
                 PreparedStatement st = connection.prepareStatement(query);
-                st.setString(1, pString256);
+                st.setString(1, title);
 
                 ResultSet rs = st.executeQuery();
                 while (rs.next()) {
