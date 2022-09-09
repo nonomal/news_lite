@@ -3,7 +3,6 @@ package search;
 import com.sun.syndication.feed.synd.SyndContent;
 import com.sun.syndication.feed.synd.SyndEntry;
 import com.sun.syndication.feed.synd.SyndFeed;
-import database.DatabaseQueries;
 import database.DatabaseQueries2;
 import database.SQLite;
 import gui.Gui;
@@ -46,6 +45,7 @@ public class Search extends SearchUtils {
     LocalTime timeStart;
     LocalTime timeEnd;
     Duration searchTime;
+    public static List<String> titlesList = new ArrayList<>();
 
     public Search() {
         excludeFromSearch = Common.getExcludeWordsFromFile();
@@ -55,7 +55,6 @@ public class Search extends SearchUtils {
     }
 
     public void mainSearch(@NotNull String pSearchType) {
-        DatabaseQueries databaseQueries = new DatabaseQueries();
         DatabaseQueries2 databaseQueries2 = new DatabaseQueries2();
         boolean isWord = pSearchType.equals("word");
         boolean isWords = pSearchType.equals("words");
@@ -125,31 +124,25 @@ public class Search extends SearchUtils {
                                             && !title.toLowerCase().contains(excludeFromSearch.get(2))
                                     ) {
                                         //отсеиваем новости, которые уже были найдены ранее
-                                        if (databaseQueries.isTitleExists(Common.sha256(title + pubDate),
-                                                SQLite.connection)) {
-                                            continue;
-                                        }
+                                        if (titlesList.contains(title)) continue;
 
                                         //Data for a table
                                         Date currentDate = new Date();
                                         int date_diff = Common.compareDatesOnly(currentDate, pubDate);
 
-                                        mainSearchProcess(databaseQueries, st, smi_source, title, newsDescribe, pubDate, dateToEmail, link, date_diff);
+                                        mainSearchProcess(st, smi_source, title, newsDescribe, pubDate, dateToEmail, link, date_diff);
                                     }
                                 } else if (isWords) {
                                     for (String it : Common.getKeywordsFromFile()) {
                                         if (title.toLowerCase().contains(it.toLowerCase()) && title.length() > 15 && checkDate == 1) {
 
-                                            // отсеиваем новости которые были обнаружены ранее
-                                            if (databaseQueries.isTitleExists(Common.sha256(title + pubDate), SQLite.connection)) {
-                                                continue;
-                                            }
+                                            if (titlesList.contains(title)) continue;
 
                                             //Data for a table
                                             Date currentDate = new Date();
                                             int date_diff = Common.compareDatesOnly(currentDate, pubDate);
 
-                                            mainSearchProcess(databaseQueries, st, smi_source, title, newsDescribe, pubDate, dateToEmail, link, date_diff);
+                                            mainSearchProcess(st, smi_source, title, newsDescribe, pubDate, dateToEmail, link, date_diff);
                                         }
                                     }
                                 }
@@ -169,9 +162,6 @@ public class Search extends SearchUtils {
                     }
                 }
                 st.close();
-
-                // при убранной галке "только последние новости" очищается временная таблица
-                //if (!Gui.isOnlyLastNews) databaseQueries2.deleteFrom256();
 
                 //Время поиска
                 timeEnd = LocalTime.now();
@@ -206,7 +196,8 @@ public class Search extends SearchUtils {
                 // удаляем все пустые строки
                 databaseQueries2.deleteEmptyRows();
                 // при убранной галке "только последние новости" очищается временная таблица
-                if (!Gui.isOnlyLastNews) databaseQueries2.deleteFrom256();
+                if (!Gui.isOnlyLastNews) titlesList.clear();
+
 
                 // Заполняем таблицу анализа
                 if (!Gui.WAS_CLICK_IN_TABLE_FOR_ANALYSIS.get()) databaseQueries2.selectSqlite();
@@ -229,7 +220,7 @@ public class Search extends SearchUtils {
         }
     }
 
-    private void mainSearchProcess(DatabaseQueries databaseQueries, PreparedStatement st, String smi_source, String title,
+    private void mainSearchProcess(PreparedStatement st, String smi_source, String title,
                                    String newsDescribe, Date pubDate, String dateToEmail, String link,
                                    int date_diff) throws SQLException {
         if (date_diff != 0) {
@@ -250,7 +241,7 @@ public class Search extends SearchUtils {
                     st.executeUpdate();
                 }
             }
-            databaseQueries.insertTitleIn256(Common.sha256(title + pubDate), SQLite.connection);
+            titlesList.add(title);
         }
     }
 }

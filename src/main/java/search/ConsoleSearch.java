@@ -12,7 +12,6 @@ import lombok.extern.slf4j.Slf4j;
 import main.Main;
 import utils.Common;
 
-import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -66,7 +65,7 @@ public class ConsoleSearch extends SearchUtils {
                                 SyndContent content = entry.getDescription();
                                 String smi_source = Common.SMI_SOURCE.get(Common.SMI_ID);
                                 String title = entry.getTitle();
-                                assert content != null;
+
                                 String newsDescribe = content.getValue()
                                         .trim()
                                         .replace("<p>", "")
@@ -87,7 +86,7 @@ public class ConsoleSearch extends SearchUtils {
 
                                     if (title.toLowerCase().contains(it.toLowerCase()) && title.length() > 15 && checkDate == 1) {
                                         // отсеиваем новости которые были обнаружены ранее
-                                        if (sqlite.isTitleExists(Common.sha256(title + pubDate), SQLite.connection)
+                                        if (sqlite.isTitleExists(Common.sha256(title), SQLite.connection)
                                                 && SQLite.isConnectionToSQLite) {
                                             continue;
                                         }
@@ -103,7 +102,7 @@ public class ConsoleSearch extends SearchUtils {
                                             /**/
                                             System.out.println(newsCount + ") " + title);
                                             /**/
-                                            sqlite.insertTitleIn256(Common.sha256(title + pubDate), SQLite.connection);
+                                            sqlite.insertTitleIn256(Common.sha256(title), SQLite.connection);
                                         }
                                     }
                                 }
@@ -132,11 +131,11 @@ public class ConsoleSearch extends SearchUtils {
                 Gui.WAS_CLICK_IN_TABLE_FOR_ANALYSIS.set(false);
             } catch (Exception e) {
                 e.printStackTrace();
-                try {
-                    sqLite.transactionCommand("ROLLBACK");
-                } catch (SQLException sql) {
-                    sql.printStackTrace();
-                }
+//                try {
+//                    sqLite.transactionCommand("ROLLBACK");
+//                } catch (SQLException sql) {
+//                    sql.printStackTrace();
+//                }
             }
         }
     }

@@ -310,7 +310,8 @@ public class Gui extends JFrame {
         onlyNewNews.addItemListener(e -> {
             isOnlyLastNews = onlyNewNews.getState();
             if (!isOnlyLastNews) {
-                databaseQueries2.deleteFrom256();
+                //databaseQueries2.deleteFrom256();
+                Search.titlesList.clear();
             }
         });
 
