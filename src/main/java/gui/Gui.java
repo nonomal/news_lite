@@ -81,7 +81,7 @@ public class Gui extends JFrame {
         this.setIconImage(Icons.LOGO_ICON.getImage());
         this.setFont(GUI_FONT);
         //this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.setBounds(360, 180, 1181, 592);
+        this.setBounds(360, 160, 1181, 592);
         this.getContentPane().setLayout(null);
 
         // Прозрачность и оформление окна
