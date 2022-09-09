@@ -39,7 +39,7 @@ public class Dialogs extends JDialog implements KeyListener {
                 Object[] columns = {"Pos", "Source", "", " "};
                 model = new DefaultTableModel(new Object[][]{
                 }, columns) {
-                    final boolean[] columnEditable = new boolean[]{true, false, true, true};
+                    final boolean[] columnEditable = new boolean[]{false, false, true, true};
                     public boolean isCellEditable(int row, int column) {
                         return columnEditable[column];
                     }
