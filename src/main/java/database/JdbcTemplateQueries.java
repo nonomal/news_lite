@@ -86,10 +86,10 @@ public class JdbcTemplateQueries {
 //    }
 
     // Получить id для нового источника
-    public Integer getNewRssId() {
-        String query = "SELECT MAX(ID) + 1 AS ID FROM RSS_LIST";
-        return jdbcTemplate.queryForObject(query, Integer.class);
-    }
+//    public Integer getNewRssId() {
+//        String query = "SELECT MAX(ID) + 1 AS ID FROM RSS_LIST";
+//        return jdbcTemplate.queryForObject(query, Integer.class);
+//    }
 
     // вставка нового источника
     public void insertNewSource() {
@@ -102,8 +102,8 @@ public class JdbcTemplateQueries {
 
         // вставка нового источника
         if (result == JOptionPane.YES_OPTION) {
-            String query = "INSERT INTO rss_list(id, source, link, is_active) VALUES (?, ?, ?, ?)";
-            jdbcTemplate.update(query, getNewRssId(), rss.getText(), link.getText(), 1);
+            String query = "INSERT INTO rss_list(source, link, is_active) VALUES (?, ?, ?)";
+            jdbcTemplate.update(query, rss.getText(), link.getText(), 1);
 
             Common.console("status: source added: " + rss.getText());
         } else {
