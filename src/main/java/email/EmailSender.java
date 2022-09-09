@@ -19,7 +19,7 @@ public class EmailSender {
     private final StringBuilder text = new StringBuilder();
 
     // Отправка письма
-    public void sendMessage(){
+    public void sendMessage() {
         Common.getEmailSettingsFromFile();
 
         if (!Main.IS_CONSOLE_SEARCH.get()) {
@@ -61,11 +61,11 @@ public class EmailSender {
             }
             try {
                 new Sender().send(subject, text.toString(), from, from_pwd, Main.emailToFromConsole);
+                log.info("Email has been sent");
             } catch (MessagingException e) {
                 e.printStackTrace();
                 log.warn("E-mail wasn't send");
             }
-            log.info("Email has been sent");
         }
     }
 }
