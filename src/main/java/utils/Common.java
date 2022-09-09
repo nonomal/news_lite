@@ -33,6 +33,7 @@ public class Common {
     public final ArrayList<String> SMI_LINK = new ArrayList<>();
     public final ArrayList<String> SMI_SOURCE = new ArrayList<>();
     public final ArrayList<Boolean> SMI_IS_ACTIVE = new ArrayList<>();
+    public final ArrayList<Integer> POSITION = new ArrayList<>();
     public final ArrayList<String> EXCLUDED_WORDS = new ArrayList<>();
     public String SCRIPT_URL = null;
     public float OPACITY;
@@ -466,7 +467,7 @@ public class Common {
                 jdbcTemplateQueries.selectSources("active_smi");
                 int i = 1;
                 for (String s : Common.SMI_SOURCE) {
-                    Object[] row = new Object[]{i, s, Common.SMI_IS_ACTIVE.get(i - 1)};
+                    Object[] row = new Object[]{Common.POSITION.get(i - 1), s, Common.SMI_IS_ACTIVE.get(i - 1)};
                     Dialogs.model.addRow(row);
                     i++;
                 }

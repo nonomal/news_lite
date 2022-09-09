@@ -8,4 +8,5 @@ public class RssSource {
     private String source;
     private String link;
     private Boolean isActive;
+    private Integer position;
 }

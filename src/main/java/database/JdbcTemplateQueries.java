@@ -44,13 +44,16 @@ public class JdbcTemplateQueries {
                 //sources
                 Common.SMI_SOURCE.clear();
                 Common.SMI_LINK.clear();
+                Common.POSITION.clear();
 
-                String query = "SELECT ID, SOURCE, LINK, IS_ACTIVE FROM RSS_LIST WHERE IS_ACTIVE = 1  ORDER BY ID";
+                String query = "SELECT ID, SOURCE, LINK, IS_ACTIVE, POSITION FROM RSS_LIST " +
+                        "WHERE IS_ACTIVE = 1 ORDER BY POSITION";
                 List<RssSource> rssItems = jdbcTemplate.query(query, new BeanPropertyRowMapper<>(RssSource.class));
 
                 for (RssSource rss : rssItems) {
                     Common.SMI_SOURCE.add(rss.getSource());
                     Common.SMI_LINK.add(rss.getLink());
+                    Common.POSITION.add(rss.getPosition());
                 }
                 break;
             case "excl":
@@ -67,14 +70,16 @@ public class JdbcTemplateQueries {
                 Common.SMI_SOURCE.clear();
                 Common.SMI_LINK.clear();
                 Common.SMI_IS_ACTIVE.clear();
+                Common.POSITION.clear();
 
-                String queryRss = "SELECT ID, SOURCE, LINK, IS_ACTIVE FROM RSS_LIST ORDER BY ID";
+                String queryRss = "SELECT ID, SOURCE, LINK, IS_ACTIVE, POSITION FROM RSS_LIST ORDER BY POSITION";
                 List<RssSource> rssListItems = jdbcTemplate.query(queryRss, new BeanPropertyRowMapper<>(RssSource.class));
 
                 for (RssSource rss : rssListItems) {
                     Common.SMI_SOURCE.add(rss.getSource());
                     Common.SMI_LINK.add(rss.getLink());
                     Common.SMI_IS_ACTIVE.add(rss.getIsActive());
+                    Common.POSITION.add(rss.getPosition());
                 }
                 break;
         }
