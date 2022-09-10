@@ -243,6 +243,7 @@ public class Gui extends JFrame {
                     int col = tableForAnalysis.columnAtPoint(new Point(e.getX(), e.getY()));
                     if (col == 0) {
                         Gui.topKeyword.setText((String) tableForAnalysis.getModel().getValueAt(row, 0));
+                        jdbcTemplateQueries.deleteFrom256();
                         searchBtnTop.doClick();
                         WAS_CLICK_IN_TABLE_FOR_ANALYSIS.set(true);
                     }
