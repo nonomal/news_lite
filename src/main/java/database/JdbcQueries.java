@@ -30,32 +30,8 @@ public class JdbcQueries {
                 Object[] row2 = new Object[]{word, sum};
                 Gui.modelForAnalysis.addRow(row2);
             }
-            deleteTitles(connection);
+            deleteFromTable("NEWS_DUAL", connection);
             rs.close();
-            st.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    // Delete from news_dual
-    public void deleteTitles(Connection connection) {
-        try {
-            String query = "DELETE FROM NEWS_DUAL";
-            PreparedStatement st = connection.prepareStatement(query);
-            st.executeUpdate();
-            st.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    // Delete from titles256
-    public void deleteFrom256(Connection connection) {
-        try {
-            String query = "DELETE FROM TITLES256";
-            PreparedStatement st = connection.prepareStatement(query);
-            st.executeUpdate();
             st.close();
         } catch (Exception e) {
             e.printStackTrace();
@@ -281,6 +257,7 @@ public class JdbcQueries {
                 String query = "DELETE FROM EXCLUDE WHERE WORD = ?";
                 PreparedStatement st = connection.prepareStatement(query);
                 st.setString(1, p_source);
+
                 st.executeUpdate();
                 st.close();
             } catch (Exception e) {
@@ -325,5 +302,16 @@ public class JdbcQueries {
         String query = "DELETE FROM NEWS_DUAL WHERE TITLE = ''";
         PreparedStatement delete = connection.prepareStatement(query);
         delete.executeUpdate();
+    }
+
+    public void deleteFromTable(String tableName, Connection connection) {
+        try {
+            String query = "DELETE FROM " + tableName;
+            PreparedStatement st = connection.prepareStatement(query);
+            st.executeUpdate();
+            st.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

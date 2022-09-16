@@ -156,7 +156,7 @@ public class Search extends SearchUtils {
                                 if (isStop.get()) return;
                             }
                             if (!Gui.isOnlyLastNews && SQLite.isConnectionToSQLite)
-                                jdbcQueries.deleteFrom256(SQLite.connection);
+                                jdbcQueries.deleteFromTable("TITLES256", SQLite.connection);
                         } catch (Exception no_rss) {
                             String smi = Common.SMI_LINK.get(Common.SMI_ID)
                                     .replaceAll(("https://|http://|www."), "");
