@@ -1,6 +1,6 @@
 package gui;
 
-import database.DatabaseQueries;
+import database.JdbcQueries;
 import database.SQLite;
 import email.EmailSender;
 import gui.buttons.Icons;
@@ -44,7 +44,7 @@ import static java.awt.GraphicsDevice.WindowTranslucency.TRANSLUCENT;
 @Slf4j
 public class Gui extends JFrame {
     final SQLite sqLite = new SQLite();
-    final DatabaseQueries databaseQueries = new DatabaseQueries();
+    final JdbcQueries jdbcQueries = new JdbcQueries();
     final Search search = new Search();
 
     private static final Object[] MAIN_TABLE_HEADERS = {"Num", "Source", "Title", "Date", "Link"};
@@ -242,6 +242,7 @@ public class Gui extends JFrame {
                     int col = tableForAnalysis.columnAtPoint(new Point(e.getX(), e.getY()));
                     if (col == 0) {
                         Gui.topKeyword.setText((String) tableForAnalysis.getModel().getValueAt(row, 0));
+                        jdbcQueries.deleteFrom256(SQLite.connection);
                         searchBtnTop.doClick();
                         WAS_CLICK_IN_TABLE_FOR_ANALYSIS.set(true);
                     }
@@ -309,7 +310,7 @@ public class Gui extends JFrame {
         onlyNewNews.addItemListener(e -> {
             isOnlyLastNews = onlyNewNews.getState();
             if (!isOnlyLastNews) {
-                databaseQueries.deleteFrom256(SQLite.connection);
+                jdbcQueries.deleteFrom256(SQLite.connection);
             }
         });
 
@@ -792,7 +793,7 @@ public class Gui extends JFrame {
         addNewSource.setBackground(new Color(243, 229, 255));
         addNewSource.setBounds(902, 479, 14, 14);
         getContentPane().add(addNewSource);
-        addNewSource.addActionListener(e -> databaseQueries.insertNewSource(SQLite.connection));
+        addNewSource.addActionListener(e -> jdbcQueries.insertNewSource(SQLite.connection));
         addNewSource.addMouseListener(new MouseAdapter() {
             // наведение мышки на кнопку
             @Override
@@ -844,7 +845,7 @@ public class Gui extends JFrame {
         sqliteBtn.setBounds(940, 479, 14, 14);
         getContentPane().add(sqliteBtn);
         sqliteBtn.addActionListener(e -> {
-            // запуск DatabaseQueries
+            // запуск JdbcQueries
             if (Desktop.isDesktopSupported() && Desktop.getDesktop().isSupported(Desktop.Action.OPEN)) {
                 try {
                     Desktop.getDesktop().open(new File(Main.DIRECTORY_PATH + "sqlite3.exe"));
@@ -853,7 +854,7 @@ public class Gui extends JFrame {
                 }
             }
 
-            // копируем адрес базы в DatabaseQueries в системный буфер для быстрого доступа
+            // копируем адрес базы в JdbcQueries в системный буфер для быстрого доступа
             String pathToBase = (".open " + Main.DIRECTORY_PATH + "news.db").replace("\\", "/");
             Toolkit.getDefaultToolkit().getSystemClipboard().setContents(new StringSelection(pathToBase), null);
         });

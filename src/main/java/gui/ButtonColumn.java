@@ -1,6 +1,6 @@
 package gui;
 
-import database.DatabaseQueries;
+import database.JdbcQueries;
 import database.SQLite;
 import gui.buttons.Icons;
 
@@ -63,7 +63,7 @@ public class ButtonColumn extends AbstractCellEditor implements TableCellRendere
     }
 
     public void actionPerformed(ActionEvent e) {
-        DatabaseQueries sqlite = new DatabaseQueries();
+        JdbcQueries sqlite = new JdbcQueries();
         fireEditingStopped();
         int rowWithSource = table.getSelectedRow();
         int rowWithExcludeWord = Gui.tableForAnalysis.getSelectedRow();

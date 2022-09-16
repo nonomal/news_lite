@@ -3,7 +3,7 @@ package search;
 import com.sun.syndication.feed.synd.SyndContent;
 import com.sun.syndication.feed.synd.SyndEntry;
 import com.sun.syndication.feed.synd.SyndFeed;
-import database.DatabaseQueries;
+import database.JdbcQueries;
 import database.SQLite;
 import email.EmailSender;
 import gui.Gui;
@@ -21,7 +21,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 @Slf4j
 public class ConsoleSearch extends SearchUtils {
     SQLite sqLite = new SQLite();
-    DatabaseQueries databaseQueries = new DatabaseQueries();
+    JdbcQueries jdbcQueries = new JdbcQueries();
     public static List<String> excludeFromSearch;
     public static AtomicBoolean isStop;
     public static AtomicBoolean isSearchNow;
@@ -41,7 +41,7 @@ public class ConsoleSearch extends SearchUtils {
     }
 
     public void searchByConsole() {
-        DatabaseQueries sqlite = new DatabaseQueries();
+        JdbcQueries sqlite = new JdbcQueries();
         if (!isSearchNow.get()) {
             dataForEmail.clear();
             sqlite.selectSources("smi", SQLite.connection);
@@ -86,7 +86,7 @@ public class ConsoleSearch extends SearchUtils {
 
                                     if (title.toLowerCase().contains(it.toLowerCase()) && title.length() > 15 && checkDate == 1) {
                                         // отсеиваем новости которые были обнаружены ранее
-                                        if (sqlite.isTitleExists(Common.sha256(title + pubDate), SQLite.connection)
+                                        if (sqlite.isTitleExists(title, SQLite.connection)
                                                 && SQLite.isConnectionToSQLite) {
                                             continue;
                                         }
@@ -102,7 +102,7 @@ public class ConsoleSearch extends SearchUtils {
                                             /**/
                                             System.out.println(newsCount + ") " + title);
                                             /**/
-                                            sqlite.insertTitleIn256(Common.sha256(title + pubDate), SQLite.connection);
+                                            sqlite.insertTitleIn256(title, SQLite.connection);
                                         }
                                     }
                                 }
@@ -120,7 +120,7 @@ public class ConsoleSearch extends SearchUtils {
                 sqLite.transactionCommand("COMMIT");
 
                 // удаляем все пустые строки
-                databaseQueries.deleteEmptyRows(SQLite.connection);
+                jdbcQueries.deleteEmptyRows(SQLite.connection);
 
                 // Автоматическая отправка результатов
                 if (dataForEmail.size() > 0) {

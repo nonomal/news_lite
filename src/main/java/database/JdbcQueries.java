@@ -11,8 +11,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 @Slf4j
-public class DatabaseQueries {
-    private final Utilities dbUtil = new Utilities();
+public class JdbcQueries {
     private static final int WORD_FREQ_MATCHES = 2;
 
     // Заполняем таблицу анализа
@@ -142,20 +141,22 @@ public class DatabaseQueries {
         if (SQLite.isConnectionToSQLite) {
             try {
                 // Диалоговое окно добавления источника новостей в базу данных
-                RssInfoFromUi rssInfoFromUI = dbUtil.getRssInfoFromUi();
+                JTextField rss = new JTextField();
+                JTextField link = new JTextField();
+                Object[] newSource = {"Source:", rss, "Link to rss:", link};
+                int result = JOptionPane.showConfirmDialog(Gui.scrollPane, newSource,
+                        "New source", JOptionPane.OK_CANCEL_OPTION);
 
-                if (rssInfoFromUI.getResult() == JOptionPane.YES_OPTION) {
-                    String query = "INSERT INTO RSS_LIST(ID, SOURCE, LINK, IS_ACTIVE) VALUES (?, ?, ?, ?)";
+                if (result == JOptionPane.YES_OPTION) {
+                    String query = "INSERT INTO RSS_LIST(SOURCE, LINK) VALUES (?, ?)";
                     PreparedStatement st = connection.prepareStatement(query);
-                    st.setInt(1, dbUtil.getNextMaxId(connection));
-                    st.setString(2, rssInfoFromUI.getSourceName().getText());
-                    st.setString(3, rssInfoFromUI.getRssLink().getText());
-                    st.setInt(4, 1);
+                    st.setString(1, rss.getText());
+                    st.setString(2, link.getText());
                     st.executeUpdate();
                     st.close();
 
                     Common.console("status: source added");
-                    log.info("New source added: " + rssInfoFromUI.getSourceName().getText());
+                    log.info("New source added: " + rss.getText());
                 } else {
                     Common.console("status: adding source canceled");
                 }
@@ -308,7 +309,8 @@ public class DatabaseQueries {
     public void deleteDuplicates(Connection connection) {
         if (SQLite.isConnectionToSQLite) {
             try {
-                String query = "DELETE FROM ALL_NEWS WHERE ROWID NOT IN (SELECT MIN(ROWID) FROM ALL_NEWS GROUP BY TITLE, NEWS_DATE)";
+                String query = "DELETE FROM ALL_NEWS WHERE ROWID NOT IN (SELECT MIN(ROWID) " +
+                        "FROM ALL_NEWS GROUP BY TITLE, NEWS_DATE)";
                 PreparedStatement st = connection.prepareStatement(query);
                 st.executeUpdate();
                 st.close();

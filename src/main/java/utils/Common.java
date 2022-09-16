@@ -1,6 +1,6 @@
 package utils;
 
-import database.DatabaseQueries;
+import database.JdbcQueries;
 import database.SQLite;
 import email.EmailSender;
 import gui.Dialogs;
@@ -19,7 +19,6 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
-import java.security.MessageDigest;
 import java.util.List;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -462,7 +461,7 @@ public class Common {
 
     // Заполнение диалоговых окон лога и СМИ
     public void showDialog(String p_file) {
-        DatabaseQueries sqlite = new DatabaseQueries();
+        JdbcQueries sqlite = new JdbcQueries();
         switch (p_file) {
             case "smi": {
                 sqlite.selectSources("active_smi", SQLite.connection);
@@ -530,21 +529,21 @@ public class Common {
     }
 
     // преобразование строки в строку с хэш кодом
-    public String sha256(String base) {
-        try {
-            MessageDigest digest = MessageDigest.getInstance("SHA-256");
-            byte[] hash = digest.digest(base.getBytes(StandardCharsets.UTF_8));
-            StringBuilder hexString = new StringBuilder();
-            for (byte b : hash) {
-                String hex = Integer.toHexString(0xff & b);
-                if (hex.length() == 1) hexString.append('0');
-                hexString.append(hex);
-            }
-            return hexString.toString();
-        } catch (Exception ex) {
-            throw new RuntimeException(ex);
-        }
-    }
+//    public String sha256(String base) {
+//        try {
+//            MessageDigest digest = MessageDigest.getInstance("SHA-256");
+//            byte[] hash = digest.digest(base.getBytes(StandardCharsets.UTF_8));
+//            StringBuilder hexString = new StringBuilder();
+//            for (byte b : hash) {
+//                String hex = Integer.toHexString(0xff & b);
+//                if (hex.length() == 1) hexString.append('0');
+//                hexString.append(hex);
+//            }
+//            return hexString.toString();
+//        } catch (Exception ex) {
+//            throw new RuntimeException(ex);
+//        }
+//    }
 
     // Уведомление в трее
     public void trayMessage(String pMessage) {

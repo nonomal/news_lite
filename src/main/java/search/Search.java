@@ -3,7 +3,7 @@ package search;
 import com.sun.syndication.feed.synd.SyndContent;
 import com.sun.syndication.feed.synd.SyndEntry;
 import com.sun.syndication.feed.synd.SyndFeed;
-import database.DatabaseQueries;
+import database.JdbcQueries;
 import database.SQLite;
 import gui.Gui;
 import gui.buttons.Icons;
@@ -53,7 +53,7 @@ public class Search extends SearchUtils {
     }
 
     public void mainSearch(String pSearchType) {
-        DatabaseQueries databaseQueries = new DatabaseQueries();
+        JdbcQueries jdbcQueries = new JdbcQueries();
         boolean isWord = pSearchType.equals("word");
         boolean isWords = pSearchType.equals("words");
 
@@ -61,7 +61,7 @@ public class Search extends SearchUtils {
             int modelRowCount = Gui.model.getRowCount();
             dataForEmail.clear();
             //выборка актуальных источников перед поиском из БД
-            databaseQueries.selectSources("smi", SQLite.connection);
+            jdbcQueries.selectSources("smi", SQLite.connection);
             isSearchNow.set(true);
             timeStart = LocalTime.now();
             Search.j = 1;
@@ -122,7 +122,7 @@ public class Search extends SearchUtils {
                                             && !title.toLowerCase().contains(excludeFromSearch.get(2))
                                     ) {
                                         //отсеиваем новости, которые уже были найдены ранее
-                                        if (databaseQueries.isTitleExists(Common.sha256(title + pubDate), SQLite.connection)
+                                        if (jdbcQueries.isTitleExists(title , SQLite.connection)
                                                 && SQLite.isConnectionToSQLite) {
                                             continue;
                                         }
@@ -132,16 +132,16 @@ public class Search extends SearchUtils {
                                         int date_diff = Common.compareDatesOnly(currentDate, pubDate);
 
                                         // вставка всех новостей в архив (ощутимо замедляет общий поиск)
-                                        databaseQueries.insertAllTitles(title, pubDate.toString(), SQLite.connection);
+                                        jdbcQueries.insertAllTitles(title, pubDate.toString(), SQLite.connection);
 
-                                        mainSearchProcess(databaseQueries, st, smi_source, title, newsDescribe, pubDate, dateToEmail, link, date_diff);
+                                        mainSearchProcess(jdbcQueries, st, smi_source, title, newsDescribe, pubDate, dateToEmail, link, date_diff);
                                     }
                                 } else if (isWords) {
                                     for (String it : Common.getKeywordsFromFile()) {
                                         if (title.toLowerCase().contains(it.toLowerCase()) && title.length() > 15 && checkDate == 1) {
 
                                             // отсеиваем новости которые были обнаружены ранее
-                                            if (databaseQueries.isTitleExists(Common.sha256(title + pubDate), SQLite.connection) && SQLite.isConnectionToSQLite) {
+                                            if (jdbcQueries.isTitleExists(title, SQLite.connection) && SQLite.isConnectionToSQLite) {
                                                 continue;
                                             }
 
@@ -149,14 +149,14 @@ public class Search extends SearchUtils {
                                             Date currentDate = new Date();
                                             int date_diff = Common.compareDatesOnly(currentDate, pubDate);
 
-                                            mainSearchProcess(databaseQueries, st, smi_source, title, newsDescribe, pubDate, dateToEmail, link, date_diff);
+                                            mainSearchProcess(jdbcQueries, st, smi_source, title, newsDescribe, pubDate, dateToEmail, link, date_diff);
                                         }
                                     }
                                 }
                                 if (isStop.get()) return;
                             }
                             if (!Gui.isOnlyLastNews && SQLite.isConnectionToSQLite)
-                                databaseQueries.deleteFrom256(SQLite.connection);
+                                jdbcQueries.deleteFrom256(SQLite.connection);
                         } catch (Exception no_rss) {
                             String smi = Common.SMI_LINK.get(Common.SMI_ID)
                                     .replaceAll(("https://|http://|www."), "");
@@ -202,21 +202,21 @@ public class Search extends SearchUtils {
                 sqLite.transactionCommand("COMMIT");
 
                 // удаляем все пустые строки
-                databaseQueries.deleteEmptyRows(SQLite.connection);
+                jdbcQueries.deleteEmptyRows(SQLite.connection);
 
                 // Заполняем таблицу анализа
-                if (!Gui.WAS_CLICK_IN_TABLE_FOR_ANALYSIS.get()) databaseQueries.selectSqlite(SQLite.connection);
+                if (!Gui.WAS_CLICK_IN_TABLE_FOR_ANALYSIS.get()) jdbcQueries.selectSqlite(SQLite.connection);
 
                 // Автоматическая отправка результатов
                 if (Gui.autoSendMessage.getState() && (Gui.model.getRowCount() > 0)) {
                     Gui.sendEmailBtn.doClick();
                 }
 
-                databaseQueries.deleteDuplicates(SQLite.connection);
+                jdbcQueries.deleteDuplicates(SQLite.connection);
                 Gui.WAS_CLICK_IN_TABLE_FOR_ANALYSIS.set(false);
                 if (isWord)
-                    Common.console("info: number of news items in the archive = " + databaseQueries.archiveNewsCount(SQLite.connection));
-                log.info("number of news items in the archive = " + databaseQueries.archiveNewsCount(SQLite.connection));
+                    Common.console("info: number of news items in the archive = " + jdbcQueries.archiveNewsCount(SQLite.connection));
+                log.info("number of news items in the archive = " + jdbcQueries.archiveNewsCount(SQLite.connection));
             } catch (Exception e) {
                 log.warn(e.getMessage());
                 try {
@@ -229,7 +229,7 @@ public class Search extends SearchUtils {
         }
     }
 
-    private void mainSearchProcess(DatabaseQueries sqlite, PreparedStatement st, String smi_source, String title,
+    private void mainSearchProcess(JdbcQueries sqlite, PreparedStatement st, String smi_source, String title,
                                    String newsDescribe, Date pubDate, String dateToEmail, String link,
                                    int date_diff) throws SQLException {
         if (date_diff != 0) {
@@ -250,7 +250,7 @@ public class Search extends SearchUtils {
                     st.executeUpdate();
                 }
             }
-            sqlite.insertTitleIn256(Common.sha256(title + pubDate), SQLite.connection);
+            sqlite.insertTitleIn256(title, SQLite.connection);
         }
     }
 }
