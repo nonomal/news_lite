@@ -1,8 +1,8 @@
 # Avandy News
 
-**Search all news in RSS (open source: JdbcTemplate, Swing, SQLite)**
+**Search all news in RSS (open source: Jdbc, Swing, SQLite)**
 
-![image](https://user-images.githubusercontent.com/45883640/188739312-ce9d376a-6b6a-48a1-8774-68771f99ef0c.png)
+![image](https://user-images.githubusercontent.com/45883640/190771963-fa155bd7-7bd2-4dea-8459-fb19e893afec.png)
 
 
 Program features:
