@@ -19,7 +19,6 @@ public class SQLite {
             connection = DriverManager.getConnection("jdbc:sqlite:" + Main.DIRECTORY_PATH + "news.db");
             isConnectionToSQLite = true;
             log.info("Connected to SQLite");
-            Thread.sleep(1000L);
         } catch (Exception e) {
             log.error("Connection open failed:\n" + e.getMessage());
         }
