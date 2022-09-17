@@ -47,7 +47,7 @@ public class JdbcQueries {
                     Common.SMI_SOURCE.clear();
                     Common.SMI_LINK.clear();
                     try {
-                        String query = "SELECT ID, SOURCE, LINK FROM RSS_LIST WHERE IS_ACTIVE = 1  ORDER BY ID";
+                        String query = "SELECT id, source, link FROM rss_list WHERE is_active = 1 ORDER BY position";
                         PreparedStatement st = connection.prepareStatement(query);
                         ResultSet rs = st.executeQuery();
 
@@ -68,7 +68,7 @@ public class JdbcQueries {
                     //excluded words
                     Common.EXCLUDED_WORDS.clear();
                     try {
-                        String query = "SELECT WORD FROM EXCLUDE";
+                        String query = "SELECT word FROM exclude";
                         PreparedStatement st = connection.prepareStatement(query);
 
                         ResultSet rs = st.executeQuery();
@@ -87,7 +87,7 @@ public class JdbcQueries {
                     Common.SMI_LINK.clear();
                     Common.SMI_IS_ACTIVE.clear();
                     try {
-                        String query = "SELECT ID, SOURCE, LINK, IS_ACTIVE FROM RSS_LIST ORDER BY ID";
+                        String query = "SELECT id, source, link, is_active FROM RSS_LIST ORDER BY position";
                         PreparedStatement st = connection.prepareStatement(query);
 
                         ResultSet rs = st.executeQuery();

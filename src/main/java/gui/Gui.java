@@ -8,6 +8,7 @@ import gui.buttons.SetButton;
 import gui.checkboxes.SetCheckbox;
 import lombok.extern.slf4j.Slf4j;
 import main.Main;
+import org.jetbrains.annotations.NotNull;
 import search.Search;
 import utils.Common;
 import utils.ExportToExcel;
@@ -126,7 +127,7 @@ public class Gui extends JFrame {
         };
         table = new JTable(model) {
             // tooltips
-            public String getToolTipText(MouseEvent e) {
+            public String getToolTipText(@NotNull MouseEvent e) {
                 String tip = null;
                 java.awt.Point p = e.getPoint();
                 int rowIndex = rowAtPoint(p);
