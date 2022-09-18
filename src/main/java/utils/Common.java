@@ -410,11 +410,10 @@ public class Common {
                 break;
             case "excl": {
                 List<Excluded> excludes = sqlite.getExcludedWords(SQLite.connection);
-                int i = 1;
+
                 for (Excluded excluded : excludes) {
-                    Object[] row = new Object[]{i, excluded.getWord()};
+                    Object[] row = new Object[]{excluded.getId(), excluded.getWord()};
                     Dialogs.model.addRow(row);
-                    i++;
                 }
                 break;
             }

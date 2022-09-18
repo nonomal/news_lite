@@ -1,12 +1,11 @@
 package model;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 
 @Data
+@AllArgsConstructor
 public class Excluded {
+    private Integer id;
     private String word;
-
-    public Excluded(String word) {
-        this.word = word;
-    }
 }

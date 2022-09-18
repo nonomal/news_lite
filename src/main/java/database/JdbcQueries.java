@@ -83,12 +83,12 @@ public class JdbcQueries {
         List<Excluded> excludedWords = new ArrayList<>();
         if (SQLite.isConnectionToSQLite) {
             try {
-                String query = "SELECT word FROM exclude";
+                String query = "SELECT id, word FROM exclude ORDER BY id DESC";
                 PreparedStatement st = connection.prepareStatement(query);
 
                 ResultSet rs = st.executeQuery();
                 while (rs.next()) {
-                    excludedWords.add(new Excluded(rs.getString("word")));
+                    excludedWords.add(new Excluded(rs.getInt("id"), rs.getString("word")));
                 }
                 rs.close();
                 st.close();
