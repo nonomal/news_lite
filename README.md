@@ -2,6 +2,10 @@
 
 **Search all news in RSS (open source: Jdbc, Swing, SQLite)**
 
+Download: https://github.com/mrprogre/news_lite/raw/master/news.jar
+
+Download Java: https://www.java.com/download/
+
 ![image](https://user-images.githubusercontent.com/45883640/190771963-fa155bd7-7bd2-4dea-8459-fb19e893afec.png)
 
 
