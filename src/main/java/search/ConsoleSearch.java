@@ -34,7 +34,7 @@ public class ConsoleSearch extends SearchUtils {
     int checkDate;
 
     public ConsoleSearch() {
-        excludeFromSearch = Common.getExcludeWordsFromFile();
+        excludeFromSearch = Common.EXCLUDE_WORDS;
         isStop = new AtomicBoolean(false);
         isSearchNow = new AtomicBoolean(false);
         isSearchFinished = new AtomicBoolean(false);

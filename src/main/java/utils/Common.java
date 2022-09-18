@@ -26,11 +26,11 @@ import java.util.stream.Stream;
 
 @Slf4j
 @UtilityClass
-public class Common {    
+public class Common {
     public static final String DIRECTORY_PATH = System.getProperty("user.home") +
             File.separator + "News" + File.separator;
-    private final int [] GUI_FONT = new int[3];
-    private final int [] GUI_BACKGROUND = new int[3];
+    private final int[] GUI_FONT = new int[3];
+    private final int[] GUI_BACKGROUND = new int[3];
     public static final Calendar MIN_PUB_DATE = Calendar.getInstance();
     public static final String CONFIG_FILE = DIRECTORY_PATH + "config.txt";
     public final AtomicBoolean IS_SENDING = new AtomicBoolean(true);
@@ -42,6 +42,7 @@ public class Common {
     public final ArrayList<String> EXCLUDED_WORDS = new ArrayList<>();
     public String SCRIPT_URL = null;
     public float OPACITY;
+    public final List<String> EXCLUDE_WORDS = new ArrayList<>();
 
     // создание файлов и директорий
     public static void createFiles() {
@@ -94,78 +95,78 @@ public class Common {
         UIManager.put("Component.arc", 10);
         UIManager.put("ProgressBar.arc", 6);
         UIManager.put("Button.arc", 8);
-        Common.getColorsSettingsFromFile();
+//        getColorsSettingsFromFile();
         UIManager.put("Table.background", new Color(GUI_BACKGROUND[0], GUI_BACKGROUND[1], GUI_BACKGROUND[2]));
         UIManager.put("Table.alternateRowColor", new Color(59, 59, 59));
         UIManager.put("Table.foreground", new Color(GUI_FONT[0], GUI_FONT[1], GUI_FONT[2]));
         UIManager.put("TextField.background", Color.GRAY);
         UIManager.put("TextField.foreground", Color.BLACK);
         FlatHiberbeeDarkIJTheme.setup();
-        Common.getOpacity();
+        //getOpacity();
     }
 
     // Запись конфигураций приложения
-    public void writeToConfig(String p_word, String p_type) {
+    public void writeToConfig(String value, String type) {
         try (OutputStreamWriter writer = new OutputStreamWriter(new FileOutputStream(CONFIG_FILE, true), StandardCharsets.UTF_8)) {
-            switch (p_type) {
+            switch (type) {
                 case "keyword": {
-                    String text = "keyword=" + p_word + "\n";
+                    String text = "keyword=" + value + "\n";
                     writer.write(text);
                     writer.flush();
                     writer.close();
                     break;
                 }
                 case "fontColorRed": {
-                    String text = "fontColorRed=" + p_word + "\n";
+                    String text = "fontColorRed=" + value + "\n";
                     writer.write(text);
                     writer.flush();
                     writer.close();
                     break;
                 }
                 case "fontColorGreen": {
-                    String text = "fontColorGreen=" + p_word + "\n";
+                    String text = "fontColorGreen=" + value + "\n";
                     writer.write(text);
                     writer.flush();
                     writer.close();
                     break;
                 }
                 case "fontColorBlue": {
-                    String text = "fontColorBlue=" + p_word + "\n";
+                    String text = "fontColorBlue=" + value + "\n";
                     writer.write(text);
                     writer.flush();
                     writer.close();
                     break;
                 }
                 case "backgroundColorRed": {
-                    String text = "backgroundColorRed=" + p_word + "\n";
+                    String text = "backgroundColorRed=" + value + "\n";
                     writer.write(text);
                     writer.flush();
                     writer.close();
                     break;
                 }
                 case "backgroundColorGreen": {
-                    String text = "backgroundColorGreen=" + p_word + "\n";
+                    String text = "backgroundColorGreen=" + value + "\n";
                     writer.write(text);
                     writer.flush();
                     writer.close();
                     break;
                 }
                 case "backgroundColorBlue": {
-                    String text = "backgroundColorBlue=" + p_word + "\n";
+                    String text = "backgroundColorBlue=" + value + "\n";
                     writer.write(text);
                     writer.flush();
                     writer.close();
                     break;
                 }
                 case "email": {
-                    String text = "email=" + p_word;
+                    String text = "email=" + value;
                     writer.write(text.trim() + "\n");
                     writer.flush();
                     writer.close();
                     break;
                 }
                 case "interval": {
-                    String text = "interval=" + p_word.replace(" hour", "h")
+                    String text = "interval=" + value.replace(" hour", "h")
                             .replace("s", "")
                             .replace(" min", "m");
                     writer.write(text + "\n");
@@ -175,12 +176,12 @@ public class Common {
                 }
                 case "checkbox": {
                     String text = null;
-                    switch (p_word) {
+                    switch (value) {
                         case "filterNewsChbx":
-                            text = "checkbox:" + p_word + "=" + Gui.onlyNewNews.getState() + "\n";
+                            text = "checkbox:" + value + "=" + Gui.onlyNewNews.getState() + "\n";
                             break;
                         case "autoSendChbx":
-                            text = "checkbox:" + p_word + "=" + Gui.autoSendMessage.getState() + "\n";
+                            text = "checkbox:" + value + "=" + Gui.autoSendMessage.getState() + "\n";
                             break;
                     }
                     if (text != null) writer.write(text);
@@ -194,140 +195,68 @@ public class Common {
         }
     }
 
-    // Считывание конфигураций
-    public void getSettingsFromFile() {
-        int linesAmount = Common.countLines();
-        String[][] lines = new String[linesAmount][];
-
-        try (BufferedReader reader = new BufferedReader(
-                new InputStreamReader(Files.newInputStream(Paths.get(CONFIG_FILE)), StandardCharsets.UTF_8))) {
-            String line;
-            int i = 0;
-
-            while ((line = reader.readLine()) != null && i < linesAmount) {
-                lines[i++] = line.split("=");
-            }
-
-            for (String[] f : lines) {
-                switch (f[0]) {
-                    case "interval":
-                        switch (f[1]) {
-                            case "1h":
-                                Gui.newsInterval.setSelectedItem(f[1].replace("h", "") + " hour");
-                                break;
-                            case "1m":
-                            case "5m":
-                            case "15m":
-                            case "30m":
-                            case "45m":
-                                Gui.newsInterval.setSelectedItem(f[1].replace("m", "") + " min");
-                                break;
-                            case "all":
-                                Gui.newsInterval.setSelectedItem("all");
-                                break;
-                            default:
-                                Gui.newsInterval.setSelectedItem(f[1].replace("h", "") + " hours");
-                                break;
-                        }
-                        break;
-                    case "email":
-                        Gui.sendEmailTo.setText(f[1].trim());
-                        break;
-                    case "keyword":
-                        Gui.keywords.addItem(f[1]);
-                        KEYWORDS_LIST.add(f[1]);
-                        break;
-                    case "checkbox:filterNewsChbx":
-                        Gui.onlyNewNews.setState(Boolean.parseBoolean(f[1]));
-                        break;
-                    case "checkbox:autoSendChbx":
-                        Gui.autoSendMessage.setState(Boolean.parseBoolean(f[1]));
-                        break;
-                    case "translate-url":
-                        SCRIPT_URL = f[1];
-                        break;
-                }
-
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    // Считывание ключевых слов при добавлении/удалении в комбобоксе
-    public List<String> getKeywordsFromFile() {
-        List<String> keywords = new ArrayList<>();
-        try {
-            for (String s : Files.readAllLines(Paths.get(CONFIG_FILE))) {
-                if (s.startsWith("keyword="))
-                    keywords.add(s.replace("keyword=", ""));
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return keywords;
-    }
-
-    // Считывание слов исключений для поиска по одному слову
-    public List<String> getExcludeWordsFromFile() {
-        List<String> excludeWords = new ArrayList<>();
+    // Считывание конфигураций до запуска интерфейса
+    public void getSettingsBeforeGui() {
         try {
             for (String s : Files.readAllLines(Paths.get(CONFIG_FILE))) {
                 if (s.startsWith("exclude="))
-                    excludeWords.add(s.replace("exclude=", ""));
+                    EXCLUDE_WORDS.add(s.replace("exclude=", ""));
+                else if (s.startsWith("opacity="))
+                    OPACITY = Float.parseFloat(s.replace("opacity=", ""));
+                else if (s.startsWith("fontColorRed="))
+                    GUI_FONT[0] = Integer.parseInt(s.replace("fontColorRed=", ""));
+                else if (s.startsWith("fontColorGreen="))
+                    GUI_FONT[1] = Integer.parseInt(s.replace("fontColorGreen=", ""));
+                else if (s.startsWith("fontColorBlue="))
+                    GUI_FONT[2] = Integer.parseInt(s.replace("fontColorBlue=", ""));
+                else if (s.startsWith("backgroundColorRed="))
+                    GUI_BACKGROUND[0] = Integer.parseInt(s.replace("backgroundColorRed=", ""));
+                else if (s.startsWith("backgroundColorGreen="))
+                    GUI_BACKGROUND[1] = Integer.parseInt(s.replace("backgroundColorGreen=", ""));
+                else if (s.startsWith("backgroundColorBlue="))
+                    GUI_BACKGROUND[2] = Integer.parseInt(s.replace("backgroundColorBlue=", ""));
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return excludeWords;
     }
 
-    // Считывание настройки прозрачности окна
-    public void getOpacity() {
+    // Считывание конфигураций после запуска интерфейса
+    public void getSettingsAfterGui() {
         try {
             for (String s : Files.readAllLines(Paths.get(CONFIG_FILE))) {
-                if (s.startsWith("opacity="))
-                    OPACITY = Float.parseFloat(s.replace("opacity=", ""));
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    // Считывание сохранённого цвета шрифта из файла
-    public void getColorsSettingsFromFile() {
-        int linesAmount = Common.countLines();
-        String[][] lines = new String[linesAmount][];
-
-        try (BufferedReader reader = new BufferedReader(
-                new InputStreamReader(Files.newInputStream(Paths.get(CONFIG_FILE)), StandardCharsets.UTF_8))) {
-            String line;
-            int i = 0;
-
-            while ((line = reader.readLine()) != null && i < linesAmount) {
-                lines[i++] = line.split("=");
-            }
-
-            for (String[] f : lines) {
-                switch (f[0]) {
-                    case "fontColorRed":
-                        GUI_FONT[0] = Integer.parseInt(f[1].trim());
-                        break;
-                    case "fontColorGreen":
-                        GUI_FONT[1] = Integer.parseInt(f[1].trim());
-                        break;
-                    case "fontColorBlue":
-                        GUI_FONT[2] = Integer.parseInt(f[1].trim());
-                        break;
-                    case "backgroundColorRed":
-                        GUI_BACKGROUND[0] = Integer.parseInt(f[1].trim());
-                        break;
-                    case "backgroundColorGreen":
-                        GUI_BACKGROUND[1] = Integer.parseInt(f[1].trim());
-                        break;
-                    case "backgroundColorBlue":
-                        GUI_BACKGROUND[2] = Integer.parseInt(f[1].trim());
-                        break;
+                // Интервал поиска interval=1m
+                if (s.startsWith("interval=")) {
+                    String interval = s.replace("interval=", "");
+                    switch (interval) {
+                        case "1h":
+                            Gui.newsInterval.setSelectedItem(interval.replace("h", "") + " hour");
+                            break;
+                        case "1m":
+                        case "5m":
+                        case "15m":
+                        case "30m":
+                        case "45m":
+                            Gui.newsInterval.setSelectedItem(interval.replace("m", "") + " min");
+                            break;
+                        case "all":
+                            Gui.newsInterval.setSelectedItem("all");
+                            break;
+                        default:
+                            Gui.newsInterval.setSelectedItem(interval.replace("h", "") + " hours");
+                            break;
+                    }
+                } else if (s.startsWith("email=")) {
+                    Gui.sendEmailTo.setText(s.replace("email=", ""));
+                } else if (s.startsWith("keyword=")) {
+                    Gui.keywords.addItem(s.replace("keyword=", ""));
+                    KEYWORDS_LIST.add(s.replace("keyword=", ""));
+                } else if (s.startsWith("checkbox:filterNewsChbx=")) {
+                    Gui.onlyNewNews.setState(Boolean.parseBoolean(s.replace("checkbox:filterNewsChbx=", "")));
+                } else if (s.startsWith("checkbox:autoSendChbx=")) {
+                    Gui.autoSendMessage.setState(Boolean.parseBoolean(s.replace("checkbox:autoSendChbx=", "")));
+                } else if (s.startsWith("translate-url=")) {
+                    SCRIPT_URL = s.replace("translate-url=", "");
                 }
             }
         } catch (IOException e) {
@@ -356,23 +285,6 @@ public class Common {
         Common.writeToConfig("autoSendChbx", "checkbox");
     }
 
-    // Подсчет количества строк в файле
-    int countLines() {
-        try {
-            LineNumberReader reader = new LineNumberReader(new FileReader(CONFIG_FILE));
-            int cnt;
-            while (true) {
-                if (reader.readLine() == null) break;
-            }
-            cnt = reader.getLineNumber();
-            reader.close();
-            return cnt;
-        } catch (IOException io) {
-            io.printStackTrace();
-        }
-        return 0;
-    }
-
     // Удаление ключевого слова из combo box
     public void delSettings(String s) throws IOException {
         Path input = Paths.get(CONFIG_FILE);
@@ -398,10 +310,10 @@ public class Common {
     }
 
     //Console
-    public void console(String p_console) {
+    public void console(String text) {
         try {
             Thread.sleep(100);
-            Gui.consoleTextArea.setText(Gui.consoleTextArea.getText() + p_console + "\n");
+            Gui.consoleTextArea.setText(Gui.consoleTextArea.getText() + text + "\n");
             Thread.sleep(100);
         } catch (InterruptedException e) {
             e.printStackTrace();
@@ -409,7 +321,7 @@ public class Common {
     }
 
     // Шкала прогресса
-    public void fill() {
+    public void fillProgressLine() {
         int counter = 0;
         while (!Search.isSearchFinished.get() || !IS_SENDING.get()) {
             if (!IS_SENDING.get()) Gui.progressBar.setForeground(new Color(255, 115, 0));
@@ -448,7 +360,7 @@ public class Common {
     }
 
     // Сравнение дат для отображения новостей по интервалу (Gui.newsInterval)
-    public int compareDatesOnly(Date p_now, Date p_in) {
+    public int compareDatesOnly(Date now, Date in) {
         int minutes;
         if (Main.IS_CONSOLE_SEARCH.get()) minutes = Main.minutesIntervalForConsoleSearch;
         else minutes = Common.getInterval();
@@ -457,16 +369,16 @@ public class Common {
         minus.setTime(new Date());
         minus.add(Calendar.MINUTE, -minutes);
         Calendar now_cal = Calendar.getInstance();
-        now_cal.setTime(p_now);
+        now_cal.setTime(now);
 
-        if (p_in.after(minus.getTime()) && p_in.before(now_cal.getTime())) {
+        if (in.after(minus.getTime()) && in.before(now_cal.getTime())) {
             return 1;
         } else
             return 0;
     }
 
     // Заполнение диалоговых окон лога и СМИ
-    public void showDialog(String p_file) {
+    public void showDialogs(String p_file) {
         JdbcQueries sqlite = new JdbcQueries();
         switch (p_file) {
             case "smi": {

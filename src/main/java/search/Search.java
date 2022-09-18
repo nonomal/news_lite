@@ -45,7 +45,7 @@ public class Search extends SearchUtils {
     Duration searchTime;
 
     public Search() {
-        excludeFromSearch = Common.getExcludeWordsFromFile();
+        excludeFromSearch = Common.EXCLUDE_WORDS;
         isStop = new AtomicBoolean(false);
         isSearchNow = new AtomicBoolean(false);
         isSearchFinished = new AtomicBoolean(false);
@@ -81,7 +81,7 @@ public class Search extends SearchUtils {
 
             isSearchFinished = new AtomicBoolean(false);
             Gui.sendEmailBtn.setIcon(Icons.SEND_EMAIL_ICON);
-            new Thread(Common::fill).start();
+            new Thread(Common::fillProgressLine).start();
             try {
                 sqLite.transaction("BEGIN TRANSACTION");
                 PreparedStatement st = SQLite.connection.prepareStatement("INSERT INTO NEWS_DUAL(TITLE) VALUES (?)");
@@ -136,7 +136,7 @@ public class Search extends SearchUtils {
                                         mainSearchProcess(jdbcQueries, st, smi_source, title, newsDescribe, pubDate, dateToEmail, link, date_diff);
                                     }
                                 } else if (isWords) {
-                                    for (String it : Common.getKeywordsFromFile()) {
+                                    for (String it : Common.KEYWORDS_LIST) {
                                         if (title.toLowerCase().contains(it.toLowerCase()) && title.length() > 15 && checkDate == 1) {
 
                                             // отсеиваем новости которые были обнаружены ранее

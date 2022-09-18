@@ -733,7 +733,7 @@ public class Gui extends JFrame {
                 Common.console("status: sending e-mail");
                 //sendTo = sendEmailTo.getText();
                 Common.IS_SENDING.set(false);
-                new Thread(Common::fill).start();
+                new Thread(Common::fillProgressLine).start();
                 EmailManager email = new EmailManager();
                 new Thread(email::sendMessage).start();
             }

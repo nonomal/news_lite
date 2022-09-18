@@ -33,6 +33,8 @@ public class Main {
         SQLite sqlite = new SQLite();
         if (args.length == 0) {
             log.info("Application started");
+
+            Common.getSettingsBeforeGui();
             Common.setGuiTheme();
 
             Gui gui = new Gui();
@@ -44,7 +46,7 @@ public class Main {
             SwingUtilities.invokeLater(runnable);
 
             // load config.txt
-            Common.getSettingsFromFile();
+            Common.getSettingsAfterGui();
             Gui.isOnlyLastNews = Gui.onlyNewNews.getState();
             sqlite.openConnection();
         } else {

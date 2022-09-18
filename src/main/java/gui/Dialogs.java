@@ -70,7 +70,7 @@ public class Dialogs extends JDialog implements KeyListener {
                 this.getContentPane().add(scrollPane);
                 scrollPane.setViewportView(table);
 
-                Common.showDialog("smi");
+                Common.showDialogs("smi");
                 break;
             }
             case "logDlg": {
@@ -87,7 +87,7 @@ public class Dialogs extends JDialog implements KeyListener {
                 scrollPane.setBounds(10, 27, 324, 233);
                 this.getContentPane().add(scrollPane);
                 scrollPane.setViewportView(textAreaForDialogs);
-                Common.showDialog("log");
+                Common.showDialogs("log");
                 break;
             }
             case "exclDlg": {
@@ -136,7 +136,7 @@ public class Dialogs extends JDialog implements KeyListener {
                 this.getContentPane().add(scrollPane);
                 scrollPane.setViewportView(table);
 
-                Common.showDialog("excl");
+                Common.showDialogs("excl");
                 break;
             }
         }
