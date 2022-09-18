@@ -10,17 +10,19 @@ import utils.Common;
 
 import javax.mail.MessagingException;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 
 @Slf4j
-public class EmailSender {
-    public static String from;
-    public static String from_pwd;
+public class EmailManager {
+    private String fromAdr;
+    private String fromPwd;
     private final String subject = ("News (" + new Search().today + ")");
     private final StringBuilder text = new StringBuilder();
 
     // Отправка письма
     public void sendMessage() {
-        Common.getEmailSettingsFromFile();
+        getEmailSettingsFromFile();
 
         if (!Main.IS_CONSOLE_SEARCH.get()) {
             String to = Gui.sendEmailTo.getText();
@@ -39,7 +41,7 @@ public class EmailSender {
                 Common.writeToConfig(to, "email");
 
                 //отправка
-                new Sender().send(subject, text.toString(), from, from_pwd, to);
+                new Sender().send(subject, text.toString(), fromAdr, fromPwd, to);
                 Common.console("status: e-mail sent successfully");
                 log.info("Email has been sent");
                 Gui.sendEmailBtn.setIcon(Icons.WHEN_SENT_ICON);
@@ -60,12 +62,28 @@ public class EmailSender {
                 text.append(s).append("\n\n");
             }
             try {
-                new Sender().send(subject, text.toString(), from, from_pwd, Main.emailToFromConsole);
+                new Sender().send(subject, text.toString(), fromAdr, fromPwd, Main.emailToFromConsole);
                 log.info("Email has been sent");
             } catch (MessagingException e) {
                 e.printStackTrace();
                 log.warn("E-mail wasn't send");
             }
+        }
+    }
+
+    // Считывание настроек почты из файла
+    private void getEmailSettingsFromFile() {
+        try {
+            for (String s : Files.readAllLines(Paths.get(Main.CONFIG_FILE))) {
+                if (s.startsWith("from_pwd=")) {
+                    fromPwd = s.replace("from_pwd=", "");
+
+                } else if (s.startsWith("from_adr=")) {
+                    fromAdr = s.replace("from_adr=", "");
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 }

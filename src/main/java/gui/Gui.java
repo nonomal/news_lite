@@ -2,13 +2,12 @@ package gui;
 
 import database.JdbcQueries;
 import database.SQLite;
-import email.EmailSender;
+import email.EmailManager;
 import gui.buttons.Icons;
 import gui.buttons.SetButton;
 import gui.checkboxes.SetCheckbox;
 import lombok.extern.slf4j.Slf4j;
 import main.Main;
-import org.jetbrains.annotations.NotNull;
 import search.Search;
 import utils.Common;
 import utils.ExportToExcel;
@@ -127,7 +126,7 @@ public class Gui extends JFrame {
         };
         table = new JTable(model) {
             // tooltips
-            public String getToolTipText(@NotNull MouseEvent e) {
+            public String getToolTipText(MouseEvent e) {
                 String tip = null;
                 java.awt.Point p = e.getPoint();
                 int rowIndex = rowAtPoint(p);
@@ -288,7 +287,7 @@ public class Gui extends JFrame {
                 stopBtnTop.setVisible(false);
                 Search.isSearchNow.set(false);
                 try {
-                    sqLite.transactionCommand("ROLLBACK");
+                    sqLite.transaction("ROLLBACK");
                 } catch (SQLException ignored) {
                 }
             } catch (Exception t) {
@@ -595,7 +594,7 @@ public class Gui extends JFrame {
                 stopBtnBottom.setVisible(false);
                 Search.isSearchNow.set(false);
                 try {
-                    sqLite.transactionCommand("ROLLBACK");
+                    sqLite.transaction("ROLLBACK");
                 } catch (SQLException ignored) {
                 }
             } catch (Exception t) {
@@ -736,7 +735,7 @@ public class Gui extends JFrame {
                 //sendTo = sendEmailTo.getText();
                 Common.IS_SENDING.set(false);
                 new Thread(Common::fill).start();
-                EmailSender email = new EmailSender();
+                EmailManager email = new EmailManager();
                 new Thread(email::sendMessage).start();
             }
         });

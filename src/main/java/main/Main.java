@@ -20,7 +20,9 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 public class Main {
     private static final Logger log = LoggerFactory.getLogger(Main.class);
-    public static final String DIRECTORY_PATH = System.getProperty("user.home") + File.separator + "News" + File.separator;
+    public static final String DIRECTORY_PATH = System.getProperty("user.home") +
+            File.separator + "News" + File.separator;
+    public static final String CONFIG_FILE = DIRECTORY_PATH + "config.txt";
     public static final Calendar MIN_PUB_DATE = Calendar.getInstance();
     public static final int [] GUI_FONT = new int[3];
     public static final int [] GUI_BACKGROUND = new int[3];
@@ -69,7 +71,7 @@ public class Main {
         }
         File configIsExists = new File(DIRECTORY_PATH + "config.txt");
         if (!configIsExists.exists()) {
-            Common.copyFiles(Main.class.getResource("/config.txt"), DIRECTORY_PATH + "config.txt");
+            Common.copyFiles(Main.class.getResource("/config.txt"), CONFIG_FILE);
         }
     }
 

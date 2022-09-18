@@ -5,7 +5,7 @@ import com.sun.syndication.feed.synd.SyndEntry;
 import com.sun.syndication.feed.synd.SyndFeed;
 import database.JdbcQueries;
 import database.SQLite;
-import email.EmailSender;
+import email.EmailManager;
 import gui.Gui;
 import lombok.extern.slf4j.Slf4j;
 import main.Main;
@@ -51,7 +51,7 @@ public class ConsoleSearch extends SearchUtils {
 
             try {
                 // начало транзакции
-                sqLite.transactionCommand("BEGIN TRANSACTION");
+                sqLite.transaction("BEGIN TRANSACTION");
 
                 Parser parser = new Parser();
                 for (Common.SMI_ID = 0; Common.SMI_ID < Common.SMI_LINK.size(); Common.SMI_ID++) {
@@ -117,7 +117,7 @@ public class ConsoleSearch extends SearchUtils {
                 isSearchNow.set(false);
 
                 // коммит транзакции
-                sqLite.transactionCommand("COMMIT");
+                sqLite.transaction("COMMIT");
 
                 // удаляем все пустые строки
                 jdbcQueries.deleteEmptyRows(SQLite.connection);
@@ -125,7 +125,7 @@ public class ConsoleSearch extends SearchUtils {
                 // Автоматическая отправка результатов
                 if (dataForEmail.size() > 0) {
                     Common.IS_SENDING.set(false);
-                    EmailSender email = new EmailSender();
+                    EmailManager email = new EmailManager();
                     email.sendMessage();
                 }
                 sqlite.deleteDuplicates(SQLite.connection);
@@ -133,7 +133,7 @@ public class ConsoleSearch extends SearchUtils {
             } catch (Exception e) {
                 e.printStackTrace();
                 try {
-                    sqLite.transactionCommand("ROLLBACK");
+                    sqLite.transaction("ROLLBACK");
                 } catch (SQLException sql) {
                     sql.printStackTrace();
                 }

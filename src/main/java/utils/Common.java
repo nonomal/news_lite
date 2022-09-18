@@ -2,7 +2,6 @@ package utils;
 
 import database.JdbcQueries;
 import database.SQLite;
-import email.EmailSender;
 import gui.Dialogs;
 import gui.Gui;
 import lombok.experimental.UtilityClass;
@@ -26,7 +25,6 @@ import java.util.stream.Stream;
 
 @UtilityClass
 public class Common {
-    public final String SETTINGS_PATH = Main.DIRECTORY_PATH + "config.txt";
     private final Logger log = LoggerFactory.getLogger(Common.class);
     public final AtomicBoolean IS_SENDING = new AtomicBoolean(true);
     public final ArrayList<String> KEYWORDS_LIST = new ArrayList<>();
@@ -40,7 +38,7 @@ public class Common {
 
     // Запись конфигураций приложения
     public void writeToConfig(String p_word, String p_type) {
-        try (OutputStreamWriter writer = new OutputStreamWriter(new FileOutputStream(SETTINGS_PATH, true), StandardCharsets.UTF_8)) {
+        try (OutputStreamWriter writer = new OutputStreamWriter(new FileOutputStream(Main.CONFIG_FILE, true), StandardCharsets.UTF_8)) {
             switch (p_type) {
                 case "keyword": {
                     String text = "keyword=" + p_word + "\n";
@@ -134,7 +132,7 @@ public class Common {
         String[][] lines = new String[linesAmount][];
 
         try (BufferedReader reader = new BufferedReader(
-                new InputStreamReader(Files.newInputStream(Paths.get(SETTINGS_PATH)), StandardCharsets.UTF_8))) {
+                new InputStreamReader(Files.newInputStream(Paths.get(Main.CONFIG_FILE)), StandardCharsets.UTF_8))) {
             String line;
             int i = 0;
 
@@ -192,7 +190,7 @@ public class Common {
     public List<String> getKeywordsFromFile() {
         List<String> keywords = new ArrayList<>();
         try {
-            for (String s : Files.readAllLines(Paths.get(SETTINGS_PATH))) {
+            for (String s : Files.readAllLines(Paths.get(Main.CONFIG_FILE))) {
                 if (s.startsWith("keyword="))
                     keywords.add(s.replace("keyword=", ""));
             }
@@ -206,7 +204,7 @@ public class Common {
     public List<String> getExcludeWordsFromFile() {
         List<String> excludeWords = new ArrayList<>();
         try {
-            for (String s : Files.readAllLines(Paths.get(SETTINGS_PATH))) {
+            for (String s : Files.readAllLines(Paths.get(Main.CONFIG_FILE))) {
                 if (s.startsWith("exclude="))
                     excludeWords.add(s.replace("exclude=", ""));
             }
@@ -219,7 +217,7 @@ public class Common {
     // Считывание настройки прозрачности окна
     public void getOpacity() {
         try {
-            for (String s : Files.readAllLines(Paths.get(SETTINGS_PATH))) {
+            for (String s : Files.readAllLines(Paths.get(Main.CONFIG_FILE))) {
                 if (s.startsWith("opacity="))
                     OPACITY = Float.parseFloat(s.replace("opacity=", ""));
             }
@@ -234,7 +232,7 @@ public class Common {
         String[][] lines = new String[linesAmount][];
 
         try (BufferedReader reader = new BufferedReader(
-                new InputStreamReader(Files.newInputStream(Paths.get(SETTINGS_PATH)), StandardCharsets.UTF_8))) {
+                new InputStreamReader(Files.newInputStream(Paths.get(Main.CONFIG_FILE)), StandardCharsets.UTF_8))) {
             String line;
             int i = 0;
 
@@ -290,70 +288,10 @@ public class Common {
         Common.writeToConfig("autoSendChbx", "checkbox");
     }
 
-    // определение SMTP исходящей почты
-    public String getSmtp() {
-        String smtp = "";
-        String serviceName = EmailSender.from.substring(EmailSender.from.indexOf(64) + 1);
-        switch (serviceName) {
-            case "mail.ru":
-            case "internet.ru":
-            case "inbox.ru":
-            case "list.ru":
-            case "bk.ru":
-                smtp = "smtp.mail.ru";
-                break;
-            case "gmail.com":
-                smtp = "smtp.gmail.com";
-                break;
-            case "yahoo.com":
-                smtp = "smtp.mail.yahoo.com";
-                break;
-            case "yandex.ru":
-                smtp = "smtp.yandex.ru";
-                break;
-            case "rambler.ru":
-                smtp = "smtp.rambler.ru";
-                break;
-            default:
-                Common.console("info: mail is sent only from Mail.ru, Gmail, Yandex, Yahoo, Rambler");
-        }
-        return smtp;
-    }
-
-    // Считывание настроек почты из файла
-    public void getEmailSettingsFromFile() {
-        int linesAmount = Common.countLines();
-        String[][] lines = new String[linesAmount][];
-        try (BufferedReader reader = new BufferedReader(
-                new InputStreamReader(Files.newInputStream(Paths.get(SETTINGS_PATH)), StandardCharsets.UTF_8))) {
-            String line;
-            int i = 0;
-
-            while ((line = reader.readLine()) != null && i < linesAmount) {
-                lines[i++] = line.split("=");
-            }
-
-            for (String[] f : lines) {
-                for (int j = 0; j < 1; j++) {
-                    switch (f[0]) {
-                        case "from_pwd":
-                            EmailSender.from_pwd = f[1].trim();
-                            break;
-                        case "from_adr":
-                            EmailSender.from = f[1].trim();
-                            break;
-                    }
-                }
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
     // Подсчет количества строк в файле
     int countLines() {
         try {
-            LineNumberReader reader = new LineNumberReader(new FileReader(SETTINGS_PATH));
+            LineNumberReader reader = new LineNumberReader(new FileReader(Main.CONFIG_FILE));
             int cnt;
             while (true) {
                 if (reader.readLine() == null) break;
@@ -369,7 +307,7 @@ public class Common {
 
     // Удаление ключевого слова из combo box
     public void delSettings(String s) throws IOException {
-        Path input = Paths.get(SETTINGS_PATH);
+        Path input = Paths.get(Main.CONFIG_FILE);
         Path temp = Files.createTempFile("temp", ".txt");
         try (Stream<String> lines = Files.lines(input)) {
             try (BufferedWriter writer = Files.newBufferedWriter(temp)) {
@@ -527,23 +465,6 @@ public class Common {
         }
         return sb.toString();
     }
-
-    // преобразование строки в строку с хэш кодом
-//    public String sha256(String base) {
-//        try {
-//            MessageDigest digest = MessageDigest.getInstance("SHA-256");
-//            byte[] hash = digest.digest(base.getBytes(StandardCharsets.UTF_8));
-//            StringBuilder hexString = new StringBuilder();
-//            for (byte b : hash) {
-//                String hex = Integer.toHexString(0xff & b);
-//                if (hex.length() == 1) hexString.append('0');
-//                hexString.append(hex);
-//            }
-//            return hexString.toString();
-//        } catch (Exception ex) {
-//            throw new RuntimeException(ex);
-//        }
-//    }
 
     // Уведомление в трее
     public void trayMessage(String pMessage) {

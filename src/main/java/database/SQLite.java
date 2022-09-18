@@ -35,7 +35,7 @@ public class SQLite {
         }
     }
 
-    public void transactionCommand(String command) throws SQLException {
+    public void transaction(String command) throws SQLException {
         PreparedStatement statement = connection.prepareStatement(command);
         statement.execute();
         statement.close();

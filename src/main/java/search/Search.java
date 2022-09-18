@@ -84,7 +84,7 @@ public class Search extends SearchUtils {
             Gui.sendEmailBtn.setIcon(Icons.SEND_EMAIL_ICON);
             new Thread(Common::fill).start();
             try {
-                sqLite.transactionCommand("BEGIN TRANSACTION");
+                sqLite.transaction("BEGIN TRANSACTION");
                 PreparedStatement st = SQLite.connection.prepareStatement("INSERT INTO NEWS_DUAL(TITLE) VALUES (?)");
 
                 Parser parser = new Parser();
@@ -199,7 +199,7 @@ public class Search extends SearchUtils {
                 }
 
                 // коммит транзакции
-                sqLite.transactionCommand("COMMIT");
+                sqLite.transaction("COMMIT");
 
                 // удаляем все пустые строки
                 jdbcQueries.deleteEmptyRows(SQLite.connection);
@@ -220,7 +220,7 @@ public class Search extends SearchUtils {
             } catch (Exception e) {
                 log.warn(e.getMessage());
                 try {
-                    sqLite.transactionCommand("ROLLBACK");
+                    sqLite.transaction("ROLLBACK");
                 } catch (SQLException i) {
                     log.warn(i.getMessage());
                 }

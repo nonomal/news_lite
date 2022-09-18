@@ -15,7 +15,7 @@ public class Sender {
     }
 
     public void send(String subject, String text, String fromEmail, String pwd, String toEmail) throws MessagingException {
-        String host = Common.getSmtp();
+        String host = getSmtp(fromEmail);
         properties.put("mail.store.protocol", "imaps");
         properties.put("mail.smtp.auth", "true");
         properties.put("mail.smtp.starttls.enable", "true");
@@ -33,5 +33,35 @@ public class Sender {
         message.setSubject(subject);
         message.setText(text);
         Transport.send(message);
+    }
+
+    // определение SMTP исходящей почты
+    private String getSmtp(String fromEmail) {
+        String smtp = "";
+        String serviceName = fromEmail.substring(fromEmail.indexOf(64) + 1);
+        switch (serviceName) {
+            case "mail.ru":
+            case "internet.ru":
+            case "inbox.ru":
+            case "list.ru":
+            case "bk.ru":
+                smtp = "smtp.mail.ru";
+                break;
+            case "gmail.com":
+                smtp = "smtp.gmail.com";
+                break;
+            case "yahoo.com":
+                smtp = "smtp.mail.yahoo.com";
+                break;
+            case "yandex.ru":
+                smtp = "smtp.yandex.ru";
+                break;
+            case "rambler.ru":
+                smtp = "smtp.rambler.ru";
+                break;
+            default:
+                Common.console("info: mail is sent only from Mail.ru, Gmail, Yandex, Yahoo, Rambler");
+        }
+        return smtp;
     }
 }
