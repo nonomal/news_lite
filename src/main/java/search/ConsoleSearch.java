@@ -124,8 +124,8 @@ public class ConsoleSearch extends SearchUtils {
                 // Автоматическая отправка результатов
                 if (dataForEmail.size() > 0) {
                     Common.IS_SENDING.set(false);
-                    EmailManager email = new EmailManager();
-                    email.sendMessage();
+                    System.out.println("sending an email..");
+                    new EmailManager().sendMessage();
                 }
                 sqlite.deleteDuplicates(SQLite.connection);
                 Gui.WAS_CLICK_IN_TABLE_FOR_ANALYSIS.set(false);

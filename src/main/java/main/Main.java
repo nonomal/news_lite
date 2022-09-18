@@ -56,9 +56,8 @@ public class Main {
             SQLite sqlite = new SQLite();
             sqlite.openConnection();
             System.arraycopy(args, 0, keywordsFromConsole, 0, args.length);
-            System.out.println(Arrays.toString(keywordsFromConsole)); //***
-            ConsoleSearch consoleSearch = new ConsoleSearch();
-            consoleSearch.searchByConsole(keywordsFromConsole);
+            System.out.println(Arrays.toString(keywordsFromConsole));
+            new ConsoleSearch().searchByConsole(keywordsFromConsole);
             sqlite.closeConnection();
         }
     }
