@@ -8,6 +8,7 @@ import database.SQLite;
 import gui.Gui;
 import gui.buttons.Icons;
 import lombok.extern.slf4j.Slf4j;
+import model.Source;
 import utils.Common;
 
 import java.sql.PreparedStatement;
@@ -60,7 +61,7 @@ public class Search extends SearchUtils {
             int modelRowCount = Gui.model.getRowCount();
             dataForEmail.clear();
             //выборка актуальных источников перед поиском из БД
-            jdbcQueries.selectSources("smi", SQLite.connection);
+            List<Source> activeSources = jdbcQueries.getSources("active", SQLite.connection);
             isSearchNow.set(true);
             timeStart = LocalTime.now();
             Search.j = 1;
@@ -87,16 +88,17 @@ public class Search extends SearchUtils {
                 PreparedStatement st = SQLite.connection.prepareStatement("INSERT INTO NEWS_DUAL(TITLE) VALUES (?)");
 
                 Parser parser = new Parser();
-                for (Common.SMI_ID = 0; Common.SMI_ID < Common.SMI_LINK.size(); Common.SMI_ID++) {
+                //for (Common.SMI_ID = 0; Common.SMI_ID < Common.SMI_LINK.size(); Common.SMI_ID++) {
+                for (Source source : activeSources) {
                     try {
                         try {
                             if (isStop.get()) return;
-                            SyndFeed feed = parser.parseFeed(Common.SMI_LINK.get(Common.SMI_ID));
+                            SyndFeed feed = parser.parseFeed(source.getLink());
                             for (Object message : feed.getEntries()) {
                                 j++;
                                 SyndEntry entry = (SyndEntry) message;
                                 SyndContent content = entry.getDescription();
-                                String smi_source = Common.SMI_SOURCE.get(Common.SMI_ID);
+                                String smi_source = source.getSource();
                                 String title = entry.getTitle();
                                 assert content != null;
                                 String newsDescribe = content.getValue()
@@ -155,7 +157,7 @@ public class Search extends SearchUtils {
                             if (!Gui.isOnlyLastNews && SQLite.isConnectionToSQLite)
                                 jdbcQueries.deleteFromTable("TITLES256", SQLite.connection);
                         } catch (Exception no_rss) {
-                            String smi = Common.SMI_LINK.get(Common.SMI_ID)
+                            String smi = source.getLink()
                                     .replaceAll(("https://|http://|www."), "");
                             smi = smi.substring(0, smi.indexOf("/"));
                             Common.console("rss is not available: " + smi);

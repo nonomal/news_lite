@@ -8,6 +8,8 @@ import gui.Gui;
 import lombok.experimental.UtilityClass;
 import lombok.extern.slf4j.Slf4j;
 import main.Main;
+import model.Excluded;
+import model.Source;
 import search.ConsoleSearch;
 import search.Search;
 
@@ -36,11 +38,6 @@ public class Common {
     public static final String CONFIG_FILE = DIRECTORY_PATH + "config.txt";
     public final AtomicBoolean IS_SENDING = new AtomicBoolean(true);
     public final ArrayList<String> KEYWORDS_LIST = new ArrayList<>();
-    public int SMI_ID = 0;
-    public final ArrayList<String> SMI_LINK = new ArrayList<>();
-    public final ArrayList<String> SMI_SOURCE = new ArrayList<>();
-    public final ArrayList<Boolean> SMI_IS_ACTIVE = new ArrayList<>();
-    public final ArrayList<String> EXCLUDED_WORDS = new ArrayList<>();
     public String SCRIPT_URL = null;
     public float OPACITY;
     public final List<String> EXCLUDE_WORDS = new ArrayList<>();
@@ -385,10 +382,10 @@ public class Common {
         JdbcQueries sqlite = new JdbcQueries();
         switch (p_file) {
             case "smi": {
-                sqlite.selectSources("active_smi", SQLite.connection);
+                List<Source> sources = sqlite.getSources("all", SQLite.connection);
                 int i = 1;
-                for (String s : Common.SMI_SOURCE) {
-                    Object[] row = new Object[]{i, s, Common.SMI_IS_ACTIVE.get(i - 1)};
+                for (Source s : sources) {
+                    Object[] row = new Object[]{i, s.getSource(), s.getIsActive()};
                     Dialogs.model.addRow(row);
                     i++;
                 }
@@ -411,10 +408,10 @@ public class Common {
                 }
                 break;
             case "excl": {
-                sqlite.selectSources("excl", SQLite.connection);
+                List<Excluded> excludes = sqlite.getExcludedWords(SQLite.connection);
                 int i = 1;
-                for (String s : Common.EXCLUDED_WORDS) {
-                    Object[] row = new Object[]{i, s};
+                for (Excluded excluded : excludes) {
+                    Object[] row = new Object[]{i, excluded.getWord()};
                     Dialogs.model.addRow(row);
                     i++;
                 }

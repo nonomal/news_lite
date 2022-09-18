@@ -2,6 +2,8 @@ package database;
 
 import gui.Gui;
 import lombok.extern.slf4j.Slf4j;
+import model.Excluded;
+import model.Source;
 import utils.Common;
 
 import javax.swing.*;
@@ -9,6 +11,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 @Slf4j
 public class JdbcQueries {
@@ -38,78 +42,61 @@ public class JdbcQueries {
         }
     }
 
-    // запись данных по актуальным источникам из базы в массивы для поиска
-    public void selectSources(String pDialog, Connection connection) {
-        if (SQLite.isConnectionToSQLite) {
-            switch (pDialog) {
-                case "smi":
-                    //sources
-                    Common.SMI_SOURCE.clear();
-                    Common.SMI_LINK.clear();
-                    try {
-                        String query = "SELECT id, source, link FROM rss_list WHERE is_active = 1 ORDER BY position";
-                        PreparedStatement st = connection.prepareStatement(query);
-                        ResultSet rs = st.executeQuery();
+    // Источники новостей
+    public List<Source> getSources(String type, Connection connection) {
+        List<Source> sources = new ArrayList<>();
+        String query;
 
-                        while (rs.next()) {
-                            //int id = rs.getInt("id");
-                            String source = rs.getString("source");
-                            String link = rs.getString("link");
-                            Common.SMI_SOURCE.add(source);
-                            Common.SMI_LINK.add(link);
-                        }
-                        rs.close();
-                        st.close();
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                    break;
-                case "excl":
-                    //excluded words
-                    Common.EXCLUDED_WORDS.clear();
-                    try {
-                        String query = "SELECT word FROM exclude";
-                        PreparedStatement st = connection.prepareStatement(query);
-
-                        ResultSet rs = st.executeQuery();
-                        while (rs.next()) {
-                            String word = rs.getString("word");
-                            Common.EXCLUDED_WORDS.add(word);
-                        }
-                        rs.close();
-                        st.close();
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                    break;
-                case "active_smi":
-                    Common.SMI_SOURCE.clear();
-                    Common.SMI_LINK.clear();
-                    Common.SMI_IS_ACTIVE.clear();
-                    try {
-                        String query = "SELECT id, source, link, is_active FROM RSS_LIST ORDER BY position";
-                        PreparedStatement st = connection.prepareStatement(query);
-
-                        ResultSet rs = st.executeQuery();
-                        while (rs.next()) {
-                            //int id = rs.getInt("id");
-                            String source = rs.getString("source");
-                            String link = rs.getString("link");
-                            boolean isActive = rs.getBoolean("is_active");
-
-                            Common.SMI_SOURCE.add(source);
-                            Common.SMI_LINK.add(link);
-                            Common.SMI_IS_ACTIVE.add(isActive);
-                        }
-                        rs.close();
-                        st.close();
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                    break;
-            }
-
+        if (type.equals("all")) {
+            query = "SELECT id, source, link, is_active, position FROM rss_list " +
+                    "ORDER BY is_active DESC, id";
+        } else {
+            query = "SELECT id, source, link, is_active, position FROM rss_list " +
+                    "WHERE is_active = 1 ORDER BY position";
         }
+
+        if (SQLite.isConnectionToSQLite) {
+            try {
+                PreparedStatement st = connection.prepareStatement(query);
+                ResultSet rs = st.executeQuery();
+
+                while (rs.next()) {
+                    sources.add(Source.builder()
+                            .id(rs.getInt("id"))
+                            .source(rs.getString("source"))
+                            .link(rs.getString("link"))
+                            .isActive(rs.getBoolean("is_active"))
+                            .position(rs.getInt("position"))
+                            .build());
+                }
+                rs.close();
+                st.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        return sources;
+    }
+
+    // исключённые из анализа слова
+    public List<Excluded> getExcludedWords(Connection connection) {
+        List<Excluded> excludedWords = new ArrayList<>();
+        if (SQLite.isConnectionToSQLite) {
+            try {
+                String query = "SELECT word FROM exclude";
+                PreparedStatement st = connection.prepareStatement(query);
+
+                ResultSet rs = st.executeQuery();
+                while (rs.next()) {
+                    excludedWords.add(new Excluded(rs.getString("word")));
+                }
+                rs.close();
+                st.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        return excludedWords;
     }
 
     // вставка нового источника

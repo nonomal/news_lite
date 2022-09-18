@@ -8,6 +8,7 @@ import database.SQLite;
 import email.EmailManager;
 import gui.Gui;
 import lombok.extern.slf4j.Slf4j;
+import model.Source;
 import utils.Common;
 
 import java.sql.SQLException;
@@ -45,17 +46,15 @@ public class ConsoleSearch extends SearchUtils {
     }
 
     public void searchByConsole(String[] args) {
-//        String[] keywordsFromConsole = new String[args.length];
         IS_CONSOLE_SEARCH.set(true);
         sendEmailToFromConsole = args[0];
         minutesIntervalConsole = Integer.parseInt(args[1]);
         sqlite.openConnection();
-//        System.arraycopy(args, 0, keywordsFromConsole, 0, args.length);
         System.out.println(Arrays.toString(args));
 
         if (!isSearchNow.get()) {
             dataForEmail.clear();
-            jdbcQueries.selectSources("smi", SQLite.connection);
+            List<Source> activeSources = jdbcQueries.getSources("active", SQLite.connection);
             isSearchNow.set(true);
             j = 1;
             newsCount = 0;
@@ -65,16 +64,16 @@ public class ConsoleSearch extends SearchUtils {
                 sqlite.transaction("BEGIN TRANSACTION");
 
                 Parser parser = new Parser();
-                for (Common.SMI_ID = 0; Common.SMI_ID < Common.SMI_LINK.size(); Common.SMI_ID++) {
+                for (Source source : activeSources) {
                     try {
                         try {
                             if (isStop.get()) return;
-                            SyndFeed feed = parser.parseFeed(Common.SMI_LINK.get(Common.SMI_ID));
+                            SyndFeed feed = parser.parseFeed(source.getLink());
                             for (Object message : feed.getEntries()) {
                                 j++;
                                 SyndEntry entry = (SyndEntry) message;
                                 SyndContent content = entry.getDescription();
-                                String smiSource = Common.SMI_SOURCE.get(Common.SMI_ID);
+                                String smiSource = source.getSource();
                                 String title = entry.getTitle();
                                 assert content != null;
                                 String newsDescribe = content.getValue()
