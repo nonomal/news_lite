@@ -1,5 +1,6 @@
 package utils;
 
+import com.formdev.flatlaf.intellijthemes.FlatHiberbeeDarkIJTheme;
 import database.JdbcQueries;
 import database.SQLite;
 import gui.Dialogs;
@@ -10,6 +11,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import search.Search;
 
+import javax.swing.*;
 import java.awt.*;
 import java.io.*;
 import java.net.URL;
@@ -24,8 +26,14 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.stream.Stream;
 
 @UtilityClass
-public class Common {
+public class Common {    
     private final Logger log = LoggerFactory.getLogger(Common.class);
+    public static final String DIRECTORY_PATH = System.getProperty("user.home") +
+            File.separator + "News" + File.separator;
+    public static final int [] GUI_FONT = new int[3];
+    public static final int [] GUI_BACKGROUND = new int[3];
+    public static final Calendar MIN_PUB_DATE = Calendar.getInstance();
+    public static final String CONFIG_FILE = DIRECTORY_PATH + "config.txt";
     public final AtomicBoolean IS_SENDING = new AtomicBoolean(true);
     public final ArrayList<String> KEYWORDS_LIST = new ArrayList<>();
     public int SMI_ID = 0;
@@ -36,9 +44,68 @@ public class Common {
     public String SCRIPT_URL = null;
     public float OPACITY;
 
+    public static void createFiles() {
+        // Минимальная дата публикации новости 01.01.2022
+        MIN_PUB_DATE.set(Calendar.YEAR, 2022);
+        MIN_PUB_DATE.set(Calendar.DAY_OF_YEAR, 1);
+
+        // main directory create
+        File mainDirectory = new File(DIRECTORY_PATH);
+        if (!mainDirectory.exists()) mainDirectory.mkdirs();
+
+        // log file create
+        File logIsExists = new File(DIRECTORY_PATH + "app.log"); // TODO logback.xml: property "LOG" = DIRECTORY_PATH + "app.log"
+        if (!logIsExists.exists()) {
+            try {
+                logIsExists.createNewFile();
+            } catch (IOException e) {
+                log.error("log create failed");
+            }
+        }
+
+        // создание файлов программы
+        File sqliteExeIsExists = new File(DIRECTORY_PATH + "sqlite3.exe");
+        if (!sqliteExeIsExists.exists()) {
+            Common.copyFiles(Main.class.getResource("/sqlite3.exe"), DIRECTORY_PATH + "sqlite3.exe");
+        }
+        File sqliteDllIsExists = new File(DIRECTORY_PATH + "sqlite3.dll");
+        if (!sqliteDllIsExists.exists()) {
+            Common.copyFiles(Main.class.getResource("/sqlite3.dll"), DIRECTORY_PATH + "sqlite3.dll");
+        }
+        File sqliteDefIsExists = new File(DIRECTORY_PATH + "sqlite3.def");
+        if (!sqliteDefIsExists.exists()) {
+            Common.copyFiles(Main.class.getResource("/sqlite3.def"), DIRECTORY_PATH + "sqlite3.def");
+        }
+        File dbIsExists = new File(DIRECTORY_PATH + "news.db");
+        if (!dbIsExists.exists()) {
+            Common.copyFiles(Main.class.getResource("/news.db"), DIRECTORY_PATH + "news.db");
+        }
+        File configIsExists = new File(DIRECTORY_PATH + "config.txt");
+        if (!configIsExists.exists()) {
+            Common.copyFiles(Main.class.getResource("/config.txt"), CONFIG_FILE);
+        }
+    }
+
+    public static void setGuiTheme() {
+        // FlatLaf theme
+        // https://github.com/JFormDesigner/FlatLaf
+        // https://docs.oracle.com/javase/tutorial/uiswing/lookandfeel/_nimbusDefaults.html
+        UIManager.put("Component.arc", 10);
+        UIManager.put("ProgressBar.arc", 6);
+        UIManager.put("Button.arc", 8);
+        Common.getColorsSettingsFromFile();
+        UIManager.put("Table.background", new Color(GUI_BACKGROUND[0], GUI_BACKGROUND[1], GUI_BACKGROUND[2]));
+        UIManager.put("Table.alternateRowColor", new Color(59, 59, 59));
+        UIManager.put("Table.foreground", new Color(GUI_FONT[0], GUI_FONT[1], GUI_FONT[2]));
+        UIManager.put("TextField.background", Color.GRAY);
+        UIManager.put("TextField.foreground", Color.BLACK);
+        FlatHiberbeeDarkIJTheme.setup();
+        Common.getOpacity();
+    }
+
     // Запись конфигураций приложения
     public void writeToConfig(String p_word, String p_type) {
-        try (OutputStreamWriter writer = new OutputStreamWriter(new FileOutputStream(Main.CONFIG_FILE, true), StandardCharsets.UTF_8)) {
+        try (OutputStreamWriter writer = new OutputStreamWriter(new FileOutputStream(CONFIG_FILE, true), StandardCharsets.UTF_8)) {
             switch (p_type) {
                 case "keyword": {
                     String text = "keyword=" + p_word + "\n";
@@ -132,7 +199,7 @@ public class Common {
         String[][] lines = new String[linesAmount][];
 
         try (BufferedReader reader = new BufferedReader(
-                new InputStreamReader(Files.newInputStream(Paths.get(Main.CONFIG_FILE)), StandardCharsets.UTF_8))) {
+                new InputStreamReader(Files.newInputStream(Paths.get(CONFIG_FILE)), StandardCharsets.UTF_8))) {
             String line;
             int i = 0;
 
@@ -190,7 +257,7 @@ public class Common {
     public List<String> getKeywordsFromFile() {
         List<String> keywords = new ArrayList<>();
         try {
-            for (String s : Files.readAllLines(Paths.get(Main.CONFIG_FILE))) {
+            for (String s : Files.readAllLines(Paths.get(CONFIG_FILE))) {
                 if (s.startsWith("keyword="))
                     keywords.add(s.replace("keyword=", ""));
             }
@@ -204,7 +271,7 @@ public class Common {
     public List<String> getExcludeWordsFromFile() {
         List<String> excludeWords = new ArrayList<>();
         try {
-            for (String s : Files.readAllLines(Paths.get(Main.CONFIG_FILE))) {
+            for (String s : Files.readAllLines(Paths.get(CONFIG_FILE))) {
                 if (s.startsWith("exclude="))
                     excludeWords.add(s.replace("exclude=", ""));
             }
@@ -217,7 +284,7 @@ public class Common {
     // Считывание настройки прозрачности окна
     public void getOpacity() {
         try {
-            for (String s : Files.readAllLines(Paths.get(Main.CONFIG_FILE))) {
+            for (String s : Files.readAllLines(Paths.get(CONFIG_FILE))) {
                 if (s.startsWith("opacity="))
                     OPACITY = Float.parseFloat(s.replace("opacity=", ""));
             }
@@ -232,7 +299,7 @@ public class Common {
         String[][] lines = new String[linesAmount][];
 
         try (BufferedReader reader = new BufferedReader(
-                new InputStreamReader(Files.newInputStream(Paths.get(Main.CONFIG_FILE)), StandardCharsets.UTF_8))) {
+                new InputStreamReader(Files.newInputStream(Paths.get(CONFIG_FILE)), StandardCharsets.UTF_8))) {
             String line;
             int i = 0;
 
@@ -243,22 +310,22 @@ public class Common {
             for (String[] f : lines) {
                 switch (f[0]) {
                     case "fontColorRed":
-                        Main.GUI_FONT[0] = Integer.parseInt(f[1].trim());
+                        GUI_FONT[0] = Integer.parseInt(f[1].trim());
                         break;
                     case "fontColorGreen":
-                        Main.GUI_FONT[1] = Integer.parseInt(f[1].trim());
+                        GUI_FONT[1] = Integer.parseInt(f[1].trim());
                         break;
                     case "fontColorBlue":
-                        Main.GUI_FONT[2] = Integer.parseInt(f[1].trim());
+                        GUI_FONT[2] = Integer.parseInt(f[1].trim());
                         break;
                     case "backgroundColorRed":
-                        Main.GUI_BACKGROUND[0] = Integer.parseInt(f[1].trim());
+                        GUI_BACKGROUND[0] = Integer.parseInt(f[1].trim());
                         break;
                     case "backgroundColorGreen":
-                        Main.GUI_BACKGROUND[1] = Integer.parseInt(f[1].trim());
+                        GUI_BACKGROUND[1] = Integer.parseInt(f[1].trim());
                         break;
                     case "backgroundColorBlue":
-                        Main.GUI_BACKGROUND[2] = Integer.parseInt(f[1].trim());
+                        GUI_BACKGROUND[2] = Integer.parseInt(f[1].trim());
                         break;
                 }
             }
@@ -291,7 +358,7 @@ public class Common {
     // Подсчет количества строк в файле
     int countLines() {
         try {
-            LineNumberReader reader = new LineNumberReader(new FileReader(Main.CONFIG_FILE));
+            LineNumberReader reader = new LineNumberReader(new FileReader(CONFIG_FILE));
             int cnt;
             while (true) {
                 if (reader.readLine() == null) break;
@@ -307,7 +374,7 @@ public class Common {
 
     // Удаление ключевого слова из combo box
     public void delSettings(String s) throws IOException {
-        Path input = Paths.get(Main.CONFIG_FILE);
+        Path input = Paths.get(CONFIG_FILE);
         Path temp = Files.createTempFile("temp", ".txt");
         try (Stream<String> lines = Files.lines(input)) {
             try (BufferedWriter writer = Files.newBufferedWriter(temp)) {
@@ -412,7 +479,7 @@ public class Common {
                 break;
             }
             case "log":
-                String path = "C:/Users/Public/Documents/app.log"; // TODO dynamic path
+                String path = DIRECTORY_PATH + "app.log"; // TODO dynamic path
 
                 try (BufferedReader reader = new BufferedReader(
                         new InputStreamReader(Files.newInputStream(Paths.get(path)), StandardCharsets.UTF_8))) {

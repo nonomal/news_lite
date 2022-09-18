@@ -7,7 +7,6 @@ import gui.buttons.Icons;
 import gui.buttons.SetButton;
 import gui.checkboxes.SetCheckbox;
 import lombok.extern.slf4j.Slf4j;
-import main.Main;
 import search.Search;
 import utils.Common;
 import utils.ExportToExcel;
@@ -848,14 +847,14 @@ public class Gui extends JFrame {
             // запуск JdbcQueries
             if (Desktop.isDesktopSupported() && Desktop.getDesktop().isSupported(Desktop.Action.OPEN)) {
                 try {
-                    Desktop.getDesktop().open(new File(Main.DIRECTORY_PATH + "sqlite3.exe"));
+                    Desktop.getDesktop().open(new File(Common.DIRECTORY_PATH + "sqlite3.exe"));
                 } catch (IOException io) {
                     io.printStackTrace();
                 }
             }
 
             // копируем адрес базы в JdbcQueries в системный буфер для быстрого доступа
-            String pathToBase = (".open " + Main.DIRECTORY_PATH + "news.db").replace("\\", "/");
+            String pathToBase = (".open " + Common.DIRECTORY_PATH + "news.db").replace("\\", "/");
             Toolkit.getDefaultToolkit().getSystemClipboard().setContents(new StringSelection(pathToBase), null);
         });
         sqliteBtn.addMouseListener(new MouseAdapter() {
@@ -885,7 +884,7 @@ public class Gui extends JFrame {
         settingsDirectoryBtn.addActionListener(e -> {
             if (Desktop.isDesktopSupported() && Desktop.getDesktop().isSupported(Desktop.Action.OPEN)) {
                 try {
-                    Desktop.getDesktop().open(new File(Main.DIRECTORY_PATH));
+                    Desktop.getDesktop().open(new File(Common.DIRECTORY_PATH));
                 } catch (IOException io) {
                     io.printStackTrace();
                 }

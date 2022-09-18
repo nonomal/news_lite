@@ -8,7 +8,6 @@ import database.SQLite;
 import gui.Gui;
 import gui.buttons.Icons;
 import lombok.extern.slf4j.Slf4j;
-import main.Main;
 import utils.Common;
 
 import java.sql.PreparedStatement;
@@ -39,7 +38,7 @@ public class Search extends SearchUtils {
     final SimpleDateFormat dateFormatHoursFirst = new SimpleDateFormat("dd.MMM HH:mm", Locale.ENGLISH);
     public static final ArrayList<String> dataForEmail = new ArrayList<>();
     int newsCount = 0;
-    final Date minDate = Main.MIN_PUB_DATE.getTime();
+    final Date minDate = Common.MIN_PUB_DATE.getTime();
     int checkDate;
     LocalTime timeStart;
     LocalTime timeEnd;

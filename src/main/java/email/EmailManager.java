@@ -74,7 +74,7 @@ public class EmailManager {
     // Считывание настроек почты из файла
     private void getEmailSettingsFromFile() {
         try {
-            for (String s : Files.readAllLines(Paths.get(Main.CONFIG_FILE))) {
+            for (String s : Files.readAllLines(Paths.get(Common.CONFIG_FILE))) {
                 if (s.startsWith("from_pwd=")) {
                     fromPwd = s.replace("from_pwd=", "");
 

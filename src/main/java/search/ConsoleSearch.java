@@ -30,7 +30,7 @@ public class ConsoleSearch extends SearchUtils {
     final SimpleDateFormat date_format = new SimpleDateFormat("dd.MM.yyyy HH:mm");
     public static final ArrayList<String> dataForEmail = new ArrayList<>();
     int newsCount = 0;
-    final Date minDate = Main.MIN_PUB_DATE.getTime();
+    final Date minDate = Common.MIN_PUB_DATE.getTime();
     int checkDate;
 
     public ConsoleSearch() {

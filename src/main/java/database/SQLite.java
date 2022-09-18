@@ -1,7 +1,7 @@
 package database;
 
 import lombok.extern.slf4j.Slf4j;
-import main.Main;
+import utils.Common;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -16,7 +16,7 @@ public class SQLite {
     public void openConnection() {
         try {
             Class.forName("org.sqlite.JDBC");
-            connection = DriverManager.getConnection("jdbc:sqlite:" + Main.DIRECTORY_PATH + "news.db");
+            connection = DriverManager.getConnection("jdbc:sqlite:" + Common.DIRECTORY_PATH + "news.db");
             isConnectionToSQLite = true;
             log.info("Connected to SQLite");
         } catch (Exception e) {
