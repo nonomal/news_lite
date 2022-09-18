@@ -6,9 +6,8 @@ import database.SQLite;
 import gui.Dialogs;
 import gui.Gui;
 import lombok.experimental.UtilityClass;
+import lombok.extern.slf4j.Slf4j;
 import main.Main;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import search.Search;
 
 import javax.swing.*;
@@ -25,13 +24,13 @@ import java.util.*;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.stream.Stream;
 
+@Slf4j
 @UtilityClass
 public class Common {    
-    private final Logger log = LoggerFactory.getLogger(Common.class);
     public static final String DIRECTORY_PATH = System.getProperty("user.home") +
             File.separator + "News" + File.separator;
-    public static final int [] GUI_FONT = new int[3];
-    public static final int [] GUI_BACKGROUND = new int[3];
+    private final int [] GUI_FONT = new int[3];
+    private final int [] GUI_BACKGROUND = new int[3];
     public static final Calendar MIN_PUB_DATE = Calendar.getInstance();
     public static final String CONFIG_FILE = DIRECTORY_PATH + "config.txt";
     public final AtomicBoolean IS_SENDING = new AtomicBoolean(true);
@@ -44,6 +43,7 @@ public class Common {
     public String SCRIPT_URL = null;
     public float OPACITY;
 
+    // создание файлов и директорий
     public static void createFiles() {
         // Минимальная дата публикации новости 01.01.2022
         MIN_PUB_DATE.set(Calendar.YEAR, 2022);
@@ -86,6 +86,7 @@ public class Common {
         }
     }
 
+    // установка темы интерфейса
     public static void setGuiTheme() {
         // FlatLaf theme
         // https://github.com/JFormDesigner/FlatLaf
