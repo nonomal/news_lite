@@ -9,6 +9,7 @@ import lombok.experimental.UtilityClass;
 import lombok.extern.slf4j.Slf4j;
 import main.Main;
 import model.Excluded;
+import model.Keyword;
 import model.Source;
 import search.ConsoleSearch;
 import search.Search;
@@ -37,7 +38,7 @@ public class Common {
     public static final Calendar MIN_PUB_DATE = Calendar.getInstance();
     public static final String CONFIG_FILE = DIRECTORY_PATH + "config.txt";
     public final AtomicBoolean IS_SENDING = new AtomicBoolean(true);
-    public final ArrayList<String> KEYWORDS_LIST = new ArrayList<>();
+    public final ArrayList<Keyword> KEYWORDS_LIST = new ArrayList<>();
     public String SCRIPT_URL = null;
     public float OPACITY;
     public final List<String> EXCLUDE_WORDS = new ArrayList<>();
@@ -248,7 +249,7 @@ public class Common {
                     Gui.sendEmailTo.setText(s.replace("email=", ""));
                 } else if (s.startsWith("keyword=")) {
                     Gui.keywords.addItem(s.replace("keyword=", ""));
-                    KEYWORDS_LIST.add(s.replace("keyword=", ""));
+                    KEYWORDS_LIST.add(new Keyword(s.replace("keyword=", "")));
                 } else if (s.startsWith("checkbox:filterNewsChbx=")) {
                     Gui.onlyNewNews.setState(Boolean.parseBoolean(s.replace("checkbox:filterNewsChbx=", "")));
                 } else if (s.startsWith("checkbox:autoSendChbx=")) {

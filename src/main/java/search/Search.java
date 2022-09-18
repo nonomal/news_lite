@@ -8,6 +8,7 @@ import database.SQLite;
 import gui.Gui;
 import gui.buttons.Icons;
 import lombok.extern.slf4j.Slf4j;
+import model.Keyword;
 import model.Source;
 import utils.Common;
 
@@ -42,8 +43,6 @@ public class Search extends SearchUtils {
     final Date minDate = Common.MIN_PUB_DATE.getTime();
     int checkDate;
     LocalTime timeStart;
-    LocalTime timeEnd;
-    Duration searchTime;
 
     public Search() {
         excludeFromSearch = Common.EXCLUDE_WORDS;
@@ -136,11 +135,13 @@ public class Search extends SearchUtils {
                                         mainSearchProcess(jdbcQueries, st, smi_source, title, newsDescribe, pubDate, dateToEmail, link, date_diff);
                                     }
                                 } else if (isWords) {
-                                    for (String it : Common.KEYWORDS_LIST) {
-                                        if (title.toLowerCase().contains(it.toLowerCase()) && title.length() > 15 && checkDate == 1) {
+                                    for (Keyword keyword : Common.KEYWORDS_LIST) {
+                                        if (title.toLowerCase().contains(keyword.getKeyword().toLowerCase())
+                                                && title.length() > 15 && checkDate == 1) {
 
                                             // отсеиваем новости которые были обнаружены ранее
-                                            if (jdbcQueries.isTitleExists(title, SQLite.connection) && SQLite.isConnectionToSQLite) {
+                                            if (jdbcQueries.isTitleExists(title, SQLite.connection)
+                                                    && SQLite.isConnectionToSQLite) {
                                                 continue;
                                             }
 
@@ -171,10 +172,8 @@ public class Search extends SearchUtils {
                 }
                 st.close();
                 //Время поиска
-                timeEnd = LocalTime.now();
-                searchTime = Duration.between(timeStart, timeEnd);
                 if (!Gui.GUI_IN_TRAY.get()) Common.console("status: search completed in " +
-                        searchTime.getSeconds() + " s.");
+                        Duration.between(timeStart, LocalTime.now()).getSeconds() + " s.");
                 isSearchNow.set(false);
 
                 Gui.labelSum.setText("total: " + newsCount);
