@@ -19,7 +19,6 @@ public class Main {
     public static final AtomicBoolean IS_CONSOLE_SEARCH = new AtomicBoolean(false);
     public static String emailToFromConsole;
     public static int minutesIntervalForConsoleSearch;
-    public static String[] keywordsFromConsole;
 
     /**
      * Main arguments for console search:
@@ -29,14 +28,11 @@ public class Main {
      */
     public static void main(String[] args) throws IOException {
         Common.createFiles();
-        keywordsFromConsole = new String[args.length];
         SQLite sqlite = new SQLite();
         if (args.length == 0) {
             log.info("Application started");
-
             Common.getSettingsBeforeGui();
             Common.setGuiTheme();
-
             Gui gui = new Gui();
             Runnable runnable = () -> {
                 FrameDragListener frameDragListener = new FrameDragListener(gui);
@@ -44,13 +40,15 @@ public class Main {
                 gui.addMouseMotionListener(frameDragListener);
             };
             SwingUtilities.invokeLater(runnable);
-
-            // load config.txt
             Common.getSettingsAfterGui();
-            Gui.isOnlyLastNews = Gui.onlyNewNews.getState();
-            sqlite.openConnection();
+
+            // check internet
+            if (!InternetAvailabilityChecker.isInternetAvailable()) {
+                Common.console("status: no internet connection");
+            }
         } else {
             // Console search
+            String[] keywordsFromConsole = new String[args.length];
             IS_CONSOLE_SEARCH.set(true);
             emailToFromConsole = args[0];
             minutesIntervalForConsoleSearch = Integer.parseInt(args[1]);
@@ -58,13 +56,8 @@ public class Main {
             System.arraycopy(args, 0, keywordsFromConsole, 0, args.length);
             System.out.println(Arrays.toString(keywordsFromConsole)); //***
             ConsoleSearch consoleSearch = new ConsoleSearch();
-            consoleSearch.searchByConsole();
+            consoleSearch.searchByConsole(keywordsFromConsole);
             sqlite.closeConnection();
-        }
-
-        // check internet
-        if (!InternetAvailabilityChecker.isInternetAvailable()) {
-            Common.console("status: no internet connection");
         }
     }
 }

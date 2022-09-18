@@ -8,7 +8,6 @@ import database.SQLite;
 import email.EmailManager;
 import gui.Gui;
 import lombok.extern.slf4j.Slf4j;
-import main.Main;
 import utils.Common;
 
 import java.sql.SQLException;
@@ -40,7 +39,7 @@ public class ConsoleSearch extends SearchUtils {
         isSearchFinished = new AtomicBoolean(false);
     }
 
-    public void searchByConsole() {
+    public void searchByConsole(String[] keywordsFromConsole) {
         JdbcQueries sqlite = new JdbcQueries();
         if (!isSearchNow.get()) {
             dataForEmail.clear();
@@ -76,12 +75,12 @@ public class ConsoleSearch extends SearchUtils {
                                 String dateToEmail = date_format.format(pubDate);
                                 String link = entry.getLink();
 
-                                // отсеиваем новости ранее 01.01.2021
+                                // отсеиваем новости ранее 01.01.2022
                                 if (pubDate.after(minDate)) checkDate = 1;
                                 else checkDate = 0;
 
-                                for (String it : Main.keywordsFromConsole) {
-                                    if (it.equals(Main.keywordsFromConsole[0]) || it.equals(Main.keywordsFromConsole[1]))
+                                for (String it : keywordsFromConsole) {
+                                    if (it.equals(keywordsFromConsole[0]) || it.equals(keywordsFromConsole[1]))
                                         continue;
 
                                     if (title.toLowerCase().contains(it.toLowerCase()) && title.length() > 15 && checkDate == 1) {

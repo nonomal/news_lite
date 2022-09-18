@@ -259,6 +259,8 @@ public class Common {
                     SCRIPT_URL = s.replace("translate-url=", "");
                 }
             }
+            Gui.isOnlyLastNews = Gui.onlyNewNews.getState();
+            new SQLite().openConnection();
         } catch (IOException e) {
             e.printStackTrace();
         }
