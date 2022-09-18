@@ -13,6 +13,7 @@ import utils.Common;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -31,6 +32,10 @@ public class ConsoleSearch extends SearchUtils {
     int newsCount = 0;
     final Date minDate = Common.MIN_PUB_DATE.getTime();
     int checkDate;
+    /**/
+    public static final AtomicBoolean IS_CONSOLE_SEARCH = new AtomicBoolean(false);
+    public static String sendEmailToFromConsole;
+    public static int minutesIntervalConsole;
 
     public ConsoleSearch() {
         excludeFromSearch = Common.EXCLUDE_WORDS;
@@ -39,11 +44,20 @@ public class ConsoleSearch extends SearchUtils {
         isSearchFinished = new AtomicBoolean(false);
     }
 
-    public void searchByConsole(String[] keywordsFromConsole) {
-        JdbcQueries sqlite = new JdbcQueries();
+    public void searchByConsole(String[] args) {
+        String[] keywordsFromConsole = new String[args.length];
+        IS_CONSOLE_SEARCH.set(true);
+        sendEmailToFromConsole = args[0];
+        minutesIntervalConsole = Integer.parseInt(args[1]);
+        SQLite sqlite = new SQLite();
+        sqlite.openConnection();
+        System.arraycopy(args, 0, keywordsFromConsole, 0, args.length);
+        System.out.println(Arrays.toString(keywordsFromConsole));
+//        new ConsoleSearch().searchByConsole(keywordsFromConsole);
+
         if (!isSearchNow.get()) {
             dataForEmail.clear();
-            sqlite.selectSources("smi", SQLite.connection);
+            jdbcQueries.selectSources("smi", SQLite.connection);
             isSearchNow.set(true);
             ConsoleSearch.j = 1;
             newsCount = 0;
@@ -85,7 +99,7 @@ public class ConsoleSearch extends SearchUtils {
 
                                     if (title.toLowerCase().contains(it.toLowerCase()) && title.length() > 15 && checkDate == 1) {
                                         // отсеиваем новости которые были обнаружены ранее
-                                        if (sqlite.isTitleExists(title, SQLite.connection)
+                                        if (jdbcQueries.isTitleExists(title, SQLite.connection)
                                                 && SQLite.isConnectionToSQLite) {
                                             continue;
                                         }
@@ -101,7 +115,7 @@ public class ConsoleSearch extends SearchUtils {
                                             /**/
                                             System.out.println(newsCount + ") " + title);
                                             /**/
-                                            sqlite.insertTitleIn256(title, SQLite.connection);
+                                            jdbcQueries.insertTitleIn256(title, SQLite.connection);
                                         }
                                     }
                                 }
@@ -127,8 +141,9 @@ public class ConsoleSearch extends SearchUtils {
                     System.out.println("sending an email..");
                     new EmailManager().sendMessage();
                 }
-                sqlite.deleteDuplicates(SQLite.connection);
+                jdbcQueries.deleteDuplicates(SQLite.connection);
                 Gui.WAS_CLICK_IN_TABLE_FOR_ANALYSIS.set(false);
+                sqlite.closeConnection();
             } catch (Exception e) {
                 e.printStackTrace();
                 try {

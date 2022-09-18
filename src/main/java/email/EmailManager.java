@@ -3,7 +3,6 @@ package email;
 import gui.Gui;
 import gui.buttons.Icons;
 import lombok.extern.slf4j.Slf4j;
-import main.Main;
 import search.ConsoleSearch;
 import search.Search;
 import utils.Common;
@@ -24,7 +23,7 @@ public class EmailManager {
     public void sendMessage() {
         getEmailSettingsFromFile();
 
-        if (!Main.IS_CONSOLE_SEARCH.get()) {
+        if (!ConsoleSearch.IS_CONSOLE_SEARCH.get()) {
             String to = Gui.sendEmailTo.getText();
             // Отправка из GUI
 
@@ -62,7 +61,7 @@ public class EmailManager {
                 text.append(s).append("\n\n");
             }
             try {
-                new Sender().send(subject, text.toString(), fromAdr, fromPwd, Main.sendEmailToFromConsole);
+                new Sender().send(subject, text.toString(), fromAdr, fromPwd, ConsoleSearch.sendEmailToFromConsole);
                 log.info("Email has been sent");
             } catch (MessagingException e) {
                 e.printStackTrace();

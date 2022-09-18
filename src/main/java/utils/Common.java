@@ -8,6 +8,7 @@ import gui.Gui;
 import lombok.experimental.UtilityClass;
 import lombok.extern.slf4j.Slf4j;
 import main.Main;
+import search.ConsoleSearch;
 import search.Search;
 
 import javax.swing.*;
@@ -364,7 +365,7 @@ public class Common {
     // Сравнение дат для отображения новостей по интервалу (Gui.newsInterval)
     public int compareDatesOnly(Date now, Date in) {
         int minutes;
-        if (Main.IS_CONSOLE_SEARCH.get()) minutes = Main.minutesIntervalConsole;
+        if (ConsoleSearch.IS_CONSOLE_SEARCH.get()) minutes = ConsoleSearch.minutesIntervalConsole;
         else minutes = Common.getInterval();
 
         Calendar minus = Calendar.getInstance();
