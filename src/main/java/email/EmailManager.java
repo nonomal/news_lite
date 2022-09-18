@@ -62,7 +62,7 @@ public class EmailManager {
                 text.append(s).append("\n\n");
             }
             try {
-                new Sender().send(subject, text.toString(), fromAdr, fromPwd, Main.emailToFromConsole);
+                new Sender().send(subject, text.toString(), fromAdr, fromPwd, Main.sendEmailToFromConsole);
                 log.info("Email has been sent");
             } catch (MessagingException e) {
                 e.printStackTrace();

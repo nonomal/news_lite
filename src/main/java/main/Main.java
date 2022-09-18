@@ -17,8 +17,8 @@ import java.util.concurrent.atomic.AtomicBoolean;
 public class Main {
     // Console search
     public static final AtomicBoolean IS_CONSOLE_SEARCH = new AtomicBoolean(false);
-    public static String emailToFromConsole;
-    public static int minutesIntervalForConsoleSearch;
+    public static String sendEmailToFromConsole;
+    public static int minutesIntervalConsole;
 
     /**
      * Main arguments for console search:
@@ -28,11 +28,11 @@ public class Main {
      */
     public static void main(String[] args) throws IOException {
         Common.createFiles();
-        SQLite sqlite = new SQLite();
         if (args.length == 0) {
             log.info("Application started");
             Common.getSettingsBeforeGui();
             Common.setGuiTheme();
+
             Gui gui = new Gui();
             Runnable runnable = () -> {
                 FrameDragListener frameDragListener = new FrameDragListener(gui);
@@ -40,6 +40,7 @@ public class Main {
                 gui.addMouseMotionListener(frameDragListener);
             };
             SwingUtilities.invokeLater(runnable);
+
             Common.getSettingsAfterGui();
 
             // check internet
@@ -50,8 +51,9 @@ public class Main {
             // Console search
             String[] keywordsFromConsole = new String[args.length];
             IS_CONSOLE_SEARCH.set(true);
-            emailToFromConsole = args[0];
-            minutesIntervalForConsoleSearch = Integer.parseInt(args[1]);
+            sendEmailToFromConsole = args[0];
+            minutesIntervalConsole = Integer.parseInt(args[1]);
+            SQLite sqlite = new SQLite();
             sqlite.openConnection();
             System.arraycopy(args, 0, keywordsFromConsole, 0, args.length);
             System.out.println(Arrays.toString(keywordsFromConsole)); //***

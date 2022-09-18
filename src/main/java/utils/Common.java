@@ -364,7 +364,7 @@ public class Common {
     // Сравнение дат для отображения новостей по интервалу (Gui.newsInterval)
     public int compareDatesOnly(Date now, Date in) {
         int minutes;
-        if (Main.IS_CONSOLE_SEARCH.get()) minutes = Main.minutesIntervalForConsoleSearch;
+        if (Main.IS_CONSOLE_SEARCH.get()) minutes = Main.minutesIntervalConsole;
         else minutes = Common.getInterval();
 
         Calendar minus = Calendar.getInstance();
