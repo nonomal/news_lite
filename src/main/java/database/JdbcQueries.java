@@ -31,14 +31,14 @@ public class JdbcQueries {
             while (rs.next()) {
                 String word = rs.getString("TITLE");
                 int sum = rs.getInt("SUM");
-                Object[] row2 = new Object[]{word, sum};
-                Gui.modelForAnalysis.addRow(row2);
+                Object[] row = new Object[]{word, sum};
+                Gui.modelForAnalysis.addRow(row);
             }
             deleteFromTable("NEWS_DUAL", connection);
             rs.close();
             st.close();
         } catch (Exception e) {
-            e.printStackTrace();
+            Common.console("error: " + e.getMessage());
         }
     }
 
@@ -72,7 +72,7 @@ public class JdbcQueries {
                 rs.close();
                 st.close();
             } catch (Exception e) {
-                e.printStackTrace();
+                Common.console("error: " + e.getMessage());
             }
         }
         return sources;
@@ -93,7 +93,7 @@ public class JdbcQueries {
                 rs.close();
                 st.close();
             } catch (Exception e) {
-                e.printStackTrace();
+                Common.console("error: " + e.getMessage());
             }
         }
         return excludedWords;
@@ -124,26 +124,25 @@ public class JdbcQueries {
                     Common.console("status: adding source canceled");
                 }
             } catch (Exception e) {
-                System.out.println(e.getMessage());
+                Common.console("error: " + e.getMessage());
             }
         }
     }
 
     // вставка нового слова для исключения из анализа частоты употребления слов
-    public void insertNewExcludedWord(String pWord, Connection connection) {
+    public void insertNewExcludedWord(String word, Connection connection) {
         if (SQLite.isConnectionToSQLite) {
             try {
-                String query = "INSERT INTO exclude(word) " + "VALUES (?)";
+                String query = "INSERT INTO exclude(word) VALUES (?)";
                 PreparedStatement st = connection.prepareStatement(query);
-                st.setString(1, pWord);
+                st.setString(1, word);
                 st.executeUpdate();
                 st.close();
 
-                Common.console("status: word \"" + pWord + "\" excluded from analysis");
+                Common.console("status: word \"" + word + "\" excluded from analysis");
                 log.info("New word excluded from analysis");
             } catch (Exception e) {
-                e.printStackTrace();
-                Common.console("status: " + e.getMessage());
+                Common.console("error: " + e.getMessage());
             }
         }
     }
@@ -152,13 +151,13 @@ public class JdbcQueries {
     public void insertTitleIn256(String pTitle, Connection connection) {
         if (SQLite.isConnectionToSQLite) {
             try {
-                String query256 = "INSERT INTO titles256(title) VALUES (?)";
-                PreparedStatement st256 = connection.prepareStatement(query256);
-                st256.setString(1, pTitle);
-                st256.executeUpdate();
-                st256.close();
-            } catch (SQLException t) {
-                t.printStackTrace();
+                String query = "INSERT INTO titles256(title) VALUES (?)";
+                PreparedStatement st = connection.prepareStatement(query);
+                st.setString(1, pTitle);
+                st.executeUpdate();
+                st.close();
+            } catch (SQLException e) {
+                Common.console("error: " + e.getMessage());
             }
         }
     }
@@ -173,7 +172,8 @@ public class JdbcQueries {
                 st.setString(2, pDate);
                 st.executeUpdate();
                 st.close();
-            } catch (SQLException ignored) {
+            } catch (SQLException e) {
+                Common.console("error: " + e.getMessage());
             }
         }
     }
@@ -195,7 +195,7 @@ public class JdbcQueries {
                 st.close();
 
             } catch (Exception e) {
-                e.printStackTrace();
+                Common.console("error: " + e.getMessage());
             }
         }
         return isExists == 1;
@@ -215,24 +215,25 @@ public class JdbcQueries {
                 }
                 rs.close();
                 st.close();
-            } catch (Exception ignored) {
+            } catch (Exception e) {
+                Common.console("error: " + e.getMessage());
             }
         }
         return countNews;
     }
 
     // удаление источника
-    public void deleteSource(String p_source, Connection connection) {
+    public void deleteSource(String source, Connection connection) {
         if (SQLite.isConnectionToSQLite) {
             try {
                 String query = "DELETE FROM rss_list WHERE source = ?";
                 PreparedStatement st = connection.prepareStatement(query);
-                st.setString(1, p_source);
+                st.setString(1, source);
 
                 st.executeUpdate();
                 st.close();
             } catch (Exception e) {
-                Common.console("status: " + e.getMessage());
+                Common.console("error: " + e.getMessage());
             }
         }
     }

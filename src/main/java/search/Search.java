@@ -87,7 +87,6 @@ public class Search extends SearchUtils {
                 PreparedStatement st = SQLite.connection.prepareStatement("INSERT INTO NEWS_DUAL(TITLE) VALUES (?)");
 
                 Parser parser = new Parser();
-                //for (Common.SMI_ID = 0; Common.SMI_ID < Common.SMI_LINK.size(); Common.SMI_ID++) {
                 for (Source source : activeSources) {
                     try {
                         try {
@@ -171,6 +170,7 @@ public class Search extends SearchUtils {
                     }
                 }
                 st.close();
+
                 //Время поиска
                 if (!Gui.GUI_IN_TRAY.get()) Common.console("status: search completed in " +
                         Duration.between(timeStart, LocalTime.now()).getSeconds() + " s.");
