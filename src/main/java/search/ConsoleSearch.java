@@ -20,7 +20,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 @Slf4j
 public class ConsoleSearch extends SearchUtils {
-    SQLite sqLite = new SQLite();
+    SQLite sqlite = new SQLite();
     JdbcQueries jdbcQueries = new JdbcQueries();
     public static List<String> excludeFromSearch;
     public static AtomicBoolean isStop;
@@ -45,26 +45,24 @@ public class ConsoleSearch extends SearchUtils {
     }
 
     public void searchByConsole(String[] args) {
-        String[] keywordsFromConsole = new String[args.length];
+//        String[] keywordsFromConsole = new String[args.length];
         IS_CONSOLE_SEARCH.set(true);
         sendEmailToFromConsole = args[0];
         minutesIntervalConsole = Integer.parseInt(args[1]);
-        SQLite sqlite = new SQLite();
         sqlite.openConnection();
-        System.arraycopy(args, 0, keywordsFromConsole, 0, args.length);
-        System.out.println(Arrays.toString(keywordsFromConsole));
-//        new ConsoleSearch().searchByConsole(keywordsFromConsole);
+//        System.arraycopy(args, 0, keywordsFromConsole, 0, args.length);
+        System.out.println(Arrays.toString(args));
 
         if (!isSearchNow.get()) {
             dataForEmail.clear();
             jdbcQueries.selectSources("smi", SQLite.connection);
             isSearchNow.set(true);
-            ConsoleSearch.j = 1;
+            j = 1;
             newsCount = 0;
 
             try {
                 // начало транзакции
-                sqLite.transaction("BEGIN TRANSACTION");
+                sqlite.transaction("BEGIN TRANSACTION");
 
                 Parser parser = new Parser();
                 for (Common.SMI_ID = 0; Common.SMI_ID < Common.SMI_LINK.size(); Common.SMI_ID++) {
@@ -76,14 +74,12 @@ public class ConsoleSearch extends SearchUtils {
                                 j++;
                                 SyndEntry entry = (SyndEntry) message;
                                 SyndContent content = entry.getDescription();
-                                String smi_source = Common.SMI_SOURCE.get(Common.SMI_ID);
+                                String smiSource = Common.SMI_SOURCE.get(Common.SMI_ID);
                                 String title = entry.getTitle();
                                 assert content != null;
                                 String newsDescribe = content.getValue()
                                         .trim()
-                                        .replace("<p>", "")
-                                        .replace("</p>", "")
-                                        .replace("<br />", "");
+                                        .replaceAll(("<p>|</p>|<br />"), "");
                                 if (isHref(newsDescribe)) newsDescribe = title;
                                 Date pubDate = entry.getPublishedDate();
                                 String dateToEmail = date_format.format(pubDate);
@@ -93,11 +89,11 @@ public class ConsoleSearch extends SearchUtils {
                                 if (pubDate.after(minDate)) checkDate = 1;
                                 else checkDate = 0;
 
-                                for (String it : keywordsFromConsole) {
-                                    if (it.equals(keywordsFromConsole[0]) || it.equals(keywordsFromConsole[1]))
+                                for (String arg : args) {
+                                    if (arg.equals(args[0]) || arg.equals(args[1]))
                                         continue;
 
-                                    if (title.toLowerCase().contains(it.toLowerCase()) && title.length() > 15 && checkDate == 1) {
+                                    if (title.toLowerCase().contains(arg.toLowerCase()) && title.length() > 15 && checkDate == 1) {
                                         // отсеиваем новости которые были обнаружены ранее
                                         if (jdbcQueries.isTitleExists(title, SQLite.connection)
                                                 && SQLite.isConnectionToSQLite) {
@@ -111,7 +107,7 @@ public class ConsoleSearch extends SearchUtils {
                                         if (date_diff != 0) { // если новость between Main.minutesIntervalForConsoleSearch and currentDate
                                             newsCount++;
                                             dataForEmail.add(newsCount + ") " + title + "\n" + link + "\n" + newsDescribe + "\n" +
-                                                    smi_source + " - " + dateToEmail);
+                                                    smiSource + " - " + dateToEmail);
                                             /**/
                                             System.out.println(newsCount + ") " + title);
                                             /**/
@@ -130,7 +126,7 @@ public class ConsoleSearch extends SearchUtils {
                 isSearchNow.set(false);
 
                 // коммит транзакции
-                sqLite.transaction("COMMIT");
+                sqlite.transaction("COMMIT");
 
                 // удаляем все пустые строки
                 jdbcQueries.deleteEmptyRows(SQLite.connection);
@@ -147,7 +143,7 @@ public class ConsoleSearch extends SearchUtils {
             } catch (Exception e) {
                 e.printStackTrace();
                 try {
-                    sqLite.transaction("ROLLBACK");
+                    sqlite.transaction("ROLLBACK");
                 } catch (SQLException sql) {
                     sql.printStackTrace();
                 }

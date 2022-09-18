@@ -14,6 +14,7 @@ import java.io.IOException;
 public class Main {
 
     public static void main(String[] args) throws IOException {
+        log.info("Application started");
         Common.createFiles();
 
         if (args.length == 0) {
@@ -30,7 +31,6 @@ public class Main {
     }
 
     private void mainSearch() throws IOException {
-        log.info("Application started");
         Common.getSettingsBeforeGui();
         Common.setGuiTheme();
 

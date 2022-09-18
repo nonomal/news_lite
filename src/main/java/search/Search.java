@@ -101,9 +101,7 @@ public class Search extends SearchUtils {
                                 assert content != null;
                                 String newsDescribe = content.getValue()
                                         .trim()
-                                        .replace("<p>", "")
-                                        .replace("</p>", "")
-                                        .replace("<br />", "");
+                                        .replaceAll(("<p>|</p>|<br />"), "");
                                 if (isHref(newsDescribe)) newsDescribe = title;
                                 Date pubDate = entry.getPublishedDate();
                                 String dateToEmail = date_format.format(pubDate);
