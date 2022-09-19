@@ -25,8 +25,13 @@ public class EmailManager {
 
         if (!ConsoleSearch.IS_CONSOLE_SEARCH.get()) {
             String to = Gui.sendEmailTo.getText();
-            // Отправка из GUI
 
+            if (!fromAdr.contains("@")||!to.contains("@")) {
+                Common.console("error: incorrect e-mail");
+                return;
+            }
+
+            // Отправка из GUI
             for (String s : Search.dataForEmail) {
                 text.append(s).append("\n\n");
             }
@@ -85,5 +90,5 @@ public class EmailManager {
             e.printStackTrace();
         }
     }
-}
 
+}

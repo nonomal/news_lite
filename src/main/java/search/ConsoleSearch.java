@@ -6,6 +6,7 @@ import com.sun.syndication.feed.synd.SyndFeed;
 import database.JdbcQueries;
 import database.SQLite;
 import email.EmailManager;
+import exception.IncorrectEmail;
 import gui.Gui;
 import lombok.extern.slf4j.Slf4j;
 import model.Source;
@@ -48,6 +49,10 @@ public class ConsoleSearch extends SearchUtils {
     public void searchByConsole(String[] args) {
         IS_CONSOLE_SEARCH.set(true);
         sendEmailToFromConsole = args[0];
+        if (!sendEmailToFromConsole.contains("@")) {
+            throw new IncorrectEmail("incorrect e-mail");
+        }
+
         minutesIntervalConsole = Integer.parseInt(args[1]);
         sqlite.openConnection();
         System.out.println(Arrays.toString(args));

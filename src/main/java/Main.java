@@ -1,11 +1,7 @@
-import gui.FrameDragListener;
-import gui.Gui;
 import lombok.extern.slf4j.Slf4j;
 import search.ConsoleSearch;
 import utils.Common;
-import utils.InternetAvailabilityChecker;
 
-import javax.swing.*;
 import java.io.IOException;
 
 @Slf4j
@@ -16,7 +12,7 @@ public class Main {
         Common.createFiles();
 
         if (args.length == 0) {
-            new Main().mainSearch();
+            Common.showGui();
         } else {
             /*
               Main arguments for console search:
@@ -25,26 +21,6 @@ public class Main {
               args3 = keyword1, keyword2 ... argsN = search keywords
              */
             new ConsoleSearch().searchByConsole(args);
-        }
-    }
-
-    private void mainSearch() throws IOException {
-        Common.getSettingsBeforeGui();
-        Common.setGuiTheme();
-
-        Gui gui = new Gui();
-        Runnable runnable = () -> {
-            FrameDragListener frameDragListener = new FrameDragListener(gui);
-            gui.addMouseListener(frameDragListener);
-            gui.addMouseMotionListener(frameDragListener);
-        };
-        SwingUtilities.invokeLater(runnable);
-
-        Common.getSettingsAfterGui();
-
-        // check internet
-        if (!InternetAvailabilityChecker.isInternetAvailable()) {
-            Common.console("status: no internet connection");
         }
     }
 }

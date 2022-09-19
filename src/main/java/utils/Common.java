@@ -4,6 +4,7 @@ import com.formdev.flatlaf.intellijthemes.FlatHiberbeeDarkIJTheme;
 import database.JdbcQueries;
 import database.SQLite;
 import gui.Dialogs;
+import gui.FrameDragListener;
 import gui.Gui;
 import lombok.experimental.UtilityClass;
 import lombok.extern.slf4j.Slf4j;
@@ -41,6 +42,26 @@ public class Common {
     public String SCRIPT_URL = null;
     public float OPACITY;
     public final List<String> EXCLUDE_WORDS = new ArrayList<>();
+
+    public void showGui() throws IOException {
+        getSettingsBeforeGui();
+        setGuiTheme();
+
+        Gui gui = new Gui();
+        Runnable runnable = () -> {
+            FrameDragListener frameDragListener = new FrameDragListener(gui);
+            gui.addMouseListener(frameDragListener);
+            gui.addMouseMotionListener(frameDragListener);
+        };
+        SwingUtilities.invokeLater(runnable);
+
+        getSettingsAfterGui();
+
+        // check internet
+        if (!InternetAvailabilityChecker.isInternetAvailable()) {
+            console("status: no internet connection");
+        }
+    }
 
     // создание файлов и директорий
     public static void createFiles() {
