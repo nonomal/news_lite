@@ -88,7 +88,9 @@ public class JdbcQueries {
 
                 ResultSet rs = st.executeQuery();
                 while (rs.next()) {
-                    excludedWords.add(new Excluded(rs.getInt("id"), rs.getString("word")));
+                    excludedWords.add(new Excluded(
+                            rs.getInt("id"),
+                            rs.getString("word")));
                 }
                 rs.close();
                 st.close();
@@ -148,7 +150,7 @@ public class JdbcQueries {
     }
 
     // вставка кода по заголовку для отсеивания ранее обнаруженных новостей
-    public void insertTitleIn256(String pTitle, Connection connection) {
+    public void insertTitles(String pTitle, Connection connection) {
         if (SQLite.isConnectionToSQLite) {
             try {
                 String query = "INSERT INTO titles256(title) VALUES (?)";
@@ -163,13 +165,13 @@ public class JdbcQueries {
     }
 
     // сохранение всех заголовков
-    public void insertAllTitles(String pTitle, String pDate, Connection connection) {
+    public void insertAllTitlesToArchive(String title, String date, Connection connection) {
         if (SQLite.isConnectionToSQLite) {
             try {
                 String query = "INSERT INTO ALL_NEWS(TITLE, NEWS_DATE) VALUES (?, ?)";
                 PreparedStatement st = connection.prepareStatement(query);
-                st.setString(1, pTitle);
-                st.setString(2, pDate);
+                st.setString(1, title);
+                st.setString(2, date);
                 st.executeUpdate();
                 st.close();
             } catch (SQLException e) {
@@ -179,13 +181,13 @@ public class JdbcQueries {
     }
 
     // отсеивание заголовков
-    public boolean isTitleExists(String pString256, Connection connection) {
+    public boolean isTitleExists(String title, Connection connection) {
         int isExists = 0;
         if (SQLite.isConnectionToSQLite) {
             try {
-                String query = "SELECT MAX(1) FROM TITLES256 WHERE EXISTS (SELECT TITLE FROM TITLES256 T WHERE T.TITLE = ?)";
+                String query = "SELECT MAX(1) FROM titles256 WHERE EXISTS (SELECT title FROM titles256 t WHERE t.title = ?)";
                 PreparedStatement st = connection.prepareStatement(query);
-                st.setString(1, pString256);
+                st.setString(1, title);
 
                 ResultSet rs = st.executeQuery();
                 while (rs.next()) {

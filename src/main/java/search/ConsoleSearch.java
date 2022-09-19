@@ -110,7 +110,7 @@ public class ConsoleSearch extends SearchUtils {
                                             /**/
                                             System.out.println(newsCount + ") " + title);
                                             /**/
-                                            jdbcQueries.insertTitleIn256(title, SQLite.connection);
+                                            jdbcQueries.insertTitles(title, SQLite.connection);
                                         }
                                     }
                                 }

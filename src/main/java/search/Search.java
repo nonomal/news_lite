@@ -129,7 +129,7 @@ public class Search extends SearchUtils {
                                         int date_diff = Common.compareDatesOnly(currentDate, pubDate);
 
                                         // вставка всех новостей в архив (ощутимо замедляет общий поиск)
-                                        jdbcQueries.insertAllTitles(title, pubDate.toString(), SQLite.connection);
+                                        jdbcQueries.insertAllTitlesToArchive(title, pubDate.toString(), SQLite.connection);
 
                                         mainSearchProcess(jdbcQueries, st, smi_source, title, newsDescribe, pubDate, dateToEmail, link, date_diff);
                                     }
@@ -248,7 +248,7 @@ public class Search extends SearchUtils {
                     st.executeUpdate();
                 }
             }
-            sqlite.insertTitleIn256(title, SQLite.connection);
+            sqlite.insertTitles(title, SQLite.connection);
         }
     }
 }

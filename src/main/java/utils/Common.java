@@ -7,7 +7,6 @@ import gui.Dialogs;
 import gui.Gui;
 import lombok.experimental.UtilityClass;
 import lombok.extern.slf4j.Slf4j;
-import main.Main;
 import model.Excluded;
 import model.Keyword;
 import model.Source;
@@ -66,23 +65,23 @@ public class Common {
         // создание файлов программы
         File sqliteExeIsExists = new File(DIRECTORY_PATH + "sqlite3.exe");
         if (!sqliteExeIsExists.exists()) {
-            Common.copyFiles(Main.class.getResource("/sqlite3.exe"), DIRECTORY_PATH + "sqlite3.exe");
+            copyFiles(Common.class.getResource("/sqlite3.exe"), DIRECTORY_PATH + "sqlite3.exe");
         }
         File sqliteDllIsExists = new File(DIRECTORY_PATH + "sqlite3.dll");
         if (!sqliteDllIsExists.exists()) {
-            Common.copyFiles(Main.class.getResource("/sqlite3.dll"), DIRECTORY_PATH + "sqlite3.dll");
+            copyFiles(Common.class.getResource("/sqlite3.dll"), DIRECTORY_PATH + "sqlite3.dll");
         }
         File sqliteDefIsExists = new File(DIRECTORY_PATH + "sqlite3.def");
         if (!sqliteDefIsExists.exists()) {
-            Common.copyFiles(Main.class.getResource("/sqlite3.def"), DIRECTORY_PATH + "sqlite3.def");
+            copyFiles(Common.class.getResource("/sqlite3.def"), DIRECTORY_PATH + "sqlite3.def");
         }
         File dbIsExists = new File(DIRECTORY_PATH + "news.db");
         if (!dbIsExists.exists()) {
-            Common.copyFiles(Main.class.getResource("/news.db"), DIRECTORY_PATH + "news.db");
+            copyFiles(Common.class.getResource("/news.db"), DIRECTORY_PATH + "news.db");
         }
         File configIsExists = new File(DIRECTORY_PATH + "config.txt");
         if (!configIsExists.exists()) {
-            Common.copyFiles(Main.class.getResource("/config.txt"), CONFIG_FILE);
+            copyFiles(Common.class.getResource("/config.txt"), CONFIG_FILE);
         }
     }
 

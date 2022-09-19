@@ -1,4 +1,3 @@
-import main.Main;
 import org.junit.jupiter.api.Test;
 import utils.Common;
 import utils.InternetAvailabilityChecker;

@@ -1,5 +1,3 @@
-package main;
-
 import gui.FrameDragListener;
 import gui.Gui;
 import lombok.extern.slf4j.Slf4j;
