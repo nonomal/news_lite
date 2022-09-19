@@ -17,14 +17,15 @@ import java.util.List;
 @Slf4j
 public class JdbcQueries {
     private static final int WORD_FREQ_MATCHES = 2;
+    private PreparedStatement st;
 
-    // Заполняем таблицу анализа
+    // Заполнение таблицы анализа
     public void selectSqlite(Connection connection) {
         try {
             String query = "SELECT SUM, TITLE FROM V_NEWS_DUAL WHERE SUM > ? " +
                     "AND TITLE NOT IN (SELECT WORD FROM ALL_TITLES_TO_EXCLUDE) " +
                     "ORDER BY SUM DESC";
-            PreparedStatement st = connection.prepareStatement(query);
+            st = connection.prepareStatement(query);
             st.setInt(1, WORD_FREQ_MATCHES);
 
             ResultSet rs = st.executeQuery();
@@ -57,7 +58,7 @@ public class JdbcQueries {
 
         if (SQLite.isConnectionToSQLite) {
             try {
-                PreparedStatement st = connection.prepareStatement(query);
+                st = connection.prepareStatement(query);
                 ResultSet rs = st.executeQuery();
 
                 while (rs.next()) {
@@ -84,7 +85,7 @@ public class JdbcQueries {
         if (SQLite.isConnectionToSQLite) {
             try {
                 String query = "SELECT id, word FROM exclude ORDER BY id DESC";
-                PreparedStatement st = connection.prepareStatement(query);
+                st = connection.prepareStatement(query);
 
                 ResultSet rs = st.executeQuery();
                 while (rs.next()) {
@@ -114,7 +115,7 @@ public class JdbcQueries {
 
                 if (result == JOptionPane.YES_OPTION) {
                     String query = "INSERT INTO RSS_LIST(SOURCE, LINK) VALUES (?, ?)";
-                    PreparedStatement st = connection.prepareStatement(query);
+                    st = connection.prepareStatement(query);
                     st.setString(1, rss.getText());
                     st.setString(2, link.getText());
                     st.executeUpdate();
@@ -136,7 +137,7 @@ public class JdbcQueries {
         if (SQLite.isConnectionToSQLite) {
             try {
                 String query = "INSERT INTO exclude(word) VALUES (?)";
-                PreparedStatement st = connection.prepareStatement(query);
+                st = connection.prepareStatement(query);
                 st.setString(1, word);
                 st.executeUpdate();
                 st.close();
@@ -153,8 +154,8 @@ public class JdbcQueries {
     public void insertTitles(String pTitle, Connection connection) {
         if (SQLite.isConnectionToSQLite) {
             try {
-                String query = "INSERT INTO titles256(title) VALUES (?)";
-                PreparedStatement st = connection.prepareStatement(query);
+                String query = "INSERT INTO titles(title) VALUES (?)";
+                st = connection.prepareStatement(query);
                 st.setString(1, pTitle);
                 st.executeUpdate();
                 st.close();
@@ -169,7 +170,7 @@ public class JdbcQueries {
         if (SQLite.isConnectionToSQLite) {
             try {
                 String query = "INSERT INTO ALL_NEWS(TITLE, NEWS_DATE) VALUES (?, ?)";
-                PreparedStatement st = connection.prepareStatement(query);
+                st = connection.prepareStatement(query);
                 st.setString(1, title);
                 st.setString(2, date);
                 st.executeUpdate();
@@ -185,8 +186,8 @@ public class JdbcQueries {
         int isExists = 0;
         if (SQLite.isConnectionToSQLite) {
             try {
-                String query = "SELECT MAX(1) FROM titles256 WHERE EXISTS (SELECT title FROM titles256 t WHERE t.title = ?)";
-                PreparedStatement st = connection.prepareStatement(query);
+                String query = "SELECT MAX(1) FROM titles WHERE EXISTS (SELECT title FROM titles t WHERE t.title = ?)";
+                st = connection.prepareStatement(query);
                 st.setString(1, title);
 
                 ResultSet rs = st.executeQuery();
@@ -209,7 +210,7 @@ public class JdbcQueries {
         if (SQLite.isConnectionToSQLite) {
             try {
                 String query = "SELECT COUNT(*) FROM ALL_NEWS";
-                PreparedStatement st = connection.prepareStatement(query);
+                st = connection.prepareStatement(query);
 
                 ResultSet rs = st.executeQuery();
                 while (rs.next()) {
@@ -229,7 +230,7 @@ public class JdbcQueries {
         if (SQLite.isConnectionToSQLite) {
             try {
                 String query = "DELETE FROM rss_list WHERE source = ?";
-                PreparedStatement st = connection.prepareStatement(query);
+                st = connection.prepareStatement(query);
                 st.setString(1, source);
 
                 st.executeUpdate();
@@ -245,7 +246,7 @@ public class JdbcQueries {
         if (SQLite.isConnectionToSQLite) {
             try {
                 String query = "DELETE FROM EXCLUDE WHERE WORD = ?";
-                PreparedStatement st = connection.prepareStatement(query);
+                st = connection.prepareStatement(query);
                 st.setString(1, p_source);
 
                 st.executeUpdate();
@@ -261,7 +262,7 @@ public class JdbcQueries {
         if (SQLite.isConnectionToSQLite) {
             try {
                 String query = "UPDATE RSS_LIST SET IS_ACTIVE = ? WHERE SOURCE = ?";
-                PreparedStatement st = connection.prepareStatement(query);
+                st = connection.prepareStatement(query);
                 st.setBoolean(1, pBoolean);
                 st.setString(2, pSource);
                 st.executeUpdate();
@@ -278,7 +279,7 @@ public class JdbcQueries {
             try {
                 String query = "DELETE FROM ALL_NEWS WHERE ROWID NOT IN (SELECT MIN(ROWID) " +
                         "FROM ALL_NEWS GROUP BY TITLE, NEWS_DATE)";
-                PreparedStatement st = connection.prepareStatement(query);
+                st = connection.prepareStatement(query);
                 st.executeUpdate();
                 st.close();
             } catch (Exception e) {
@@ -290,14 +291,14 @@ public class JdbcQueries {
     // удаляем все пустые строки
     public void deleteEmptyRows(Connection connection) throws SQLException {
         String query = "DELETE FROM NEWS_DUAL WHERE TITLE = ''";
-        PreparedStatement delete = connection.prepareStatement(query);
-        delete.executeUpdate();
+        st = connection.prepareStatement(query);
+        st.executeUpdate();
     }
 
     public void deleteFromTable(String tableName, Connection connection) {
         try {
             String query = "DELETE FROM " + tableName;
-            PreparedStatement st = connection.prepareStatement(query);
+            st = connection.prepareStatement(query);
             st.executeUpdate();
             st.close();
         } catch (Exception e) {

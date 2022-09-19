@@ -21,7 +21,7 @@ public class DatabaseTest {
         sqlite = new SQLite();
         sqlite.openConnection();
         Connection connection = DriverManager.getConnection("jdbc:sqlite:" + Common.DIRECTORY_PATH + "news.db");
-        new JdbcQueries().deleteFromTable("TITLES256", connection);
+        new JdbcQueries().deleteFromTable("TITLES", connection);
     }
 
     @AfterEach

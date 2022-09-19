@@ -99,8 +99,7 @@ public class ConsoleSearch extends SearchUtils {
 
                                     if (title.toLowerCase().contains(arg.toLowerCase()) && title.length() > 15 && checkDate == 1) {
                                         // отсеиваем новости которые были обнаружены ранее
-                                        if (jdbcQueries.isTitleExists(title, SQLite.connection)
-                                                && SQLite.isConnectionToSQLite) {
+                                        if (jdbcQueries.isTitleExists(title, SQLite.connection)) {
                                             continue;
                                         }
 
@@ -120,8 +119,6 @@ public class ConsoleSearch extends SearchUtils {
                                     }
                                 }
                             }
-                            // удалять новости, чтобы были вообще все, даже те, которые уже были обнаружены
-                            //sqlite.deleteFrom256();
                         } catch (Exception ignored) {
                         }
                     } catch (Exception ignored) {

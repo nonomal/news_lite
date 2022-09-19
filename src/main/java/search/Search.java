@@ -32,7 +32,7 @@ public class Search extends SearchUtils {
     public static AtomicBoolean isStop;
     public static AtomicBoolean isSearchNow;
     public static AtomicBoolean isSearchFinished;
-    public static int j = 1;
+//    public static int j = 1;
     final DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm");
     final LocalDateTime now = LocalDateTime.now();
     public final String today = dtf.format(now);
@@ -63,7 +63,7 @@ public class Search extends SearchUtils {
             List<Source> activeSources = jdbcQueries.getSources("active", SQLite.connection);
             isSearchNow.set(true);
             timeStart = LocalTime.now();
-            Search.j = 1;
+//            Search.j = 1;
             if (!Gui.GUI_IN_TRAY.get()) Gui.model.setRowCount(0);
             if (!Gui.WAS_CLICK_IN_TABLE_FOR_ANALYSIS.get()) Gui.modelForAnalysis.setRowCount(0);
             newsCount = 0;
@@ -93,7 +93,7 @@ public class Search extends SearchUtils {
                             if (isStop.get()) return;
                             SyndFeed feed = parser.parseFeed(source.getLink());
                             for (Object message : feed.getEntries()) {
-                                j++;
+//                                j++;
                                 SyndEntry entry = (SyndEntry) message;
                                 SyndContent content = entry.getDescription();
                                 String smi_source = source.getSource();
@@ -107,7 +107,7 @@ public class Search extends SearchUtils {
                                 String dateToEmail = date_format.format(pubDate);
                                 String link = entry.getLink();
 
-                                // отсеиваем новости ранее 01.01.2021
+                                // отсеиваем новости ранее 01.01.2022
                                 if (pubDate.after(minDate)) checkDate = 1;
                                 else checkDate = 0;
 
@@ -119,14 +119,12 @@ public class Search extends SearchUtils {
                                             && !title.toLowerCase().contains(excludeFromSearch.get(2))
                                     ) {
                                         //отсеиваем новости, которые уже были найдены ранее
-                                        if (jdbcQueries.isTitleExists(title , SQLite.connection)
-                                                && SQLite.isConnectionToSQLite) {
+                                        if (jdbcQueries.isTitleExists(title , SQLite.connection)) {
                                             continue;
                                         }
 
                                         //Data for a table
-                                        Date currentDate = new Date();
-                                        int date_diff = Common.compareDatesOnly(currentDate, pubDate);
+                                        int date_diff = Common.compareDatesOnly(new Date(), pubDate);
 
                                         // вставка всех новостей в архив (ощутимо замедляет общий поиск)
                                         jdbcQueries.insertAllTitlesToArchive(title, pubDate.toString(), SQLite.connection);
@@ -139,14 +137,12 @@ public class Search extends SearchUtils {
                                                 && title.length() > 15 && checkDate == 1) {
 
                                             // отсеиваем новости которые были обнаружены ранее
-                                            if (jdbcQueries.isTitleExists(title, SQLite.connection)
-                                                    && SQLite.isConnectionToSQLite) {
+                                            if (jdbcQueries.isTitleExists(title, SQLite.connection)) {
                                                 continue;
                                             }
 
                                             //Data for a table
-                                            Date currentDate = new Date();
-                                            int date_diff = Common.compareDatesOnly(currentDate, pubDate);
+                                            int date_diff = Common.compareDatesOnly(new Date(), pubDate);
 
                                             mainSearchProcess(jdbcQueries, st, smi_source, title, newsDescribe, pubDate, dateToEmail, link, date_diff);
                                         }
@@ -154,9 +150,9 @@ public class Search extends SearchUtils {
                                 }
                                 if (isStop.get()) return;
                             }
-                            if (!Gui.isOnlyLastNews && SQLite.isConnectionToSQLite)
-                                jdbcQueries.deleteFromTable("TITLES256", SQLite.connection);
-                        } catch (Exception no_rss) {
+                            if (!Gui.isOnlyLastNews)
+                                jdbcQueries.deleteFromTable("TITLES", SQLite.connection);
+                        } catch (Exception noRss) {
                             String smi = source.getLink()
                                     .replaceAll(("https://|http://|www."), "");
                             smi = smi.substring(0, smi.indexOf("/"));
@@ -164,7 +160,7 @@ public class Search extends SearchUtils {
                             log.warn("rss is not available: " + smi);
                         }
                     } catch (Exception e) {
-                        Common.console("status: to many news.. please restart the application!");
+                        Common.console("error: restart the application!");
                         log.warn("error: restart the application!");
                         isStop.set(true);
                     }
@@ -240,11 +236,10 @@ public class Search extends SearchUtils {
                     newsCount, smi_source, title, dateFormatHoursFirst.format(pubDate), link
             });
 
-            String[] subStr = title.split(" ");
-            for (String s : subStr) {
+            String[] substr = title.split(" ");
+            for (String s : substr) {
                 if (s.length() > 3) {
-                    assert st != null;
-                    st.setString(1, Common.delNoLetter(s).toLowerCase());
+                    st.setString(1, s);
                     st.executeUpdate();
                 }
             }
