@@ -1,7 +1,5 @@
 package utils;
 
-import com.ibm.icu.text.Transliterator;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -22,7 +20,7 @@ public class Translator {
             URL url = new URL(urlStr);
             response = new StringBuilder();
             HttpURLConnection con = (HttpURLConnection) url.openConnection();
-            con.setRequestProperty("User-Agent", "Mozilla/5.0");
+            con.setRequestProperty("User-Agent", "");
             BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
             String inputLine;
             while ((inputLine = in.readLine()) != null) {
@@ -32,13 +30,6 @@ public class Translator {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        return translit(response.toString());
-    }
-
-    public String translit(String text) {
-        String CYRILLIC_TO_LATIN = "Russian-Latin/BGN";
-
-        Transliterator toLatinTrans = Transliterator.getInstance(CYRILLIC_TO_LATIN);
-        return toLatinTrans.transliterate(text);
+        return response.toString();
     }
 }
