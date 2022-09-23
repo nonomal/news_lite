@@ -71,6 +71,9 @@ public class Gui extends JFrame {
     public static JProgressBar progressBar;
     public static Timer timer;
     public static TimerTask timerTask;
+    private Thread wordSearch;
+    private Thread wordsThread;
+
 
     public Gui() {
         this.setResizable(false);
@@ -270,7 +273,10 @@ public class Gui extends JFrame {
         getRootPane().setDefaultButton(searchBtnTop);
         searchBtnTop.requestFocus();
         searchBtnTop.doClick();
-        searchBtnTop.addActionListener(e -> new Thread(() -> search.mainSearch("word")).start());
+        searchBtnTop.addActionListener(e -> {
+            wordSearch = new Thread(() -> search.mainSearch("word"));
+            wordSearch.start();
+        });
 
         //Stop addNewSource
         stopBtnTop = new JButton();
@@ -279,6 +285,7 @@ public class Gui extends JFrame {
         stopBtnTop.setBounds(192, topLeftActionY, 30, 22);
         stopBtnTop.addActionListener(e -> {
             try {
+                wordSearch.interrupt();
                 Search.isSearchFinished.set(true);
                 Search.isStop.set(true);
                 Common.console("status: search stopped");
@@ -577,15 +584,19 @@ public class Gui extends JFrame {
         searchBtnBottom = new JButton();
         setButton = new SetButton(Icons.SEARCH_KEYWORDS_ICON, new Color(154, 237, 196), 261, 561);
         setButton.buttonSetting(searchBtnBottom, "Search by keywords");
-        searchBtnBottom.addActionListener(e -> new Thread(() -> search.mainSearch("words")).start());
+        searchBtnBottom.addActionListener(e -> {
+            wordsThread = new Thread(() -> search.mainSearch("words"));
+            wordsThread.start();
+        });
         getContentPane().add(searchBtnBottom);
 
-        //Stop addNewSource (bottom)
+        //Stop (bottom)
         stopBtnBottom = new JButton();
         setButton = new SetButton(Icons.STOP_SEARCH_ICON, new Color(255, 208, 202), 261, 561);
         setButton.buttonSetting(stopBtnBottom, null);
         stopBtnBottom.addActionListener(e -> {
             try {
+                wordsThread.interrupt();
                 Search.isSearchFinished.set(true);
                 Search.isStop.set(true);
                 Common.console("status: search stopped");
