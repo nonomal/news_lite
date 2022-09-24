@@ -39,7 +39,7 @@ public class JdbcQueries {
             rs.close();
             st.close();
         } catch (Exception e) {
-            Common.console("error: " + e.getMessage());
+            Common.console("selectSqlite error: " + e.getMessage());
         }
     }
 
@@ -56,25 +56,23 @@ public class JdbcQueries {
                     "WHERE is_active = 1 ORDER BY position";
         }
 
-        if (SQLite.isConnectionToSQLite) {
-            try {
-                st = connection.prepareStatement(query);
-                ResultSet rs = st.executeQuery();
+        try {
+            st = connection.prepareStatement(query);
+            ResultSet rs = st.executeQuery();
 
-                while (rs.next()) {
-                    sources.add(Source.builder()
-                            .id(rs.getInt("id"))
-                            .source(rs.getString("source"))
-                            .link(rs.getString("link"))
-                            .isActive(rs.getBoolean("is_active"))
-                            .position(rs.getInt("position"))
-                            .build());
-                }
-                rs.close();
-                st.close();
-            } catch (Exception e) {
-                Common.console("error: " + e.getMessage());
+            while (rs.next()) {
+                sources.add(Source.builder()
+                        .id(rs.getInt("id"))
+                        .source(rs.getString("source"))
+                        .link(rs.getString("link"))
+                        .isActive(rs.getBoolean("is_active"))
+                        .position(rs.getInt("position"))
+                        .build());
             }
+            rs.close();
+            st.close();
+        } catch (Exception e) {
+            Common.console("getSources error: " + e.getMessage());
         }
         return sources;
     }
@@ -82,127 +80,115 @@ public class JdbcQueries {
     // исключённые из анализа слова
     public List<Excluded> getExcludedWords(Connection connection) {
         List<Excluded> excludedWords = new ArrayList<>();
-        if (SQLite.isConnectionToSQLite) {
-            try {
-                String query = "SELECT id, word FROM exclude ORDER BY id DESC";
-                st = connection.prepareStatement(query);
+        try {
+            String query = "SELECT id, word FROM exclude ORDER BY id DESC";
+            st = connection.prepareStatement(query);
 
-                ResultSet rs = st.executeQuery();
-                while (rs.next()) {
-                    excludedWords.add(new Excluded(
-                            rs.getInt("id"),
-                            rs.getString("word")));
-                }
-                rs.close();
-                st.close();
-            } catch (Exception e) {
-                Common.console("error: " + e.getMessage());
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                excludedWords.add(new Excluded(
+                        rs.getInt("id"),
+                        rs.getString("word")));
             }
+            rs.close();
+            st.close();
+        } catch (Exception e) {
+            Common.console("getExcludedWords error: " + e.getMessage());
         }
         return excludedWords;
     }
 
     // вставка нового источника
     public void insertNewSource(Connection connection) {
-        if (SQLite.isConnectionToSQLite) {
-            try {
-                // Диалоговое окно добавления источника новостей в базу данных
-                JTextField rss = new JTextField();
-                JTextField link = new JTextField();
-                Object[] newSource = {"Source:", rss, "Link to rss:", link};
-                int result = JOptionPane.showConfirmDialog(Gui.scrollPane, newSource,
-                        "New source", JOptionPane.OK_CANCEL_OPTION);
+        try {
+            // Диалоговое окно добавления источника новостей в базу данных
+            JTextField rss = new JTextField();
+            JTextField link = new JTextField();
+            Object[] newSource = {"Source:", rss, "Link to rss:", link};
+            int result = JOptionPane.showConfirmDialog(Gui.scrollPane, newSource,
+                    "New source", JOptionPane.OK_CANCEL_OPTION);
 
-                if (result == JOptionPane.YES_OPTION) {
-                    String query = "INSERT INTO RSS_LIST(SOURCE, LINK) VALUES (?, ?)";
-                    st = connection.prepareStatement(query);
-                    st.setString(1, rss.getText());
-                    st.setString(2, link.getText());
-                    st.executeUpdate();
-                    st.close();
+            if (result == JOptionPane.YES_OPTION) {
+                String query = "INSERT INTO RSS_LIST(SOURCE, LINK) VALUES (?, ?)";
+                st = connection.prepareStatement(query);
+                st.setString(1, rss.getText());
+                st.setString(2, link.getText());
+                st.executeUpdate();
+                st.close();
 
-                    Common.console("status: source added");
-                    log.info("New source added: " + rss.getText());
-                } else {
-                    Common.console("status: adding source canceled");
-                }
-            } catch (Exception e) {
-                Common.console("error: " + e.getMessage());
+                Common.console("status: source added");
+                log.info("New source added: " + rss.getText());
+            } else {
+                Common.console("status: adding source canceled");
             }
+        } catch (Exception e) {
+            Common.console("insertNewSource error: " + e.getMessage());
         }
     }
 
     // вставка нового слова для исключения из анализа частоты употребления слов
     public void insertNewExcludedWord(String word, Connection connection) {
-        if (SQLite.isConnectionToSQLite) {
-            try {
-                String query = "INSERT INTO exclude(word) VALUES (?)";
-                st = connection.prepareStatement(query);
-                st.setString(1, word);
-                st.executeUpdate();
-                st.close();
+        try {
+            String query = "INSERT INTO exclude(word) VALUES (?)";
+            st = connection.prepareStatement(query);
+            st.setString(1, word);
+            st.executeUpdate();
+            st.close();
 
-                Common.console("status: word \"" + word + "\" excluded from analysis");
-                log.info("New word excluded from analysis");
-            } catch (Exception e) {
-                Common.console("error: " + e.getMessage());
-            }
+            Common.console("status: word \"" + word + "\" excluded from analysis");
+            log.info("New word excluded from analysis");
+        } catch (Exception e) {
+            Common.console("insertNewExcludedWord error: " + e.getMessage());
         }
     }
 
     // вставка кода по заголовку для отсеивания ранее обнаруженных новостей
     public void insertTitles(String title, String type, Connection connection) {
-        if (SQLite.isConnectionToSQLite) {
-            try {
-                String query = "INSERT INTO titles(title, type) VALUES (?, ?)";
-                st = connection.prepareStatement(query);
-                st.setString(1, title);
-                st.setString(2, type);
-                st.executeUpdate();
-                st.close();
-            } catch (SQLException e) {
-                Common.console("error: " + e.getMessage());
-            }
+        try {
+            String query = "INSERT INTO titles(title, type) VALUES (?, ?)";
+            st = connection.prepareStatement(query);
+            st.setString(1, title);
+            st.setString(2, type);
+            st.executeUpdate();
+            st.close();
+        } catch (SQLException e) {
+            Common.console("insertTitles error: " + e.getMessage());
         }
     }
 
     // сохранение всех заголовков
     public void insertAllTitlesToArchive(String title, String date, Connection connection) {
-        if (SQLite.isConnectionToSQLite) {
-            try {
-                String query = "INSERT INTO ALL_NEWS(TITLE, NEWS_DATE) VALUES (?, ?)";
-                st = connection.prepareStatement(query);
-                st.setString(1, title);
-                st.setString(2, date);
-                st.executeUpdate();
-                st.close();
-            } catch (SQLException e) {
-                Common.console("error: " + e.getMessage());
-            }
+        try {
+            String query = "INSERT INTO ALL_NEWS(TITLE, NEWS_DATE) VALUES (?, ?)";
+            st = connection.prepareStatement(query);
+            st.setString(1, title);
+            st.setString(2, date);
+            st.executeUpdate();
+            st.close();
+        } catch (SQLException e) {
+            Common.console("insertAllTitlesToArchive error: " + e.getMessage());
         }
     }
 
     // отсеивание заголовков
     public boolean isTitleExists(String title, String type, Connection connection) {
         int isExists = 0;
-        if (SQLite.isConnectionToSQLite) {
-            try {
-                String query = "SELECT MAX(1) FROM titles " +
-                        "WHERE EXISTS (SELECT title FROM titles t WHERE t.title = ? AND t.type = ?)";
-                st = connection.prepareStatement(query);
-                st.setString(1, title);
-                st.setString(2, type);
+        try {
+            String query = "SELECT MAX(1) FROM titles " +
+                    "WHERE EXISTS (SELECT title FROM titles t WHERE t.title = ? AND t.type = ?)";
+            st = connection.prepareStatement(query);
+            st.setString(1, title);
+            st.setString(2, type);
 
-                ResultSet rs = st.executeQuery();
-                while (rs.next()) {
-                    isExists = rs.getInt(1);
-                }
-                rs.close();
-                st.close();
-
-            } catch (Exception e) {
-                Common.console("error: " + e.getMessage());
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                isExists = rs.getInt(1);
             }
+            rs.close();
+            st.close();
+
+        } catch (Exception e) {
+            Common.console("isTitleExists error: " + e.getMessage());
         }
         return isExists == 1;
     }
@@ -210,53 +196,47 @@ public class JdbcQueries {
     // новостей в архиве всего
     public int archiveNewsCount(Connection connection) {
         int countNews = 0;
-        if (SQLite.isConnectionToSQLite) {
-            try {
-                String query = "SELECT COUNT(*) FROM ALL_NEWS";
-                st = connection.prepareStatement(query);
+        try {
+            String query = "SELECT COUNT(*) FROM ALL_NEWS";
+            st = connection.prepareStatement(query);
 
-                ResultSet rs = st.executeQuery();
-                while (rs.next()) {
-                    countNews = rs.getInt(1);
-                }
-                rs.close();
-                st.close();
-            } catch (Exception e) {
-                Common.console("error: " + e.getMessage());
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                countNews = rs.getInt(1);
             }
+            rs.close();
+            st.close();
+        } catch (Exception e) {
+            Common.console("archiveNewsCount error: " + e.getMessage());
         }
         return countNews;
     }
 
     // удаление источника
     public void deleteSource(String source, Connection connection) {
-        if (SQLite.isConnectionToSQLite) {
-            try {
-                String query = "DELETE FROM rss_list WHERE source = ?";
-                st = connection.prepareStatement(query);
-                st.setString(1, source);
-
-                st.executeUpdate();
-                st.close();
-            } catch (Exception e) {
-                Common.console("error: " + e.getMessage());
-            }
+        try {
+            String query = "DELETE FROM rss_list WHERE source = ?";
+            st = connection.prepareStatement(query);
+            st.setString(1, source);
+            st.executeUpdate();
+            st.close();
+        } catch (Exception e) {
+            Common.console("deleteSource error: " + e.getMessage());
         }
+
     }
 
     // удаление слова исключенного из поиска
     public void deleteExcluded(String p_source, Connection connection) {
-        if (SQLite.isConnectionToSQLite) {
-            try {
-                String query = "DELETE FROM EXCLUDE WHERE WORD = ?";
-                st = connection.prepareStatement(query);
-                st.setString(1, p_source);
+        try {
+            String query = "DELETE FROM EXCLUDE WHERE WORD = ?";
+            st = connection.prepareStatement(query);
+            st.setString(1, p_source);
 
-                st.executeUpdate();
-                st.close();
-            } catch (Exception e) {
-                Common.console("status: " + e.getMessage());
-            }
+            st.executeUpdate();
+            st.close();
+        } catch (Exception e) {
+            Common.console("deleteExcluded error: " + e.getMessage());
         }
     }
 
@@ -271,7 +251,7 @@ public class JdbcQueries {
                 st.executeUpdate();
                 st.close();
             } catch (Exception e) {
-                e.printStackTrace();
+                Common.console("updateIsActiveStatus error: " + e.getMessage());
             }
         }
     }
@@ -286,7 +266,7 @@ public class JdbcQueries {
                 st.executeUpdate();
                 st.close();
             } catch (Exception e) {
-                e.printStackTrace();
+                Common.console("deleteDuplicates error: " + e.getMessage());
             }
         }
     }
@@ -305,7 +285,7 @@ public class JdbcQueries {
             st.executeUpdate();
             st.close();
         } catch (Exception e) {
-            e.printStackTrace();
+            Common.console("deleteFromTable error: " + e.getMessage());
         }
     }
 }
