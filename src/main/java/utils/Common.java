@@ -131,57 +131,41 @@ public class Common {
                 case "keyword": {
                     String text = "keyword=" + value + "\n";
                     writer.write(text);
-                    writer.flush();
-                    writer.close();
                     break;
                 }
                 case "fontColorRed": {
                     String text = "fontColorRed=" + value + "\n";
                     writer.write(text);
-                    writer.flush();
-                    writer.close();
                     break;
                 }
                 case "fontColorGreen": {
                     String text = "fontColorGreen=" + value + "\n";
                     writer.write(text);
-                    writer.flush();
-                    writer.close();
                     break;
                 }
                 case "fontColorBlue": {
                     String text = "fontColorBlue=" + value + "\n";
                     writer.write(text);
-                    writer.flush();
-                    writer.close();
                     break;
                 }
                 case "backgroundColorRed": {
                     String text = "backgroundColorRed=" + value + "\n";
                     writer.write(text);
-                    writer.flush();
-                    writer.close();
                     break;
                 }
                 case "backgroundColorGreen": {
                     String text = "backgroundColorGreen=" + value + "\n";
                     writer.write(text);
-                    writer.flush();
-                    writer.close();
                     break;
                 }
                 case "backgroundColorBlue": {
                     String text = "backgroundColorBlue=" + value + "\n";
                     writer.write(text);
-                    writer.flush();
-                    writer.close();
                     break;
                 }
                 case "email": {
                     String text = "email=" + value;
                     writer.write(text.trim() + "\n");
-                    writer.flush();
-                    writer.close();
                     break;
                 }
                 case "interval": {
@@ -189,8 +173,6 @@ public class Common {
                             .replace("s", "")
                             .replace(" min", "m");
                     writer.write(text + "\n");
-                    writer.flush();
-                    writer.close();
                     break;
                 }
                 case "checkbox": {
@@ -204,11 +186,11 @@ public class Common {
                             break;
                     }
                     if (text != null) writer.write(text);
-                    writer.flush();
-                    writer.close();
                     break;
                 }
             }
+            writer.flush();
+            //writer.close();
         } catch (IOException ex) {
             ex.printStackTrace();
         }
@@ -332,13 +314,13 @@ public class Common {
 
     //Console
     public void console(String text) {
-        try {
-            Thread.sleep(100);
+        //try {
+            //Thread.sleep(100);
             Gui.consoleTextArea.setText(Gui.consoleTextArea.getText() + text + "\n");
-            Thread.sleep(100);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+            //Thread.sleep(100);
+       // } catch (InterruptedException e) {
+        //    e.printStackTrace();
+        //}
     }
 
     // Шкала прогресса

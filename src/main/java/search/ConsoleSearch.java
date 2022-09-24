@@ -99,7 +99,7 @@ public class ConsoleSearch extends SearchUtils {
 
                                     if (title.toLowerCase().contains(arg.toLowerCase()) && title.length() > 15 && checkDate == 1) {
                                         // отсеиваем новости которые были обнаружены ранее
-                                        if (jdbcQueries.isTitleExists(title, SQLite.connection)) {
+                                        if (jdbcQueries.isTitleExists(title, "console", SQLite.connection)) {
                                             continue;
                                         }
 
@@ -114,7 +114,7 @@ public class ConsoleSearch extends SearchUtils {
                                             /**/
                                             System.out.println(newsCount + ") " + title);
                                             /**/
-                                            jdbcQueries.insertTitles(title, SQLite.connection);
+                                            jdbcQueries.insertTitles(title, "console", SQLite.connection);
                                         }
                                     }
                                 }

@@ -119,7 +119,7 @@ public class Search extends SearchUtils {
                                             && !title.toLowerCase().contains(excludeFromSearch.get(2))
                                     ) {
                                         //отсеиваем новости, которые уже были найдены ранее
-                                        if (jdbcQueries.isTitleExists(title , SQLite.connection)) {
+                                        if (jdbcQueries.isTitleExists(title, pSearchType, SQLite.connection)) {
                                             continue;
                                         }
 
@@ -129,7 +129,8 @@ public class Search extends SearchUtils {
                                         // вставка всех новостей в архив (ощутимо замедляет общий поиск)
                                         jdbcQueries.insertAllTitlesToArchive(title, pubDate.toString(), SQLite.connection);
 
-                                        mainSearchProcess(jdbcQueries, st, smi_source, title, newsDescribe, pubDate, dateToEmail, link, date_diff);
+                                        mainSearchProcess(jdbcQueries, st, smi_source, title, newsDescribe, pubDate,
+                                                dateToEmail, link, date_diff, pSearchType);
                                     }
                                 } else if (isWords) {
                                     for (Keyword keyword : Common.KEYWORDS_LIST) {
@@ -137,14 +138,15 @@ public class Search extends SearchUtils {
                                                 && title.length() > 15 && checkDate == 1) {
 
                                             // отсеиваем новости которые были обнаружены ранее
-                                            if (jdbcQueries.isTitleExists(title, SQLite.connection)) {
+                                            if (jdbcQueries.isTitleExists(title, pSearchType, SQLite.connection)) {
                                                 continue;
                                             }
 
                                             //Data for a table
                                             int date_diff = Common.compareDatesOnly(new Date(), pubDate);
 
-                                            mainSearchProcess(jdbcQueries, st, smi_source, title, newsDescribe, pubDate, dateToEmail, link, date_diff);
+                                            mainSearchProcess(jdbcQueries, st, smi_source, title, newsDescribe, pubDate,
+                                                    dateToEmail, link, date_diff, pSearchType);
                                         }
                                     }
                                 }
@@ -225,7 +227,7 @@ public class Search extends SearchUtils {
 
     private void mainSearchProcess(JdbcQueries sqlite, PreparedStatement st, String smi_source, String title,
                                    String newsDescribe, Date pubDate, String dateToEmail, String link,
-                                   int date_diff) throws SQLException {
+                                   int date_diff, String searchType) throws SQLException {
         if (date_diff != 0) {
             newsCount++;
             Gui.labelSum.setText(String.valueOf(newsCount));
@@ -243,7 +245,7 @@ public class Search extends SearchUtils {
                     st.executeUpdate();
                 }
             }
-            sqlite.insertTitles(title, SQLite.connection);
+            sqlite.insertTitles(title, searchType, SQLite.connection);
         }
     }
 }

@@ -151,12 +151,13 @@ public class JdbcQueries {
     }
 
     // вставка кода по заголовку для отсеивания ранее обнаруженных новостей
-    public void insertTitles(String pTitle, Connection connection) {
+    public void insertTitles(String title, String type, Connection connection) {
         if (SQLite.isConnectionToSQLite) {
             try {
-                String query = "INSERT INTO titles(title) VALUES (?)";
+                String query = "INSERT INTO titles(title, type) VALUES (?, ?)";
                 st = connection.prepareStatement(query);
-                st.setString(1, pTitle);
+                st.setString(1, title);
+                st.setString(2, type);
                 st.executeUpdate();
                 st.close();
             } catch (SQLException e) {
@@ -182,13 +183,15 @@ public class JdbcQueries {
     }
 
     // отсеивание заголовков
-    public boolean isTitleExists(String title, Connection connection) {
+    public boolean isTitleExists(String title, String type, Connection connection) {
         int isExists = 0;
         if (SQLite.isConnectionToSQLite) {
             try {
-                String query = "SELECT MAX(1) FROM titles WHERE EXISTS (SELECT title FROM titles t WHERE t.title = ?)";
+                String query = "SELECT MAX(1) FROM titles " +
+                        "WHERE EXISTS (SELECT title FROM titles t WHERE t.title = ? AND t.type = ?)";
                 st = connection.prepareStatement(query);
                 st.setString(1, title);
+                st.setString(2, type);
 
                 ResultSet rs = st.executeQuery();
                 while (rs.next()) {
