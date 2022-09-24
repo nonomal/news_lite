@@ -505,10 +505,10 @@ public class Gui extends JFrame {
         getContentPane().add(exitBtn);
         exitBtn.addActionListener((e) -> {
             Search.isSearchFinished.set(true);
-            SQLite.isConnectionToSQLite = false;
+//            SQLite.isConnectionToSQLite = false;
             Common.saveState();
             log.info("Application closed");
-            if (SQLite.isConnectionToSQLite) sqLite.closeConnection();
+            //if (SQLite.isConnectionToSQLite) sqLite.closeConnection();
             System.exit(0);
         });
         animation(exitBtn, Icons.EXIT_BUTTON_ICON, Icons.WHEN_MOUSE_ON_EXIT_BUTTON_ICON);

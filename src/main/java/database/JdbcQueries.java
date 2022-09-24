@@ -242,7 +242,6 @@ public class JdbcQueries {
 
     // обновление статуса чекбокса is_active для ресурсов SELECT id, source, link FROM rss_list where is_active = 1  ORDER BY id
     public void updateIsActiveStatus(boolean pBoolean, String pSource, Connection connection) {
-        if (SQLite.isConnectionToSQLite) {
             try {
                 String query = "UPDATE RSS_LIST SET IS_ACTIVE = ? WHERE SOURCE = ?";
                 st = connection.prepareStatement(query);
@@ -253,12 +252,10 @@ public class JdbcQueries {
             } catch (Exception e) {
                 Common.console("updateIsActiveStatus error: " + e.getMessage());
             }
-        }
     }
 
     // удаление дубликатов новостей
     public void deleteDuplicates(Connection connection) {
-        if (SQLite.isConnectionToSQLite) {
             try {
                 String query = "DELETE FROM ALL_NEWS WHERE ROWID NOT IN (SELECT MIN(ROWID) " +
                         "FROM ALL_NEWS GROUP BY TITLE, NEWS_DATE)";
@@ -268,7 +265,6 @@ public class JdbcQueries {
             } catch (Exception e) {
                 Common.console("deleteDuplicates error: " + e.getMessage());
             }
-        }
     }
 
     // удаляем все пустые строки

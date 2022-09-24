@@ -1,5 +1,6 @@
 package database;
 
+import exception.NotConnectedToDatabase;
 import lombok.extern.slf4j.Slf4j;
 import utils.Common;
 
@@ -11,25 +12,26 @@ import java.sql.SQLException;
 @Slf4j
 public class SQLite {
     public static Connection connection;
-    public static boolean isConnectionToSQLite;
+    //public static boolean isConnectionToSQLite;
 
     public void openConnection() {
         try {
             Class.forName("org.sqlite.JDBC");
             connection = DriverManager.getConnection("jdbc:sqlite:" + Common.DIRECTORY_PATH + "news.db");
-            isConnectionToSQLite = true;
+            //isConnectionToSQLite = true;
             log.info("Connected to SQLite");
         } catch (Exception e) {
             log.error("Connection open failed:\n" + e.getMessage());
+            throw new NotConnectedToDatabase("Нет подключения к базе данных");
         }
     }
 
     public void closeConnection() {
         try {
-            if (isConnectionToSQLite) {
+            //if (isConnectionToSQLite) {
                 connection.close();
                 log.info("Connection closed");
-            }
+            //}
         } catch (Exception e) {
             log.error("Connection closed failed:\n" + e.getMessage());
         }
