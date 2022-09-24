@@ -12,26 +12,22 @@ import java.sql.SQLException;
 @Slf4j
 public class SQLite {
     public static Connection connection;
-    //public static boolean isConnectionToSQLite;
 
     public void openConnection() {
         try {
             Class.forName("org.sqlite.JDBC");
             connection = DriverManager.getConnection("jdbc:sqlite:" + Common.DIRECTORY_PATH + "news.db");
-            //isConnectionToSQLite = true;
-            log.info("Connected to SQLite");
+            log.info("Connected to database");
         } catch (Exception e) {
-            log.error("Connection open failed:\n" + e.getMessage());
-            throw new NotConnectedToDatabase("Нет подключения к базе данных");
+            log.error("Failed to connect to database:\n" + e.getMessage());
+            throw new NotConnectedToDatabase("Failed to connect to database");
         }
     }
 
     public void closeConnection() {
         try {
-            //if (isConnectionToSQLite) {
-                connection.close();
                 log.info("Connection closed");
-            //}
+                connection.close();
         } catch (Exception e) {
             log.error("Connection closed failed:\n" + e.getMessage());
         }
