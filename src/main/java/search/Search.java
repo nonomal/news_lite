@@ -16,9 +16,7 @@ import utils.Common;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.time.Duration;
-import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -27,21 +25,19 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 @Slf4j
 public class Search extends SearchUtils {
-    SQLite sqLite = new SQLite();
-    JdbcQueries jdbcQueries = new JdbcQueries();
+    private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("dd.MMM HH:mm", Locale.ENGLISH);
+    private final SQLite sqLite;
+    private final JdbcQueries jdbcQueries;
     public static List<String> excludeFromSearch;
     public static AtomicBoolean isStop;
     public static AtomicBoolean isSearchNow;
     public static AtomicBoolean isSearchFinished;
-    final DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm");
-    final LocalDateTime now = LocalDateTime.now();
-    public final String today = dtf.format(now);
-    final SimpleDateFormat date_format = new SimpleDateFormat("dd.MMM HH:mm", Locale.ENGLISH);
     public static final ArrayList<String> dataForEmail = new ArrayList<>();
-    int newsCount = 0;
-    LocalTime timeStart;
+    private int newsCount = 0;
 
     public Search() {
+        sqLite = new SQLite();
+        jdbcQueries = new JdbcQueries();
         excludeFromSearch = Common.EXCLUDE_WORDS;
         isStop = new AtomicBoolean(false);
         isSearchNow = new AtomicBoolean(false);
@@ -56,7 +52,7 @@ public class Search extends SearchUtils {
             int modelRowCount = Gui.model.getRowCount();
             dataForEmail.clear();
             isSearchNow.set(true);
-            timeStart = LocalTime.now();
+            LocalTime timeStart = LocalTime.now();
             if (!Gui.GUI_IN_TRAY.get()) Gui.model.setRowCount(0);
             if (!Gui.WAS_CLICK_IN_TABLE_FOR_ANALYSIS.get()) Gui.modelForAnalysis.setRowCount(0);
             newsCount = 0;
@@ -103,7 +99,7 @@ public class Search extends SearchUtils {
                                         source.getSource(),
                                         title,
                                         newsDescribe,
-                                        date_format.format(pubDate),
+                                        DATE_FORMAT.format(pubDate),
                                         entry.getLink());
 
                                 if (isWord) {

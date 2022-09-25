@@ -11,12 +11,15 @@ import javax.mail.MessagingException;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 @Slf4j
 public class EmailManager {
     private String fromAdr;
     private String fromPwd;
-    private final String subject = ("News (" + new Search().today + ")");
+    private final String today = DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm").format(LocalDateTime.now());
+    private final String subject = ("News (" + today + ")");
     private final StringBuilder text = new StringBuilder();
 
     // Отправка письма
