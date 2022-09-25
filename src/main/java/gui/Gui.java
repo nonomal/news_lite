@@ -82,7 +82,7 @@ public class Gui extends JFrame {
         this.setIconImage(Icons.LOGO_ICON.getImage());
         this.setFont(GUI_FONT);
         //this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.setBounds(360, 180, 1181, 592);
+        this.setBounds(360, 180, 1181, 575);
         this.getContentPane().setLayout(null);
 
         // Прозрачность и оформление окна
@@ -440,7 +440,6 @@ public class Gui extends JFrame {
 
         /* Сворачивание в трей */
         JButton toTrayBtn = new JButton(Icons.TRAY_BUTTON_ICON);
-        toTrayBtn.setToolTipText("to tray");
         toTrayBtn.setFocusable(false);
         toTrayBtn.setContentAreaFilled(false);
         toTrayBtn.setBorderPainted(false);
@@ -497,7 +496,6 @@ public class Gui extends JFrame {
 
         // Exit button
         JButton exitBtn = new JButton(Icons.EXIT_BUTTON_ICON);
-        exitBtn.setToolTipText("exit");
         exitBtn.setBounds(1151, 3, 24, 22);
         exitBtn.setContentAreaFilled(false);
         exitBtn.setBorderPainted(false);
@@ -513,48 +511,21 @@ public class Gui extends JFrame {
         animation(exitBtn, Icons.EXIT_BUTTON_ICON, Icons.WHEN_MOUSE_ON_EXIT_BUTTON_ICON);
 
         /* KEYWORDS BOTTOM SEARCH */
+        int bottomLeftX = 110;
+        int bottomLeftY = 545;
+
         // label
         JLabel lblKeywordsSearch = new JLabel();
         lblKeywordsSearch.setText("search by keywords");
         lblKeywordsSearch.setForeground(new Color(255, 255, 153));
         lblKeywordsSearch.setFont(GUI_FONT);
-        lblKeywordsSearch.setBounds(10, 545, 160, 14);
+        lblKeywordsSearch.setBounds(bottomLeftX - 100, bottomLeftY + 3, 120, 14);
         getContentPane().add(lblKeywordsSearch);
 
-        //Add to combo box
-        addKeywordToList = new JTextField();
-        addKeywordToList.setFont(GUI_FONT);
-        addKeywordToList.setBounds(9, 561, 80, 22);
-        getContentPane().add(addKeywordToList);
-
-        //Add to keywords combo box
-        JButton btnAddKeywordToList = new JButton();
-        setButton = new SetButton(Icons.ADD_KEYWORD_ICON, null, 95, 561);
-        setButton.buttonSetting(btnAddKeywordToList, "Add keyword");
-        getContentPane().add(btnAddKeywordToList);
-        btnAddKeywordToList.addActionListener(e -> {
-            if (addKeywordToList.getText().length() > 0) {
-                String word = addKeywordToList.getText();
-                for (int i = 0; i < keywords.getItemCount(); i++) {
-                    if (word.equals(keywords.getItemAt(i))) {
-                        Common.console("info: список ключевых слов уже содержит: " + word);
-                        isInKeywords = true;
-                    } else {
-                        isInKeywords = false;
-                    }
-                }
-                if (!isInKeywords) {
-                    Common.writeToConfig(word, "keyword");
-                    keywords.addItem(word);
-                    isInKeywords = false;
-                }
-                addKeywordToList.setText("");
-            }
-        });
-
-        //Delete from combo box
+        // Delete from combo box
         JButton btnDelFromList = new JButton();
-        setButton = new SetButton(Icons.DELETE_FROM_KEYWORDS_ICON, null, 130, 561);
+        btnDelFromList.setBorderPainted(false);
+        setButton = new SetButton(Icons.EXIT_BUTTON_ICON, null, bottomLeftX, bottomLeftY);
         setButton.buttonSetting(btnDelFromList, "Delete word from list");
         btnDelFromList.addActionListener(e -> {
             if (keywords.getItemCount() > 0) {
@@ -568,7 +539,7 @@ public class Gui extends JFrame {
                 }
             }
         });
-
+        animation(btnDelFromList, Icons.EXIT_BUTTON_ICON, Icons.WHEN_MOUSE_ON_EXIT_BUTTON_ICON);
         getContentPane().add(btnDelFromList);
 
         //Keywords combo box
@@ -576,12 +547,12 @@ public class Gui extends JFrame {
         keywords.setFont(GUI_FONT);
         keywords.setModel(new DefaultComboBoxModel<>());
         keywords.setEditable(false);
-        keywords.setBounds(165, 561, 90, 22);
+        keywords.setBounds(bottomLeftX + 30, bottomLeftY, 90, 22);
         getContentPane().add(keywords);
 
         //Bottom search by keywords
         searchBtnBottom = new JButton();
-        setButton = new SetButton(Icons.SEARCH_KEYWORDS_ICON, new Color(154, 237, 196), 261, 561);
+        setButton = new SetButton(Icons.SEARCH_KEYWORDS_ICON, new Color(154, 237, 196), bottomLeftX + 126, bottomLeftY);
         setButton.buttonSetting(searchBtnBottom, "Search by keywords");
         searchBtnBottom.addActionListener(e -> {
             wordsThread = new Thread(() -> search.mainSearch("words"));
@@ -591,7 +562,7 @@ public class Gui extends JFrame {
 
         //Stop (bottom)
         stopBtnBottom = new JButton();
-        setButton = new SetButton(Icons.STOP_SEARCH_ICON, new Color(255, 208, 202), 261, 561);
+        setButton = new SetButton(Icons.STOP_SEARCH_ICON, new Color(255, 208, 202), bottomLeftX + 126, bottomLeftY);
         setButton.buttonSetting(stopBtnBottom, null);
         stopBtnBottom.addActionListener(e -> {
             try {
@@ -614,7 +585,7 @@ public class Gui extends JFrame {
 
         // Автозапуск поиска по ключевым словам каждые 60 секунд
         autoUpdateNewsBottom = new Checkbox("auto update");
-        setCheckbox1 = new SetCheckbox(297, 561, 75);
+        setCheckbox1 = new SetCheckbox(bottomLeftX + 164, bottomLeftY + 1, 75);
         setCheckbox1.checkBoxSetting(autoUpdateNewsBottom);
         getContentPane().add(autoUpdateNewsBottom);
         autoUpdateNewsBottom.addItemListener(e -> {
@@ -637,6 +608,46 @@ public class Gui extends JFrame {
                 }
             }
         });
+
+        JLabel lblAddKeywordsSearch = new JLabel();
+        lblAddKeywordsSearch.setText("add keyword");
+        lblAddKeywordsSearch.setForeground(new Color(255, 255, 153));
+        lblAddKeywordsSearch.setFont(GUI_FONT);
+        lblAddKeywordsSearch.setBounds(bottomLeftX + 280, bottomLeftY + 3, 90, 14);
+        getContentPane().add(lblAddKeywordsSearch);
+
+        //Add to combo box
+        addKeywordToList = new JTextField();
+        addKeywordToList.setFont(GUI_FONT);
+        addKeywordToList.setBounds(bottomLeftX + 350, bottomLeftY, 80, 22);
+        getContentPane().add(addKeywordToList);
+
+        //Add to keywords combo box
+        JButton btnAddKeywordToList = new JButton();
+        btnAddKeywordToList.setBorderPainted(false);
+        setButton = new SetButton(Icons.ADD_KEYWORD_ICON, null, bottomLeftX + 426, bottomLeftY);
+        setButton.buttonSetting(btnAddKeywordToList, "Add keyword");
+        getContentPane().add(btnAddKeywordToList);
+        btnAddKeywordToList.addActionListener(e -> {
+            if (addKeywordToList.getText().length() > 0) {
+                String word = addKeywordToList.getText();
+                for (int i = 0; i < keywords.getItemCount(); i++) {
+                    if (word.equals(keywords.getItemAt(i))) {
+                        Common.console("info: список ключевых слов уже содержит: " + word);
+                        isInKeywords = true;
+                    } else {
+                        isInKeywords = false;
+                    }
+                }
+                if (!isInKeywords) {
+                    Common.writeToConfig(word, "keyword");
+                    keywords.addItem(word);
+                    isInKeywords = false;
+                }
+                addKeywordToList.setText("");
+            }
+        });
+        animation(btnAddKeywordToList, Icons.ADD_KEYWORD_ICON, Icons.WHEN_MOUSE_ON_ADD_KEYWORD_ICON);
 
         /* CONSOLE */
         //Console - textarea
@@ -943,7 +954,7 @@ public class Gui extends JFrame {
         labelSign.setForeground(new Color(255, 160, 122));
         labelSign.setEnabled(false);
         labelSign.setFont(new Font("Tahoma", Font.BOLD, 11));
-        labelSign.setBounds(1110, 567, 57, 14);
+        labelSign.setBounds(1110, 550, 57, 14);
         getContentPane().add(labelSign);
         labelSign.addMouseListener(new MouseAdapter() {
             // наведение мышки на письмо
