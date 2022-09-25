@@ -13,7 +13,6 @@ import model.Source;
 import model.TableRow;
 import utils.Common;
 
-import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.time.Duration;
@@ -29,6 +28,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 @Slf4j
 public class Search extends SearchUtils {
     SQLite sqLite = new SQLite();
+    JdbcQueries jdbcQueries = new JdbcQueries();
     public static List<String> excludeFromSearch;
     public static AtomicBoolean isStop;
     public static AtomicBoolean isSearchNow;
@@ -50,7 +50,6 @@ public class Search extends SearchUtils {
     }
 
     public void mainSearch(String pSearchType) {
-        JdbcQueries jdbcQueries = new JdbcQueries();
         boolean isWord = pSearchType.equals("word");
         boolean isWords = pSearchType.equals("words");
 
@@ -82,7 +81,6 @@ public class Search extends SearchUtils {
             new Thread(Common::fillProgressLine).start();
             try {
                 sqLite.transaction("BEGIN TRANSACTION");
-                PreparedStatement st = SQLite.connection.prepareStatement("INSERT INTO NEWS_DUAL(TITLE) VALUES (?)");
 
                 Parser parser = new Parser();
                 TableRow tableRow;
@@ -127,7 +125,7 @@ public class Search extends SearchUtils {
                                         // вставка всех новостей в архив (ощутимо замедляет общий поиск)
                                         jdbcQueries.insertAllTitlesToArchive(tableRow.getTitle(), pubDate.toString(), SQLite.connection);
                                         if (dateDiff != 0) {
-                                            mainSearchProcess(jdbcQueries, st, tableRow, pSearchType);
+                                            searchProcess(tableRow, pSearchType);
                                         }
                                     }
                                 } else if (isWords) {
@@ -144,7 +142,7 @@ public class Search extends SearchUtils {
                                             int dateDiff = Common.compareDatesOnly(new Date(), pubDate);
 
                                             if (dateDiff != 0) {
-                                                mainSearchProcess(jdbcQueries, st, tableRow, pSearchType);
+                                                searchProcess(tableRow, pSearchType);
                                             }
                                         }
                                     }
@@ -166,7 +164,6 @@ public class Search extends SearchUtils {
                         isStop.set(true);
                     }
                 }
-                st.close();
 
                 //Время поиска
                 if (!Gui.GUI_IN_TRAY.get()) Common.console("status: search completed in " +
@@ -224,8 +221,7 @@ public class Search extends SearchUtils {
         }
     }
 
-    private void mainSearchProcess(JdbcQueries sqlite, PreparedStatement st,
-                                   TableRow tableRow, String searchType) throws SQLException {
+    private void searchProcess(TableRow tableRow, String searchType) {
         newsCount++;
         Gui.labelSum.setText(String.valueOf(newsCount));
 
@@ -246,13 +242,9 @@ public class Search extends SearchUtils {
                 tableRow.getLink()
         });
 
-        String[] substr = tableRow.getTitle().split(" ");
-        for (String s : substr) {
-            if (s.length() > 3) {
-                st.setString(1, s);
-                st.executeUpdate();
-            }
-        }
-        sqlite.insertTitles(tableRow.getTitle(), searchType, SQLite.connection);
+        jdbcQueries.insertTitlesNewsDual(tableRow.getTitle(), SQLite.connection);
+        jdbcQueries.insertTitles(tableRow.getTitle(), searchType, SQLite.connection);
     }
+
+
 }

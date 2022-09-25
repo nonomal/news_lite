@@ -19,6 +19,25 @@ public class JdbcQueries {
     private static final int WORD_FREQ_MATCHES = 2;
     private PreparedStatement st;
 
+    // Вставка заголовков разбитых на слова
+    public void insertTitlesNewsDual(String title, Connection connection) {
+        try {
+            String query = "INSERT INTO NEWS_DUAL(TITLE) VALUES (?)";
+            PreparedStatement st = connection.prepareStatement(query);
+            String[] substr = title.split(" ");
+
+            for (String s : substr) {
+                if (s.length() > 3) {
+                    st.setString(1, s);
+                    st.executeUpdate();
+                }
+            }
+            st.close();
+        } catch (Exception e) {
+            Common.console("selectSqlite error: " + e.getMessage());
+        }
+    }
+
     // Заполнение таблицы анализа
     public void selectSqlite(Connection connection) {
         try {
@@ -240,29 +259,29 @@ public class JdbcQueries {
 
     // обновление статуса чекбокса is_active для ресурсов SELECT id, source, link FROM rss_list where is_active = 1  ORDER BY id
     public void updateIsActiveStatus(boolean pBoolean, String pSource, Connection connection) {
-            try {
-                String query = "UPDATE RSS_LIST SET IS_ACTIVE = ? WHERE SOURCE = ?";
-                st = connection.prepareStatement(query);
-                st.setBoolean(1, pBoolean);
-                st.setString(2, pSource);
-                st.executeUpdate();
-                st.close();
-            } catch (Exception e) {
-                Common.console("updateIsActiveStatus error: " + e.getMessage());
-            }
+        try {
+            String query = "UPDATE RSS_LIST SET IS_ACTIVE = ? WHERE SOURCE = ?";
+            st = connection.prepareStatement(query);
+            st.setBoolean(1, pBoolean);
+            st.setString(2, pSource);
+            st.executeUpdate();
+            st.close();
+        } catch (Exception e) {
+            Common.console("updateIsActiveStatus error: " + e.getMessage());
+        }
     }
 
     // удаление дубликатов новостей
     public void deleteDuplicates(Connection connection) {
-            try {
-                String query = "DELETE FROM ALL_NEWS WHERE ROWID NOT IN (SELECT MIN(ROWID) " +
-                        "FROM ALL_NEWS GROUP BY TITLE, NEWS_DATE)";
-                st = connection.prepareStatement(query);
-                st.executeUpdate();
-                st.close();
-            } catch (Exception e) {
-                Common.console("deleteDuplicates error: " + e.getMessage());
-            }
+        try {
+            String query = "DELETE FROM ALL_NEWS WHERE ROWID NOT IN (SELECT MIN(ROWID) " +
+                    "FROM ALL_NEWS GROUP BY TITLE, NEWS_DATE)";
+            st = connection.prepareStatement(query);
+            st.executeUpdate();
+            st.close();
+        } catch (Exception e) {
+            Common.console("deleteDuplicates error: " + e.getMessage());
+        }
     }
 
     // удаляем все пустые строки
