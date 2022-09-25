@@ -33,7 +33,6 @@ public class Search extends SearchUtils {
     public static AtomicBoolean isStop;
     public static AtomicBoolean isSearchNow;
     public static AtomicBoolean isSearchFinished;
-    //    public static int j = 1;
     final DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm");
     final LocalDateTime now = LocalDateTime.now();
     public final String today = dtf.format(now);
@@ -56,11 +55,8 @@ public class Search extends SearchUtils {
         if (!isSearchNow.get()) {
             int modelRowCount = Gui.model.getRowCount();
             dataForEmail.clear();
-            //выборка актуальных источников перед поиском из БД
-            List<Source> activeSources = jdbcQueries.getSources("active");
             isSearchNow.set(true);
             timeStart = LocalTime.now();
-//            Search.j = 1;
             if (!Gui.GUI_IN_TRAY.get()) Gui.model.setRowCount(0);
             if (!Gui.WAS_CLICK_IN_TABLE_FOR_ANALYSIS.get()) Gui.modelForAnalysis.setRowCount(0);
             newsCount = 0;
@@ -81,9 +77,12 @@ public class Search extends SearchUtils {
             new Thread(Common::fillProgressLine).start();
             try {
                 sqLite.transaction("BEGIN TRANSACTION");
-
-                Parser parser = new Parser();
                 TableRow tableRow;
+                Parser parser = new Parser();
+
+                // Актуальные источники новостей
+                List<Source> activeSources = jdbcQueries.getSources("active");
+
                 for (Source source : activeSources) {
                     try {
                         try {

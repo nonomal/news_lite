@@ -290,6 +290,7 @@ public class JdbcQueries {
         String query = "DELETE FROM NEWS_DUAL WHERE TITLE = ''";
         statement = connection.prepareStatement(query);
         statement.executeUpdate();
+        statement.close();
     }
 
     public void deleteFromTable(String tableName) {
