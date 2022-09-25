@@ -35,7 +35,6 @@ public class Common {
             File.separator + "News" + File.separator;
     private final int[] GUI_FONT = new int[3];
     private final int[] GUI_BACKGROUND = new int[3];
-    public static final Calendar MIN_PUB_DATE = Calendar.getInstance();
     public static final String CONFIG_FILE = DIRECTORY_PATH + "config.txt";
     public final AtomicBoolean IS_SENDING = new AtomicBoolean(true);
     public final ArrayList<Keyword> KEYWORDS_LIST = new ArrayList<>();
@@ -65,10 +64,6 @@ public class Common {
 
     // создание файлов и директорий
     public static void createFiles() {
-        // Минимальная дата публикации новости 01.01.2022
-        MIN_PUB_DATE.set(Calendar.YEAR, 2022);
-        MIN_PUB_DATE.set(Calendar.DAY_OF_YEAR, 1);
-
         // main directory create
         File mainDirectory = new File(DIRECTORY_PATH);
         if (!mainDirectory.exists()) mainDirectory.mkdirs();

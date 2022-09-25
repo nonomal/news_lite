@@ -32,9 +32,6 @@ public class ConsoleSearch extends SearchUtils {
     final SimpleDateFormat date_format = new SimpleDateFormat("dd.MM.yyyy HH:mm");
     public static final ArrayList<String> dataForEmail = new ArrayList<>();
     int newsCount = 0;
-    final Date minDate = Common.MIN_PUB_DATE.getTime();
-    int checkDate;
-    /**/
     public static final AtomicBoolean IS_CONSOLE_SEARCH = new AtomicBoolean(false);
     public static String sendEmailToFromConsole;
     public static int minutesIntervalConsole;
@@ -89,15 +86,11 @@ public class ConsoleSearch extends SearchUtils {
                                 String dateToEmail = date_format.format(pubDate);
                                 String link = entry.getLink();
 
-                                // отсеиваем новости ранее 01.01.2022
-                                if (pubDate.after(minDate)) checkDate = 1;
-                                else checkDate = 0;
-
                                 for (String arg : args) {
                                     if (arg.equals(args[0]) || arg.equals(args[1]))
                                         continue;
 
-                                    if (title.toLowerCase().contains(arg.toLowerCase()) && title.length() > 15 && checkDate == 1) {
+                                    if (title.toLowerCase().contains(arg.toLowerCase()) && title.length() > 15) {
                                         // отсеиваем новости которые были обнаружены ранее
                                         if (jdbcQueries.isTitleExists(title, "console", SQLite.connection)) {
                                             continue;

@@ -46,14 +46,12 @@ public class JdbcQueries {
     // Источники новостей
     public List<Source> getSources(String type, Connection connection) {
         List<Source> sources = new ArrayList<>();
-        String query;
+        String query = "SELECT id, source, link, is_active, position FROM rss_list " +
+                "WHERE is_active = 1 ORDER BY position";
 
         if (type.equals("all")) {
             query = "SELECT id, source, link, is_active, position FROM rss_list " +
                     "ORDER BY is_active DESC, id";
-        } else {
-            query = "SELECT id, source, link, is_active, position FROM rss_list " +
-                    "WHERE is_active = 1 ORDER BY position";
         }
 
         try {

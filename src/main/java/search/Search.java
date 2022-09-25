@@ -10,6 +10,7 @@ import gui.buttons.Icons;
 import lombok.extern.slf4j.Slf4j;
 import model.Keyword;
 import model.Source;
+import model.TableRow;
 import utils.Common;
 
 import java.sql.PreparedStatement;
@@ -32,16 +33,13 @@ public class Search extends SearchUtils {
     public static AtomicBoolean isStop;
     public static AtomicBoolean isSearchNow;
     public static AtomicBoolean isSearchFinished;
-//    public static int j = 1;
+    //    public static int j = 1;
     final DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm");
     final LocalDateTime now = LocalDateTime.now();
     public final String today = dtf.format(now);
-    final SimpleDateFormat date_format = new SimpleDateFormat("dd.MM.yyyy HH:mm");
-    final SimpleDateFormat dateFormatHoursFirst = new SimpleDateFormat("dd.MMM HH:mm", Locale.ENGLISH);
+    final SimpleDateFormat date_format = new SimpleDateFormat("dd.MMM HH:mm", Locale.ENGLISH);
     public static final ArrayList<String> dataForEmail = new ArrayList<>();
     int newsCount = 0;
-    final Date minDate = Common.MIN_PUB_DATE.getTime();
-    int checkDate;
     LocalTime timeStart;
 
     public Search() {
@@ -87,66 +85,67 @@ public class Search extends SearchUtils {
                 PreparedStatement st = SQLite.connection.prepareStatement("INSERT INTO NEWS_DUAL(TITLE) VALUES (?)");
 
                 Parser parser = new Parser();
+                TableRow tableRow;
                 for (Source source : activeSources) {
                     try {
                         try {
                             if (isStop.get()) return;
                             SyndFeed feed = parser.parseFeed(source.getLink());
                             for (Object message : feed.getEntries()) {
-//                                j++;
                                 SyndEntry entry = (SyndEntry) message;
                                 SyndContent content = entry.getDescription();
-                                String smi_source = source.getSource();
                                 String title = entry.getTitle();
-                                assert content != null;
+
                                 String newsDescribe = content.getValue()
                                         .trim()
                                         .replaceAll(("<p>|</p>|<br />"), "");
                                 if (isHref(newsDescribe)) newsDescribe = title;
                                 Date pubDate = entry.getPublishedDate();
-                                String dateToEmail = date_format.format(pubDate);
-                                String link = entry.getLink();
 
-                                // отсеиваем новости ранее 01.01.2022
-                                if (pubDate.after(minDate)) checkDate = 1;
-                                else checkDate = 0;
+                                tableRow = new TableRow(
+                                        source.getSource(),
+                                        title,
+                                        newsDescribe,
+                                        date_format.format(pubDate),
+                                        entry.getLink());
 
                                 if (isWord) {
-                                    if (title.toLowerCase().contains(Gui.findWord.toLowerCase())
-                                            && title.length() > 15 && checkDate == 1
-                                            && !title.toLowerCase().contains(excludeFromSearch.get(0))
-                                            && !title.toLowerCase().contains(excludeFromSearch.get(1))
-                                            && !title.toLowerCase().contains(excludeFromSearch.get(2))
+                                    if (tableRow.getTitle().toLowerCase().contains(Gui.findWord.toLowerCase())
+                                            && tableRow.getTitle().length() > 15
+                                            && !tableRow.getTitle().toLowerCase().contains(excludeFromSearch.get(0))
+                                            && !tableRow.getTitle().toLowerCase().contains(excludeFromSearch.get(1))
+                                            && !tableRow.getTitle().toLowerCase().contains(excludeFromSearch.get(2))
                                     ) {
                                         //отсеиваем новости, которые уже были найдены ранее
-                                        if (jdbcQueries.isTitleExists(title, pSearchType, SQLite.connection)) {
+                                        if (jdbcQueries.isTitleExists(tableRow.getTitle(), pSearchType, SQLite.connection)) {
                                             continue;
                                         }
 
                                         //Data for a table
-                                        int date_diff = Common.compareDatesOnly(new Date(), pubDate);
+                                        int dateDiff = Common.compareDatesOnly(new Date(), pubDate);
 
                                         // вставка всех новостей в архив (ощутимо замедляет общий поиск)
-                                        jdbcQueries.insertAllTitlesToArchive(title, pubDate.toString(), SQLite.connection);
-
-                                        mainSearchProcess(jdbcQueries, st, smi_source, title, newsDescribe, pubDate,
-                                                dateToEmail, link, date_diff, pSearchType);
+                                        jdbcQueries.insertAllTitlesToArchive(tableRow.getTitle(), pubDate.toString(), SQLite.connection);
+                                        if (dateDiff != 0) {
+                                            mainSearchProcess(jdbcQueries, st, tableRow, pSearchType);
+                                        }
                                     }
                                 } else if (isWords) {
                                     for (Keyword keyword : Common.KEYWORDS_LIST) {
-                                        if (title.toLowerCase().contains(keyword.getKeyword().toLowerCase())
-                                                && title.length() > 15 && checkDate == 1) {
+                                        if (tableRow.getTitle().toLowerCase().contains(keyword.getKeyword().toLowerCase())
+                                                && tableRow.getTitle().length() > 15) {
 
                                             // отсеиваем новости которые были обнаружены ранее
-                                            if (jdbcQueries.isTitleExists(title, pSearchType, SQLite.connection)) {
+                                            if (jdbcQueries.isTitleExists(tableRow.getTitle(), pSearchType, SQLite.connection)) {
                                                 continue;
                                             }
 
                                             //Data for a table
-                                            int date_diff = Common.compareDatesOnly(new Date(), pubDate);
+                                            int dateDiff = Common.compareDatesOnly(new Date(), pubDate);
 
-                                            mainSearchProcess(jdbcQueries, st, smi_source, title, newsDescribe, pubDate,
-                                                    dateToEmail, link, date_diff, pSearchType);
+                                            if (dateDiff != 0) {
+                                                mainSearchProcess(jdbcQueries, st, tableRow, pSearchType);
+                                            }
                                         }
                                     }
                                 }
@@ -225,27 +224,35 @@ public class Search extends SearchUtils {
         }
     }
 
-    private void mainSearchProcess(JdbcQueries sqlite, PreparedStatement st, String smi_source, String title,
-                                   String newsDescribe, Date pubDate, String dateToEmail, String link,
-                                   int date_diff, String searchType) throws SQLException {
-        if (date_diff != 0) {
-            newsCount++;
-            Gui.labelSum.setText(String.valueOf(newsCount));
-            dataForEmail.add(newsCount + ") " + title + "\n" + link + "\n" + newsDescribe + "\n" +
-                    smi_source + " - " + dateToEmail);
+    private void mainSearchProcess(JdbcQueries sqlite, PreparedStatement st,
+                                   TableRow tableRow, String searchType) throws SQLException {
+        newsCount++;
+        Gui.labelSum.setText(String.valueOf(newsCount));
 
-            Gui.model.addRow(new Object[] {
-                    newsCount, smi_source, title, dateFormatHoursFirst.format(pubDate), link
-            });
+        // Подготовка данных для отправки результата на почту
+        dataForEmail.add(newsCount + ") " +
+                tableRow.getTitle() + "\n" +
+                tableRow.getLink() + "\n" +
+                tableRow.getDescribe() + "\n" +
+                tableRow.getSource() + " - " +
+                tableRow.getDate());
 
-            String[] substr = title.split(" ");
-            for (String s : substr) {
-                if (s.length() > 3) {
-                    st.setString(1, s);
-                    st.executeUpdate();
-                }
+        // Добавление строки в таблицу интерфейса
+        Gui.model.addRow(new Object[]{
+                newsCount,
+                tableRow.getSource(),
+                tableRow.getTitle(),
+                tableRow.getDate(),
+                tableRow.getLink()
+        });
+
+        String[] substr = tableRow.getTitle().split(" ");
+        for (String s : substr) {
+            if (s.length() > 3) {
+                st.setString(1, s);
+                st.executeUpdate();
             }
-            sqlite.insertTitles(title, searchType, SQLite.connection);
         }
+        sqlite.insertTitles(tableRow.getTitle(), searchType, SQLite.connection);
     }
 }
