@@ -30,7 +30,7 @@ public class Icons {
     public static final ImageIcon WHEN_MOUSE_ON_ADD_KEYWORD_ICON = new ImageIcon(Toolkit.getDefaultToolkit()
             .createImage(Gui.class.getResource("/icons/add2.png")));
     public static final ImageIcon DELETE_UNIT = new ImageIcon(Toolkit.getDefaultToolkit()
-            .createImage(Gui.class.getResource("/icons/exit2.png")));
+            .createImage(Gui.class.getResource("/icons/exit.png")));
     public static final ImageIcon FONT_COLOR_BUTTON_ICON = new ImageIcon(Toolkit.getDefaultToolkit()
             .createImage(Gui.class.getResource("/icons/font.png")));
     public static final ImageIcon BACK_GROUND_COLOR_ICON = new ImageIcon(Toolkit.getDefaultToolkit()

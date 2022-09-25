@@ -550,82 +550,23 @@ public class Gui extends JFrame {
         keywords.setBounds(bottomLeftX + 30, bottomLeftY, 90, 22);
         getContentPane().add(keywords);
 
-        //Bottom search by keywords
-        searchBtnBottom = new JButton();
-        setButton = new SetButton(Icons.SEARCH_KEYWORDS_ICON, new Color(154, 237, 196), bottomLeftX + 126, bottomLeftY);
-        setButton.buttonSetting(searchBtnBottom, "Search by keywords");
-        searchBtnBottom.addActionListener(e -> {
-            wordsThread = new Thread(() -> search.mainSearch("words"));
-            wordsThread.start();
-        });
-        getContentPane().add(searchBtnBottom);
-
-        //Stop (bottom)
-        stopBtnBottom = new JButton();
-        setButton = new SetButton(Icons.STOP_SEARCH_ICON, new Color(255, 208, 202), bottomLeftX + 126, bottomLeftY);
-        setButton.buttonSetting(stopBtnBottom, null);
-        stopBtnBottom.addActionListener(e -> {
-            try {
-                wordsThread.interrupt();
-                Search.isSearchFinished.set(true);
-                Search.isStop.set(true);
-                Common.console("status: search stopped");
-                searchBtnBottom.setVisible(true);
-                stopBtnBottom.setVisible(false);
-                Search.isSearchNow.set(false);
-                try {
-                    sqLite.transaction("ROLLBACK");
-                } catch (SQLException ignored) {
-                }
-            } catch (Exception t) {
-                Common.console("status: there is no threads to stop");
-            }
-        });
-        getContentPane().add(stopBtnBottom);
-
-        // Автозапуск поиска по ключевым словам каждые 60 секунд
-        autoUpdateNewsBottom = new Checkbox("auto update");
-        setCheckbox1 = new SetCheckbox(bottomLeftX + 164, bottomLeftY + 1, 75);
-        setCheckbox1.checkBoxSetting(autoUpdateNewsBottom);
-        getContentPane().add(autoUpdateNewsBottom);
-        autoUpdateNewsBottom.addItemListener(e -> {
-            if (autoUpdateNewsBottom.getState()) {
-                timer = new Timer(true);
-                timerTask = new MyTimerTask();
-                timer.scheduleAtFixedRate(timerTask, 0, AUTO_START_TIMER);
-                searchBtnBottom.setVisible(false);
-                stopBtnBottom.setVisible(true);
-                autoUpdateNewsTop.setVisible(false);
-            } else {
-                timer.cancel();
-                searchBtnBottom.setVisible(true);
-                stopBtnBottom.setVisible(false);
-                autoUpdateNewsTop.setVisible(true);
-                try {
-                    stopBtnTop.doClick();
-                } catch (Exception ignored) {
-
-                }
-            }
-        });
-
         JLabel lblAddKeywordsSearch = new JLabel();
-        lblAddKeywordsSearch.setText("add keyword");
+        lblAddKeywordsSearch.setText("add keyword:");
         lblAddKeywordsSearch.setForeground(new Color(255, 255, 153));
         lblAddKeywordsSearch.setFont(GUI_FONT);
-        lblAddKeywordsSearch.setBounds(bottomLeftX + 280, bottomLeftY + 3, 90, 14);
+        lblAddKeywordsSearch.setBounds(bottomLeftX + 130, bottomLeftY + 3, 90, 14);
         getContentPane().add(lblAddKeywordsSearch);
 
         //Add to combo box
         addKeywordToList = new JTextField();
         addKeywordToList.setFont(GUI_FONT);
-        addKeywordToList.setBounds(bottomLeftX + 350, bottomLeftY, 80, 22);
+        addKeywordToList.setBounds(bottomLeftX + 200, bottomLeftY, 80, 22);
         getContentPane().add(addKeywordToList);
 
         //Add to keywords combo box
         JButton btnAddKeywordToList = new JButton();
         btnAddKeywordToList.setBorderPainted(false);
-        setButton = new SetButton(Icons.ADD_KEYWORD_ICON, null, bottomLeftX + 426, bottomLeftY);
+        setButton = new SetButton(Icons.ADD_KEYWORD_ICON, null, bottomLeftX + 276, bottomLeftY);
         setButton.buttonSetting(btnAddKeywordToList, "Add keyword");
         getContentPane().add(btnAddKeywordToList);
         btnAddKeywordToList.addActionListener(e -> {
@@ -648,6 +589,65 @@ public class Gui extends JFrame {
             }
         });
         animation(btnAddKeywordToList, Icons.ADD_KEYWORD_ICON, Icons.WHEN_MOUSE_ON_ADD_KEYWORD_ICON);
+
+        //Bottom search by keywords
+        searchBtnBottom = new JButton();
+        setButton = new SetButton(Icons.SEARCH_KEYWORDS_ICON, new Color(154, 237, 196), bottomLeftX + 310, bottomLeftY);
+        setButton.buttonSetting(searchBtnBottom, "Search by keywords");
+        searchBtnBottom.addActionListener(e -> {
+            wordsThread = new Thread(() -> search.mainSearch("words"));
+            wordsThread.start();
+        });
+        getContentPane().add(searchBtnBottom);
+
+        //Stop (bottom)
+        stopBtnBottom = new JButton();
+        setButton = new SetButton(Icons.STOP_SEARCH_ICON, new Color(255, 208, 202), bottomLeftX + 310, bottomLeftY);
+        setButton.buttonSetting(stopBtnBottom, null);
+        stopBtnBottom.addActionListener(e -> {
+            try {
+                wordsThread.interrupt();
+                Search.isSearchFinished.set(true);
+                Search.isStop.set(true);
+                Common.console("status: search stopped");
+                searchBtnBottom.setVisible(true);
+                stopBtnBottom.setVisible(false);
+                Search.isSearchNow.set(false);
+                try {
+                    sqLite.transaction("ROLLBACK");
+                } catch (SQLException ignored) {
+                }
+            } catch (Exception t) {
+                Common.console("status: there is no threads to stop");
+            }
+        });
+        getContentPane().add(stopBtnBottom);
+
+        // Автозапуск поиска по ключевым словам каждые 60 секунд
+        autoUpdateNewsBottom = new Checkbox("auto update");
+        setCheckbox1 = new SetCheckbox(bottomLeftX + 350, bottomLeftY + 1, 75);
+        setCheckbox1.checkBoxSetting(autoUpdateNewsBottom);
+        getContentPane().add(autoUpdateNewsBottom);
+        autoUpdateNewsBottom.addItemListener(e -> {
+            if (autoUpdateNewsBottom.getState()) {
+                timer = new Timer(true);
+                timerTask = new MyTimerTask();
+                timer.scheduleAtFixedRate(timerTask, 0, AUTO_START_TIMER);
+                searchBtnBottom.setVisible(false);
+                stopBtnBottom.setVisible(true);
+                autoUpdateNewsTop.setVisible(false);
+            } else {
+                timer.cancel();
+                searchBtnBottom.setVisible(true);
+                stopBtnBottom.setVisible(false);
+                autoUpdateNewsTop.setVisible(true);
+                try {
+                    stopBtnTop.doClick();
+                } catch (Exception ignored) {
+
+                }
+            }
+        });
 
         /* CONSOLE */
         //Console - textarea
@@ -954,7 +954,7 @@ public class Gui extends JFrame {
         labelSign.setForeground(new Color(255, 160, 122));
         labelSign.setEnabled(false);
         labelSign.setFont(new Font("Tahoma", Font.BOLD, 11));
-        labelSign.setBounds(1110, 550, 57, 14);
+        labelSign.setBounds(1110, 555, 57, 14);
         getContentPane().add(labelSign);
         labelSign.addMouseListener(new MouseAdapter() {
             // наведение мышки на письмо
