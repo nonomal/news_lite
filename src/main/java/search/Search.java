@@ -45,20 +45,20 @@ public class Search extends SearchUtils {
     }
 
     public void mainSearch(String pSearchType) {
-        boolean isWord = pSearchType.equals("word");
-        boolean isWords = pSearchType.equals("words");
-
         if (!isSearchNow.get()) {
+            boolean isWord = pSearchType.equals("word");
+            boolean isWords = pSearchType.equals("words");
+
+            isSearchNow.set(true);
+            Search.isStop.set(false);
+            LocalTime timeStart = LocalTime.now();
+
             int modelRowCount = Gui.model.getRowCount();
             dataForEmail.clear();
-            isSearchNow.set(true);
-            LocalTime timeStart = LocalTime.now();
             if (!Gui.GUI_IN_TRAY.get()) Gui.model.setRowCount(0);
             if (!Gui.WAS_CLICK_IN_TABLE_FOR_ANALYSIS.get()) Gui.modelForAnalysis.setRowCount(0);
             newsCount = 0;
             Gui.labelSum.setText("" + newsCount);
-            Search.isStop.set(false);
-            Gui.findWord = Gui.topKeyword.getText().toLowerCase();
 
             if (isWord) {
                 Gui.searchBtnTop.setVisible(false);
@@ -78,7 +78,6 @@ public class Search extends SearchUtils {
 
                 // Актуальные источники новостей
                 List<Source> activeSources = jdbcQueries.getSources("active");
-
                 for (Source source : activeSources) {
                     try {
                         try {
@@ -103,7 +102,9 @@ public class Search extends SearchUtils {
                                         entry.getLink());
 
                                 if (isWord) {
-                                    if (tableRow.getTitle().toLowerCase().contains(Gui.findWord.toLowerCase())
+                                    Gui.findWord = Gui.topKeyword.getText().toLowerCase();
+
+                                    if (tableRow.getTitle().toLowerCase().contains(Gui.findWord)
                                             && tableRow.getTitle().length() > 15
                                             && !tableRow.getTitle().toLowerCase().contains(excludeFromSearch.get(0))
                                             && !tableRow.getTitle().toLowerCase().contains(excludeFromSearch.get(1))
