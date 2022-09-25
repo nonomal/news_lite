@@ -256,7 +256,6 @@ public class Common {
                 }
             }
             Gui.isOnlyLastNews = Gui.onlyNewNews.getState();
-            new SQLite().openConnection();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -380,7 +379,7 @@ public class Common {
         JdbcQueries sqlite = new JdbcQueries();
         switch (p_file) {
             case "smi": {
-                List<Source> sources = sqlite.getSources("all", SQLite.connection);
+                List<Source> sources = sqlite.getSources("all");
                 int i = 1;
                 for (Source s : sources) {
                     Object[] row = new Object[]{i, s.getSource(), s.getIsActive()};

@@ -14,19 +14,18 @@ import java.sql.SQLException;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class DatabaseTest {
-    private SQLite sqlite;
+    private SQLite sqLite;
 
     @BeforeEach
-    public void init() throws SQLException {
-        sqlite = new SQLite();
-        sqlite.openConnection();
-        Connection connection = DriverManager.getConnection("jdbc:sqlite:" + Common.DIRECTORY_PATH + "news.db");
-        new JdbcQueries().deleteFromTable("TITLES", connection);
+    public void init() {
+        sqLite = new SQLite();
+        sqLite.openConnection();
+        new JdbcQueries().deleteFromTable("TITLES");
     }
 
     @AfterEach
     public void after() {
-        sqlite.closeConnection();
+        sqLite.closeConnection();
     }
 
     @Test
@@ -38,7 +37,6 @@ public class DatabaseTest {
     @Test
     public void shouldThrowIncorrectEmailException() {
         String[] args = {"rps_mail.ru", "30", "а", "е"};
-
         IncorrectEmail ex = assertThrows(IncorrectEmail.class, () -> Main.main(args));
         assertEquals("incorrect e-mail", ex.getMessage());
     }

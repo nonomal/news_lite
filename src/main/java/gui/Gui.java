@@ -244,7 +244,7 @@ public class Gui extends JFrame {
                     int col = tableForAnalysis.columnAtPoint(new Point(e.getX(), e.getY()));
                     if (col == 0) {
                         Gui.topKeyword.setText((String) tableForAnalysis.getModel().getValueAt(row, 0));
-                        jdbcQueries.deleteFromTable("TITLES", SQLite.connection);
+                        jdbcQueries.deleteFromTable("TITLES");
                         searchBtnTop.doClick();
                         WAS_CLICK_IN_TABLE_FOR_ANALYSIS.set(true);
                     }
@@ -316,7 +316,7 @@ public class Gui extends JFrame {
         onlyNewNews.addItemListener(e -> {
             isOnlyLastNews = onlyNewNews.getState();
             if (!isOnlyLastNews) {
-                jdbcQueries.deleteFromTable("TITLES", SQLite.connection);
+                jdbcQueries.deleteFromTable("TITLES");
             }
         });
 

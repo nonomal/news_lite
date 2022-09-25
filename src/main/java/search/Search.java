@@ -57,7 +57,7 @@ public class Search extends SearchUtils {
             int modelRowCount = Gui.model.getRowCount();
             dataForEmail.clear();
             //выборка актуальных источников перед поиском из БД
-            List<Source> activeSources = jdbcQueries.getSources("active", SQLite.connection);
+            List<Source> activeSources = jdbcQueries.getSources("active");
             isSearchNow.set(true);
             timeStart = LocalTime.now();
 //            Search.j = 1;
@@ -115,7 +115,7 @@ public class Search extends SearchUtils {
                                             && !tableRow.getTitle().toLowerCase().contains(excludeFromSearch.get(2))
                                     ) {
                                         //отсеиваем новости, которые уже были найдены ранее
-                                        if (jdbcQueries.isTitleExists(tableRow.getTitle(), pSearchType, SQLite.connection)) {
+                                        if (jdbcQueries.isTitleExists(tableRow.getTitle(), pSearchType)) {
                                             continue;
                                         }
 
@@ -123,7 +123,7 @@ public class Search extends SearchUtils {
                                         int dateDiff = Common.compareDatesOnly(new Date(), pubDate);
 
                                         // вставка всех новостей в архив (ощутимо замедляет общий поиск)
-                                        jdbcQueries.insertAllTitlesToArchive(tableRow.getTitle(), pubDate.toString(), SQLite.connection);
+                                        jdbcQueries.insertAllTitlesToArchive(tableRow.getTitle(), pubDate.toString());
                                         if (dateDiff != 0) {
                                             searchProcess(tableRow, pSearchType);
                                         }
@@ -134,7 +134,7 @@ public class Search extends SearchUtils {
                                                 && tableRow.getTitle().length() > 15) {
 
                                             // отсеиваем новости которые были обнаружены ранее
-                                            if (jdbcQueries.isTitleExists(tableRow.getTitle(), pSearchType, SQLite.connection)) {
+                                            if (jdbcQueries.isTitleExists(tableRow.getTitle(), pSearchType)) {
                                                 continue;
                                             }
 
@@ -150,7 +150,7 @@ public class Search extends SearchUtils {
                                 if (isStop.get()) return;
                             }
                             if (!Gui.isOnlyLastNews)
-                                jdbcQueries.deleteFromTable("TITLES", SQLite.connection);
+                                jdbcQueries.deleteFromTable("TITLES");
                         } catch (Exception noRss) {
                             String smi = source.getLink()
                                     .replaceAll(("https://|http://|www."), "");
@@ -222,10 +222,11 @@ public class Search extends SearchUtils {
     }
 
     private void searchProcess(TableRow tableRow, String searchType) {
+        // Счётчик количества новостей
         newsCount++;
         Gui.labelSum.setText(String.valueOf(newsCount));
 
-        // Подготовка данных для отправки результата на почту
+        // Подготовка данных для отправки результатов на почту
         dataForEmail.add(newsCount + ") " +
                 tableRow.getTitle() + "\n" +
                 tableRow.getLink() + "\n" +
@@ -242,8 +243,8 @@ public class Search extends SearchUtils {
                 tableRow.getLink()
         });
 
-        jdbcQueries.insertTitlesNewsDual(tableRow.getTitle(), SQLite.connection);
-        jdbcQueries.insertTitles(tableRow.getTitle(), searchType, SQLite.connection);
+        jdbcQueries.insertTitlesNewsDual(tableRow.getTitle());
+        jdbcQueries.insertTitles(tableRow.getTitle(), searchType);
     }
 
 

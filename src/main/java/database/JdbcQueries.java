@@ -17,22 +17,23 @@ import java.util.List;
 @Slf4j
 public class JdbcQueries {
     private static final int WORD_FREQ_MATCHES = 2;
-    private PreparedStatement st;
+    private final Connection connection = SQLite.connection;
+    private PreparedStatement statement;
 
     // Вставка заголовков разбитых на слова
-    public void insertTitlesNewsDual(String title, Connection connection) {
+    public void insertTitlesNewsDual(String title) {
         try {
             String query = "INSERT INTO NEWS_DUAL(TITLE) VALUES (?)";
-            PreparedStatement st = connection.prepareStatement(query);
+            statement = connection.prepareStatement(query);
             String[] substr = title.split(" ");
 
             for (String s : substr) {
                 if (s.length() > 3) {
-                    st.setString(1, s);
-                    st.executeUpdate();
+                    statement.setString(1, s);
+                    statement.executeUpdate();
                 }
             }
-            st.close();
+            statement.close();
         } catch (Exception e) {
             Common.console("selectSqlite error: " + e.getMessage());
         }
@@ -44,26 +45,26 @@ public class JdbcQueries {
             String query = "SELECT SUM, TITLE FROM V_NEWS_DUAL WHERE SUM > ? " +
                     "AND TITLE NOT IN (SELECT WORD FROM ALL_TITLES_TO_EXCLUDE) " +
                     "ORDER BY SUM DESC";
-            st = connection.prepareStatement(query);
-            st.setInt(1, WORD_FREQ_MATCHES);
+            statement = connection.prepareStatement(query);
+            statement.setInt(1, WORD_FREQ_MATCHES);
 
-            ResultSet rs = st.executeQuery();
+            ResultSet rs = statement.executeQuery();
             while (rs.next()) {
                 String word = rs.getString("TITLE");
                 int sum = rs.getInt("SUM");
                 Object[] row = new Object[]{word, sum};
                 Gui.modelForAnalysis.addRow(row);
             }
-            deleteFromTable("NEWS_DUAL", connection);
+            deleteFromTable("NEWS_DUAL");
             rs.close();
-            st.close();
+            statement.close();
         } catch (Exception e) {
             Common.console("selectSqlite error: " + e.getMessage());
         }
     }
 
     // Источники новостей
-    public List<Source> getSources(String type, Connection connection) {
+    public List<Source> getSources(String type) {
         List<Source> sources = new ArrayList<>();
         String query = "SELECT id, source, link, is_active, position FROM rss_list " +
                 "WHERE is_active = 1 ORDER BY position";
@@ -74,8 +75,8 @@ public class JdbcQueries {
         }
 
         try {
-            st = connection.prepareStatement(query);
-            ResultSet rs = st.executeQuery();
+            statement = connection.prepareStatement(query);
+            ResultSet rs = statement.executeQuery();
 
             while (rs.next()) {
                 sources.add(Source.builder()
@@ -87,7 +88,7 @@ public class JdbcQueries {
                         .build());
             }
             rs.close();
-            st.close();
+            statement.close();
         } catch (Exception e) {
             Common.console("getSources error: " + e.getMessage());
         }
@@ -99,16 +100,16 @@ public class JdbcQueries {
         List<Excluded> excludedWords = new ArrayList<>();
         try {
             String query = "SELECT id, word FROM exclude ORDER BY id DESC";
-            st = connection.prepareStatement(query);
+            statement = connection.prepareStatement(query);
 
-            ResultSet rs = st.executeQuery();
+            ResultSet rs = statement.executeQuery();
             while (rs.next()) {
                 excludedWords.add(new Excluded(
                         rs.getInt("id"),
                         rs.getString("word")));
             }
             rs.close();
-            st.close();
+            statement.close();
         } catch (Exception e) {
             Common.console("getExcludedWords error: " + e.getMessage());
         }
@@ -127,11 +128,11 @@ public class JdbcQueries {
 
             if (result == JOptionPane.YES_OPTION) {
                 String query = "INSERT INTO RSS_LIST(SOURCE, LINK) VALUES (?, ?)";
-                st = connection.prepareStatement(query);
-                st.setString(1, rss.getText());
-                st.setString(2, link.getText());
-                st.executeUpdate();
-                st.close();
+                statement = connection.prepareStatement(query);
+                statement.setString(1, rss.getText());
+                statement.setString(2, link.getText());
+                statement.executeUpdate();
+                statement.close();
 
                 Common.console("status: source added");
                 log.info("New source added: " + rss.getText());
@@ -144,13 +145,13 @@ public class JdbcQueries {
     }
 
     // вставка нового слова для исключения из анализа частоты употребления слов
-    public void insertNewExcludedWord(String word, Connection connection) {
+    public void insertNewExcludedWord(String word) {
         try {
             String query = "INSERT INTO exclude(word) VALUES (?)";
-            st = connection.prepareStatement(query);
-            st.setString(1, word);
-            st.executeUpdate();
-            st.close();
+            statement = connection.prepareStatement(query);
+            statement.setString(1, word);
+            statement.executeUpdate();
+            statement.close();
 
             Common.console("status: word \"" + word + "\" excluded from analysis");
             log.info("New word excluded from analysis");
@@ -160,49 +161,49 @@ public class JdbcQueries {
     }
 
     // вставка кода по заголовку для отсеивания ранее обнаруженных новостей
-    public void insertTitles(String title, String type, Connection connection) {
+    public void insertTitles(String title, String type) {
         try {
             String query = "INSERT INTO titles(title, type) VALUES (?, ?)";
-            st = connection.prepareStatement(query);
-            st.setString(1, title);
-            st.setString(2, type);
-            st.executeUpdate();
-            st.close();
+            statement = connection.prepareStatement(query);
+            statement.setString(1, title);
+            statement.setString(2, type);
+            statement.executeUpdate();
+            statement.close();
         } catch (SQLException e) {
             Common.console("insertTitles error: " + e.getMessage());
         }
     }
 
     // сохранение всех заголовков
-    public void insertAllTitlesToArchive(String title, String date, Connection connection) {
+    public void insertAllTitlesToArchive(String title, String date) {
         try {
             String query = "INSERT INTO ALL_NEWS(TITLE, NEWS_DATE) VALUES (?, ?)";
-            st = connection.prepareStatement(query);
-            st.setString(1, title);
-            st.setString(2, date);
-            st.executeUpdate();
-            st.close();
+            statement = connection.prepareStatement(query);
+            statement.setString(1, title);
+            statement.setString(2, date);
+            statement.executeUpdate();
+            statement.close();
         } catch (SQLException e) {
             Common.console("insertAllTitlesToArchive error: " + e.getMessage());
         }
     }
 
     // отсеивание заголовков
-    public boolean isTitleExists(String title, String type, Connection connection) {
+    public boolean isTitleExists(String title, String type) {
         int isExists = 0;
         try {
             String query = "SELECT MAX(1) FROM titles " +
                     "WHERE EXISTS (SELECT title FROM titles t WHERE t.title = ? AND t.type = ?)";
-            st = connection.prepareStatement(query);
-            st.setString(1, title);
-            st.setString(2, type);
+            statement = connection.prepareStatement(query);
+            statement.setString(1, title);
+            statement.setString(2, type);
 
-            ResultSet rs = st.executeQuery();
+            ResultSet rs = statement.executeQuery();
             while (rs.next()) {
                 isExists = rs.getInt(1);
             }
             rs.close();
-            st.close();
+            statement.close();
 
         } catch (Exception e) {
             Common.console("isTitleExists error: " + e.getMessage());
@@ -215,14 +216,14 @@ public class JdbcQueries {
         int countNews = 0;
         try {
             String query = "SELECT COUNT(*) FROM ALL_NEWS";
-            st = connection.prepareStatement(query);
+            statement = connection.prepareStatement(query);
 
-            ResultSet rs = st.executeQuery();
+            ResultSet rs = statement.executeQuery();
             while (rs.next()) {
                 countNews = rs.getInt(1);
             }
             rs.close();
-            st.close();
+            statement.close();
         } catch (Exception e) {
             Common.console("archiveNewsCount error: " + e.getMessage());
         }
@@ -230,13 +231,13 @@ public class JdbcQueries {
     }
 
     // удаление источника
-    public void deleteSource(String source, Connection connection) {
+    public void deleteSource(String source) {
         try {
             String query = "DELETE FROM rss_list WHERE source = ?";
-            st = connection.prepareStatement(query);
-            st.setString(1, source);
-            st.executeUpdate();
-            st.close();
+            statement = connection.prepareStatement(query);
+            statement.setString(1, source);
+            statement.executeUpdate();
+            statement.close();
         } catch (Exception e) {
             Common.console("deleteSource error: " + e.getMessage());
         }
@@ -244,28 +245,28 @@ public class JdbcQueries {
     }
 
     // удаление слова исключенного из поиска
-    public void deleteExcluded(String p_source, Connection connection) {
+    public void deleteExcluded(String p_source) {
         try {
             String query = "DELETE FROM EXCLUDE WHERE WORD = ?";
-            st = connection.prepareStatement(query);
-            st.setString(1, p_source);
+            statement = connection.prepareStatement(query);
+            statement.setString(1, p_source);
 
-            st.executeUpdate();
-            st.close();
+            statement.executeUpdate();
+            statement.close();
         } catch (Exception e) {
             Common.console("deleteExcluded error: " + e.getMessage());
         }
     }
 
     // обновление статуса чекбокса is_active для ресурсов SELECT id, source, link FROM rss_list where is_active = 1  ORDER BY id
-    public void updateIsActiveStatus(boolean pBoolean, String pSource, Connection connection) {
+    public void updateIsActiveStatus(boolean pBoolean, String pSource) {
         try {
             String query = "UPDATE RSS_LIST SET IS_ACTIVE = ? WHERE SOURCE = ?";
-            st = connection.prepareStatement(query);
-            st.setBoolean(1, pBoolean);
-            st.setString(2, pSource);
-            st.executeUpdate();
-            st.close();
+            statement = connection.prepareStatement(query);
+            statement.setBoolean(1, pBoolean);
+            statement.setString(2, pSource);
+            statement.executeUpdate();
+            statement.close();
         } catch (Exception e) {
             Common.console("updateIsActiveStatus error: " + e.getMessage());
         }
@@ -276,9 +277,9 @@ public class JdbcQueries {
         try {
             String query = "DELETE FROM ALL_NEWS WHERE ROWID NOT IN (SELECT MIN(ROWID) " +
                     "FROM ALL_NEWS GROUP BY TITLE, NEWS_DATE)";
-            st = connection.prepareStatement(query);
-            st.executeUpdate();
-            st.close();
+            statement = connection.prepareStatement(query);
+            statement.executeUpdate();
+            statement.close();
         } catch (Exception e) {
             Common.console("deleteDuplicates error: " + e.getMessage());
         }
@@ -287,16 +288,16 @@ public class JdbcQueries {
     // удаляем все пустые строки
     public void deleteEmptyRows(Connection connection) throws SQLException {
         String query = "DELETE FROM NEWS_DUAL WHERE TITLE = ''";
-        st = connection.prepareStatement(query);
-        st.executeUpdate();
+        statement = connection.prepareStatement(query);
+        statement.executeUpdate();
     }
 
-    public void deleteFromTable(String tableName, Connection connection) {
+    public void deleteFromTable(String tableName) {
         try {
             String query = "DELETE FROM " + tableName;
-            st = connection.prepareStatement(query);
-            st.executeUpdate();
-            st.close();
+            statement = connection.prepareStatement(query);
+            statement.executeUpdate();
+            statement.close();
         } catch (Exception e) {
             Common.console("deleteFromTable error: " + e.getMessage());
         }

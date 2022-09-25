@@ -51,12 +51,11 @@ public class ConsoleSearch extends SearchUtils {
         }
 
         minutesIntervalConsole = Integer.parseInt(args[1]);
-        sqlite.openConnection();
         System.out.println(Arrays.toString(args));
 
         if (!isSearchNow.get()) {
             dataForEmail.clear();
-            List<Source> activeSources = jdbcQueries.getSources("active", SQLite.connection);
+            List<Source> activeSources = jdbcQueries.getSources("active");
             isSearchNow.set(true);
             j = 1;
             newsCount = 0;
@@ -92,7 +91,7 @@ public class ConsoleSearch extends SearchUtils {
 
                                     if (title.toLowerCase().contains(arg.toLowerCase()) && title.length() > 15) {
                                         // отсеиваем новости которые были обнаружены ранее
-                                        if (jdbcQueries.isTitleExists(title, "console", SQLite.connection)) {
+                                        if (jdbcQueries.isTitleExists(title, "console")) {
                                             continue;
                                         }
 
@@ -107,7 +106,7 @@ public class ConsoleSearch extends SearchUtils {
                                             /**/
                                             System.out.println(newsCount + ") " + title);
                                             /**/
-                                            jdbcQueries.insertTitles(title, "console", SQLite.connection);
+                                            jdbcQueries.insertTitles(title, "console");
                                         }
                                     }
                                 }
@@ -133,7 +132,7 @@ public class ConsoleSearch extends SearchUtils {
                 }
                 jdbcQueries.deleteDuplicates(SQLite.connection);
                 Gui.WAS_CLICK_IN_TABLE_FOR_ANALYSIS.set(false);
-                sqlite.closeConnection();
+
             } catch (Exception e) {
                 e.printStackTrace();
                 try {

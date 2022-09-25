@@ -1,3 +1,4 @@
+import database.SQLite;
 import lombok.extern.slf4j.Slf4j;
 import search.ConsoleSearch;
 import utils.Common;
@@ -10,6 +11,7 @@ public class Main {
     public static void main(String[] args) throws IOException {
         log.info("Application started");
         Common.createFiles();
+        new SQLite().openConnection();
 
         if (args.length == 0) {
             Common.showGui();
