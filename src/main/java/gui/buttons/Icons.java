@@ -32,7 +32,7 @@ public class Icons {
     public static final ImageIcon FONT_COLOR_BUTTON_ICON = new ImageIcon(Toolkit.getDefaultToolkit()
             .createImage(Gui.class.getResource("/icons/font.png")));
     public static final ImageIcon BACK_GROUND_COLOR_ICON = new ImageIcon(Toolkit.getDefaultToolkit()
-            .createImage(Gui.class.getResource("/icons/tray.png")));
+            .createImage(Gui.class.getResource("/icons/bg.png")));
     public static final ImageIcon EXIT_BUTTON_ICON = new ImageIcon(Toolkit.getDefaultToolkit()
             .createImage(Gui.class.getResource("/icons/exit.png")));
     public static final ImageIcon WHEN_MOUSE_ON_EXIT_BUTTON_ICON = new ImageIcon(Toolkit.getDefaultToolkit()
@@ -41,5 +41,5 @@ public class Icons {
             .createImage(Gui.class.getResource("/icons/tray.png")));
     public static final ImageIcon WHEN_MOUSE_ON_TRAY_BUTTON_ICON = new ImageIcon(Toolkit.getDefaultToolkit()
             .createImage(Gui.class.getResource("/icons/tray2.png")));
-    public static final URL APP_IN_TRAY_BUTTON_ICON = Gui.class.getResource("/icons/tray.png");
+    public static final URL APP_IN_TRAY_BUTTON_ICON = Gui.class.getResource("/icons/bg.png");
 }
