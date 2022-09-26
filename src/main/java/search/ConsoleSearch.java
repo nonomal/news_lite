@@ -55,7 +55,6 @@ public class ConsoleSearch extends SearchUtils {
 
         if (!isSearchNow.get()) {
             dataForEmail.clear();
-            List<Source> activeSources = jdbcQueries.getSources("active");
             isSearchNow.set(true);
             j = 1;
             newsCount = 0;
@@ -65,7 +64,7 @@ public class ConsoleSearch extends SearchUtils {
                 sqlite.transaction("BEGIN TRANSACTION");
 
                 Parser parser = new Parser();
-                for (Source source : activeSources) {
+                for (Source source : jdbcQueries.getSources("active")) {
                     try {
                         try {
                             if (isStop.get()) return;

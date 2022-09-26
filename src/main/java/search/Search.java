@@ -1,8 +1,6 @@
 package search;
 
-import com.sun.syndication.feed.synd.SyndContent;
 import com.sun.syndication.feed.synd.SyndEntry;
-import com.sun.syndication.feed.synd.SyndFeed;
 import database.JdbcQueries;
 import database.SQLite;
 import gui.Gui;
@@ -59,6 +57,8 @@ public class Search extends SearchUtils {
             if (!Gui.WAS_CLICK_IN_TABLE_FOR_ANALYSIS.get()) Gui.modelForAnalysis.setRowCount(0);
             newsCount = 0;
             Gui.labelSum.setText("" + newsCount);
+            Gui.sendEmailBtn.setIcon(Icons.SEND_EMAIL_ICON);
+            isSearchFinished = new AtomicBoolean(false);
 
             if (isWord) {
                 Gui.searchBtnTop.setVisible(false);
@@ -68,31 +68,24 @@ public class Search extends SearchUtils {
                 Gui.stopBtnBottom.setVisible(true);
             }
 
-            isSearchFinished = new AtomicBoolean(false);
-            Gui.sendEmailBtn.setIcon(Icons.SEND_EMAIL_ICON);
             new Thread(Common::fillProgressLine).start();
             try {
                 sqLite.transaction("BEGIN TRANSACTION");
                 TableRow tableRow;
-                Parser parser = new Parser();
 
                 // Актуальные источники новостей
-                List<Source> activeSources = jdbcQueries.getSources("active");
-                for (Source source : activeSources) {
+                for (Source source : jdbcQueries.getSources("active")) {
+                    if (isStop.get()) return;
                     try {
                         try {
-                            if (isStop.get()) return;
-                            SyndFeed feed = parser.parseFeed(source.getLink());
-                            for (Object message : feed.getEntries()) {
+                            for (Object message : new Parser().parseFeed(source.getLink()).getEntries()) {
                                 SyndEntry entry = (SyndEntry) message;
-                                SyndContent content = entry.getDescription();
                                 String title = entry.getTitle();
-
-                                String newsDescribe = content.getValue()
+                                Date pubDate = entry.getPublishedDate();
+                                String newsDescribe = entry.getDescription().getValue()
                                         .trim()
                                         .replaceAll(("<p>|</p>|<br />"), "");
                                 if (isHref(newsDescribe)) newsDescribe = title;
-                                Date pubDate = entry.getPublishedDate();
 
                                 tableRow = new TableRow(
                                         source.getSource(),
@@ -103,12 +96,13 @@ public class Search extends SearchUtils {
 
                                 if (isWord) {
                                     Gui.findWord = Gui.topKeyword.getText().toLowerCase();
+                                    String newsTitle = tableRow.getTitle().toLowerCase();
 
                                     if (tableRow.getTitle().toLowerCase().contains(Gui.findWord)
-                                            && tableRow.getTitle().length() > 15
-                                            && !tableRow.getTitle().toLowerCase().contains(excludeFromSearch.get(0))
-                                            && !tableRow.getTitle().toLowerCase().contains(excludeFromSearch.get(1))
-                                            && !tableRow.getTitle().toLowerCase().contains(excludeFromSearch.get(2))
+                                            && newsTitle.length() > 15
+                                            && !newsTitle.contains(excludeFromSearch.get(0))
+                                            && !newsTitle.contains(excludeFromSearch.get(1))
+                                            && !newsTitle.contains(excludeFromSearch.get(2))
                                     ) {
                                         //отсеиваем новости, которые уже были найдены ранее
                                         if (jdbcQueries.isTitleExists(tableRow.getTitle(), pSearchType)) {

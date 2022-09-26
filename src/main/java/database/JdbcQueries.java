@@ -250,7 +250,6 @@ public class JdbcQueries {
             String query = "DELETE FROM EXCLUDE WHERE WORD = ?";
             statement = connection.prepareStatement(query);
             statement.setString(1, p_source);
-
             statement.executeUpdate();
             statement.close();
         } catch (Exception e) {
@@ -286,11 +285,15 @@ public class JdbcQueries {
     }
 
     // удаляем все пустые строки
-    public void deleteEmptyRows(Connection connection) throws SQLException {
-        String query = "DELETE FROM NEWS_DUAL WHERE TITLE = ''";
-        statement = connection.prepareStatement(query);
-        statement.executeUpdate();
-        statement.close();
+    public void deleteEmptyRows(Connection connection) {
+        try {
+            String query = "DELETE FROM NEWS_DUAL WHERE TITLE = ''";
+            statement = connection.prepareStatement(query);
+            statement.executeUpdate();
+            statement.close();
+        } catch (Exception e) {
+            Common.console("deleteEmptyRows error: " + e.getMessage());
+        }
     }
 
     public void deleteFromTable(String tableName) {
