@@ -432,11 +432,11 @@ public class Gui extends JFrame {
         getContentPane().add(clearBtnTop);
 
         /* Сворачивание в трей */
-        JButton toTrayBtn = new JButton(Icons.TRAY_BUTTON_ICON);
+        JButton toTrayBtn = new JButton(Icons.HIDE_BUTTON_ICON);
         toTrayBtn.setFocusable(false);
         toTrayBtn.setContentAreaFilled(false);
         toTrayBtn.setBorderPainted(false);
-        toTrayBtn.setBounds(1126, 3, 24, 22);
+        toTrayBtn.setBounds(1126, 4, 24, 22);
         if (SystemTray.isSupported()) {
             getContentPane().add(toTrayBtn);
         }
@@ -445,7 +445,7 @@ public class Gui extends JFrame {
             setVisible(false);
             if (autoUpdateNewsBottom.getState()) consoleTextArea.setText("");
         });
-        animation(toTrayBtn, Icons.TRAY_BUTTON_ICON, Icons.WHEN_MOUSE_ON_TRAY_BUTTON_ICON);
+        animation(toTrayBtn, Icons.HIDE_BUTTON_ICON, Icons.WHEN_MOUSE_ON_HIDE_BUTTON_ICON);
 
         // Сворачивание приложения в трей
         try {
