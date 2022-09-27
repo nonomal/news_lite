@@ -451,4 +451,21 @@ public class Common {
         }
     }
 
+    public void saveFontColor(Color color) throws IOException {
+        delSettings("fontColorRed");
+        delSettings("fontColorGreen");
+        delSettings("fontColorBlue");
+        writeToConfig(String.valueOf(color.getRed()), "fontColorRed");
+        writeToConfig(String.valueOf(color.getGreen()), "fontColorGreen");
+        writeToConfig(String.valueOf(color.getBlue()), "fontColorBlue");
+    }
+
+    public void saveBackgroundColor(Color color) throws IOException {
+        delSettings("backgroundColorRed");
+        delSettings("backgroundColorGreen");
+        delSettings("backgroundColorBlue");
+        writeToConfig(String.valueOf(color.getRed()), "backgroundColorRed");
+        writeToConfig(String.valueOf(color.getGreen()), "backgroundColorGreen");
+        writeToConfig(String.valueOf(color.getBlue()), "backgroundColorBlue");
+    }
 }

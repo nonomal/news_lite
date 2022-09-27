@@ -344,7 +344,7 @@ public class Gui extends JFrame {
             }
         });
 
-        /* Top-Right action panel */
+        /* TOP-RIGHT ACTION PANEL */
         int topRightX = 965;
         int topRightY = 9;
 
@@ -358,12 +358,7 @@ public class Gui extends JFrame {
             if (color != null) {
                 try {
                     table.setBackground(color);
-                    Common.delSettings("backgroundColorRed");
-                    Common.delSettings("backgroundColorGreen");
-                    Common.delSettings("backgroundColorBlue");
-                    Common.writeToConfig(String.valueOf(color.getRed()), "backgroundColorRed");
-                    Common.writeToConfig(String.valueOf(color.getGreen()), "backgroundColorGreen");
-                    Common.writeToConfig(String.valueOf(color.getBlue()), "backgroundColorBlue");
+                    Common.saveBackgroundColor(color);
                 } catch (IOException ex) {
                     ex.printStackTrace();
                 }
@@ -382,12 +377,7 @@ public class Gui extends JFrame {
                 try {
                     table.setForeground(color);
                     tableForAnalysis.setForeground(color);
-                    Common.delSettings("fontColorRed");
-                    Common.delSettings("fontColorGreen");
-                    Common.delSettings("fontColorBlue");
-                    Common.writeToConfig(String.valueOf(color.getRed()), "fontColorRed");
-                    Common.writeToConfig(String.valueOf(color.getGreen()), "fontColorGreen");
-                    Common.writeToConfig(String.valueOf(color.getBlue()), "fontColorBlue");
+                    Common.saveFontColor(color);
                 } catch (IOException ex) {
                     ex.printStackTrace();
                 }
