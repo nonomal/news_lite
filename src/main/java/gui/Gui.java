@@ -94,14 +94,6 @@ public class Gui extends JFrame {
             this.setOpacity(Common.OPACITY);
         }
 
-        //Input keyword
-        final JLabel lblNewLabel = new JLabel("Keyword:");
-        lblNewLabel.setForeground(new Color(255, 179, 131));
-        lblNewLabel.setBounds(10, 9, 71, 19);
-        lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 15));
-        lblNewLabel.setHorizontalAlignment(SwingConstants.LEFT);
-        getContentPane().add(lblNewLabel);
-
         //Table
         scrollPane = new JScrollPane();
         scrollPane.setBounds(10, 40, 860, 500);
@@ -251,21 +243,30 @@ public class Gui extends JFrame {
         });
 
         /* TOP-LEFT ACTION PANEL */
+        int topLeftActionX = 10;
         int topLeftActionY = 9;
+
+        //Input keyword
+        JLabel lblNewLabel = new JLabel("find:");
+        lblNewLabel.setForeground(new Color(255, 179, 131));
+        lblNewLabel.setBounds(topLeftActionX, topLeftActionY, 36, 19);
+        lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 15));
+        lblNewLabel.setHorizontalAlignment(SwingConstants.LEFT);
+        getContentPane().add(lblNewLabel);
 
         //Keyword field
         topKeyword = new JTextField(findWord);
-        topKeyword.setBounds(87, topLeftActionY, 100, 22);
+        topKeyword.setBounds(topLeftActionX + 42, topLeftActionY, 100, 22);
         topKeyword.setFont(new Font("Tahoma", Font.BOLD, 13));
         getContentPane().add(topKeyword);
 
-        //Search addNewSource
+        //Search
         searchBtnTop = new JButton();
         searchBtnTop.setIcon(Icons.SEARCH_KEYWORDS_ICON);
         searchBtnTop.setToolTipText("Исключая заголовки содержащие: " + Arrays.toString(Search.excludedTitles.toArray()));
         searchBtnTop.setBackground(new Color(154, 237, 196));
         searchBtnTop.setFont(new Font("Tahoma", Font.BOLD, 10));
-        searchBtnTop.setBounds(192, topLeftActionY, 30, 22);
+        searchBtnTop.setBounds(topLeftActionX + 147, topLeftActionY, 30, 22);
         getContentPane().add(searchBtnTop);
         // Search by Enter
         getRootPane().setDefaultButton(searchBtnTop);
@@ -277,7 +278,7 @@ public class Gui extends JFrame {
         stopBtnTop = new JButton();
         stopBtnTop.setIcon(Icons.STOP_SEARCH_ICON);
         stopBtnTop.setBackground(new Color(255, 208, 202));
-        stopBtnTop.setBounds(192, topLeftActionY, 30, 22);
+        stopBtnTop.setBounds(topLeftActionX + 147, topLeftActionY, 30, 22);
         stopBtnTop.addActionListener(e -> {
             try {
                 Search.isSearchFinished.set(true);
@@ -299,12 +300,12 @@ public class Gui extends JFrame {
         // Интервалы для поиска новостей
         newsInterval = new JComboBox<>(INTERVALS);
         newsInterval.setFont(GUI_FONT);
-        newsInterval.setBounds(230, topLeftActionY, 75, 20); //516
+        newsInterval.setBounds(topLeftActionX + 185, topLeftActionY, 75, 20); //516
         getContentPane().add(newsInterval);
 
         // latest news
         onlyNewNews = new Checkbox("only new");
-        SetCheckbox setCheckbox = new SetCheckbox(315, topLeftActionY, 65);
+        SetCheckbox setCheckbox = new SetCheckbox(topLeftActionX + 270, topLeftActionY, 65);
         setCheckbox.checkBoxSetting(onlyNewNews);
         getContentPane().add(onlyNewNews);
         onlyNewNews.addItemListener(e -> {
@@ -316,13 +317,13 @@ public class Gui extends JFrame {
 
         // Автоматическая отправка письма с результатами
         autoSendMessage = new Checkbox("auto send");
-        setCheckbox = new SetCheckbox(383, topLeftActionY, 66);
+        setCheckbox = new SetCheckbox(topLeftActionX + 338, topLeftActionY, 66);
         setCheckbox.checkBoxSetting(autoSendMessage);
         getContentPane().add(autoSendMessage);
 
         // Автозапуск поиска по слову каждые 60 секунд
         autoUpdateNewsTop = new Checkbox("auto update");
-        SetCheckbox setCheckbox1 = new SetCheckbox(455, topLeftActionY, 75);
+        SetCheckbox setCheckbox1 = new SetCheckbox(topLeftActionX + 410, topLeftActionY, 75);
         setCheckbox1.checkBoxSetting(autoUpdateNewsTop);
 
         getContentPane().add(autoUpdateNewsTop);

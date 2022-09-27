@@ -104,7 +104,7 @@ public class Search extends SearchUtils {
                                         // исключение заголовков, которые указаны в таблице EXCLUDE_FROM_MAIN_SEARCH
                                         for (String excludedTitle : excludedTitles) {
                                             if (excludedTitle.length() > 3 && newsTitle.contains(excludedTitle)) {
-                                                tableRow.setTitle("#");
+                                                tableRow.setTitle("# " + excludedTitle);
                                             }
                                         }
 
