@@ -17,27 +17,25 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
-import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 @Slf4j
 public class ConsoleSearch extends SearchUtils {
-    SQLite sqlite = new SQLite();
-    JdbcQueries jdbcQueries = new JdbcQueries();
-    public static List<String> excludeFromSearch;
+    SQLite sqlite;
+    JdbcQueries jdbcQueries;
+    int newsCount = 0;
     public static AtomicBoolean isStop;
     public static AtomicBoolean isSearchNow;
     public static AtomicBoolean isSearchFinished;
-    public static int j = 1;
-    final SimpleDateFormat date_format = new SimpleDateFormat("dd.MM.yyyy HH:mm");
+    private final SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy HH:mm");
     public static final ArrayList<String> dataForEmail = new ArrayList<>();
-    int newsCount = 0;
     public static final AtomicBoolean IS_CONSOLE_SEARCH = new AtomicBoolean(false);
     public static String sendEmailToFromConsole;
     public static int minutesIntervalConsole;
 
     public ConsoleSearch() {
-        excludeFromSearch = Common.EXCLUDE_WORDS;
+        sqlite = new SQLite();
+        jdbcQueries = new JdbcQueries();
         isStop = new AtomicBoolean(false);
         isSearchNow = new AtomicBoolean(false);
         isSearchFinished = new AtomicBoolean(false);
@@ -56,7 +54,6 @@ public class ConsoleSearch extends SearchUtils {
         if (!isSearchNow.get()) {
             dataForEmail.clear();
             isSearchNow.set(true);
-            j = 1;
             newsCount = 0;
 
             try {
@@ -70,7 +67,6 @@ public class ConsoleSearch extends SearchUtils {
                             if (isStop.get()) return;
                             SyndFeed feed = parser.parseFeed(source.getLink());
                             for (Object message : feed.getEntries()) {
-                                j++;
                                 SyndEntry entry = (SyndEntry) message;
                                 SyndContent content = entry.getDescription();
                                 String smiSource = source.getSource();
@@ -81,7 +77,7 @@ public class ConsoleSearch extends SearchUtils {
                                         .replaceAll(("<p>|</p>|<br />"), "");
                                 if (isHref(newsDescribe)) newsDescribe = title;
                                 Date pubDate = entry.getPublishedDate();
-                                String dateToEmail = date_format.format(pubDate);
+                                String dateToEmail = dateFormat.format(pubDate);
                                 String link = entry.getLink();
 
                                 for (String arg : args) {

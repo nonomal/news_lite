@@ -23,26 +23,27 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 @Slf4j
 public class Search extends SearchUtils {
+    private int newsCount = 0;
     private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("dd.MMM HH:mm", Locale.ENGLISH);
     private final SQLite sqLite;
     private final JdbcQueries jdbcQueries;
-    public static List<String> excludeFromSearch;
     public static AtomicBoolean isStop;
     public static AtomicBoolean isSearchNow;
     public static AtomicBoolean isSearchFinished;
-    public static final ArrayList<String> dataForEmail = new ArrayList<>();
-    private int newsCount = 0;
+    public static final List<String> dataForEmail = new ArrayList<>();
+    public static List<String> excludedTitles;
 
     public Search() {
         sqLite = new SQLite();
         jdbcQueries = new JdbcQueries();
-        excludeFromSearch = Common.EXCLUDE_WORDS;
         isStop = new AtomicBoolean(false);
         isSearchNow = new AtomicBoolean(false);
         isSearchFinished = new AtomicBoolean(false);
+        excludedTitles = jdbcQueries.excludedTitles();
     }
 
     public void mainSearch(String pSearchType) {
+
         if (!isSearchNow.get()) {
             boolean isWord = pSearchType.equals("word");
             boolean isWords = pSearchType.equals("words");
@@ -98,12 +99,15 @@ public class Search extends SearchUtils {
                                     Gui.findWord = Gui.topKeyword.getText().toLowerCase();
                                     String newsTitle = tableRow.getTitle().toLowerCase();
 
-                                    if (tableRow.getTitle().toLowerCase().contains(Gui.findWord)
-                                            && newsTitle.length() > 15
-                                            && !newsTitle.contains(excludeFromSearch.get(0))
-                                            && !newsTitle.contains(excludeFromSearch.get(1))
-                                            && !newsTitle.contains(excludeFromSearch.get(2))
-                                    ) {
+                                    if (newsTitle.contains(Gui.findWord) && newsTitle.length() > 15) {
+
+                                        // исключение заголовков, которые указаны в таблице EXCLUDE_FROM_MAIN_SEARCH
+                                        for (String excludedTitle : excludedTitles) {
+                                            if (excludedTitle.length() > 3 && newsTitle.contains(excludedTitle)) {
+                                                tableRow.setTitle("#");
+                                            }
+                                        }
+
                                         //отсеиваем новости, которые уже были найдены ранее
                                         if (jdbcQueries.isTitleExists(tableRow.getTitle(), pSearchType)) {
                                             continue;

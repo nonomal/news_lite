@@ -188,7 +188,7 @@ public class JdbcQueries {
         }
     }
 
-    // отсеивание заголовков
+    // отсеивание ранее найденных заголовков при включённом чекбоксе ""
     public boolean isTitleExists(String title, String type) {
         int isExists = 0;
         try {
@@ -209,6 +209,27 @@ public class JdbcQueries {
             Common.console("isTitleExists error: " + e.getMessage());
         }
         return isExists == 1;
+    }
+
+    // отсеивание ненужных заголовков
+    public List<String> excludedTitles() {
+        List<String> titles = new ArrayList<>();
+
+        try {
+            String query = "SELECT word FROM exclude_from_main_search";
+            statement = connection.prepareStatement(query);
+
+            ResultSet rs = statement.executeQuery();
+            while (rs.next()) {
+                titles.add(rs.getString(1).toLowerCase());
+            }
+            rs.close();
+            statement.close();
+
+        } catch (Exception e) {
+            Common.console("excludedTitles error: " + e.getMessage());
+        }
+        return titles;
     }
 
     // новостей в архиве всего

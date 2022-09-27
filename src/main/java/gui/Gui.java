@@ -31,6 +31,7 @@ import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.sql.SQLException;
+import java.util.Arrays;
 import java.util.Objects;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -261,7 +262,7 @@ public class Gui extends JFrame {
         //Search addNewSource
         searchBtnTop = new JButton();
         searchBtnTop.setIcon(Icons.SEARCH_KEYWORDS_ICON);
-        searchBtnTop.setToolTipText("Без заголовков со словами " + Search.excludeFromSearch);
+        searchBtnTop.setToolTipText("Исключая заголовки содержащие: " + Arrays.toString(Search.excludedTitles.toArray()));
         searchBtnTop.setBackground(new Color(154, 237, 196));
         searchBtnTop.setFont(new Font("Tahoma", Font.BOLD, 10));
         searchBtnTop.setBounds(192, topLeftActionY, 30, 22);

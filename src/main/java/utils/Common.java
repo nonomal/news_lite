@@ -40,7 +40,6 @@ public class Common {
     public final ArrayList<Keyword> KEYWORDS_LIST = new ArrayList<>();
     public String SCRIPT_URL = null;
     public float OPACITY;
-    public final List<String> EXCLUDE_WORDS = new ArrayList<>();
 
     public void showGui() throws IOException {
         getSettingsBeforeGui();
@@ -195,9 +194,7 @@ public class Common {
     public void getSettingsBeforeGui() {
         try {
             for (String s : Files.readAllLines(Paths.get(CONFIG_FILE))) {
-                if (s.startsWith("exclude="))
-                    EXCLUDE_WORDS.add(s.replace("exclude=", ""));
-                else if (s.startsWith("opacity="))
+                if (s.startsWith("opacity="))
                     OPACITY = Float.parseFloat(s.replace("opacity=", ""));
                 else if (s.startsWith("fontColorRed="))
                     GUI_FONT[0] = Integer.parseInt(s.replace("fontColorRed=", ""));
