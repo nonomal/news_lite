@@ -257,7 +257,7 @@ public class Gui extends JFrame {
 
         //Keyword field
         topKeyword = new JTextField(findWord);
-        topKeyword.setToolTipText("Press CTRL+i to exclude news headlines containing this word");
+        topKeyword.setToolTipText("CTRL+i to exclude news headlines containing this word");
         topKeyword.setBounds(topLeftActionX + 42, topLeftActionY, 100, 22);
         topKeyword.setFont(new Font("Tahoma", Font.BOLD, 13));
         getContentPane().add(topKeyword);
