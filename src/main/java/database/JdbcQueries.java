@@ -22,7 +22,7 @@ public class JdbcQueries {
     private PreparedStatement statement;
 
     // Вставка заголовков разбитых на слова
-    public void insertTitlesNewsDual(String title) {
+    public void addTitlesNewsDual(String title) {
         try {
             String query = "INSERT INTO NEWS_DUAL(TITLE) VALUES (?)";
             statement = connection.prepareStatement(query);
@@ -36,12 +36,12 @@ public class JdbcQueries {
             }
             statement.close();
         } catch (Exception e) {
-            Common.console("selectSqlite error: " + e.getMessage());
+            Common.console("addTitlesNewsDual error: " + e.getMessage());
         }
     }
 
     // Заполнение таблицы анализа
-    public void selectSqlite() {
+    public void setAnalysis() {
         try {
             String query = "SELECT SUM, TITLE FROM V_NEWS_DUAL WHERE SUM > ? " +
                     "AND TITLE NOT IN (SELECT WORD FROM ALL_TITLES_TO_EXCLUDE) " +
@@ -60,7 +60,7 @@ public class JdbcQueries {
             rs.close();
             statement.close();
         } catch (Exception e) {
-            Common.console("selectSqlite error: " + e.getMessage());
+            Common.console("setAnalysis error: " + e.getMessage());
         }
     }
 
@@ -165,27 +165,12 @@ public class JdbcQueries {
             statement.executeUpdate();
             statement.close();
         } catch (Exception e) {
-            Common.console("selectSqlite error: " + e.getMessage());
+            Common.console("addKeyword error: " + e.getMessage());
         }
-    }
-
-    // удаление ключевого слова
-    public void deleteKeyword(String word) {
-        try {
-            String query = "DELETE FROM keywords WHERE word = ?";
-            statement = connection.prepareStatement(query);
-            statement.setString(1, word);
-            statement.executeUpdate();
-            statement.close();
-        } catch (
-                Exception e) {
-            Common.console("deleteKeyword error: " + e.getMessage());
-        }
-
     }
 
     // вставка нового источника
-    public void insertNewSource() {
+    public void addNewSource() {
         try {
             // Диалоговое окно добавления источника новостей в базу данных
             JTextField rss = new JTextField();
@@ -208,12 +193,12 @@ public class JdbcQueries {
                 Common.console("status: adding source canceled");
             }
         } catch (Exception e) {
-            Common.console("insertNewSource error: " + e.getMessage());
+            Common.console("addNewSource error: " + e.getMessage());
         }
     }
 
     // вставка слова для исключения из анализа частоты употребления слов
-    public void insertNewExcludedWord(String word) {
+    public void addExcludedWord(String word) {
         try {
             String query = "INSERT INTO exclude(word) VALUES (?)";
             statement = connection.prepareStatement(query);
@@ -224,12 +209,12 @@ public class JdbcQueries {
             Common.console("status: word \"" + word + "\" excluded from analysis");
             log.info("New word excluded from analysis: " + word);
         } catch (Exception e) {
-            Common.console("insertNewExcludedWord error: " + e.getMessage());
+            Common.console("addExcludedWord error: " + e.getMessage());
         }
     }
 
     // вставка кода по заголовку для отсеивания ранее обнаруженных новостей
-    public void insertTitles(String title, String type) {
+    public void addTitles(String title, String type) {
         try {
             String query = "INSERT INTO titles(title, type) VALUES (?, ?)";
             statement = connection.prepareStatement(query);
@@ -238,12 +223,12 @@ public class JdbcQueries {
             statement.executeUpdate();
             statement.close();
         } catch (SQLException e) {
-            Common.console("insertTitles error: " + e.getMessage());
+            Common.console("addTitles error: " + e.getMessage());
         }
     }
 
     // сохранение всех заголовков
-    public void insertAllTitlesToArchive(String title, String date) {
+    public void addAllTitlesToArchive(String title, String date) {
         try {
             String query = "INSERT INTO ALL_NEWS(TITLE, NEWS_DATE) VALUES (?, ?)";
             statement = connection.prepareStatement(query);
@@ -252,7 +237,7 @@ public class JdbcQueries {
             statement.executeUpdate();
             statement.close();
         } catch (SQLException e) {
-            Common.console("insertAllTitlesToArchive error: " + e.getMessage());
+            Common.console("addAllTitlesToArchive error: " + e.getMessage());
         }
     }
 
@@ -301,7 +286,7 @@ public class JdbcQueries {
     }
 
     // вставка слова для исключения содержащих его заголовков
-    public void insertWordToExcludeTitles(String word) {
+    public void addWordToExcludeTitles(String word) {
         if (word != null && word.length() > 0) {
             try {
                 String query = "INSERT INTO exclude_from_main_search(word) VALUES (?)";
@@ -313,7 +298,7 @@ public class JdbcQueries {
                 Common.console("status: word \"" + word + "\" excluded from search");
                 log.info("New word excluded from search: " + word);
             } catch (Exception e) {
-                Common.console("insertWordToExcludeTitles error: " + e.getMessage());
+                Common.console("addWordToExcludeTitles error: " + e.getMessage());
             }
         }
     }
@@ -348,11 +333,10 @@ public class JdbcQueries {
         } catch (Exception e) {
             Common.console("deleteSource error: " + e.getMessage());
         }
-
     }
 
     // удаление слова исключенного из поиска
-    public void deleteExcluded(String source, int activeWindow) {
+    public void deleteExcluded(String word, int activeWindow) {
         try {
             String query = "DELETE FROM exclude WHERE word = ?";
 
@@ -361,11 +345,25 @@ public class JdbcQueries {
             }
 
             statement = connection.prepareStatement(query);
-            statement.setString(1, source);
+            statement.setString(1, word);
             statement.executeUpdate();
             statement.close();
         } catch (Exception e) {
             Common.console("deleteExcluded error: " + e.getMessage());
+        }
+    }
+
+    // удаление ключевого слова
+    public void deleteKeyword(String word) {
+        try {
+            String query = "DELETE FROM keywords WHERE word = ?";
+            statement = connection.prepareStatement(query);
+            statement.setString(1, word);
+            statement.executeUpdate();
+            statement.close();
+        } catch (
+                Exception e) {
+            Common.console("deleteKeyword error: " + e.getMessage());
         }
     }
 

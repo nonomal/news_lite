@@ -265,7 +265,7 @@ public class Gui extends JFrame {
             @Override
             public void keyPressed(KeyEvent e) {
                 if (e.isControlDown() && e.getKeyCode() == KeyEvent.VK_I) {
-                    jdbcQueries.insertWordToExcludeTitles(topKeyword.getText().toLowerCase());
+                    jdbcQueries.addWordToExcludeTitles(topKeyword.getText().toLowerCase());
                     topKeyword.setText("");
                 }
             }
@@ -831,7 +831,7 @@ public class Gui extends JFrame {
         addNewSource.setBackground(new Color(243, 229, 255));
         addNewSource.setBounds(902, 479, 14, 14);
         getContentPane().add(addNewSource);
-        addNewSource.addActionListener(e -> jdbcQueries.insertNewSource());
+        addNewSource.addActionListener(e -> jdbcQueries.addNewSource());
         addNewSource.addMouseListener(new MouseAdapter() {
             // наведение мышки на кнопку
             @Override

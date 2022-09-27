@@ -101,7 +101,7 @@ public class ConsoleSearch extends SearchUtils {
                                             /**/
                                             System.out.println(newsCount + ") " + title);
                                             /**/
-                                            jdbcQueries.insertTitles(title, "console");
+                                            jdbcQueries.addTitles(title, "console");
                                         }
                                     }
                                 }

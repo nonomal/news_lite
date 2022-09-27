@@ -95,7 +95,7 @@ public class ButtonColumn extends AbstractCellEditor implements TableCellRendere
             // удаление из диалогового окна
             Gui.modelForAnalysis.removeRow(rowWithExcludeWord);
             // добавление в базу данных и файл excluded.txt
-            jdbcQueries.insertNewExcludedWord(source);
+            jdbcQueries.addExcludedWord(source);
         }
 
         // окно источников RSS

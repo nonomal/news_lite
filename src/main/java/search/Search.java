@@ -115,7 +115,7 @@ public class Search extends SearchUtils {
                                         int dateDiff = Common.compareDatesOnly(new Date(), pubDate);
 
                                         // вставка всех новостей в архив (ощутимо замедляет общий поиск)
-                                        jdbcQueries.insertAllTitlesToArchive(tableRow.getTitle(), pubDate.toString());
+                                        jdbcQueries.addAllTitlesToArchive(tableRow.getTitle(), pubDate.toString());
                                         if (dateDiff != 0) {
                                             searchProcess(tableRow, pSearchType);
                                         }
@@ -189,7 +189,7 @@ public class Search extends SearchUtils {
                 jdbcQueries.deleteEmptyRows();
 
                 // Заполняем таблицу анализа
-                if (!Gui.WAS_CLICK_IN_TABLE_FOR_ANALYSIS.get()) jdbcQueries.selectSqlite();
+                if (!Gui.WAS_CLICK_IN_TABLE_FOR_ANALYSIS.get()) jdbcQueries.setAnalysis();
 
                 // Автоматическая отправка результатов
                 if (Gui.autoSendMessage.getState() && (Gui.model.getRowCount() > 0)) {
@@ -235,8 +235,8 @@ public class Search extends SearchUtils {
                 tableRow.getLink()
         });
 
-        jdbcQueries.insertTitlesNewsDual(tableRow.getTitle());
-        jdbcQueries.insertTitles(tableRow.getTitle(), searchType);
+        jdbcQueries.addTitlesNewsDual(tableRow.getTitle());
+        jdbcQueries.addTitles(tableRow.getTitle(), searchType);
     }
 
 
