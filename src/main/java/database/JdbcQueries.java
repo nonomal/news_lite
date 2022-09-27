@@ -245,7 +245,7 @@ public class JdbcQueries {
                 Common.console("status: word \"" + word + "\" excluded from search");
                 log.info("New word excluded from search: " + word);
             } catch (Exception e) {
-                Common.console("insertNewExcludedWord error: " + e.getMessage());
+                Common.console("insertWordToExcludeTitles error: " + e.getMessage());
             }
         }
     }
