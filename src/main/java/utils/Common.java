@@ -2,7 +2,6 @@ package utils;
 
 import com.formdev.flatlaf.intellijthemes.FlatHiberbeeDarkIJTheme;
 import database.JdbcQueries;
-import database.SQLite;
 import gui.Dialogs;
 import gui.FrameDragListener;
 import gui.Gui;
@@ -402,7 +401,15 @@ public class Common {
                 }
                 break;
             case "excl": {
-                List<Excluded> excludes = sqlite.getExcludedWords(SQLite.connection);
+                List<Excluded> excludes = sqlite.getExcludedWords();
+
+                for (Excluded excluded : excludes) {
+                    Object[] row = new Object[]{excluded.getId(), excluded.getWord()};
+                    Dialogs.model.addRow(row);
+                }
+                break;
+            } case "title-excl": {
+                List<Excluded> excludes = sqlite.getExcludedTitlesWords();
 
                 for (Excluded excluded : excludes) {
                     Object[] row = new Object[]{excluded.getId(), excluded.getWord()};

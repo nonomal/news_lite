@@ -98,7 +98,7 @@ public class Dialogs extends JDialog implements KeyListener {
                 this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
                 this.addKeyListener(this);
                 this.setVisible(true);
-                this.setTitle("Excluded words");
+                this.setTitle("Excluded from analysis");
                 this.setLocationRelativeTo(Gui.exclBtn);
                 final JScrollPane scrollPane = new JScrollPane();
                 Object[] columns = {"Num", "Word", "Del"};
@@ -137,6 +137,54 @@ public class Dialogs extends JDialog implements KeyListener {
                 scrollPane.setViewportView(table);
 
                 Common.showDialogs("excl");
+                break;
+            } case "exclTitlesDlg": {
+                this.setResizable(false);
+                this.setFont(new Font("Tahoma", Font.PLAIN, 14));
+                this.setBounds(600, 200, 250, 300);
+                this.getContentPane().setLayout(new BorderLayout(0, 0));
+                this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+                this.addKeyListener(this);
+                this.setVisible(true);
+                this.setTitle("Excluded from search");
+                this.setLocationRelativeTo(Gui.exclTitlesBtn);
+                final JScrollPane scrollPane = new JScrollPane();
+                Object[] columns = {"Num", "Word", "Del"};
+                model = new DefaultTableModel(new Object[][]{
+                }, columns) {
+                    final boolean[] columnEditable = new boolean[]{false, false, true};
+
+                    public boolean isCellEditable(int row, int column) {
+                        return columnEditable[column];
+                    }
+
+                    // Сортировка
+                    final Class[] types_unique = {Integer.class, String.class, Button.class};
+
+                    @Override
+                    public Class getColumnClass(int columnIndex) {
+                        return this.types_unique[columnIndex];
+                    }
+                };
+                table = new JTable(model);
+                table.getColumn("Del").setCellRenderer(new ButtonColumn(table, 2));
+                table.setAutoCreateRowSorter(true);
+                DefaultTableCellRenderer renderer = new DefaultTableCellRenderer();
+                renderer.setHorizontalAlignment(JLabel.CENTER);
+                table.setRowHeight(20);
+                table.setFont(new Font("SansSerif", Font.PLAIN, 13));
+                JTableHeader header = table.getTableHeader();
+                header.setFont(new Font("Tahoma", Font.BOLD, 13));
+                table.getColumnModel().getColumn(0).setCellRenderer(renderer);
+                table.getColumnModel().getColumn(0).setMaxWidth(40);
+                table.getColumnModel().getColumn(2).setMaxWidth(40);
+                getContentPane().add(table, BorderLayout.CENTER);
+
+                scrollPane.setBounds(10, 27, 324, 233);
+                this.getContentPane().add(scrollPane);
+                scrollPane.setViewportView(table);
+
+                Common.showDialogs("title-excl");
                 break;
             }
         }

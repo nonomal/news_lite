@@ -40,7 +40,7 @@ public class JdbcQueries {
     }
 
     // Заполнение таблицы анализа
-    public void selectSqlite(Connection connection) {
+    public void selectSqlite() {
         try {
             String query = "SELECT SUM, TITLE FROM V_NEWS_DUAL WHERE SUM > ? " +
                     "AND TITLE NOT IN (SELECT WORD FROM ALL_TITLES_TO_EXCLUDE) " +
@@ -95,8 +95,8 @@ public class JdbcQueries {
         return sources;
     }
 
-    // исключённые из анализа слова
-    public List<Excluded> getExcludedWords(Connection connection) {
+    // Список исключённые из анализа слова
+    public List<Excluded> getExcludedWords() {
         List<Excluded> excludedWords = new ArrayList<>();
         try {
             String query = "SELECT id, word FROM exclude ORDER BY id DESC";
@@ -116,8 +116,27 @@ public class JdbcQueries {
         return excludedWords;
     }
 
+    // Список исключённые из поиска слов
+    public List<Excluded> getExcludedTitlesWords() {
+        List<Excluded> excludedWords = new ArrayList<>();
+        try {
+            String query = "SELECT id, word FROM exclude_from_main_search ORDER BY id DESC";
+            statement = connection.prepareStatement(query);
+
+            ResultSet rs = statement.executeQuery();
+            while (rs.next()) {
+                excludedWords.add(new Excluded(rs.getInt("id"), rs.getString("word")));
+            }
+            rs.close();
+            statement.close();
+        } catch (Exception e) {
+            Common.console("getExcludedTitlesWords error: " + e.getMessage());
+        }
+        return excludedWords;
+    }
+
     // вставка нового источника
-    public void insertNewSource(Connection connection) {
+    public void insertNewSource() {
         try {
             // Диалоговое окно добавления источника новостей в базу данных
             JTextField rss = new JTextField();
@@ -251,7 +270,7 @@ public class JdbcQueries {
     }
 
     // новостей в архиве всего
-    public int archiveNewsCount(Connection connection) {
+    public int archiveNewsCount() {
         int countNews = 0;
         try {
             String query = "SELECT COUNT(*) FROM ALL_NEWS";
@@ -284,11 +303,16 @@ public class JdbcQueries {
     }
 
     // удаление слова исключенного из поиска
-    public void deleteExcluded(String p_source) {
+    public void deleteExcluded(String source, int activeWindow) {
         try {
-            String query = "DELETE FROM EXCLUDE WHERE WORD = ?";
+            String query = "DELETE FROM exclude WHERE word = ?";
+
+            if (activeWindow == 4) {
+                query = "DELETE FROM exclude_from_main_search WHERE word = ?";
+            }
+
             statement = connection.prepareStatement(query);
-            statement.setString(1, p_source);
+            statement.setString(1, source);
             statement.executeUpdate();
             statement.close();
         } catch (Exception e) {
@@ -311,7 +335,7 @@ public class JdbcQueries {
     }
 
     // удаление дубликатов новостей
-    public void deleteDuplicates(Connection connection) {
+    public void deleteDuplicates() {
         try {
             String query = "DELETE FROM ALL_NEWS WHERE ROWID NOT IN (SELECT MIN(ROWID) " +
                     "FROM ALL_NEWS GROUP BY TITLE, NEWS_DATE)";
@@ -324,7 +348,7 @@ public class JdbcQueries {
     }
 
     // удаляем все пустые строки
-    public void deleteEmptyRows(Connection connection) {
+    public void deleteEmptyRows() {
         try {
             String query = "DELETE FROM NEWS_DUAL WHERE TITLE = ''";
             statement = connection.prepareStatement(query);

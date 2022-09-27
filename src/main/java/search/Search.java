@@ -186,21 +186,21 @@ public class Search extends SearchUtils {
                 sqLite.transaction("COMMIT");
 
                 // удаляем все пустые строки
-                jdbcQueries.deleteEmptyRows(SQLite.connection);
+                jdbcQueries.deleteEmptyRows();
 
                 // Заполняем таблицу анализа
-                if (!Gui.WAS_CLICK_IN_TABLE_FOR_ANALYSIS.get()) jdbcQueries.selectSqlite(SQLite.connection);
+                if (!Gui.WAS_CLICK_IN_TABLE_FOR_ANALYSIS.get()) jdbcQueries.selectSqlite();
 
                 // Автоматическая отправка результатов
                 if (Gui.autoSendMessage.getState() && (Gui.model.getRowCount() > 0)) {
                     Gui.sendEmailBtn.doClick();
                 }
 
-                jdbcQueries.deleteDuplicates(SQLite.connection);
+                jdbcQueries.deleteDuplicates();
                 Gui.WAS_CLICK_IN_TABLE_FOR_ANALYSIS.set(false);
                 if (isWord)
-                    Common.console("info: number of news items in the archive = " + jdbcQueries.archiveNewsCount(SQLite.connection));
-                log.info("number of news items in the archive = " + jdbcQueries.archiveNewsCount(SQLite.connection));
+                    Common.console("info: number of news items in the archive = " + jdbcQueries.archiveNewsCount());
+                log.info("number of news items in the archive = " + jdbcQueries.archiveNewsCount());
             } catch (Exception e) {
                 log.warn(e.getMessage());
                 try {

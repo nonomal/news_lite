@@ -68,7 +68,7 @@ public class Gui extends JFrame {
     public static JComboBox<String> keywords, newsInterval;
     public static JLabel labelSign, labelSum, lblLogSourceSqlite;
     public static JButton searchBtnTop, searchBtnBottom, stopBtnTop, stopBtnBottom,
-            sendEmailBtn, smiBtn, logBtn, exclBtn;
+            sendEmailBtn, smiBtn, logBtn, exclBtn, exclTitlesBtn;
     public static Checkbox autoUpdateNewsTop, autoUpdateNewsBottom, autoSendMessage, onlyNewNews;
     public static JProgressBar progressBar;
     public static Timer timer;
@@ -353,6 +353,38 @@ public class Gui extends JFrame {
                 stopBtnTop.doClick();
             }
         });
+
+        // Диалоговое окно со списком исключенных слов из поиска
+        exclTitlesBtn = new JButton();
+        exclTitlesBtn.setFocusable(false);
+        exclTitlesBtn.setContentAreaFilled(true);
+        //exclBtn.setBorderPainted(false);
+        exclTitlesBtn.setBackground(new Color(0, 52, 96));
+        exclTitlesBtn.setBounds(topLeftActionX + 490, topLeftActionY + 3, 14, 14);
+        getContentPane().add(exclTitlesBtn);
+        exclTitlesBtn.addActionListener((e) -> new Dialogs("exclTitlesDlg"));
+        exclTitlesBtn.addMouseListener(new MouseAdapter() {
+            // наведение мышки на кнопку
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                exclTitlesBtn.setBackground(new Color(128, 128, 128));
+            }
+
+            @Override
+            // убрали мышку с кнопки
+            public void mouseExited(MouseEvent e) {
+                exclTitlesBtn.setBackground(new Color(0, 52, 96));
+            }
+        });
+
+        //label
+        JLabel excludedTitlesLabel = new JLabel("excluded list");
+        excludedTitlesLabel.setHorizontalAlignment(SwingConstants.LEFT);
+        excludedTitlesLabel.setForeground(new Color(255, 179, 131));
+        excludedTitlesLabel.setFont(GUI_FONT);
+        excludedTitlesLabel.setBackground(new Color(240, 255, 240));
+        excludedTitlesLabel.setBounds(topLeftActionX + 510, topLeftActionY + 2, 64, 14);
+        getContentPane().add(excludedTitlesLabel);
 
         /* TOP-RIGHT ACTION PANEL */
         int topRightX = 965;
@@ -803,7 +835,7 @@ public class Gui extends JFrame {
         addNewSource.setBackground(new Color(243, 229, 255));
         addNewSource.setBounds(902, 479, 14, 14);
         getContentPane().add(addNewSource);
-        addNewSource.addActionListener(e -> jdbcQueries.insertNewSource(SQLite.connection));
+        addNewSource.addActionListener(e -> jdbcQueries.insertNewSource());
         addNewSource.addMouseListener(new MouseAdapter() {
             // наведение мышки на кнопку
             @Override

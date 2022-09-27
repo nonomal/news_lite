@@ -117,7 +117,7 @@ public class ConsoleSearch extends SearchUtils {
                 sqlite.transaction("COMMIT");
 
                 // удаляем все пустые строки
-                jdbcQueries.deleteEmptyRows(SQLite.connection);
+                jdbcQueries.deleteEmptyRows();
 
                 // Автоматическая отправка результатов
                 if (dataForEmail.size() > 0) {
@@ -125,7 +125,7 @@ public class ConsoleSearch extends SearchUtils {
                     System.out.println("sending an email..");
                     new EmailManager().sendMessage();
                 }
-                jdbcQueries.deleteDuplicates(SQLite.connection);
+                jdbcQueries.deleteDuplicates();
                 Gui.WAS_CLICK_IN_TABLE_FOR_ANALYSIS.set(false);
 
             } catch (Exception e) {

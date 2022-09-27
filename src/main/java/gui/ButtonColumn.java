@@ -63,11 +63,12 @@ public class ButtonColumn extends AbstractCellEditor implements TableCellRendere
     }
 
     public void actionPerformed(ActionEvent e) {
-        JdbcQueries sqlite = new JdbcQueries();
+        JdbcQueries jdbcQueries = new JdbcQueries();
         fireEditingStopped();
         int rowWithSource = table.getSelectedRow();
         int rowWithExcludeWord = Gui.tableForAnalysis.getSelectedRow();
         int delRowWithExcludeWord = 0;
+        int delRowWithExcludeTitlesWord = 0;
 
         // определяем активное окно
         Window window = FocusManager.getCurrentManager().getActiveWindow();
@@ -78,9 +79,13 @@ public class ButtonColumn extends AbstractCellEditor implements TableCellRendere
         if (window.toString().contains("Sources")) {
             activeWindow = 2;
         }
-        if (window.toString().contains("Excluded")) {
+        if (window.toString().contains("analysis")) {
             activeWindow = 3;
             delRowWithExcludeWord = Dialogs.table.getSelectedRow();
+        }
+        if (window.toString().contains("search")) {
+            activeWindow = 4;
+            delRowWithExcludeTitlesWord = Dialogs.table.getSelectedRow();
         }
 
         // окно таблицы с анализом частоты слов на основной панели (добавляем в базу)
@@ -90,7 +95,7 @@ public class ButtonColumn extends AbstractCellEditor implements TableCellRendere
             // удаление из диалогового окна
             Gui.modelForAnalysis.removeRow(rowWithExcludeWord);
             // добавление в базу данных и файл excluded.txt
-            sqlite.insertNewExcludedWord(source);
+            jdbcQueries.insertNewExcludedWord(source);
         }
 
         // окно источников RSS
@@ -99,7 +104,7 @@ public class ButtonColumn extends AbstractCellEditor implements TableCellRendere
             String source = (String) Dialogs.model.getValueAt(rowWithSource, 1);
             // удаление из диалогового окна
             Dialogs.model.removeRow(rowWithSource);
-            sqlite.deleteSource(source);
+            jdbcQueries.deleteSource(source);
         }
 
         // окно с исключенными из анализа слов (удаляем из базы)
@@ -108,7 +113,16 @@ public class ButtonColumn extends AbstractCellEditor implements TableCellRendere
             String source = (String) Dialogs.model.getValueAt(delRowWithExcludeWord, 1);
             // удаление из диалогового окна
             Dialogs.model.removeRow(delRowWithExcludeWord);
-            sqlite.deleteExcluded(source);
+            jdbcQueries.deleteExcluded(source, 3);
+        }
+
+        // окно с исключенными из поиска слов (удаляем из базы)
+        if (activeWindow == 4 && delRowWithExcludeTitlesWord != -1) {
+            delRowWithExcludeTitlesWord = Dialogs.table.convertRowIndexToModel(delRowWithExcludeTitlesWord);
+            String source = (String) Dialogs.model.getValueAt(delRowWithExcludeTitlesWord, 1);
+            // удаление из диалогового окна
+            Dialogs.model.removeRow(delRowWithExcludeTitlesWord);
+            jdbcQueries.deleteExcluded(source, 4);
         }
 
     }
