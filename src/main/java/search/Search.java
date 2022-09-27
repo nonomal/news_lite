@@ -106,7 +106,7 @@ public class Search extends SearchUtils {
                                             }
                                         }
 
-                                        //отсеиваем новости, которые уже были найдены ранее
+                                        //отсеиваем новости, которые уже были найдены ранее при включенном чекбоксе
                                         if (jdbcQueries.isTitleExists(tableRow.getTitle(), pSearchType)) {
                                             continue;
                                         }
@@ -186,7 +186,7 @@ public class Search extends SearchUtils {
                 sqLite.transaction("COMMIT");
 
                 // удаляем все пустые строки
-                jdbcQueries.deleteEmptyRows();
+                //jdbcQueries.deleteEmptyRows(); TODO может и вернуть надо
 
                 // Заполняем таблицу анализа
                 if (!Gui.WAS_CLICK_IN_TABLE_FOR_ANALYSIS.get()) jdbcQueries.setAnalysis();
@@ -196,7 +196,7 @@ public class Search extends SearchUtils {
                     Gui.sendEmailBtn.doClick();
                 }
 
-                jdbcQueries.deleteDuplicates();
+                //jdbcQueries.deleteDuplicates(); TODO может и вернуть надо
                 Gui.WAS_CLICK_IN_TABLE_FOR_ANALYSIS.set(false);
                 if (isWord)
                     Common.console("info: number of news items in the archive = " + jdbcQueries.archiveNewsCount());
