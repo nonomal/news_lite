@@ -6,7 +6,7 @@ Download: https://github.com/mrprogre/news_lite/raw/master/news.jar
 
 Download Java: https://www.java.com/download/
 
-![image](https://user-images.githubusercontent.com/45883640/192269704-d383f7fb-a9ec-4c3c-aca6-cfed55aae580.png)
+![image](https://user-images.githubusercontent.com/45883640/192563159-d229b3f3-e4e6-41e9-a26e-b64220c05f98.png)
 
 Program features:
 - keyword search
@@ -22,7 +22,7 @@ Program features:
 - Ability to add a new RSS source. Deactivate existing ones or delete them.
 - the ability to view the folder with the program files
 - the ability to exclude unnecessary words from the word frequency analysis table (and return them back from the excluded ones)
-- in the config.txt file, after the "exclude" key, you can specify 3 words that we are not initially interested in (you cannot delete them or leave them empty)
+- you can specify words that we are not initially interested in
 - jar can be uploaded to the server where Linux is installed and specify the command in Сrontab to call the program around the clock. No news will be missed! Here is the command that I indicated (parameter No. 1 - the addressee, 2 - the interval (the moment of the call minus 1440 minutes (day), then the keywords. That is, every day at 10:30 am I received all the news for the day for the specified words + wrote them to the log)
 - work without UI with commands (in Linux-Crontab or Windows-PowerShell) like:
 
@@ -54,7 +54,7 @@ Program features:
 - возможность добавления нового источника RSS. Деактивация существующих или их удаление.
 - возможность просмотра папки с файлами программы
 - возможность исключить ненужные слова из таблицы анализа частоты употребления слов (и вернуть их обратно из исключенных)
-- в файле config.txt после ключа "exclude" можно указать 3 слова, которые нас не интересуют изначально (удалять их или оставлять пустыми нельзя)
+- можно добавить комбинацией ctrl+i в поле find слова, и заголовки, содержащие их, не будут отображаться
 - программу можно вызывать в консоли Windows или Linux без интерфейса. 
 - перевод английских заголовков
 - настройка прозрачности
