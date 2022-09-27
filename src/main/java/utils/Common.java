@@ -36,7 +36,6 @@ public class Common {
     private final int[] GUI_BACKGROUND = new int[3];
     public static final String CONFIG_FILE = DIRECTORY_PATH + "config.txt";
     public final AtomicBoolean IS_SENDING = new AtomicBoolean(true);
-    public final ArrayList<Keyword> KEYWORDS_LIST = new ArrayList<>();
     public String SCRIPT_URL = null;
     public float OPACITY;
 
@@ -215,6 +214,11 @@ public class Common {
 
     // Считывание конфигураций после запуска интерфейса
     public void getSettingsAfterGui() {
+        // Заполнение комбобокса ключевыми словами
+        for (Keyword keyword : new JdbcQueries().getKeywords()) {
+            Gui.keywords.addItem(keyword.getKeyword());
+        }
+
         try {
             for (String s : Files.readAllLines(Paths.get(CONFIG_FILE))) {
                 // Интервал поиска interval=1m
@@ -240,9 +244,6 @@ public class Common {
                     }
                 } else if (s.startsWith("email=")) {
                     Gui.sendEmailTo.setText(s.replace("email=", ""));
-                } else if (s.startsWith("keyword=")) {
-                    Gui.keywords.addItem(s.replace("keyword=", ""));
-                    KEYWORDS_LIST.add(new Keyword(s.replace("keyword=", "")));
                 } else if (s.startsWith("checkbox:filterNewsChbx=")) {
                     Gui.onlyNewNews.setState(Boolean.parseBoolean(s.replace("checkbox:filterNewsChbx=", "")));
                 } else if (s.startsWith("checkbox:autoSendChbx=")) {

@@ -555,14 +555,10 @@ public class Gui extends JFrame {
         setButton.buttonSetting(btnDelFromList, "Delete word from list");
         btnDelFromList.addActionListener(e -> {
             if (keywords.getItemCount() > 0) {
-                try {
-                    String item = (String) keywords.getSelectedItem();
-                    keywords.removeItem(item);
-                    Common.delSettings("keyword=" + Objects.requireNonNull(item));
-                } catch (IOException io) {
-                    io.printStackTrace();
-                    log.warn(io.getMessage());
-                }
+                String item = (String) keywords.getSelectedItem();
+                keywords.removeItem(item);
+                //Common.delSettings("keyword=" + Objects.requireNonNull(item));
+                jdbcQueries.deleteKeyword(item);
             }
         });
         animation(btnDelFromList, Icons.EXIT_BUTTON_ICON, Icons.WHEN_MOUSE_ON_EXIT_BUTTON_ICON);
@@ -607,7 +603,8 @@ public class Gui extends JFrame {
                     }
                 }
                 if (!isInKeywords) {
-                    Common.writeToConfig(word, "keyword");
+                    //Common.writeToConfig(word, "keyword");
+                    jdbcQueries.addKeyword(word);
                     keywords.addItem(word);
                     isInKeywords = false;
                 }

@@ -1,10 +1,10 @@
 package model;
 
 import lombok.AllArgsConstructor;
-import lombok.Getter;
+import lombok.Data;
 
-@Getter
+@Data
 @AllArgsConstructor
 public class Keyword {
-    private final String keyword;
+    private String keyword;
 }

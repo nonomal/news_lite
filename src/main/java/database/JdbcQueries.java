@@ -3,6 +3,7 @@ package database;
 import gui.Gui;
 import lombok.extern.slf4j.Slf4j;
 import model.Excluded;
+import model.Keyword;
 import model.Source;
 import utils.Common;
 
@@ -133,6 +134,54 @@ public class JdbcQueries {
             Common.console("getExcludedTitlesWords error: " + e.getMessage());
         }
         return excludedWords;
+    }
+
+    // Список ключевых слов для поиска
+    public List<Keyword> getKeywords() {
+        List<Keyword> keywords = new ArrayList<>();
+        try {
+            String query = "SELECT word FROM keywords";
+            statement = connection.prepareStatement(query);
+
+            ResultSet rs = statement.executeQuery();
+            while (rs.next()) {
+                Keyword keyword = new Keyword(rs.getString("word"));
+                keywords.add(keyword);
+            }
+            rs.close();
+            statement.close();
+        } catch (Exception e) {
+            Common.console("getKeywords error: " + e.getMessage());
+        }
+        return keywords;
+    }
+
+    // Вставка ключевого слова
+    public void addKeyword(String word) {
+        try {
+            String query = "INSERT INTO keywords(word) VALUES (?)";
+            statement = connection.prepareStatement(query);
+            statement.setString(1, word);
+            statement.executeUpdate();
+            statement.close();
+        } catch (Exception e) {
+            Common.console("selectSqlite error: " + e.getMessage());
+        }
+    }
+
+    // удаление ключевого слова
+    public void deleteKeyword(String word) {
+        try {
+            String query = "DELETE FROM keywords WHERE word = ?";
+            statement = connection.prepareStatement(query);
+            statement.setString(1, word);
+            statement.executeUpdate();
+            statement.close();
+        } catch (
+                Exception e) {
+            Common.console("deleteKeyword error: " + e.getMessage());
+        }
+
     }
 
     // вставка нового источника

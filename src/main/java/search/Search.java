@@ -121,7 +121,7 @@ public class Search extends SearchUtils {
                                         }
                                     }
                                 } else if (isWords) {
-                                    for (Keyword keyword : Common.KEYWORDS_LIST) {
+                                    for (Keyword keyword : jdbcQueries.getKeywords()) {
                                         if (tableRow.getTitle().toLowerCase().contains(keyword.getKeyword().toLowerCase())
                                                 && tableRow.getTitle().length() > 15) {
 
