@@ -186,7 +186,7 @@ public class Search extends SearchUtils {
                 sqLite.transaction("COMMIT");
 
                 // удаляем все пустые строки
-                //jdbcQueries.deleteEmptyRows(); TODO может и вернуть надо
+                jdbcQueries.deleteEmptyRows();
 
                 // Заполняем таблицу анализа
                 if (!Gui.WAS_CLICK_IN_TABLE_FOR_ANALYSIS.get()) jdbcQueries.setAnalysis();
@@ -196,7 +196,7 @@ public class Search extends SearchUtils {
                     Gui.sendEmailBtn.doClick();
                 }
 
-                //jdbcQueries.deleteDuplicates(); TODO может и вернуть надо
+                jdbcQueries.deleteDuplicates();
                 Gui.WAS_CLICK_IN_TABLE_FOR_ANALYSIS.set(false);
                 if (isWord)
                     Common.console("info: number of news items in the archive = " + jdbcQueries.archiveNewsCount());
