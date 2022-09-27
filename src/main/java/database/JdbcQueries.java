@@ -144,7 +144,7 @@ public class JdbcQueries {
         }
     }
 
-    // вставка нового слова для исключения из анализа частоты употребления слов
+    // вставка слова для исключения из анализа частоты употребления слов
     public void insertNewExcludedWord(String word) {
         try {
             String query = "INSERT INTO exclude(word) VALUES (?)";
@@ -154,7 +154,7 @@ public class JdbcQueries {
             statement.close();
 
             Common.console("status: word \"" + word + "\" excluded from analysis");
-            log.info("New word excluded from analysis");
+            log.info("New word excluded from analysis: " + word);
         } catch (Exception e) {
             Common.console("insertNewExcludedWord error: " + e.getMessage());
         }
@@ -230,6 +230,24 @@ public class JdbcQueries {
             Common.console("excludedTitles error: " + e.getMessage());
         }
         return titles;
+    }
+
+    // вставка слова для исключения содержащих его заголовков
+    public void insertWordToExcludeTitles(String word) {
+        if (word != null && word.length() > 0) {
+            try {
+                String query = "INSERT INTO exclude_from_main_search(word) VALUES (?)";
+                statement = connection.prepareStatement(query);
+                statement.setString(1, word);
+                statement.executeUpdate();
+                statement.close();
+
+                Common.console("status: word \"" + word + "\" excluded from search");
+                log.info("New word excluded from search: " + word);
+            } catch (Exception e) {
+                Common.console("insertNewExcludedWord error: " + e.getMessage());
+            }
+        }
     }
 
     // новостей в архиве всего

@@ -23,6 +23,8 @@ import javax.swing.text.DefaultCaret;
 import java.awt.*;
 import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.StringSelection;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
@@ -31,7 +33,6 @@ import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.sql.SQLException;
-import java.util.Arrays;
 import java.util.Objects;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -256,14 +257,23 @@ public class Gui extends JFrame {
 
         //Keyword field
         topKeyword = new JTextField(findWord);
+        topKeyword.setToolTipText("Press CTRL+i to exclude news headlines containing this word");
         topKeyword.setBounds(topLeftActionX + 42, topLeftActionY, 100, 22);
         topKeyword.setFont(new Font("Tahoma", Font.BOLD, 13));
         getContentPane().add(topKeyword);
+        topKeyword.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyPressed(KeyEvent e) {
+                if (e.isControlDown() && e.getKeyCode() == KeyEvent.VK_I) {
+                    jdbcQueries.insertWordToExcludeTitles(topKeyword.getText().toLowerCase());
+                    topKeyword.setText("");
+                }
+            }
+        });
 
         //Search
         searchBtnTop = new JButton();
         searchBtnTop.setIcon(Icons.SEARCH_KEYWORDS_ICON);
-        searchBtnTop.setToolTipText("Исключая заголовки содержащие: " + Arrays.toString(Search.excludedTitles.toArray()));
         searchBtnTop.setBackground(new Color(154, 237, 196));
         searchBtnTop.setFont(new Font("Tahoma", Font.BOLD, 10));
         searchBtnTop.setBounds(topLeftActionX + 147, topLeftActionY, 30, 22);
@@ -409,7 +419,6 @@ public class Gui extends JFrame {
                     Common.console("status: no data to clear");
                     return;
                 }
-//                Search.j = 1;
                 model.setRowCount(0);
                 modelForAnalysis.setRowCount(0);
                 newsCount = 0;

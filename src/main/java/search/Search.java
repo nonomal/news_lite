@@ -31,7 +31,6 @@ public class Search extends SearchUtils {
     public static AtomicBoolean isSearchNow;
     public static AtomicBoolean isSearchFinished;
     public static final List<String> dataForEmail = new ArrayList<>();
-    public static List<String> excludedTitles;
 
     public Search() {
         sqLite = new SQLite();
@@ -39,7 +38,6 @@ public class Search extends SearchUtils {
         isStop = new AtomicBoolean(false);
         isSearchNow = new AtomicBoolean(false);
         isSearchFinished = new AtomicBoolean(false);
-        excludedTitles = jdbcQueries.excludedTitles();
     }
 
     public void mainSearch(String pSearchType) {
@@ -73,6 +71,7 @@ public class Search extends SearchUtils {
             try {
                 sqLite.transaction("BEGIN TRANSACTION");
                 TableRow tableRow;
+                List<String> excludedTitles = jdbcQueries.excludedTitles();
 
                 // Актуальные источники новостей
                 for (Source source : jdbcQueries.getSources("active")) {
@@ -100,7 +99,6 @@ public class Search extends SearchUtils {
                                     String newsTitle = tableRow.getTitle().toLowerCase();
 
                                     if (newsTitle.contains(Gui.findWord) && newsTitle.length() > 15) {
-
                                         // исключение заголовков, которые указаны в таблице EXCLUDE_FROM_MAIN_SEARCH
                                         for (String excludedTitle : excludedTitles) {
                                             if (excludedTitle.length() > 3 && newsTitle.contains(excludedTitle)) {
