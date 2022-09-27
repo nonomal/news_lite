@@ -360,7 +360,7 @@ public class Gui extends JFrame {
         exclTitlesBtn.setContentAreaFilled(true);
         //exclBtn.setBorderPainted(false);
         exclTitlesBtn.setBackground(new Color(0, 52, 96));
-        exclTitlesBtn.setBounds(topLeftActionX + 490, topLeftActionY + 3, 14, 14);
+        exclTitlesBtn.setBounds(topLeftActionX + 490, topLeftActionY + 2, 14, 14);
         getContentPane().add(exclTitlesBtn);
         exclTitlesBtn.addActionListener((e) -> new Dialogs("exclTitlesDlg"));
         exclTitlesBtn.addMouseListener(new MouseAdapter() {
@@ -378,7 +378,7 @@ public class Gui extends JFrame {
         });
 
         //label
-        JLabel excludedTitlesLabel = new JLabel("excluded list");
+        JLabel excludedTitlesLabel = new JLabel("excluded");
         excludedTitlesLabel.setHorizontalAlignment(SwingConstants.LEFT);
         excludedTitlesLabel.setForeground(new Color(255, 179, 131));
         excludedTitlesLabel.setFont(GUI_FONT);
