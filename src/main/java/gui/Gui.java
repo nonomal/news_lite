@@ -694,15 +694,14 @@ public class Gui extends JFrame {
         getContentPane().add(consoleScroll);
         //Console - label
         JLabel lblConsole = new JLabel();
-        lblConsole.setText("clear console");
+        lblConsole.setText("clear");
         lblConsole.setForeground(new Color(255, 255, 153));
         lblConsole.setFont(GUI_FONT);
-        lblConsole.setBounds(1089, 448, 64, 14);
+        lblConsole.setBounds(1128, 447, 64, 14);
         getContentPane().add(lblConsole);
 
         // Clear console
         JButton clearConsoleBtn = new JButton();
-        clearConsoleBtn.setToolTipText("Clear the console");
         clearConsoleBtn.setBackground(new Color(0, 52, 96));
         clearConsoleBtn.setBounds(1155, 448, 14, 14);
         clearConsoleBtn.addActionListener(e -> consoleTextArea.setText(""));
@@ -741,12 +740,12 @@ public class Gui extends JFrame {
             }
         });
         //label
-        JLabel excludedLabel = new JLabel("excluded list");
+        JLabel excludedLabel = new JLabel("excluded");
         excludedLabel.setHorizontalAlignment(SwingConstants.LEFT);
         excludedLabel.setForeground(new Color(255, 255, 153));
         excludedLabel.setFont(GUI_FONT);
         excludedLabel.setBackground(new Color(240, 255, 240));
-        excludedLabel.setBounds(1092, 278, 64, 14);
+        excludedLabel.setBounds(1110, 278, 64, 14);
         getContentPane().add(excludedLabel);
 
         /* BOTTOM RIGHT AREA */
