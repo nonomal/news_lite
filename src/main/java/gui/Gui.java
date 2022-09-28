@@ -626,15 +626,11 @@ public class Gui extends JFrame {
                 searchBtnBottom.setVisible(false);
                 stopBtnBottom.setVisible(true);
                 autoUpdateNewsTop.setVisible(false);
-                exclTitlesBtn.setBounds(topLeftActionX + 410, topLeftActionY + 3, 14, 14);
-                excludedTitlesLabel.setBounds(topLeftActionX + 430, topLeftActionY + 3, 64, 14);
             } else {
                 timer.cancel();
                 searchBtnBottom.setVisible(true);
                 stopBtnBottom.setVisible(false);
                 autoUpdateNewsTop.setVisible(true);
-                exclTitlesBtn.setBounds(topLeftActionX + 490, topLeftActionY + 3, 14, 14);
-                excludedTitlesLabel.setBounds(topLeftActionX + 510, topLeftActionY + 3, 64, 14);
                 try {
                     stopBtnTop.doClick();
                 } catch (Exception ignored) {
