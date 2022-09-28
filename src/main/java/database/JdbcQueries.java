@@ -227,7 +227,7 @@ public class JdbcQueries {
         }
     }
 
-    // сохранение всех заголовков
+    // сохранение всех заголовков в архив
     public void addAllTitlesToArchive(String title, String date) {
         try {
             String query = "INSERT INTO ALL_NEWS(TITLE, NEWS_DATE) VALUES (?, ?)";
@@ -241,7 +241,7 @@ public class JdbcQueries {
         }
     }
 
-    // отсеивание ранее найденных заголовков при включённом чекбоксе ""
+    // отсеивание ранее найденных заголовков при включённом чекбоксе
     public boolean isTitleExists(String title, String type) {
         int isExists = 0;
         try {
