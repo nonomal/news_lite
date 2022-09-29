@@ -39,7 +39,7 @@ public class Common {
     public String SCRIPT_URL = null;
     public float OPACITY;
 
-    public void showGui() throws IOException {
+    public void showGui() {
         getSettingsBeforeGui();
         setGuiTheme();
 
@@ -54,8 +54,12 @@ public class Common {
         getSettingsAfterGui();
 
         // check internet
-        if (!InternetAvailabilityChecker.isInternetAvailable()) {
-            console("status: no internet connection");
+        try {
+            if (!InternetAvailabilityChecker.isInternetAvailable()) {
+                console("status: no internet connection");
+            }
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
     }
 

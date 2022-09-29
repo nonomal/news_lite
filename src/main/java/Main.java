@@ -3,12 +3,10 @@ import lombok.extern.slf4j.Slf4j;
 import search.ConsoleSearch;
 import utils.Common;
 
-import java.io.IOException;
-
 @Slf4j
 public class Main {
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) {
         log.info("Application started");
         Common.createFiles();
         new SQLite().openConnection();
