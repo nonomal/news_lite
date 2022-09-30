@@ -26,7 +26,7 @@ public class Dialogs extends JDialog implements KeyListener {
     public static DefaultTableModel model;
     public static JTextArea textAreaForDialogs;
 
-    public Dialogs(String p_file) {
+    public Dialogs(String name) {
         textAreaForDialogs = new JTextArea();
         textAreaForDialogs.setFont(new Font("Dialog", Font.PLAIN, 13));
         textAreaForDialogs.setTabSize(10);
@@ -35,7 +35,7 @@ public class Dialogs extends JDialog implements KeyListener {
         textAreaForDialogs.setWrapStyleWord(true);
         textAreaForDialogs.setBounds(12, 27, 22, 233);
 
-        switch (p_file) {
+        switch (name) {
             case "smiDlg": {
                 this.setResizable(false);
                 this.setFont(new Font("Tahoma", Font.PLAIN, 14));
@@ -252,32 +252,15 @@ public class Dialogs extends JDialog implements KeyListener {
         this.setVisible(true);
     }
 
-    @Override
-    public void keyTyped(KeyEvent e) {
-    }
-
-    // Закрываем диалоговые окна клавишей ESC
-    @Override
-    public void keyPressed(KeyEvent e) {
-        if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
-            setVisible(false);
-        }
-    }
-
-    @Override
-    public void keyReleased(KeyEvent e) {
-    }
-
     // Заполнение диалоговых окон лога и СМИ
-    public void showDialogs(String p_file) {
+    private void showDialogs(String name) {
         int id = 0;
         JdbcQueries jdbcQueries = new JdbcQueries();
-        switch (p_file) {
+        switch (name) {
             case "smi": {
                 java.util.List<Source> sources = jdbcQueries.getSources("all");
-                int i = 0;
                 for (Source s : sources) {
-                    Dialogs.model.addRow(new Object[]{++i, s.getSource(), s.getIsActive()});
+                    Dialogs.model.addRow(new Object[]{++id, s.getSource(), s.getIsActive()});
                 }
                 break;
             }
@@ -320,7 +303,22 @@ public class Dialogs extends JDialog implements KeyListener {
                 }
                 break;
             }
-
         }
+    }
+
+    @Override
+    public void keyTyped(KeyEvent e) {
+    }
+
+    // Закрываем диалоговые окна клавишей ESC
+    @Override
+    public void keyPressed(KeyEvent e) {
+        if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
+            setVisible(false);
+        }
+    }
+
+    @Override
+    public void keyReleased(KeyEvent e) {
     }
 }
