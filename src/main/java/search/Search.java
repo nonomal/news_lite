@@ -230,8 +230,8 @@ public class Search extends SearchUtils {
         // Добавление строки в таблицу интерфейса
         Gui.model.addRow(new Object[]{
                 newsCount,
+                tableRow.getSource(),
                 title,
-                tableRow.getTitle(),
                 tableRow.getDate(),
                 tableRow.getLink()
         });
