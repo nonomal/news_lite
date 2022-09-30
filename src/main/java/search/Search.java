@@ -84,7 +84,7 @@ public class Search extends SearchUtils {
                                 Date pubDate = entry.getPublishedDate();
                                 String newsDescribe = entry.getDescription().getValue()
                                         .trim()
-                                        .replaceAll(("<p>|</p>|<br />"), "");
+                                        .replaceAll(("<p>|</p>|<br />|&#"), "");
                                 if (isHref(newsDescribe)) newsDescribe = title;
 
                                 tableRow = new TableRow(
@@ -99,7 +99,8 @@ public class Search extends SearchUtils {
                                     String newsTitle = tableRow.getTitle().toLowerCase();
 
                                     if (newsTitle.contains(Gui.findWord) && newsTitle.length() > 15) {
-                                        // исключение заголовков, которые указаны в таблице EXCLUDE_FROM_MAIN_SEARCH
+
+                                        // исключение не интересующих заголовков в UI
                                         for (String excludedTitle : excludedTitles) {
                                             if (excludedTitle.length() > 2 && newsTitle.contains(excludedTitle)) {
                                                 tableRow.setTitle("# " + excludedTitle);
@@ -115,9 +116,9 @@ public class Search extends SearchUtils {
                                         int dateDiff = Common.compareDatesOnly(new Date(), pubDate);
 
                                         // вставка всех новостей в архив (ощутимо замедляет общий поиск)
-                                        jdbcQueries.addAllTitlesToArchive(tableRow.getTitle(), pubDate.toString());
+                                        jdbcQueries.addAllTitlesToArchive(title, pubDate.toString());
                                         if (dateDiff != 0) {
-                                            searchProcess(tableRow, pSearchType);
+                                            searchProcess(tableRow, pSearchType, title);
                                         }
                                     }
                                 } else if (isWords) {
@@ -134,7 +135,7 @@ public class Search extends SearchUtils {
                                             int dateDiff = Common.compareDatesOnly(new Date(), pubDate);
 
                                             if (dateDiff != 0) {
-                                                searchProcess(tableRow, pSearchType);
+                                                searchProcess(tableRow, pSearchType, tableRow.getTitle());
                                             }
                                         }
                                     }
@@ -213,14 +214,14 @@ public class Search extends SearchUtils {
         }
     }
 
-    private void searchProcess(TableRow tableRow, String searchType) {
+    private void searchProcess(TableRow tableRow, String searchType, String title) {
         // Счётчик количества новостей
         newsCount++;
         Gui.labelSum.setText(String.valueOf(newsCount));
 
         // Подготовка данных для отправки результатов на почту
         dataForEmail.add(newsCount + ") " +
-                tableRow.getTitle() + "\n" +
+                title + "\n" +
                 tableRow.getLink() + "\n" +
                 tableRow.getDescribe() + "\n" +
                 tableRow.getSource() + " - " +
@@ -229,7 +230,7 @@ public class Search extends SearchUtils {
         // Добавление строки в таблицу интерфейса
         Gui.model.addRow(new Object[]{
                 newsCount,
-                tableRow.getSource(),
+                title,
                 tableRow.getTitle(),
                 tableRow.getDate(),
                 tableRow.getLink()
