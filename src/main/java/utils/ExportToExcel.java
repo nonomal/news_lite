@@ -91,7 +91,7 @@ public class ExportToExcel {
                     header.setCellStyle(headerStyle);
                 }
 
-                for (int i = 0; i < Search.dataForExcel.size(); i++) { // Gui.model.getRowCount()
+                for (int i = 0; i < Search.dataForExcel.size(); i++) {
                     Row row = sheet.createRow(i + 1);
                     row.setHeight(SHEET_ROWS_HEIGHT);
 
