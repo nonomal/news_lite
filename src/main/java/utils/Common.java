@@ -1,15 +1,10 @@
 package utils;
 
 import com.formdev.flatlaf.intellijthemes.FlatHiberbeeDarkIJTheme;
-import database.JdbcQueries;
-import gui.Dialogs;
 import gui.FrameDragListener;
 import gui.Gui;
 import lombok.experimental.UtilityClass;
 import lombok.extern.slf4j.Slf4j;
-import model.Excluded;
-import model.Keyword;
-import model.Source;
 import search.ConsoleSearch;
 import search.Search;
 
@@ -22,8 +17,9 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
-import java.util.List;
-import java.util.*;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Objects;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.stream.Stream;
 
@@ -368,62 +364,6 @@ public class Common {
             return 1;
         } else
             return 0;
-    }
-
-    // Заполнение диалоговых окон лога и СМИ
-    public void showDialogs(String p_file) {
-        JdbcQueries jdbcQueries = new JdbcQueries();
-        switch (p_file) {
-            case "smi": {
-                List<Source> sources = jdbcQueries.getSources("all");
-                int i = 0;
-                for (Source s : sources) {
-                    Dialogs.model.addRow(new Object[]{++i, s.getSource(), s.getIsActive()});
-                }
-                break;
-            }
-            case "log":
-                String path = DIRECTORY_PATH + "app.log"; // TODO dynamic path
-
-                try (BufferedReader reader = new BufferedReader(
-                        new InputStreamReader(Files.newInputStream(Paths.get(path)), StandardCharsets.UTF_8))) {
-                    String line;
-                    StringBuilder allTab = new StringBuilder();
-
-                    while ((line = reader.readLine()) != null) {
-                        allTab.append(line).append("\n");
-                    }
-                    Dialogs.textAreaForDialogs.setText(allTab.toString());
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                break;
-            case "excl": {
-                List<Excluded> excludes = jdbcQueries.getExcludedWords();
-
-                for (Excluded excluded : excludes) {
-                    Object[] row = new Object[]{excluded.getId(), excluded.getWord()};
-                    Dialogs.model.addRow(row);
-                }
-                break;
-            } case "title-excl": {
-                List<Excluded> excludes = jdbcQueries.getExcludedTitlesWords();
-
-                for (Excluded excluded : excludes) {
-                    Object[] row = new Object[]{excluded.getId(), excluded.getWord()};
-                    Dialogs.model.addRow(row);
-                }
-                break;
-            } case "keywords": {
-                int id = 0;
-                List<Keyword> keywords = jdbcQueries.getKeywords(2);
-                for (Keyword keyword : keywords) {
-                    Dialogs.model.addRow(new Object[]{++id, keyword.getKeyword(), keyword.getIsActive()});
-                }
-                break;
-            }
-
-        }
     }
 
     // Копирование файлов из jar

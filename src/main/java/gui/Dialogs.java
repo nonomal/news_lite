@@ -1,5 +1,9 @@
 package gui;
 
+import database.JdbcQueries;
+import model.Excluded;
+import model.Keyword;
+import model.Source;
 import utils.Common;
 
 import javax.swing.*;
@@ -9,6 +13,13 @@ import javax.swing.table.JTableHeader;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.List;
 
 public class Dialogs extends JDialog implements KeyListener {
     static JTable table;
@@ -70,7 +81,7 @@ public class Dialogs extends JDialog implements KeyListener {
                 this.getContentPane().add(scrollPane);
                 scrollPane.setViewportView(table);
 
-                Common.showDialogs("smi");
+                showDialogs("smi");
                 break;
             }
             case "logDlg": {
@@ -87,7 +98,7 @@ public class Dialogs extends JDialog implements KeyListener {
                 scrollPane.setBounds(10, 27, 324, 233);
                 this.getContentPane().add(scrollPane);
                 scrollPane.setViewportView(textAreaForDialogs);
-                Common.showDialogs("log");
+                showDialogs("log");
                 break;
             }
             case "exclDlg": {
@@ -136,7 +147,7 @@ public class Dialogs extends JDialog implements KeyListener {
                 this.getContentPane().add(scrollPane);
                 scrollPane.setViewportView(table);
 
-                Common.showDialogs("excl");
+                showDialogs("excl");
                 break;
             } case "exclTitlesDlg": {
                 this.setResizable(false);
@@ -184,7 +195,7 @@ public class Dialogs extends JDialog implements KeyListener {
                 this.getContentPane().add(scrollPane);
                 scrollPane.setViewportView(table);
 
-                Common.showDialogs("title-excl");
+                showDialogs("title-excl");
                 break;
             }
             case "keywordsDlg": {
@@ -232,7 +243,7 @@ public class Dialogs extends JDialog implements KeyListener {
                 this.getContentPane().add(scrollPane);
                 scrollPane.setViewportView(table);
 
-                Common.showDialogs("keywords");
+                showDialogs("keywords");
                 break;
             }
         }
@@ -255,5 +266,61 @@ public class Dialogs extends JDialog implements KeyListener {
 
     @Override
     public void keyReleased(KeyEvent e) {
+    }
+
+    // Заполнение диалоговых окон лога и СМИ
+    public void showDialogs(String p_file) {
+        int id = 0;
+        JdbcQueries jdbcQueries = new JdbcQueries();
+        switch (p_file) {
+            case "smi": {
+                java.util.List<Source> sources = jdbcQueries.getSources("all");
+                int i = 0;
+                for (Source s : sources) {
+                    Dialogs.model.addRow(new Object[]{++i, s.getSource(), s.getIsActive()});
+                }
+                break;
+            }
+            case "log":
+                String path = Common.DIRECTORY_PATH + "app.log"; // TODO dynamic path
+
+                try (BufferedReader reader = new BufferedReader(
+                        new InputStreamReader(Files.newInputStream(Paths.get(path)), StandardCharsets.UTF_8))) {
+                    String line;
+                    StringBuilder allTab = new StringBuilder();
+
+                    while ((line = reader.readLine()) != null) {
+                        allTab.append(line).append("\n");
+                    }
+                    Dialogs.textAreaForDialogs.setText(allTab.toString());
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                break;
+            case "excl": {
+                java.util.List<Excluded> excludes = jdbcQueries.getExcludedWords();
+
+                for (Excluded excluded : excludes) {
+                    Object[] row = new Object[]{++id, excluded.getWord()};
+                    Dialogs.model.addRow(row);
+                }
+                break;
+            } case "title-excl": {
+                java.util.List<Excluded> excludes = jdbcQueries.getExcludedTitlesWords();
+
+                for (Excluded excluded : excludes) {
+                    Object[] row = new Object[]{++id, excluded.getWord()};
+                    Dialogs.model.addRow(row);
+                }
+                break;
+            } case "keywords": {
+                List<Keyword> keywords = jdbcQueries.getKeywords(2);
+                for (Keyword keyword : keywords) {
+                    Dialogs.model.addRow(new Object[]{++id, keyword.getKeyword(), keyword.getIsActive()});
+                }
+                break;
+            }
+
+        }
     }
 }
