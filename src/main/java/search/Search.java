@@ -27,9 +27,7 @@ public class Search {
     private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("dd.MMM HH:mm", Locale.ENGLISH);
     private final SQLite sqLite;
     private final JdbcQueries jdbcQueries;
-    public static AtomicBoolean isStop;
-    public static AtomicBoolean isSearchNow;
-    public static AtomicBoolean isSearchFinished;
+    public static AtomicBoolean isStop, isSearchNow, isSearchFinished;
     public static final List<String> dataForEmail = new ArrayList<>();
 
     public Search() {
