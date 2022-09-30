@@ -106,7 +106,7 @@ public class Search {
                                         }
 
                                         //отсеиваем новости, которые уже были найдены ранее при включенном чекбоксе
-                                        if (jdbcQueries.isTitleExists(tableRow.getTitle(), pSearchType)) {
+                                        if (jdbcQueries.isTitleExists(title, pSearchType)) {
                                             continue;
                                         }
 
@@ -125,7 +125,7 @@ public class Search {
                                                 && tableRow.getTitle().length() > 15) {
 
                                             // отсеиваем новости которые были обнаружены ранее
-                                            if (jdbcQueries.isTitleExists(tableRow.getTitle(), pSearchType)) {
+                                            if (jdbcQueries.isTitleExists(title, pSearchType)) {
                                                 continue;
                                             }
 
@@ -213,7 +213,6 @@ public class Search {
     }
 
     private void searchProcess(TableRow tableRow, String searchType, String title) {
-        // Счётчик количества новостей
         newsCount++;
         Gui.labelSum.setText(String.valueOf(newsCount));
 
@@ -234,8 +233,8 @@ public class Search {
                 tableRow.getLink()
         });
 
-        jdbcQueries.addTitlesNewsDual(tableRow.getTitle());
-        jdbcQueries.addTitles(tableRow.getTitle(), searchType);
+        jdbcQueries.addTitlesNewsDual(title);
+        jdbcQueries.addTitles(title, searchType);
     }
 
     private boolean isHref(String newsDescribe) {
