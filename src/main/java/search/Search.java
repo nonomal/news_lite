@@ -29,6 +29,7 @@ public class Search {
     private final JdbcQueries jdbcQueries;
     public static AtomicBoolean isStop, isSearchNow, isSearchFinished;
     public static final List<String> dataForEmail = new ArrayList<>();
+    public static final List<TableRow> dataForExcel = new ArrayList<>();
 
     public Search() {
         sqLite = new SQLite();
@@ -38,11 +39,11 @@ public class Search {
         isSearchFinished = new AtomicBoolean(false);
     }
 
-    public void mainSearch(String pSearchType) {
+    public void mainSearch(String searchType) {
 
         if (!isSearchNow.get()) {
-            boolean isWord = pSearchType.equals("word");
-            boolean isWords = pSearchType.equals("words");
+            boolean isWord = searchType.equals("word");
+            boolean isWords = searchType.equals("words");
 
             isSearchNow.set(true);
             Search.isStop.set(false);
@@ -106,7 +107,7 @@ public class Search {
                                         }
 
                                         //отсеиваем новости, которые уже были найдены ранее при включенном чекбоксе
-                                        if (jdbcQueries.isTitleExists(title, pSearchType)) {
+                                        if (jdbcQueries.isTitleExists(title, searchType)) {
                                             continue;
                                         }
 
@@ -116,7 +117,7 @@ public class Search {
                                         // вставка всех новостей в архив (ощутимо замедляет общий поиск)
                                         jdbcQueries.addAllTitlesToArchive(title, pubDate.toString());
                                         if (dateDiff != 0) {
-                                            searchProcess(tableRow, pSearchType, title);
+                                            searchProcess(tableRow, searchType, title);
                                         }
                                     }
                                 } else if (isWords) {
@@ -125,7 +126,7 @@ public class Search {
                                                 && tableRow.getTitle().length() > 15) {
 
                                             // отсеиваем новости которые были обнаружены ранее
-                                            if (jdbcQueries.isTitleExists(title, pSearchType)) {
+                                            if (jdbcQueries.isTitleExists(title, searchType)) {
                                                 continue;
                                             }
 
@@ -133,7 +134,7 @@ public class Search {
                                             int dateDiff = Common.compareDatesOnly(new Date(), pubDate);
 
                                             if (dateDiff != 0) {
-                                                searchProcess(tableRow, pSearchType, tableRow.getTitle());
+                                                searchProcess(tableRow, searchType, tableRow.getTitle());
                                             }
                                         }
                                     }
@@ -216,15 +217,7 @@ public class Search {
         newsCount++;
         Gui.labelSum.setText(String.valueOf(newsCount));
 
-        // Подготовка данных для отправки результатов на почту
-        dataForEmail.add(newsCount + ") " +
-                title + "\n" +
-                tableRow.getLink() + "\n" +
-                tableRow.getDescribe() + "\n" +
-                tableRow.getSource() + " - " +
-                tableRow.getDate());
-
-        // Добавление строки в таблицу интерфейса
+        // Добавление строки в таблицу интерфейса (заголовок модифицирован как # + слово исключение)
         Gui.model.addRow(new Object[]{
                 newsCount,
                 tableRow.getSource(),
@@ -233,8 +226,20 @@ public class Search {
                 tableRow.getLink()
         });
 
-        jdbcQueries.addTitlesNewsDual(title);
-        jdbcQueries.addTitles(title, searchType);
+        // Данные для выгрузки эксель-файла
+        tableRow.setTitle(title);
+        dataForExcel.add(tableRow);
+
+        // Данные для отправки результатов на почту в виде строки
+        dataForEmail.add(newsCount + ") " +
+                tableRow.getTitle() + "\n" +
+                tableRow.getLink() + "\n" +
+                tableRow.getDescribe() + "\n" +
+                tableRow.getSource() + " - " +
+                tableRow.getDate());
+
+        jdbcQueries.addTitlesNewsDual(tableRow.getTitle());
+        jdbcQueries.addTitles(tableRow.getTitle(), searchType);
     }
 
     private boolean isHref(String newsDescribe) {

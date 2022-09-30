@@ -1,10 +1,10 @@
 package utils;
 
-import gui.Gui;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.poi.common.usermodel.HyperlinkType;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.*;
+import search.Search;
 
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
@@ -18,7 +18,7 @@ public class ExportToExcel {
     private static final String[] HEADERS = {"Number", "Source", "Title", "Date", "Link"};
     private static final String SHEET_FONT = "Arial";
     private static final short SHEET_FONT_SIZE = (short) 13;
-    private static final short SHEET_ROWS_HEIGHT =  (short) 400;
+    private static final short SHEET_ROWS_HEIGHT = (short) 400;
     private final Workbook workbook = new HSSFWorkbook();
     private final Sheet sheet = workbook.createSheet("Avandy-news");
 
@@ -91,33 +91,33 @@ public class ExportToExcel {
                     header.setCellStyle(headerStyle);
                 }
 
-                for (int i = 0; i < Gui.model.getRowCount(); i++) {
+                for (int i = 0; i < Search.dataForExcel.size(); i++) { // Gui.model.getRowCount()
                     Row row = sheet.createRow(i + 1);
                     row.setHeight(SHEET_ROWS_HEIGHT);
 
                     // "Number"
                     Cell number = row.createCell(0);
-                    number.setCellValue((Integer) Gui.model.getValueAt(i, 0));
+                    number.setCellValue(i + 1);
                     number.setCellStyle(cellStyle);
 
                     // "Source"
                     Cell source = row.createCell(1);
-                    source.setCellValue(Gui.model.getValueAt(i, 1).toString());
+                    source.setCellValue(Search.dataForExcel.get(i).getSource());
                     source.setCellStyle(leftCellStyle);
 
                     // "Title"
                     Cell title = row.createCell(2);
-                    title.setCellValue(Gui.model.getValueAt(i, 2).toString());
+                    title.setCellValue(Search.dataForExcel.get(i).getTitle());
                     title.setCellStyle(leftCellStyle);
 
                     // "Date"
                     Cell date = row.createCell(3);
-                    date.setCellValue(Gui.model.getValueAt(i, 3).toString());
+                    date.setCellValue(Search.dataForExcel.get(i).getDate());
                     date.setCellStyle(cellStyle);
 
                     // "Link"
                     Hyperlink hyperlink = workbook.getCreationHelper().createHyperlink(HyperlinkType.URL);
-                    hyperlink.setAddress(Gui.model.getValueAt(i, 4).toString());
+                    hyperlink.setAddress(Search.dataForExcel.get(i).getLink());
                     Cell link = row.createCell(4);
                     link.setCellValue("⟶");
                     link.setHyperlink(hyperlink);
