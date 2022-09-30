@@ -22,7 +22,7 @@ import java.util.Locale;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 @Slf4j
-public class Search extends SearchUtils {
+public class Search {
     private int newsCount = 0;
     private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("dd.MMM HH:mm", Locale.ENGLISH);
     private final SQLite sqLite;
@@ -238,6 +238,18 @@ public class Search extends SearchUtils {
 
         jdbcQueries.addTitlesNewsDual(tableRow.getTitle());
         jdbcQueries.addTitles(tableRow.getTitle(), searchType);
+    }
+
+    private boolean isHref(String newsDescribe) {
+        return newsDescribe.contains("<img")
+                || newsDescribe.contains("href")
+                || newsDescribe.contains("<div")
+                || newsDescribe.contains("&#34")
+                || newsDescribe.contains("<p lang")
+                || newsDescribe.contains("&quot")
+                || newsDescribe.contains("<span")
+                || newsDescribe.contains("<ol")
+                || newsDescribe.equals("");
     }
 
 
