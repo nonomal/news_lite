@@ -47,7 +47,6 @@ public class Gui extends JFrame {
     final SQLite sqLite = new SQLite();
     final JdbcQueries jdbcQueries = new JdbcQueries();
     final Search search = new Search();
-
     private static final Object[] MAIN_TABLE_HEADERS = {"Num", "Source", "Title", "Date", "Link"};
     private static final String[] TABLE_FOR_ANALYZE_HEADERS = {"top 10", "freq.", " "};
     private static final Font GUI_FONT = new Font("Tahoma", Font.PLAIN, 11);
@@ -58,14 +57,13 @@ public class Gui extends JFrame {
     public static final AtomicBoolean GUI_IN_TRAY = new AtomicBoolean(false);
     public static int newsCount = 1;
     public static boolean isOnlyLastNews = false;
-    public static boolean isInKeywords = false;
     public static String findWord;
     public static JScrollPane scrollPane;
     public static JTable table, tableForAnalysis;
     public static DefaultTableModel model, modelForAnalysis;
     public static JTextField topKeyword, sendEmailTo, addKeywordToList;
     public static JTextArea consoleTextArea;
-    public static JComboBox<String> keywords, newsInterval;
+    public static JComboBox<String> newsInterval;
     public static JLabel labelSign, labelSum, lblLogSourceSqlite;
     public static JButton searchBtnTop, searchBtnBottom, stopBtnTop, stopBtnBottom,
             sendEmailBtn, smiBtn, logBtn, exclBtn, exclTitlesBtn;
@@ -548,65 +546,42 @@ public class Gui extends JFrame {
         lblKeywordsSearch.setBounds(bottomLeftX - 100, bottomLeftY + 3, 120, 14);
         getContentPane().add(lblKeywordsSearch);
 
-        // Delete from combo box
-        JButton btnDelFromList = new JButton();
-        btnDelFromList.setBorderPainted(false);
-        setButton = new SetButton(Icons.EXIT_BUTTON_ICON, null, bottomLeftX, bottomLeftY);
-        setButton.buttonSetting(btnDelFromList, "Delete word from list");
-        btnDelFromList.addActionListener(e -> {
-            if (keywords.getItemCount() > 0) {
-                String item = (String) keywords.getSelectedItem();
-                keywords.removeItem(item);
-                //Common.delSettings("keyword=" + Objects.requireNonNull(item));
-                jdbcQueries.deleteKeyword(item);
-            }
-        });
-        animation(btnDelFromList, Icons.EXIT_BUTTON_ICON, Icons.WHEN_MOUSE_ON_EXIT_BUTTON_ICON);
-        getContentPane().add(btnDelFromList);
-
-        //Keywords combo box
-        keywords = new JComboBox<>();
-        keywords.setFont(GUI_FONT);
-        keywords.setModel(new DefaultComboBoxModel<>());
-        keywords.setEditable(false);
-        keywords.setBounds(bottomLeftX + 30, bottomLeftY, 90, 22);
-        getContentPane().add(keywords);
+        // Открыть список ключевых слов для поиска
+        JButton btnShowKeywordsList = new JButton();
+        btnShowKeywordsList.setBorderPainted(false);
+        setButton = new SetButton(Icons.LIST_BUTTON_ICON, null, bottomLeftX - 5, bottomLeftY - 1);
+        setButton.buttonSetting(btnShowKeywordsList, null);
+        btnShowKeywordsList.addActionListener(e -> new Dialogs("keywordsDlg"));
+        animation(btnShowKeywordsList, Icons.LIST_BUTTON_ICON, Icons.WHEN_MOUSE_ON_LIST_BUTTON_ICON);
+        getContentPane().add(btnShowKeywordsList);
 
         JLabel lblAddKeywordsSearch = new JLabel();
-        lblAddKeywordsSearch.setText("add keyword:");
+        lblAddKeywordsSearch.setText("add keyword");
         lblAddKeywordsSearch.setForeground(new Color(255, 255, 153));
         lblAddKeywordsSearch.setFont(GUI_FONT);
-        lblAddKeywordsSearch.setBounds(bottomLeftX + 130, bottomLeftY + 3, 90, 14);
+        lblAddKeywordsSearch.setBounds(bottomLeftX + 30, bottomLeftY + 3, 90, 14);
         getContentPane().add(lblAddKeywordsSearch);
 
         //Add to combo box
         addKeywordToList = new JTextField();
         addKeywordToList.setFont(GUI_FONT);
-        addKeywordToList.setBounds(bottomLeftX + 200, bottomLeftY, 80, 22);
+        addKeywordToList.setBounds(bottomLeftX + 100, bottomLeftY, 80, 22);
         getContentPane().add(addKeywordToList);
 
         //Add to keywords combo box
         JButton btnAddKeywordToList = new JButton();
         btnAddKeywordToList.setBorderPainted(false);
-        setButton = new SetButton(Icons.ADD_KEYWORD_ICON, null, bottomLeftX + 276, bottomLeftY);
-        setButton.buttonSetting(btnAddKeywordToList, "Add keyword");
+        setButton = new SetButton(Icons.ADD_KEYWORD_ICON, null, bottomLeftX + 176, bottomLeftY);
+        setButton.buttonSetting(btnAddKeywordToList, null);
         getContentPane().add(btnAddKeywordToList);
         btnAddKeywordToList.addActionListener(e -> {
             if (addKeywordToList.getText().length() > 0) {
                 String word = addKeywordToList.getText();
-                for (int i = 0; i < keywords.getItemCount(); i++) {
-                    if (word.equals(keywords.getItemAt(i))) {
-                        Common.console("info: список ключевых слов уже содержит: " + word);
-                        isInKeywords = true;
-                    } else {
-                        isInKeywords = false;
-                    }
-                }
-                if (!isInKeywords) {
-                    //Common.writeToConfig(word, "keyword");
+                if (!jdbcQueries.isKeywordExists(word)) {
                     jdbcQueries.addKeyword(word);
-                    keywords.addItem(word);
-                    isInKeywords = false;
+                    Common.console("info: слово " + word +" добавлено в список ключевых слов");
+                } else {
+                    Common.console("warn: список ключевых слов уже содержит слово: " + word);
                 }
                 addKeywordToList.setText("");
             }
@@ -615,7 +590,7 @@ public class Gui extends JFrame {
 
         // Автозапуск поиска по ключевым словам каждые 60 секунд
         autoUpdateNewsBottom = new Checkbox("auto update");
-        setCheckbox1 = new SetCheckbox(bottomLeftX + 310, bottomLeftY + 1, 75);
+        setCheckbox1 = new SetCheckbox(bottomLeftX + 210, bottomLeftY + 1, 75);
         setCheckbox1.checkBoxSetting(autoUpdateNewsBottom);
         getContentPane().add(autoUpdateNewsBottom);
         autoUpdateNewsBottom.addItemListener(e -> {
@@ -641,14 +616,14 @@ public class Gui extends JFrame {
 
         //Bottom search by keywords
         searchBtnBottom = new JButton();
-        setButton = new SetButton(Icons.SEARCH_KEYWORDS_ICON, new Color(154, 237, 196), bottomLeftX + 390, bottomLeftY);
+        setButton = new SetButton(Icons.SEARCH_KEYWORDS_ICON, new Color(154, 237, 196), bottomLeftX + 290, bottomLeftY);
         setButton.buttonSetting(searchBtnBottom, "Search by keywords");
         searchBtnBottom.addActionListener(e -> new Thread(() -> search.mainSearch("words")).start());
         getContentPane().add(searchBtnBottom);
 
         //Stop (bottom)
         stopBtnBottom = new JButton();
-        setButton = new SetButton(Icons.STOP_SEARCH_ICON, new Color(255, 208, 202), bottomLeftX + 390, bottomLeftY);
+        setButton = new SetButton(Icons.STOP_SEARCH_ICON, new Color(255, 208, 202), bottomLeftX + 290, bottomLeftY);
         setButton.buttonSetting(stopBtnBottom, null);
         stopBtnBottom.addActionListener(e -> {
             try {

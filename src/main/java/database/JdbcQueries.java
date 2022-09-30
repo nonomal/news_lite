@@ -136,16 +136,23 @@ public class JdbcQueries {
         return excludedWords;
     }
 
-    // Список ключевых слов для поиска
-    public List<Keyword> getKeywords() {
+    // Список ключевых слов для поиска (0 - не активные, 1 - активные, 2 - все)
+    public List<Keyword> getKeywords(int isActive) {
         List<Keyword> keywords = new ArrayList<>();
         try {
-            String query = "SELECT word FROM keywords";
+            String query = "SELECT word, is_active FROM keywords ORDER BY is_active DESC, word";
+
+            if (isActive == 0 || isActive == 1) {
+                query = "SELECT word, is_active FROM keywords WHERE is_active = " + isActive + " ORDER BY word";
+            }
             statement = connection.prepareStatement(query);
 
             ResultSet rs = statement.executeQuery();
             while (rs.next()) {
-                Keyword keyword = new Keyword(rs.getString("word"));
+                Keyword keyword = new Keyword(
+                        rs.getString("word"),
+                        rs.getBoolean("is_active")
+                );
                 keywords.add(keyword);
             }
             rs.close();
@@ -169,6 +176,26 @@ public class JdbcQueries {
         }
     }
 
+    // Проверка наличия ключевого слова
+    public boolean isKeywordExists(String word) {
+        int isExists = 0;
+        try {
+            String query = "SELECT MAX(1) FROM keywords WHERE exists (select word from keywords where word = ?)";
+            statement = connection.prepareStatement(query);
+            statement.setString(1, word);
+
+            ResultSet rs = statement.executeQuery();
+            while (rs.next()) {
+                isExists = rs.getInt(1);
+            }
+
+            statement.close();
+        } catch (Exception e) {
+            Common.console("isKeywordExists error: " + e.getMessage());
+        }
+        return isExists == 1;
+    }
+
     // вставка нового источника
     public void addNewSource() {
         try {
@@ -180,7 +207,7 @@ public class JdbcQueries {
                     "New source", JOptionPane.OK_CANCEL_OPTION);
 
             if (result == JOptionPane.YES_OPTION) {
-                String query = "INSERT INTO RSS_LIST(SOURCE, LINK) VALUES (?, ?)";
+                String query = "INSERT INTO rss_list(source, link, is_active) VALUES (?, ?, 1)";
                 statement = connection.prepareStatement(query);
                 statement.setString(1, rss.getText());
                 statement.setString(2, link.getText());
@@ -342,6 +369,8 @@ public class JdbcQueries {
 
             if (activeWindow == 4) {
                 query = "DELETE FROM exclude_from_main_search WHERE word = ?";
+            } else if (activeWindow == 5) {
+                deleteKeyword(word);
             }
 
             statement = connection.prepareStatement(query);
@@ -368,12 +397,18 @@ public class JdbcQueries {
     }
 
     // обновление статуса чекбокса is_active для ресурсов SELECT id, source, link FROM rss_list where is_active = 1  ORDER BY id
-    public void updateIsActiveStatus(boolean pBoolean, String pSource) {
+    public void updateIsActiveCheckboxes(boolean check, String name, String type) {
+        String query = null;
         try {
-            String query = "UPDATE RSS_LIST SET IS_ACTIVE = ? WHERE SOURCE = ?";
+            if (type.equals("rss")) {
+                query = "UPDATE rss_list SET is_active = ? WHERE source = ?";
+            } else if (type.equals("keywords")) {
+                query = "UPDATE keywords SET is_active = ? WHERE word = ?";
+            }
+
             statement = connection.prepareStatement(query);
-            statement.setBoolean(1, pBoolean);
-            statement.setString(2, pSource);
+            statement.setBoolean(1, check);
+            statement.setString(2, name);
             statement.executeUpdate();
             statement.close();
         } catch (Exception e) {

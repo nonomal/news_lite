@@ -7,4 +7,5 @@ import lombok.Data;
 @AllArgsConstructor
 public class Keyword {
     private String keyword;
+    private Boolean isActive;
 }

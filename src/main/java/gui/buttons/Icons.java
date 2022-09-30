@@ -43,4 +43,8 @@ public class Icons {
             .createImage(Icons.class.getResource("/icons/hide.png")));
     public static final ImageIcon WHEN_MOUSE_ON_HIDE_BUTTON_ICON = new ImageIcon(Toolkit.getDefaultToolkit()
             .createImage(Icons.class.getResource("/icons/hide2.png")));
+    public static final ImageIcon LIST_BUTTON_ICON = new ImageIcon(Toolkit.getDefaultToolkit()
+            .createImage(Icons.class.getResource("/icons/list.png")));
+    public static final ImageIcon WHEN_MOUSE_ON_LIST_BUTTON_ICON = new ImageIcon(Toolkit.getDefaultToolkit()
+            .createImage(Icons.class.getResource("/icons/list2.png")));
 }

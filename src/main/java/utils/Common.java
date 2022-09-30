@@ -218,11 +218,6 @@ public class Common {
 
     // Считывание конфигураций после запуска интерфейса
     public void getSettingsAfterGui() {
-        // Заполнение комбобокса ключевыми словами
-        for (Keyword keyword : new JdbcQueries().getKeywords()) {
-            Gui.keywords.addItem(keyword.getKeyword());
-        }
-
         try {
             for (String s : Files.readAllLines(Paths.get(CONFIG_FILE))) {
                 // Интервал поиска interval=1m
@@ -377,15 +372,13 @@ public class Common {
 
     // Заполнение диалоговых окон лога и СМИ
     public void showDialogs(String p_file) {
-        JdbcQueries sqlite = new JdbcQueries();
+        JdbcQueries jdbcQueries = new JdbcQueries();
         switch (p_file) {
             case "smi": {
-                List<Source> sources = sqlite.getSources("all");
-                int i = 1;
+                List<Source> sources = jdbcQueries.getSources("all");
+                int i = 0;
                 for (Source s : sources) {
-                    Object[] row = new Object[]{i, s.getSource(), s.getIsActive()};
-                    Dialogs.model.addRow(row);
-                    i++;
+                    Dialogs.model.addRow(new Object[]{++i, s.getSource(), s.getIsActive()});
                 }
                 break;
             }
@@ -406,7 +399,7 @@ public class Common {
                 }
                 break;
             case "excl": {
-                List<Excluded> excludes = sqlite.getExcludedWords();
+                List<Excluded> excludes = jdbcQueries.getExcludedWords();
 
                 for (Excluded excluded : excludes) {
                     Object[] row = new Object[]{excluded.getId(), excluded.getWord()};
@@ -414,14 +407,22 @@ public class Common {
                 }
                 break;
             } case "title-excl": {
-                List<Excluded> excludes = sqlite.getExcludedTitlesWords();
+                List<Excluded> excludes = jdbcQueries.getExcludedTitlesWords();
 
                 for (Excluded excluded : excludes) {
                     Object[] row = new Object[]{excluded.getId(), excluded.getWord()};
                     Dialogs.model.addRow(row);
                 }
                 break;
+            } case "keywords": {
+                int id = 0;
+                List<Keyword> keywords = jdbcQueries.getKeywords(2);
+                for (Keyword keyword : keywords) {
+                    Dialogs.model.addRow(new Object[]{++id, keyword.getKeyword(), keyword.getIsActive()});
+                }
+                break;
             }
+
         }
     }
 

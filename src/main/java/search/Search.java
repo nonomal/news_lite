@@ -121,7 +121,7 @@ public class Search extends SearchUtils {
                                         }
                                     }
                                 } else if (isWords) {
-                                    for (Keyword keyword : jdbcQueries.getKeywords()) {
+                                    for (Keyword keyword : jdbcQueries.getKeywords(1)) {
                                         if (tableRow.getTitle().toLowerCase().contains(keyword.getKeyword().toLowerCase())
                                                 && tableRow.getTitle().length() > 15) {
 
@@ -192,7 +192,7 @@ public class Search extends SearchUtils {
                 if (!Gui.WAS_CLICK_IN_TABLE_FOR_ANALYSIS.get()) jdbcQueries.setAnalysis();
 
                 // Автоматическая отправка результатов
-                if (Gui.autoSendMessage.getState() && (Gui.model.getRowCount() > 0)) {
+                if (Gui.autoSendMessage.getState() && (Gui.model.getRowCount() > 0) && dataForEmail.size() > 0) {
                     Gui.sendEmailBtn.doClick();
                 }
 

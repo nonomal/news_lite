@@ -25,10 +25,17 @@ public class CheckBoxEditor extends DefaultCellEditor implements ItemListener {
     }
 
     public void itemStateChanged(ItemEvent e) {
-        JdbcQueries sqlite = new JdbcQueries();
+        JdbcQueries jdbcQueries = new JdbcQueries();
         this.fireEditingStopped();
-        String source = (String) Dialogs.model.getValueAt(row, 1);
-        sqlite.updateIsActiveStatus(checkBox.isSelected(), source);
+        String itemName = (String) Dialogs.model.getValueAt(row, 1);
+        String columnName = Dialogs.model.getColumnName(1);
+
+        if (columnName.equals("Source")) {
+            jdbcQueries.updateIsActiveCheckboxes(checkBox.isSelected(), itemName, "rss");
+        } else if (columnName.equals("Keyword")) {
+            jdbcQueries.updateIsActiveCheckboxes(checkBox.isSelected(), itemName, "keywords");
+        }
+
     }
 
 }
