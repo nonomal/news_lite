@@ -229,7 +229,7 @@ public class Search {
         Gui.model.addRow(new Object[]{
                 newsCount,
                 tableRow.getSource(),
-                title,
+                tableRow.getTitle(),
                 tableRow.getDate(),
                 tableRow.getLink()
         });
@@ -249,6 +249,4 @@ public class Search {
                 || newsDescribe.contains("<ol")
                 || newsDescribe.equals("");
     }
-
-
 }

@@ -20,7 +20,7 @@ import java.util.Locale;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 @Slf4j
-public class ConsoleSearch extends SearchUtils {
+public class ConsoleSearch {
     SQLite sqlite;
     JdbcQueries jdbcQueries;
     int newsCount = 0;
@@ -72,7 +72,6 @@ public class ConsoleSearch extends SearchUtils {
                                 String newsDescribe = entry.getDescription().getValue()
                                         .trim()
                                         .replaceAll(("<p>|</p>|<br />"), "");
-                                if (isHref(newsDescribe)) newsDescribe = title;
 
                                 tableRow = new TableRow(
                                         source.getSource(),
