@@ -40,7 +40,6 @@ public class Search {
     }
 
     public void mainSearch(String searchType) {
-
         if (!isSearchNow.get()) {
             boolean isWord = searchType.equals("word");
             boolean isWords = searchType.equals("words");
@@ -99,7 +98,7 @@ public class Search {
 
                                     if (newsTitle.contains(Gui.findWord) && newsTitle.length() > 15) {
 
-                                        // исключение не интересующих заголовков в UI
+                                        // замена не интересующих заголовков в UI на # + слово исключение
                                         for (String excludedTitle : excludedTitles) {
                                             if (excludedTitle.length() > 2 && newsTitle.contains(excludedTitle)) {
                                                 tableRow.setTitle("# " + excludedTitle);
