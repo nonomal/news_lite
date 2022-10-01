@@ -1,6 +1,6 @@
 # Avandy News
 
-**Search all news in RSS (open source: Jdbc, Swing, SQLite)**
+**Search all news in RSS (Jdbc, Swing, SQLite)**
 
 Download: https://github.com/mrprogre/news_lite/raw/master/news.jar
 
