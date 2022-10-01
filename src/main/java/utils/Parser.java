@@ -1,17 +1,16 @@
-package search;
-
-import java.io.IOException;
-import java.net.URL;
-import java.net.URLConnection;
-import java.time.Duration;
-import java.time.LocalTime;
+package utils;
 
 import com.sun.syndication.feed.synd.SyndFeed;
 import com.sun.syndication.io.FeedException;
 import com.sun.syndication.io.SyndFeedInput;
 import com.sun.syndication.io.XmlReader;
 import gui.Gui;
-import utils.Common;
+
+import java.io.IOException;
+import java.net.URL;
+import java.net.URLConnection;
+import java.time.Duration;
+import java.time.LocalTime;
 
 public class Parser {
     LocalTime timeStart;

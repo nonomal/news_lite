@@ -1,9 +1,11 @@
 package model;
 
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
-@Data
+@Getter
+@Setter
 @AllArgsConstructor
 public class TableRow {
     private String source;
@@ -11,5 +13,11 @@ public class TableRow {
     private String describe;
     private String date;
     private String link;
+
+    @Override
+    public String toString() {
+        return this.getTitle() + "\n" + this.getLink() + "\n" +  this.getDescribe() + "\n" +
+                this.getSource() + " - " + this.getDate();
+    }
 }
 

@@ -10,6 +10,7 @@ import model.Keyword;
 import model.Source;
 import model.TableRow;
 import utils.Common;
+import utils.Parser;
 
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
@@ -225,17 +226,14 @@ public class Search {
                 tableRow.getLink()
         });
 
-        // Данные для выгрузки эксель-файла
+        // Преобразование модифицированного заголовка с # к изначальному виду
         tableRow.setTitle(title);
+
+        // Данные для выгрузки эксель-файла
         dataForExcel.add(tableRow);
 
         // Данные для отправки результатов на почту в виде строки
-        dataForEmail.add(newsCount + ") " +
-                tableRow.getTitle() + "\n" +
-                tableRow.getLink() + "\n" +
-                tableRow.getDescribe() + "\n" +
-                tableRow.getSource() + " - " +
-                tableRow.getDate());
+        dataForEmail.add(newsCount + ") " + tableRow);
 
         jdbcQueries.addTitlesNewsDual(tableRow.getTitle());
         jdbcQueries.addTitles(tableRow.getTitle(), searchType);
