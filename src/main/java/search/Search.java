@@ -29,8 +29,7 @@ public class Search {
     private final SQLite sqLite;
     private final JdbcQueries jdbcQueries;
     public static AtomicBoolean isStop, isSearchNow, isSearchFinished;
-    public static final List<String> dataForEmail = new ArrayList<>();
-    public static final List<TableRow> dataForExcel = new ArrayList<>();
+    public static final List<TableRow> emailAndExcelData = new ArrayList<>();
 
     public Search() {
         sqLite = new SQLite();
@@ -50,7 +49,7 @@ public class Search {
             LocalTime timeStart = LocalTime.now();
 
             int modelRowCount = Gui.model.getRowCount();
-            dataForEmail.clear();
+            emailAndExcelData.clear();
             if (!Gui.GUI_IN_TRAY.get()) Gui.model.setRowCount(0);
             if (!Gui.WAS_CLICK_IN_TABLE_FOR_ANALYSIS.get()) Gui.modelForAnalysis.setRowCount(0);
             newsCount = 0;
@@ -192,7 +191,7 @@ public class Search {
                 if (!Gui.WAS_CLICK_IN_TABLE_FOR_ANALYSIS.get()) jdbcQueries.setAnalysis();
 
                 // Автоматическая отправка результатов
-                if (Gui.autoSendMessage.getState() && (Gui.model.getRowCount() > 0) && dataForEmail.size() > 0) {
+                if (Gui.autoSendMessage.getState() && (Gui.model.getRowCount() > 0) && emailAndExcelData.size() > 0) {
                     Gui.sendEmailBtn.doClick();
                 }
 
@@ -229,11 +228,8 @@ public class Search {
         // Преобразование модифицированного заголовка с # к изначальному виду
         tableRow.setTitle(title);
 
-        // Данные для выгрузки эксель-файла
-        dataForExcel.add(tableRow);
-
-        // Данные для отправки результатов на почту в виде строки
-        dataForEmail.add(newsCount + ") " + tableRow);
+        // Данные для отправки результатов на почту и выгрузки эксель-файла
+        emailAndExcelData.add(tableRow);
 
         jdbcQueries.addTitlesNewsDual(tableRow.getTitle());
         jdbcQueries.addTitles(tableRow.getTitle(), searchType);

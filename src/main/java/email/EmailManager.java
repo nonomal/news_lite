@@ -3,6 +3,7 @@ package email;
 import gui.Gui;
 import gui.buttons.Icons;
 import lombok.extern.slf4j.Slf4j;
+import model.TableRow;
 import search.ConsoleSearch;
 import search.Search;
 import utils.Common;
@@ -35,8 +36,9 @@ public class EmailManager {
             }
 
             // Отправка из GUI
-            for (String s : Search.dataForEmail) {
-                text.append(s).append("\n\n");
+            int i = 1;
+            for (TableRow s : Search.emailAndExcelData) {
+                text.append(i++).append(") ").append(s).append("\n\n");
             }
             try {
                 // чтобы не было задвоений в настройках - удаляем старую почту и записываем новую при отправке

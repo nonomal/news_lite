@@ -91,7 +91,7 @@ public class ExportToExcel {
                     header.setCellStyle(headerStyle);
                 }
 
-                for (int i = 0; i < Search.dataForExcel.size(); i++) {
+                for (int i = 0; i < Search.emailAndExcelData.size(); i++) {
                     Row row = sheet.createRow(i + 1);
                     row.setHeight(SHEET_ROWS_HEIGHT);
 
@@ -102,22 +102,22 @@ public class ExportToExcel {
 
                     // "Source"
                     Cell source = row.createCell(1);
-                    source.setCellValue(Search.dataForExcel.get(i).getSource());
+                    source.setCellValue(Search.emailAndExcelData.get(i).getSource());
                     source.setCellStyle(leftCellStyle);
 
                     // "Title"
                     Cell title = row.createCell(2);
-                    title.setCellValue(Search.dataForExcel.get(i).getTitle());
+                    title.setCellValue(Search.emailAndExcelData.get(i).getTitle());
                     title.setCellStyle(leftCellStyle);
 
                     // "Date"
                     Cell date = row.createCell(3);
-                    date.setCellValue(Search.dataForExcel.get(i).getDate());
+                    date.setCellValue(Search.emailAndExcelData.get(i).getDate());
                     date.setCellStyle(cellStyle);
 
                     // "Link"
                     Hyperlink hyperlink = workbook.getCreationHelper().createHyperlink(HyperlinkType.URL);
-                    hyperlink.setAddress(Search.dataForExcel.get(i).getLink());
+                    hyperlink.setAddress(Search.emailAndExcelData.get(i).getLink());
                     Cell link = row.createCell(4);
                     link.setCellValue("⟶");
                     link.setHyperlink(hyperlink);
