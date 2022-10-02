@@ -6,7 +6,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import utils.Common;
 
-import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -20,7 +19,7 @@ public class DatabaseTest {
     public void init() {
         sqLite = new SQLite();
         sqLite.openConnection();
-        new JdbcQueries().deleteFromTable("TITLES");
+        new JdbcQueries().removeFromTable("TITLES");
     }
 
     @AfterEach
@@ -29,7 +28,7 @@ public class DatabaseTest {
     }
 
     @Test
-    public void shouldFindAndSendResultsToEmail() throws IOException {
+    public void shouldFindAndSendResultsToEmail() {
         String[] args = {"rps_project@mail.ru", "30", "а", "е"};
         Main.main(args);
     }

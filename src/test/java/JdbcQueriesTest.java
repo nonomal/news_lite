@@ -1,6 +1,7 @@
 import database.JdbcQueries;
 import database.SQLite;
 import model.Excluded;
+import model.Favorite;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -27,6 +28,12 @@ public class JdbcQueriesTest {
     @Test
     public void shouldExcludedListIncludeMoreThanNull() {
         List<Excluded> excluded = jdbcQueries.getExcludedWords();
+        Assertions.assertTrue(excluded.size() > 0);
+    }
+
+    @Test
+    public void shouldGetFavorites() {
+        List<Favorite> excluded = jdbcQueries.getFavorites();
         Assertions.assertTrue(excluded.size() > 0);
     }
 }

@@ -3,6 +3,7 @@ package database;
 import gui.Gui;
 import lombok.extern.slf4j.Slf4j;
 import model.Excluded;
+import model.Favorite;
 import model.Keyword;
 import model.Source;
 import utils.Common;
@@ -21,6 +22,7 @@ public class JdbcQueries {
     private final Connection connection = SQLite.connection;
     private PreparedStatement statement;
 
+    /* INSERT */
     // Вставка заголовков разбитых на слова
     public void addTitlesNewsDual(String title) {
         try {
@@ -40,30 +42,131 @@ public class JdbcQueries {
         }
     }
 
-    // Заполнение таблицы анализа
-    public void setAnalysis() {
+    // Вставка ключевого слова
+    public void addKeyword(String word) {
         try {
-            String query = "SELECT SUM, TITLE FROM V_NEWS_DUAL WHERE SUM > ? " +
-                    "AND TITLE NOT IN (SELECT WORD FROM ALL_TITLES_TO_EXCLUDE) " +
-                    "ORDER BY SUM DESC";
+            String query = "INSERT INTO keywords(word) VALUES (?)";
             statement = connection.prepareStatement(query);
-            statement.setInt(1, WORD_FREQ_MATCHES);
-
-            ResultSet rs = statement.executeQuery();
-            while (rs.next()) {
-                String word = rs.getString("TITLE");
-                int sum = rs.getInt("SUM");
-                Object[] row = new Object[]{word, sum};
-                Gui.modelForAnalysis.addRow(row);
-            }
-            deleteFromTable("NEWS_DUAL");
-            rs.close();
+            statement.setString(1, word);
+            statement.executeUpdate();
             statement.close();
+
+            Common.console("info: слово \"" + word + "\" добавлено в список ключевых слов");
         } catch (Exception e) {
-            Common.console("setAnalysis error: " + e.getMessage());
+            Common.console("addKeyword error: " + e.getMessage());
         }
     }
 
+    // Вставка нового источника
+    public void addNewSource() {
+        try {
+            // Диалоговое окно добавления источника новостей в базу данных
+            JTextField rss = new JTextField();
+            JTextField link = new JTextField();
+            Object[] newSource = {"Source:", rss, "Link to rss:", link};
+            int result = JOptionPane.showConfirmDialog(Gui.scrollPane, newSource,
+                    "New source", JOptionPane.OK_CANCEL_OPTION);
+
+            if (result == JOptionPane.YES_OPTION) {
+                String query = "INSERT INTO rss_list(source, link, is_active) VALUES (?, ?, 1)";
+                statement = connection.prepareStatement(query);
+                statement.setString(1, rss.getText());
+                statement.setString(2, link.getText());
+                statement.executeUpdate();
+                statement.close();
+
+                Common.console("status: source added");
+                log.info("New source added: " + rss.getText());
+            } else {
+                Common.console("status: adding source canceled");
+            }
+        } catch (Exception e) {
+            Common.console("addNewSource error: " + e.getMessage());
+        }
+    }
+
+    // Вставка слова для исключения из анализа частоты употребления слов
+    public void addExcludedWord(String word) {
+        try {
+            String query = "INSERT INTO exclude(word) VALUES (?)";
+            statement = connection.prepareStatement(query);
+            statement.setString(1, word);
+            statement.executeUpdate();
+            statement.close();
+
+            Common.console("status: word \"" + word + "\" excluded from analysis");
+            log.info("New word excluded from analysis: " + word);
+        } catch (Exception e) {
+            Common.console("addExcludedWord error: " + e.getMessage());
+        }
+    }
+
+    // Вставка избранных заголовков
+    public void addFavoriteTitles(String title, String link) {
+        try {
+            String query = "INSERT INTO favorites(title, link) VALUES (?, ?)";
+            statement = connection.prepareStatement(query);
+            statement.setString(1, title);
+            statement.setString(2, link);
+            statement.executeUpdate();
+            statement.close();
+
+            Common.console("info: title added to favorites");
+            log.info("title added to favorites");
+        } catch (Exception e) {
+            Common.console("addFavoriteTitles error: " + e.getMessage());
+        }
+    }
+
+    // вставка кода по заголовку для отсеивания ранее обнаруженных новостей
+    public void addTitles(String title, String type) {
+        try {
+            String query = "INSERT INTO titles(title, type) VALUES (?, ?)";
+            statement = connection.prepareStatement(query);
+            statement.setString(1, title);
+            statement.setString(2, type);
+            statement.executeUpdate();
+            statement.close();
+        } catch (SQLException e) {
+            Common.console("addTitles error: " + e.getMessage());
+        }
+    }
+
+    // сохранение всех заголовков в архив
+    public void addAllTitlesToArchive(String title, String date, String link, String source) {
+        try {
+            String query = "INSERT INTO all_news(title, news_date, link, source) VALUES (?, ?, ?, ?)";
+            statement = connection.prepareStatement(query);
+            statement.setString(1, title);
+            statement.setString(2, date);
+            statement.setString(3, link);
+            statement.setString(4, source);
+            statement.executeUpdate();
+            statement.close();
+        } catch (SQLException e) {
+            Common.console("addAllTitlesToArchive error: " + e.getMessage());
+        }
+    }
+
+    // вставка слова для исключения содержащих его заголовков
+    public void addWordToExcludeTitles(String word) {
+        if (word != null && word.length() > 0) {
+            try {
+                String query = "INSERT INTO exclude_from_main_search(word) VALUES (?)";
+                statement = connection.prepareStatement(query);
+                statement.setString(1, word);
+                statement.executeUpdate();
+                statement.close();
+
+                Common.console("status: word \"" + word + "\" excluded from search");
+                log.info("New word excluded from search: " + word);
+            } catch (Exception e) {
+                Common.console("addWordToExcludeTitles error: " + e.getMessage());
+            }
+        }
+    }
+
+    /* SELECT */
     // Источники новостей
     public List<Source> getSources(String type) {
         List<Source> sources = new ArrayList<>();
@@ -121,7 +224,7 @@ public class JdbcQueries {
     public List<Excluded> getExcludedTitlesWords() {
         List<Excluded> excludedWords = new ArrayList<>();
         try {
-            String query = "SELECT id, word FROM exclude_from_main_search ORDER BY id DESC";
+            String query = "SELECT id, word FROM exclude_from_main_search ORDER BY id";
             statement = connection.prepareStatement(query);
 
             ResultSet rs = statement.executeQuery();
@@ -163,19 +266,6 @@ public class JdbcQueries {
         return keywords;
     }
 
-    // Вставка ключевого слова
-    public void addKeyword(String word) {
-        try {
-            String query = "INSERT INTO keywords(word) VALUES (?)";
-            statement = connection.prepareStatement(query);
-            statement.setString(1, word);
-            statement.executeUpdate();
-            statement.close();
-        } catch (Exception e) {
-            Common.console("addKeyword error: " + e.getMessage());
-        }
-    }
-
     // Проверка наличия ключевого слова
     public boolean isKeywordExists(String word) {
         int isExists = 0;
@@ -196,97 +286,97 @@ public class JdbcQueries {
         return isExists == 1;
     }
 
-    // вставка нового источника
-    public void addNewSource() {
+    // Список избранных новостей
+    public List<Favorite> getFavorites() {
+        List<Favorite> favorites = new ArrayList<>();
         try {
-            // Диалоговое окно добавления источника новостей в базу данных
-            JTextField rss = new JTextField();
-            JTextField link = new JTextField();
-            Object[] newSource = {"Source:", rss, "Link to rss:", link};
-            int result = JOptionPane.showConfirmDialog(Gui.scrollPane, newSource,
-                    "New source", JOptionPane.OK_CANCEL_OPTION);
+            String query = "SELECT title, link, add_date FROM main.favorites ORDER BY add_date DESC";
+            statement = connection.prepareStatement(query);
 
-            if (result == JOptionPane.YES_OPTION) {
-                String query = "INSERT INTO rss_list(source, link, is_active) VALUES (?, ?, 1)";
-                statement = connection.prepareStatement(query);
-                statement.setString(1, rss.getText());
-                statement.setString(2, link.getText());
-                statement.executeUpdate();
-                statement.close();
-
-                Common.console("status: source added");
-                log.info("New source added: " + rss.getText());
-            } else {
-                Common.console("status: adding source canceled");
+            ResultSet rs = statement.executeQuery();
+            while (rs.next()) {
+                favorites.add(new Favorite(
+                                rs.getString("title"),
+                                rs.getString("link"),
+                                rs.getString("add_date")
+                        )
+                );
             }
+            rs.close();
+            statement.close();
         } catch (Exception e) {
-            Common.console("addNewSource error: " + e.getMessage());
+            Common.console("getExcludedTitlesWords error: " + e.getMessage());
         }
+        return favorites;
     }
 
-    // вставка слова для исключения из анализа частоты употребления слов
-    public void addExcludedWord(String word) {
+    /* REMOVE */
+    // удаление слов из разных таблиц
+    public void removeItem(String item, int activeWindow) {
         try {
-            String query = "INSERT INTO exclude(word) VALUES (?)";
+            String query = null;
+            if (activeWindow == 2) {
+                query = "DELETE FROM rss_list WHERE source = ?";
+            } else if (activeWindow == 3) {
+                query = "DELETE FROM exclude WHERE word = ?";
+            } else if (activeWindow == 4) {
+                query = "DELETE FROM exclude_from_main_search WHERE word = ?";
+            } else if (activeWindow == 5) {
+                query = "DELETE FROM keywords WHERE word = ?";
+            } else if (activeWindow == 6) {
+                query = "DELETE FROM favorites WHERE title = ?";
+            }
+
+
             statement = connection.prepareStatement(query);
-            statement.setString(1, word);
+            statement.setString(1, item);
             statement.executeUpdate();
             statement.close();
+        } catch (
+                Exception e) {
+            Common.console("deleteExcluded error: " + e.getMessage());
+        }
 
-            Common.console("status: word \"" + word + "\" excluded from analysis");
-            log.info("New word excluded from analysis: " + word);
+    }
+
+    // удаление дубликатов новостей
+    public void removeDuplicates() {
+        try {
+            String query = "DELETE FROM all_news WHERE ROWID NOT IN (SELECT MIN(ROWID) " +
+                    "FROM all_news GROUP BY source, title, news_date)";
+            statement = connection.prepareStatement(query);
+            statement.executeUpdate();
+            statement.close();
         } catch (Exception e) {
-            Common.console("addExcludedWord error: " + e.getMessage());
+            Common.console("deleteDuplicates error: " + e.getMessage());
         }
     }
 
-    // вставка избранных заголовков
-    public void addFavoriteTitles(String title, String link) {
+    // удаляем все пустые строки
+    public void removeEmptyRows() {
         try {
-            String query = "INSERT INTO favorites(title, link) VALUES (?, ?)";
+            String query = "DELETE FROM NEWS_DUAL WHERE TITLE = ''";
             statement = connection.prepareStatement(query);
-            statement.setString(1, title);
-            statement.setString(2, link);
             statement.executeUpdate();
             statement.close();
-
-            Common.console("info: title added to favorites");
-            log.info("title added to favorites");
         } catch (Exception e) {
-            Common.console("addFavoriteTitles error: " + e.getMessage());
+            Common.console("deleteEmptyRows error: " + e.getMessage());
         }
     }
 
-    // вставка кода по заголовку для отсеивания ранее обнаруженных новостей
-    public void addTitles(String title, String type) {
+    // Очистка данных любой передаваемой таблицы
+    public void removeFromTable(String tableName) {
         try {
-            String query = "INSERT INTO titles(title, type) VALUES (?, ?)";
+            String query = "DELETE FROM " + tableName;
             statement = connection.prepareStatement(query);
-            statement.setString(1, title);
-            statement.setString(2, type);
             statement.executeUpdate();
             statement.close();
-        } catch (SQLException e) {
-            Common.console("addTitles error: " + e.getMessage());
+        } catch (Exception e) {
+            Common.console("deleteFromTable error: " + e.getMessage());
         }
     }
 
-    // сохранение всех заголовков в архив
-    public void addAllTitlesToArchive(String title, String date, String link, String source) {
-        try {
-            String query = "INSERT INTO all_news(title, news_date, link, source) VALUES (?, ?, ?, ?)";
-            statement = connection.prepareStatement(query);
-            statement.setString(1, title);
-            statement.setString(2, date);
-            statement.setString(3, link);
-            statement.setString(4, source);
-            statement.executeUpdate();
-            statement.close();
-        } catch (SQLException e) {
-            Common.console("addAllTitlesToArchive error: " + e.getMessage());
-        }
-    }
-
+    /* DIFFERENT */
     // отсеивание ранее найденных заголовков при включённом чекбоксе
     public boolean isTitleExists(String title, String type) {
         int isExists = 0;
@@ -331,21 +421,27 @@ public class JdbcQueries {
         return titles;
     }
 
-    // вставка слова для исключения содержащих его заголовков
-    public void addWordToExcludeTitles(String word) {
-        if (word != null && word.length() > 0) {
-            try {
-                String query = "INSERT INTO exclude_from_main_search(word) VALUES (?)";
-                statement = connection.prepareStatement(query);
-                statement.setString(1, word);
-                statement.executeUpdate();
-                statement.close();
+    // Заполнение таблицы анализа
+    public void setAnalysis() {
+        try {
+            String query = "SELECT SUM, TITLE FROM V_NEWS_DUAL WHERE SUM > ? " +
+                    "AND TITLE NOT IN (SELECT WORD FROM ALL_TITLES_TO_EXCLUDE) " +
+                    "ORDER BY SUM DESC";
+            statement = connection.prepareStatement(query);
+            statement.setInt(1, WORD_FREQ_MATCHES);
 
-                Common.console("status: word \"" + word + "\" excluded from search");
-                log.info("New word excluded from search: " + word);
-            } catch (Exception e) {
-                Common.console("addWordToExcludeTitles error: " + e.getMessage());
+            ResultSet rs = statement.executeQuery();
+            while (rs.next()) {
+                String word = rs.getString("TITLE");
+                int sum = rs.getInt("SUM");
+                Object[] row = new Object[]{word, sum};
+                Gui.modelForAnalysis.addRow(row);
             }
+            removeFromTable("NEWS_DUAL");
+            rs.close();
+            statement.close();
+        } catch (Exception e) {
+            Common.console("setAnalysis error: " + e.getMessage());
         }
     }
 
@@ -368,53 +464,6 @@ public class JdbcQueries {
         return countNews;
     }
 
-    // удаление источника
-    public void deleteSource(String source) {
-        try {
-            String query = "DELETE FROM rss_list WHERE source = ?";
-            statement = connection.prepareStatement(query);
-            statement.setString(1, source);
-            statement.executeUpdate();
-            statement.close();
-        } catch (Exception e) {
-            Common.console("deleteSource error: " + e.getMessage());
-        }
-    }
-
-    // удаление слова исключенного из поиска
-    public void deleteExcluded(String word, int activeWindow) {
-        try {
-            String query = "DELETE FROM exclude WHERE word = ?";
-
-            if (activeWindow == 4) {
-                query = "DELETE FROM exclude_from_main_search WHERE word = ?";
-            } else if (activeWindow == 5) {
-                deleteKeyword(word);
-            }
-
-            statement = connection.prepareStatement(query);
-            statement.setString(1, word);
-            statement.executeUpdate();
-            statement.close();
-        } catch (Exception e) {
-            Common.console("deleteExcluded error: " + e.getMessage());
-        }
-    }
-
-    // удаление ключевого слова
-    public void deleteKeyword(String word) {
-        try {
-            String query = "DELETE FROM keywords WHERE word = ?";
-            statement = connection.prepareStatement(query);
-            statement.setString(1, word);
-            statement.executeUpdate();
-            statement.close();
-        } catch (
-                Exception e) {
-            Common.console("deleteKeyword error: " + e.getMessage());
-        }
-    }
-
     // обновление статуса чекбокса is_active для ресурсов SELECT id, source, link FROM rss_list where is_active = 1  ORDER BY id
     public void updateIsActiveCheckboxes(boolean check, String name, String type) {
         String query = null;
@@ -432,42 +481,6 @@ public class JdbcQueries {
             statement.close();
         } catch (Exception e) {
             Common.console("updateIsActiveStatus error: " + e.getMessage());
-        }
-    }
-
-    // удаление дубликатов новостей
-    public void deleteDuplicates() {
-        try {
-            String query = "DELETE FROM all_news WHERE ROWID NOT IN (SELECT MIN(ROWID) " +
-                    "FROM all_news GROUP BY source, title, news_date)";
-            statement = connection.prepareStatement(query);
-            statement.executeUpdate();
-            statement.close();
-        } catch (Exception e) {
-            Common.console("deleteDuplicates error: " + e.getMessage());
-        }
-    }
-
-    // удаляем все пустые строки
-    public void deleteEmptyRows() {
-        try {
-            String query = "DELETE FROM NEWS_DUAL WHERE TITLE = ''";
-            statement = connection.prepareStatement(query);
-            statement.executeUpdate();
-            statement.close();
-        } catch (Exception e) {
-            Common.console("deleteEmptyRows error: " + e.getMessage());
-        }
-    }
-
-    public void deleteFromTable(String tableName) {
-        try {
-            String query = "DELETE FROM " + tableName;
-            statement = connection.prepareStatement(query);
-            statement.executeUpdate();
-            statement.close();
-        } catch (Exception e) {
-            Common.console("deleteFromTable error: " + e.getMessage());
         }
     }
 }

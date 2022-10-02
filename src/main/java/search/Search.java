@@ -144,7 +144,7 @@ public class Search {
                                 if (isStop.get()) return;
                             }
                             if (!Gui.isOnlyLastNews)
-                                jdbcQueries.deleteFromTable("TITLES");
+                                jdbcQueries.removeFromTable("TITLES");
                         } catch (Exception noRss) {
                             String smi = source.getLink()
                                     .replaceAll(("https://|http://|www."), "");
@@ -188,7 +188,7 @@ public class Search {
                 sqLite.transaction("COMMIT");
 
                 // удаляем все пустые строки
-                jdbcQueries.deleteEmptyRows();
+                jdbcQueries.removeEmptyRows();
 
                 // Заполняем таблицу анализа
                 if (!Gui.WAS_CLICK_IN_TABLE_FOR_ANALYSIS.get()) jdbcQueries.setAnalysis();
@@ -199,7 +199,7 @@ public class Search {
                 }
 
                 // Удаление дубликатов заголовков
-                jdbcQueries.deleteDuplicates();
+                jdbcQueries.removeDuplicates();
 
                 Gui.WAS_CLICK_IN_TABLE_FOR_ANALYSIS.set(false);
                 if (isWord)

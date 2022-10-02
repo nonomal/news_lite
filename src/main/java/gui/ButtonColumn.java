@@ -70,6 +70,7 @@ public class ButtonColumn extends AbstractCellEditor implements TableCellRendere
         int delRowWithExcludeWord = 0;
         int delRowWithExcludeTitlesWord = 0;
         int delKeyword = 0;
+        int delFavorite = 0;
 
         // определяем активное окно
         Window window = FocusManager.getCurrentManager().getActiveWindow();
@@ -92,6 +93,10 @@ public class ButtonColumn extends AbstractCellEditor implements TableCellRendere
             activeWindow = 5;
             delKeyword = Dialogs.table.getSelectedRow();
         }
+        if (window.toString().contains("Favorites")) {
+            activeWindow = 6;
+            delFavorite = Dialogs.table.getSelectedRow();
+        }
 
         // окно таблицы с анализом частоты слов на основной панели (добавляем в базу)
         if (activeWindow == 1 && rowWithExcludeWord != -1) {
@@ -109,7 +114,7 @@ public class ButtonColumn extends AbstractCellEditor implements TableCellRendere
             String source = (String) Dialogs.model.getValueAt(rowWithSource, 1);
             // удаление из диалогового окна
             Dialogs.model.removeRow(rowWithSource);
-            jdbcQueries.deleteSource(source);
+            jdbcQueries.removeItem(source, 2);
         }
 
         // окно с исключенными из анализа слов (удаляем из базы)
@@ -118,7 +123,7 @@ public class ButtonColumn extends AbstractCellEditor implements TableCellRendere
             String source = (String) Dialogs.model.getValueAt(delRowWithExcludeWord, 1);
             // удаление из диалогового окна
             Dialogs.model.removeRow(delRowWithExcludeWord);
-            jdbcQueries.deleteExcluded(source, 3);
+            jdbcQueries.removeItem(source, 3);
         }
 
         // окно с исключенными из поиска слов (удаляем из базы)
@@ -127,7 +132,7 @@ public class ButtonColumn extends AbstractCellEditor implements TableCellRendere
             String word = (String) Dialogs.model.getValueAt(delRowWithExcludeTitlesWord, 1);
             // удаление из диалогового окна
             Dialogs.model.removeRow(delRowWithExcludeTitlesWord);
-            jdbcQueries.deleteExcluded(word, 4);
+            jdbcQueries.removeItem(word, 4);
         }
 
         // окно с ключевыми словами (удаляем из базы)
@@ -136,9 +141,17 @@ public class ButtonColumn extends AbstractCellEditor implements TableCellRendere
             String word = (String) Dialogs.model.getValueAt(delKeyword, 1);
             // удаление из диалогового окна
             Dialogs.model.removeRow(delKeyword);
-            jdbcQueries.deleteExcluded(word, 5);
+            jdbcQueries.removeItem(word, 5);
         }
 
+        // окно с избранными заголовками (удаляем из базы)
+        if (activeWindow == 6 && delFavorite != -1) {
+            delFavorite = Dialogs.table.convertRowIndexToModel(delFavorite);
+            String title = (String) Dialogs.model.getValueAt(delFavorite, 1);
+            // удаление из диалогового окна
+            Dialogs.model.removeRow(delFavorite);
+            jdbcQueries.removeItem(title, 6);
+        }
     }
 
 }

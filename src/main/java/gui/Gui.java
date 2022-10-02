@@ -66,7 +66,7 @@ public class Gui extends JFrame {
     public static JComboBox<String> newsInterval;
     public static JLabel labelSign, labelSum, lblLogSourceSqlite;
     public static JButton searchBtnTop, searchBtnBottom, stopBtnTop, stopBtnBottom,
-            sendEmailBtn, smiBtn, logBtn, exclBtn, exclTitlesBtn;
+            sendEmailBtn, smiBtn, logBtn, exclBtn, exclTitlesBtn, favoritesBtn;
     public static Checkbox autoUpdateNewsTop, autoUpdateNewsBottom, autoSendMessage, onlyNewNews;
     public static JProgressBar progressBar;
     public static Timer timer;
@@ -235,7 +235,7 @@ public class Gui extends JFrame {
                     int col = tableForAnalysis.columnAtPoint(new Point(e.getX(), e.getY()));
                     if (col == 0) {
                         Gui.topKeyword.setText((String) tableForAnalysis.getModel().getValueAt(row, 0));
-                        jdbcQueries.deleteFromTable("TITLES");
+                        jdbcQueries.removeFromTable("TITLES");
                         searchBtnTop.doClick();
                         WAS_CLICK_IN_TABLE_FOR_ANALYSIS.set(true);
                     }
@@ -321,7 +321,7 @@ public class Gui extends JFrame {
         onlyNewNews.addItemListener(e -> {
             isOnlyLastNews = onlyNewNews.getState();
             if (!isOnlyLastNews) {
-                jdbcQueries.deleteFromTable("TITLES");
+                jdbcQueries.removeFromTable("TITLES");
             }
         });
 
@@ -358,33 +358,33 @@ public class Gui extends JFrame {
         exclTitlesBtn = new JButton();
         exclTitlesBtn.setFocusable(false);
         exclTitlesBtn.setContentAreaFilled(true);
-        //exclBtn.setBorderPainted(false);
         exclTitlesBtn.setBackground(new Color(0, 52, 96));
         exclTitlesBtn.setBounds(topLeftActionX + 490, topLeftActionY + 3, 14, 14);
         getContentPane().add(exclTitlesBtn);
         exclTitlesBtn.addActionListener((e) -> new Dialogs("exclTitlesDlg"));
-        exclTitlesBtn.addMouseListener(new MouseAdapter() {
-            // наведение мышки на кнопку
-            @Override
-            public void mouseEntered(MouseEvent e) {
-                exclTitlesBtn.setBackground(new Color(128, 128, 128));
-            }
 
-            @Override
-            // убрали мышку с кнопки
-            public void mouseExited(MouseEvent e) {
-                exclTitlesBtn.setBackground(new Color(0, 52, 96));
-            }
-        });
-
-        //label
-        JLabel excludedTitlesLabel = new JLabel("excluded");
+        JLabel excludedTitlesLabel = new JLabel("exclude headlines");
         excludedTitlesLabel.setHorizontalAlignment(SwingConstants.LEFT);
         excludedTitlesLabel.setForeground(new Color(255, 179, 131));
         excludedTitlesLabel.setFont(GUI_FONT);
-        excludedTitlesLabel.setBackground(new Color(240, 255, 240));
-        excludedTitlesLabel.setBounds(topLeftActionX + 510, topLeftActionY + 3, 64, 14);
+        excludedTitlesLabel.setBounds(topLeftActionX + 510, topLeftActionY + 3, 86, 14);
         getContentPane().add(excludedTitlesLabel);
+
+        // Диалоговое окно со списком избранных заголовков
+        favoritesBtn = new JButton();
+        favoritesBtn.setFocusable(false);
+        favoritesBtn.setContentAreaFilled(true);
+        favoritesBtn.setBackground(new Color(0, 52, 96));
+        favoritesBtn.setBounds(topLeftActionX + 606, topLeftActionY + 3, 14, 14);
+        getContentPane().add(favoritesBtn);
+        favoritesBtn.addActionListener((e) -> new Dialogs("favoritesDlg"));
+
+        JLabel favoritesLabel = new JLabel("favorites");
+        favoritesLabel.setHorizontalAlignment(SwingConstants.LEFT);
+        favoritesLabel.setForeground(new Color(114, 237, 161));
+        favoritesLabel.setFont(GUI_FONT);
+        favoritesLabel.setBounds(topLeftActionX + 626, topLeftActionY + 3, 86, 14);
+        getContentPane().add(favoritesLabel);
 
         /* TOP-RIGHT ACTION PANEL */
         int topRightX = 965;
@@ -581,7 +581,6 @@ public class Gui extends JFrame {
                 String word = addKeywordToList.getText();
                 if (!jdbcQueries.isKeywordExists(word)) {
                     jdbcQueries.addKeyword(word);
-                    Common.console("info: слово " + word +" добавлено в список ключевых слов");
                 } else {
                     Common.console("warn: список ключевых слов уже содержит слово: " + word);
                 }
@@ -700,25 +699,12 @@ public class Gui extends JFrame {
         exclBtn.setBounds(1157, 278, 14, 14);
         getContentPane().add(exclBtn);
         exclBtn.addActionListener((e) -> new Dialogs("exclDlg"));
-        exclBtn.addMouseListener(new MouseAdapter() {
-            // наведение мышки на кнопку
-            @Override
-            public void mouseEntered(MouseEvent e) {
-                exclBtn.setBackground(new Color(128, 128, 128));
-            }
 
-            @Override
-            // убрали мышку с кнопки
-            public void mouseExited(MouseEvent e) {
-                exclBtn.setBackground(new Color(0, 52, 96));
-            }
-        });
         //label
         JLabel excludedLabel = new JLabel("excluded");
         excludedLabel.setHorizontalAlignment(SwingConstants.LEFT);
         excludedLabel.setForeground(new Color(255, 255, 153));
         excludedLabel.setFont(GUI_FONT);
-        excludedLabel.setBackground(new Color(240, 255, 240));
         excludedLabel.setBounds(1110, 278, 64, 14);
         getContentPane().add(excludedLabel);
 
