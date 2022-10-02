@@ -438,8 +438,8 @@ public class JdbcQueries {
     // удаление дубликатов новостей
     public void deleteDuplicates() {
         try {
-            String query = "DELETE FROM ALL_NEWS WHERE ROWID NOT IN (SELECT MIN(ROWID) " +
-                    "FROM ALL_NEWS GROUP BY TITLE, NEWS_DATE)";
+            String query = "DELETE FROM all_news WHERE ROWID NOT IN (SELECT MIN(ROWID) " +
+                    "FROM all_news GROUP BY source, title, news_date)";
             statement = connection.prepareStatement(query);
             statement.executeUpdate();
             statement.close();

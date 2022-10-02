@@ -198,7 +198,9 @@ public class Search {
                     Gui.sendEmailBtn.doClick();
                 }
 
+                // Удаление дубликатов заголовков
                 jdbcQueries.deleteDuplicates();
+
                 Gui.WAS_CLICK_IN_TABLE_FOR_ANALYSIS.set(false);
                 if (isWord)
                     Common.console("info: number of news items in the archive = " + jdbcQueries.archiveNewsCount());
