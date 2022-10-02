@@ -363,11 +363,11 @@ public class Gui extends JFrame {
         getContentPane().add(exclTitlesBtn);
         exclTitlesBtn.addActionListener((e) -> new Dialogs("exclTitlesDlg"));
 
-        JLabel excludedTitlesLabel = new JLabel("exclude headlines");
+        JLabel excludedTitlesLabel = new JLabel("excluded headlines");
         excludedTitlesLabel.setHorizontalAlignment(SwingConstants.LEFT);
         excludedTitlesLabel.setForeground(new Color(255, 179, 131));
         excludedTitlesLabel.setFont(GUI_FONT);
-        excludedTitlesLabel.setBounds(topLeftActionX + 510, topLeftActionY + 3, 86, 14);
+        excludedTitlesLabel.setBounds(topLeftActionX + 510, topLeftActionY + 3, 92, 14);
         getContentPane().add(excludedTitlesLabel);
 
         // Диалоговое окно со списком избранных заголовков
@@ -375,7 +375,7 @@ public class Gui extends JFrame {
         favoritesBtn.setFocusable(false);
         favoritesBtn.setContentAreaFilled(true);
         favoritesBtn.setBackground(new Color(0, 52, 96));
-        favoritesBtn.setBounds(topLeftActionX + 606, topLeftActionY + 3, 14, 14);
+        favoritesBtn.setBounds(topLeftActionX + 610, topLeftActionY + 3, 14, 14);
         getContentPane().add(favoritesBtn);
         favoritesBtn.addActionListener((e) -> new Dialogs("favoritesDlg"));
 
@@ -383,7 +383,7 @@ public class Gui extends JFrame {
         favoritesLabel.setHorizontalAlignment(SwingConstants.LEFT);
         favoritesLabel.setForeground(new Color(114, 237, 161));
         favoritesLabel.setFont(GUI_FONT);
-        favoritesLabel.setBounds(topLeftActionX + 626, topLeftActionY + 3, 86, 14);
+        favoritesLabel.setBounds(topLeftActionX + 630, topLeftActionY + 3, 86, 14);
         getContentPane().add(favoritesLabel);
 
         /* TOP-RIGHT ACTION PANEL */

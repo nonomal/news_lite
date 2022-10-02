@@ -85,7 +85,7 @@ public class ButtonColumn extends AbstractCellEditor implements TableCellRendere
             activeWindow = 3;
             delRowWithExcludeWord = Dialogs.table.getSelectedRow();
         }
-        if (window.toString().contains("search")) {
+        if (window.toString().contains("headlines")) {
             activeWindow = 4;
             delRowWithExcludeTitlesWord = Dialogs.table.getSelectedRow();
         }

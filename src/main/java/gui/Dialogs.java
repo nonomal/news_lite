@@ -159,7 +159,7 @@ public class Dialogs extends JDialog implements KeyListener {
                 this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
                 this.addKeyListener(this);
                 this.setVisible(true);
-                this.setTitle("Excluded from search");
+                this.setTitle("Excluded headlines");
                 this.setLocationRelativeTo(Gui.exclTitlesBtn);
                 final JScrollPane scrollPane = new JScrollPane();
                 Object[] columns = {"Num", "Word", "Del"};
