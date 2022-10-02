@@ -240,6 +240,23 @@ public class JdbcQueries {
         }
     }
 
+    // вставка избранных заголовков
+    public void addFavoriteTitles(String title, String link) {
+        try {
+            String query = "INSERT INTO favorites(title, link) VALUES (?, ?)";
+            statement = connection.prepareStatement(query);
+            statement.setString(1, title);
+            statement.setString(2, link);
+            statement.executeUpdate();
+            statement.close();
+
+            Common.console("info: title added to favorites");
+            log.info("title added to favorites");
+        } catch (Exception e) {
+            Common.console("addFavoriteTitles error: " + e.getMessage());
+        }
+    }
+
     // вставка кода по заголовку для отсеивания ранее обнаруженных новостей
     public void addTitles(String title, String type) {
         try {
@@ -255,12 +272,14 @@ public class JdbcQueries {
     }
 
     // сохранение всех заголовков в архив
-    public void addAllTitlesToArchive(String title, String date) {
+    public void addAllTitlesToArchive(String title, String date, String link, String source) {
         try {
-            String query = "INSERT INTO ALL_NEWS(TITLE, NEWS_DATE) VALUES (?, ?)";
+            String query = "INSERT INTO all_news(title, news_date, link, source) VALUES (?, ?, ?, ?)";
             statement = connection.prepareStatement(query);
             statement.setString(1, title);
             statement.setString(2, date);
+            statement.setString(3, link);
+            statement.setString(4, source);
             statement.executeUpdate();
             statement.close();
         } catch (SQLException e) {

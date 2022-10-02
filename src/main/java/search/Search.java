@@ -114,7 +114,10 @@ public class Search {
                                         int dateDiff = Common.compareDatesOnly(new Date(), pubDate);
 
                                         // вставка всех новостей в архив (ощутимо замедляет общий поиск)
-                                        jdbcQueries.addAllTitlesToArchive(title, pubDate.toString());
+                                        jdbcQueries.addAllTitlesToArchive(title,
+                                                pubDate.toString(),
+                                                tableRow.getLink(),
+                                                tableRow.getSource());
                                         if (dateDiff != 0) {
                                             searchProcess(tableRow, searchType, title);
                                         }

@@ -127,7 +127,7 @@ public class Gui extends JFrame {
                 } catch (RuntimeException ignored) {
                 }
                 assert tip != null;
-                if (tip.length() > 80) {
+                if (tip.length() > 65) {
                     return tip;
                 } else {
                     return null;
@@ -153,7 +153,9 @@ public class Gui extends JFrame {
         table.getColumnModel().getColumn(2).setPreferredWidth(490);
         table.getColumnModel().getColumn(3).setPreferredWidth(100);
         table.getColumnModel().getColumn(3).setMaxWidth(100);
-        table.removeColumn(table.getColumnModel().getColumn(4)); // Скрыть 4 колонку со ссылкой на новость
+        //table.removeColumn(table.getColumnModel().getColumn(4)); // Скрыть 4 колонку со ссылкой на новость
+        table.getColumnModel().getColumn(4).setPreferredWidth(100);
+        table.getColumnModel().getColumn(4).setMaxWidth(100);
         scrollPane.setViewportView(table);
 
         table.addMouseListener(new MouseAdapter() {
@@ -1023,6 +1025,18 @@ public class Gui extends JFrame {
             }
         });
         popup.add(menuDeleteRow);
+
+        // Add to favorites (menu)
+        JMenuItem menuFavorite = new JMenuItem("Favorite");
+        menuFavorite.addActionListener((e) -> {
+            String title = (String) table.getValueAt(table.getSelectedRow(), 2);
+            String link = (String) table.getValueAt(table.getSelectedRow(), 4);
+
+            jdbcQueries.addFavoriteTitles(title, link);
+
+        });
+        popup.add(menuFavorite);
+
 
         // Translate from ENG to RUS (menu)
         JMenuItem menuTranslate = new JMenuItem("Translate");
