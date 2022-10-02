@@ -300,12 +300,13 @@ public class Dialogs extends JDialog implements KeyListener {
                 break;
             }
         }
+
         // делаем фокус на окно, чтобы работал захват клавиш
         this.requestFocusInWindow();
         this.setVisible(true);
     }
 
-    // Заполнение диалоговых окон лога и СМИ
+    // Заполнение диалоговых окон данными
     private void showDialogs(String name) {
         int id = 0;
         JdbcQueries jdbcQueries = new JdbcQueries();

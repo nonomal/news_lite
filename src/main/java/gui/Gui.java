@@ -770,21 +770,7 @@ public class Gui extends JFrame {
         smiBtn.setBackground(new Color(221, 255, 221));
         getContentPane().add(smiBtn);
         smiBtn.addActionListener((e) -> new Dialogs("smiDlg"));
-        smiBtn.addMouseListener(new MouseAdapter() {
-            // наведение мышки на кнопку
-            @Override
-            public void mouseEntered(MouseEvent e) {
-                smiBtn.setBackground(new Color(25, 226, 25));
-                lblLogSourceSqlite.setText("sources");
-            }
-
-            @Override
-            // убрали мышку с кнопки
-            public void mouseExited(MouseEvent e) {
-                smiBtn.setBackground(new Color(221, 255, 221));
-                lblLogSourceSqlite.setText("");
-            }
-        });
+        animation(smiBtn, "sources");
 
         // добавить новый RSS источник "add source"
         JButton addNewSource = new JButton();
@@ -795,21 +781,7 @@ public class Gui extends JFrame {
         addNewSource.setBounds(902, 479, 14, 14);
         getContentPane().add(addNewSource);
         addNewSource.addActionListener(e -> jdbcQueries.addNewSource());
-        addNewSource.addMouseListener(new MouseAdapter() {
-            // наведение мышки на кнопку
-            @Override
-            public void mouseEntered(MouseEvent e) {
-                addNewSource.setBackground(new Color(153, 84, 241));
-                lblLogSourceSqlite.setText("add source");
-            }
-
-            @Override
-            // убрали мышку с кнопки
-            public void mouseExited(MouseEvent e) {
-                addNewSource.setBackground(new Color(243, 229, 255));
-                lblLogSourceSqlite.setText("");
-            }
-        });
+        animation(addNewSource, "add source");
 
         // Диалоговое окно лога "log"
         logBtn = new JButton();
@@ -820,21 +792,7 @@ public class Gui extends JFrame {
         logBtn.setBounds(921, 479, 14, 14);
         getContentPane().add(logBtn);
         logBtn.addActionListener(e -> new Dialogs("logDlg"));
-        logBtn.addMouseListener(new MouseAdapter() {
-            // наведение мышки на кнопку
-            @Override
-            public void mouseEntered(MouseEvent e) {
-                logBtn.setBackground(new Color(222, 114, 7));
-                lblLogSourceSqlite.setText("log");
-            }
-
-            @Override
-            // убрали мышку с кнопки
-            public void mouseExited(MouseEvent e) {
-                logBtn.setBackground(new Color(248, 206, 165));
-                lblLogSourceSqlite.setText("");
-            }
-        });
+        animation(logBtn, "log");
 
         // SQLite
         JButton sqliteBtn = new JButton();
@@ -859,21 +817,7 @@ public class Gui extends JFrame {
             String pathToBase = (".open " + Common.DIRECTORY_PATH + "news.db").replace("\\", "/");
             Toolkit.getDefaultToolkit().getSystemClipboard().setContents(new StringSelection(pathToBase), null);
         });
-        sqliteBtn.addMouseListener(new MouseAdapter() {
-            // наведение мышки на кнопку
-            @Override
-            public void mouseEntered(MouseEvent e) {
-                sqliteBtn.setBackground(new Color(255, 50, 50));
-                lblLogSourceSqlite.setText("sqlite");
-            }
-
-            @Override
-            // убрали мышку с кнопки
-            public void mouseExited(MouseEvent e) {
-                sqliteBtn.setBackground(new Color(244, 181, 181));
-                lblLogSourceSqlite.setText("");
-            }
-        });
+        animation(sqliteBtn, "sqlite");
 
         //Открыть папку с настройками "files"
         JButton settingsDirectoryBtn = new JButton();
@@ -893,21 +837,7 @@ public class Gui extends JFrame {
             }
 
         });
-        settingsDirectoryBtn.addMouseListener(new MouseAdapter() {
-            // наведение мышки на кнопку
-            @Override
-            public void mouseEntered(MouseEvent e) {
-                settingsDirectoryBtn.setBackground(new Color(80, 124, 255));
-                lblLogSourceSqlite.setText("files");
-            }
-
-            @Override
-            // убрали мышку с кнопки
-            public void mouseExited(MouseEvent e) {
-                settingsDirectoryBtn.setBackground(new Color(219, 229, 252));
-                lblLogSourceSqlite.setText("");
-            }
-        });
+        animation(settingsDirectoryBtn, "files");
 
         // Источники, лог, sqlite лейбл
         lblLogSourceSqlite = new JLabel();
@@ -1017,12 +947,9 @@ public class Gui extends JFrame {
         menuFavorite.addActionListener((e) -> {
             String title = (String) table.getValueAt(table.getSelectedRow(), 2);
             String link = (String) table.getValueAt(table.getSelectedRow(), 4);
-
-            jdbcQueries.addFavoriteTitles(title, link);
-
+            jdbcQueries.addFavoriteTitle(title, link);
         });
         popup.add(menuFavorite);
-
 
         // Translate from ENG to RUS (menu)
         JMenuItem menuTranslate = new JMenuItem("Translate");
@@ -1071,6 +998,20 @@ public class Gui extends JFrame {
             @Override
             public void mouseExited(MouseEvent e) {
                 exitBtn.setIcon(off);
+            }
+        });
+    }
+
+    private void animation(JButton button, String label) {
+        button.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                lblLogSourceSqlite.setText(label);
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+                lblLogSourceSqlite.setText("");
             }
         });
     }

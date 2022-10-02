@@ -102,7 +102,7 @@ public class JdbcQueries {
     }
 
     // Вставка избранных заголовков
-    public void addFavoriteTitles(String title, String link) {
+    public void addFavoriteTitle(String title, String link) {
         try {
             String query = "INSERT INTO favorites(title, link) VALUES (?, ?)";
             statement = connection.prepareStatement(query);
