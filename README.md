@@ -6,7 +6,7 @@ Download: https://github.com/mrprogre/news_lite/raw/master/news.jar
 
 Download Java: https://www.java.com/download/
 
-![image](https://user-images.githubusercontent.com/45883640/193623949-962a51e4-3134-474c-b861-f02bcb2cd825.png)
+![image](https://user-images.githubusercontent.com/45883640/193682791-942ccb82-681b-4128-9257-b76e2b642a0c.png)
 
 Program features:
 - keyword search
