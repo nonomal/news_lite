@@ -387,13 +387,14 @@ public class Gui extends JFrame {
         getContentPane().add(favoritesLabel);
 
         /* TOP-RIGHT ACTION PANEL */
-        int topRightX = 965;
-        int topRightY = 9;
+        int topRightX = 740;
+        int topRightY = 8;
 
         // Выбор цвета фона
         JButton backgroundColorBtn = new JButton();
-        SetButton setButton = new SetButton(Icons.BACK_GROUND_COLOR_ICON, new Color(189, 189, 189), topRightX, topRightY);
+        SetButton setButton = new SetButton(Icons.BACK_GROUND_COLOR_ICON, null, topRightX, topRightY);
         setButton.buttonSetting(backgroundColorBtn, "Background color");
+        backgroundColorBtn.setContentAreaFilled(false);
 
         backgroundColorBtn.addActionListener(e -> {
             Color color = JColorChooser.showDialog(null, "Color", Color.black);
@@ -407,11 +408,13 @@ public class Gui extends JFrame {
             }
         });
         getContentPane().add(backgroundColorBtn);
+        animation(backgroundColorBtn, Icons.BACK_GROUND_COLOR_ICON, Icons.WHEN_MOUSE_ON_BACK_GROUND_COLOR_ICON);
 
         // Выбор цвета шрифта в таблице
         JButton fontColorBtn = new JButton();
-        setButton = new SetButton(Icons.FONT_COLOR_BUTTON_ICON, new Color(190, 225, 255), topRightX + 35, topRightY);
+        setButton = new SetButton(Icons.FONT_COLOR_BUTTON_ICON, null, topRightX + 35, topRightY);
         setButton.buttonSetting(fontColorBtn, "Font color");
+        fontColorBtn.setContentAreaFilled(false);
 
         fontColorBtn.addActionListener(e -> {
             Color color = JColorChooser.showDialog(null, "Color", Color.black);
@@ -426,11 +429,14 @@ public class Gui extends JFrame {
             }
         });
         getContentPane().add(fontColorBtn);
+        animation(fontColorBtn, Icons.FONT_COLOR_BUTTON_ICON, Icons.WHEN_MOUSE_ON_FONT_COLOR_BUTTON_ICON);
 
         //Export to excel
         JButton exportBtn = new JButton();
-        setButton = new SetButton(Icons.EXCEL_BUTTON_ICON, new Color(255, 251, 183), topRightX + 70, topRightY);
+        setButton = new SetButton(Icons.EXCEL_BUTTON_ICON, null, topRightX + 70, topRightY);
         setButton.buttonSetting(exportBtn, "Export news to excel");
+        exportBtn.setContentAreaFilled(false);
+
         exportBtn.addActionListener(e -> {
             if (model.getRowCount() != 0) {
                 new Thread(new ExportToExcel()::exportResultsToExcel).start();
@@ -440,11 +446,14 @@ public class Gui extends JFrame {
             }
         });
         getContentPane().add(exportBtn);
+        animation(exportBtn, Icons.EXCEL_BUTTON_ICON, Icons.WHEN_MOUSE_ON_EXCEL_BUTTON_ICON);
 
         // Clear
         JButton clearBtnTop = new JButton();
-        setButton = new SetButton(Icons.CLEAR_BUTTON_ICON, new Color(250, 128, 114), topRightX + 105, topRightY);
+        setButton = new SetButton(Icons.CLEAR_BUTTON_ICON, null, topRightX + 105, topRightY);
         setButton.buttonSetting(clearBtnTop, "Clear the list");
+        clearBtnTop.setContentAreaFilled(false);
+
         clearBtnTop.addActionListener(e -> {
             try {
                 if (model.getRowCount() == 0) {
@@ -463,6 +472,7 @@ public class Gui extends JFrame {
             }
         });
         getContentPane().add(clearBtnTop);
+        animation(clearBtnTop, Icons.CLEAR_BUTTON_ICON, Icons.WHEN_MOUSE_ON_CLEAR_BUTTON_ICON);
 
         /* Сворачивание в трей */
         JButton toTrayBtn = new JButton(Icons.HIDE_BUTTON_ICON);

@@ -8,7 +8,7 @@ import java.net.URL;
 
 @UtilityClass
 public class Icons {
-    public static final URL APP_IN_TRAY_BUTTON_ICON = Icons.class.getResource("/icons/bg.png");
+    public static final URL APP_IN_TRAY_BUTTON_ICON = Icons.class.getResource("/icons/in_tray.png");
     public static final ImageIcon LOGO_ICON = new ImageIcon(Toolkit.getDefaultToolkit()
             .createImage(Icons.class.getResource("/icons/logo.png")));
     public static final ImageIcon SEND_EMAIL_ICON = new ImageIcon(Toolkit.getDefaultToolkit()
@@ -23,8 +23,12 @@ public class Icons {
             .createImage(Icons.class.getResource("/icons/stop.png")));
     public static final ImageIcon CLEAR_BUTTON_ICON = new ImageIcon(Toolkit.getDefaultToolkit()
             .createImage(Icons.class.getResource("/icons/clear.png")));
+    public static final ImageIcon WHEN_MOUSE_ON_CLEAR_BUTTON_ICON = new ImageIcon(Toolkit.getDefaultToolkit()
+            .createImage(Icons.class.getResource("/icons/clear2.png")));
     public static final ImageIcon EXCEL_BUTTON_ICON = new ImageIcon(Toolkit.getDefaultToolkit()
             .createImage(Icons.class.getResource("/icons/excel.png")));
+    public static final ImageIcon WHEN_MOUSE_ON_EXCEL_BUTTON_ICON = new ImageIcon(Toolkit.getDefaultToolkit()
+            .createImage(Icons.class.getResource("/icons/excel2.png")));
     public static final ImageIcon ADD_KEYWORD_ICON = new ImageIcon(Toolkit.getDefaultToolkit()
             .createImage(Icons.class.getResource("/icons/add.png")));
     public static final ImageIcon WHEN_MOUSE_ON_ADD_KEYWORD_ICON = new ImageIcon(Toolkit.getDefaultToolkit()
@@ -33,8 +37,12 @@ public class Icons {
             .createImage(Icons.class.getResource("/icons/exit.png")));
     public static final ImageIcon FONT_COLOR_BUTTON_ICON = new ImageIcon(Toolkit.getDefaultToolkit()
             .createImage(Icons.class.getResource("/icons/font.png")));
+    public static final ImageIcon  WHEN_MOUSE_ON_FONT_COLOR_BUTTON_ICON = new ImageIcon(Toolkit.getDefaultToolkit()
+            .createImage(Icons.class.getResource("/icons/font2.png")));
     public static final ImageIcon BACK_GROUND_COLOR_ICON = new ImageIcon(Toolkit.getDefaultToolkit()
-            .createImage(Icons.class.getResource("/icons/bg.png")));
+            .createImage(Icons.class.getResource("/icons/background.png")));
+    public static final ImageIcon WHEN_MOUSE_ON_BACK_GROUND_COLOR_ICON = new ImageIcon(Toolkit.getDefaultToolkit()
+            .createImage(Icons.class.getResource("/icons/background2.png")));
     public static final ImageIcon EXIT_BUTTON_ICON = new ImageIcon(Toolkit.getDefaultToolkit()
             .createImage(Icons.class.getResource("/icons/exit.png")));
     public static final ImageIcon WHEN_MOUSE_ON_EXIT_BUTTON_ICON = new ImageIcon(Toolkit.getDefaultToolkit()
