@@ -27,27 +27,27 @@ public class Dialogs extends JDialog implements KeyListener {
     public static DefaultTableModel model;
     public static JTextArea textAreaForDialogs;
 
-    public Dialogs(String name) {
+    public Dialogs(String name) {        
         textAreaForDialogs = new JTextArea();
         textAreaForDialogs.setFont(new Font("Dialog", Font.PLAIN, 13));
         textAreaForDialogs.setTabSize(10);
         textAreaForDialogs.setEditable(false);
         textAreaForDialogs.setLineWrap(true);
         textAreaForDialogs.setWrapStyleWord(true);
-        textAreaForDialogs.setBounds(12, 27, 22, 233);
+        textAreaForDialogs.setBounds(12, 27, 22, 233);        
+        this.setResizable(true);
+        this.setFont(new Font("Tahoma", Font.PLAIN, 14));
+        this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+        this.setVisible(true);
+        JScrollPane scrollPane = new JScrollPane();
+        this.getContentPane().setLayout(new BorderLayout(0, 0));
+        this.addKeyListener(this);
 
         switch (name) {
             case "smiDlg": {
-                this.setResizable(false);
-                this.setFont(new Font("Tahoma", Font.PLAIN, 14));
-                this.setBounds(600, 200, 250, 300);
-                this.getContentPane().setLayout(new BorderLayout(0, 0));
-                this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-                this.addKeyListener(this);
-                this.setVisible(true);
+                this.setBounds(600, 200, 250, 306);
                 this.setTitle("Sources");
-                this.setLocationRelativeTo(Gui.smiBtn);
-                final JScrollPane scrollPane = new JScrollPane();
+                this.setLocationRelativeTo(Gui.smiBtn);                
                 Object[] columns = {"Pos", "Source", "", " "};
                 model = new DefaultTableModel(new Object[][]{
                 }, columns) {
@@ -86,16 +86,9 @@ public class Dialogs extends JDialog implements KeyListener {
                 break;
             }
             case "logDlg": {
-                this.setResizable(false);
-                this.setFont(new Font("Tahoma", Font.PLAIN, 14));
-                this.setBounds(600, 200, 350, 300);
-                this.getContentPane().setLayout(new BorderLayout(0, 0));
-                this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-                this.addKeyListener(this);
-                this.setVisible(true);
+                this.setBounds(600, 200, 350, 306);
                 this.setTitle("Log");
                 this.setLocationRelativeTo(Gui.logBtn);
-                final JScrollPane scrollPane = new JScrollPane();
                 scrollPane.setBounds(10, 27, 324, 233);
                 this.getContentPane().add(scrollPane);
                 scrollPane.setViewportView(textAreaForDialogs);
@@ -103,16 +96,9 @@ public class Dialogs extends JDialog implements KeyListener {
                 break;
             }
             case "exclDlg": {
-                this.setResizable(false);
-                this.setFont(new Font("Tahoma", Font.PLAIN, 14));
-                this.setBounds(600, 200, 250, 300);
-                this.getContentPane().setLayout(new BorderLayout(0, 0));
-                this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-                this.addKeyListener(this);
-                this.setVisible(true);
+                this.setBounds(600, 200, 250, 306);
                 this.setTitle("Excluded from analysis");
                 this.setLocationRelativeTo(Gui.exclBtn);
-                final JScrollPane scrollPane = new JScrollPane();
                 Object[] columns = {"Num", "Word", "Del"};
                 model = new DefaultTableModel(new Object[][]{
                 }, columns) {
@@ -152,16 +138,10 @@ public class Dialogs extends JDialog implements KeyListener {
                 break;
             }
             case "exclTitlesDlg": {
-                this.setResizable(false);
-                this.setFont(new Font("Tahoma", Font.PLAIN, 14));
-                this.setBounds(600, 200, 250, 300);
-                this.getContentPane().setLayout(new BorderLayout(0, 0));
-                this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-                this.addKeyListener(this);
-                this.setVisible(true);
+                this.setBounds(600, 200, 250, 306);
                 this.setTitle("Excluded headlines");
                 this.setLocationRelativeTo(Gui.exclTitlesBtn);
-                final JScrollPane scrollPane = new JScrollPane();
+
                 Object[] columns = {"Num", "Word", "Del"};
                 model = new DefaultTableModel(new Object[][]{
                 }, columns) {
@@ -201,16 +181,10 @@ public class Dialogs extends JDialog implements KeyListener {
                 break;
             }
             case "keywordsDlg": {
-                this.setResizable(false);
-                this.setFont(new Font("Tahoma", Font.PLAIN, 14));
-                this.setBounds(600, 200, 250, 300);
-                this.getContentPane().setLayout(new BorderLayout(0, 0));
-                this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-                this.addKeyListener(this);
-                this.setVisible(true);
+                this.setBounds(600, 200, 250, 306);
                 this.setTitle("Keywords");
                 this.setLocationRelativeTo(Gui.addKeywordToList);
-                final JScrollPane scrollPane = new JScrollPane();
+                
                 Object[] columns = {"Pos", "Keyword", "", " "};
                 model = new DefaultTableModel(new Object[][]{
                 }, columns) {
@@ -249,16 +223,10 @@ public class Dialogs extends JDialog implements KeyListener {
                 break;
             }
             case "favoritesDlg": {
-                this.setResizable(false);
-                this.setFont(new Font("Tahoma", Font.PLAIN, 14));
-                this.setBounds(640, 215, 600, 400);
-                this.getContentPane().setLayout(new BorderLayout(0, 0));
-                this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-                this.addKeyListener(this);
-                this.setVisible(true);
+                this.setBounds(640, 215, 800, 400);
                 this.setTitle("Favorites");
                 this.setLocationRelativeTo(Gui.favoritesBtn);
-                final JScrollPane scrollPane = new JScrollPane();
+                
                 Object[] columns = {"", "title", "added", "link", " "};
                 model = new DefaultTableModel(new Object[][]{
                 }, columns) {
@@ -284,7 +252,8 @@ public class Dialogs extends JDialog implements KeyListener {
                 header.setFont(new Font("Tahoma", Font.BOLD, 13));
                 table.getColumnModel().getColumn(0).setCellRenderer(renderer);
                 table.getColumnModel().getColumn(0).setMaxWidth(30);
-                table.getColumnModel().getColumn(2).setMaxWidth(70);
+                table.getColumnModel().getColumn(2).setPreferredWidth(130);
+                table.getColumnModel().getColumn(2).setMaxWidth(130);
                 table.getColumnModel().getColumn(3).setMaxWidth(70);
                 table.getColumnModel().getColumn(4).setMaxWidth(30);
                 table.setColumnSelectionAllowed(true);
@@ -303,7 +272,7 @@ public class Dialogs extends JDialog implements KeyListener {
 
         // делаем фокус на окно, чтобы работал захват клавиш
         this.requestFocusInWindow();
-        this.setVisible(true);
+        
     }
 
     // Заполнение диалоговых окон данными
