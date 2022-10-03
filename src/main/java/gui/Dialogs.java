@@ -14,9 +14,13 @@ import javax.swing.table.JTableHeader;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -260,6 +264,33 @@ public class Dialogs extends JDialog implements KeyListener {
                 table.setCellSelectionEnabled(true);
                 table.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
                 getContentPane().add(table, BorderLayout.CENTER);
+
+                // открытие вкладки двойным кликом
+                table.addMouseListener(new MouseAdapter() {
+                    @Override
+                    public void mouseClicked(MouseEvent e) {
+                        if (e.getClickCount() == 2) {
+                            int row = table.convertRowIndexToModel(table.rowAtPoint(new Point(e.getX(), e.getY()))); // при сортировке строк оставляет верные данные
+                            int col = table.columnAtPoint(new Point(e.getX(), e.getY()));
+                            if (col == 1 || col == 3) {
+                                String url = (String) table.getModel().getValueAt(row, 3);
+                                URI uri = null;
+                                try {
+                                    uri = new URI(url);
+                                } catch (URISyntaxException ex) {
+                                    ex.printStackTrace();
+                                }
+                                Desktop desktop = Desktop.getDesktop();
+                                assert uri != null;
+                                try {
+                                    desktop.browse(uri);
+                                } catch (IOException ex) {
+                                    ex.printStackTrace();
+                                }
+                            }
+                        }
+                    }
+                });
 
                 scrollPane.setBounds(10, 27, 324, 233);
                 this.getContentPane().add(scrollPane);
