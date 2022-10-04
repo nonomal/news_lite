@@ -203,7 +203,7 @@ public class JdbcQueries {
     public List<Excluded> getExcludedWords() {
         List<Excluded> excludedWords = new ArrayList<>();
         try {
-            String query = "SELECT id, word FROM exclude ORDER BY id DESC";
+            String query = "SELECT id, word FROM exclude ORDER BY word";
             statement = connection.prepareStatement(query);
 
             ResultSet rs = statement.executeQuery();
@@ -290,7 +290,7 @@ public class JdbcQueries {
     public List<Favorite> getFavorites() {
         List<Favorite> favorites = new ArrayList<>();
         try {
-            String query = "SELECT title, link, add_date FROM main.favorites ORDER BY add_date DESC";
+            String query = "SELECT title, link, add_date FROM main.favorites ORDER BY add_date";
             statement = connection.prepareStatement(query);
 
             ResultSet rs = statement.executeQuery();
