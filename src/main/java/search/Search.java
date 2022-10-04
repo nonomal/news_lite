@@ -227,7 +227,8 @@ public class Search {
                 tableRow.getSource(),
                 tableRow.getTitle(),
                 tableRow.getDate(),
-                tableRow.getLink()
+                tableRow.getLink(),
+                tableRow.getDescribe()
         });
 
         // Преобразование модифицированного заголовка с # к изначальному виду

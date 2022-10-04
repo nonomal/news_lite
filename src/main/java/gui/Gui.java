@@ -47,7 +47,7 @@ public class Gui extends JFrame {
     final SQLite sqLite = new SQLite();
     final JdbcQueries jdbcQueries = new JdbcQueries();
     final Search search = new Search();
-    private static final Object[] MAIN_TABLE_HEADERS = {"Num", "Source", "Title", "Date", "Link"};
+    private static final Object[] MAIN_TABLE_HEADERS = {"Num", "Source", "Title", "Date", "Link", "Description"};
     private static final String[] TABLE_FOR_ANALYZE_HEADERS = {"top 10", "freq.", " "};
     private static final Font GUI_FONT = new Font("Tahoma", Font.PLAIN, 11);
     private static final String[] INTERVALS = {"1 min", "5 min", "15 min", "30 min", "45 min", "1 hour", "2 hours",
@@ -100,7 +100,7 @@ public class Gui extends JFrame {
         model = new DefaultTableModel(new Object[][]{
         }, MAIN_TABLE_HEADERS) {
             final boolean[] columnEditable = new boolean[]{
-                    false, false, false, false, false
+                    false, false, false, false, false, false
             };
 
             public boolean isCellEditable(int row, int column) {
@@ -108,7 +108,8 @@ public class Gui extends JFrame {
             }
 
             // Сортировка
-            final Class[] types_unique = {Integer.class, String.class, String.class, /*Date.class*/ String.class, String.class};
+            final Class[] types_unique = {Integer.class, String.class, String.class,
+                    /*Date.class*/ String.class, String.class, String.class};
 
             @Override
             public Class getColumnClass(int columnIndex) {
@@ -156,6 +157,8 @@ public class Gui extends JFrame {
         //table.removeColumn(table.getColumnModel().getColumn(4)); // Скрыть 4 колонку со ссылкой на новость
         table.getColumnModel().getColumn(4).setPreferredWidth(20);
         table.getColumnModel().getColumn(4).setMaxWidth(100);
+        table.getColumnModel().getColumn(5).setPreferredWidth(20);
+        table.getColumnModel().getColumn(5).setMaxWidth(100);
         scrollPane.setViewportView(table);
 
         table.addMouseListener(new MouseAdapter() {
@@ -164,7 +167,7 @@ public class Gui extends JFrame {
                 if (e.getClickCount() == 2) {
                     int row = table.convertRowIndexToModel(table.rowAtPoint(new Point(e.getX(), e.getY()))); // при сортировке строк оставляет верные данные
                     int col = table.columnAtPoint(new Point(e.getX(), e.getY()));
-                    if (col == 2 || col == 4) {
+                    if (col == 2 || col == 4 || col == 5) {
                         String url = (String) table.getModel().getValueAt(row, 4);
                         URI uri = null;
                         try {
