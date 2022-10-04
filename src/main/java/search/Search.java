@@ -236,8 +236,10 @@ public class Search {
         // Данные для отправки результатов на почту и выгрузки эксель-файла
         emailAndExcelData.add(tableRow);
 
-        jdbcQueries.addTitlesNewsDual(tableRow.getTitle());
-        jdbcQueries.addTitles(tableRow.getTitle(), searchType);
+        jdbcQueries.addCutTitlesForAnalysis(tableRow.getTitle());
+        if (Gui.isOnlyLastNews) {
+            jdbcQueries.addTitles(tableRow.getTitle(), searchType);
+        }
     }
 
     private boolean isHref(String newsDescribe) {

@@ -24,7 +24,7 @@ public class JdbcQueries {
 
     /* INSERT */
     // Вставка заголовков разбитых на слова
-    public void addTitlesNewsDual(String title) {
+    public void addCutTitlesForAnalysis(String title) {
         try {
             String query = "INSERT INTO NEWS_DUAL(TITLE) VALUES (?)";
             statement = connection.prepareStatement(query);
