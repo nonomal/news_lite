@@ -370,7 +370,7 @@ public class Gui extends JFrame {
         excludedTitlesLabel.setHorizontalAlignment(SwingConstants.LEFT);
         excludedTitlesLabel.setForeground(new Color(255, 179, 131));
         excludedTitlesLabel.setFont(GUI_FONT);
-        excludedTitlesLabel.setBounds(topLeftActionX + 510, topLeftActionY + 3, 92, 14);
+        excludedTitlesLabel.setBounds(topLeftActionX + 510, topLeftActionY + 3, 96, 14);
         getContentPane().add(excludedTitlesLabel);
 
         // Диалоговое окно со списком избранных заголовков
