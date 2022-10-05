@@ -128,7 +128,7 @@ public class Gui extends JFrame {
                 } catch (RuntimeException ignored) {
                 }
                 assert tip != null;
-                if (tip.length() > 80) {
+                if (tip.length() > 82) {
                     return tip;
                 } else {
                     return null;
@@ -154,11 +154,12 @@ public class Gui extends JFrame {
         table.getColumnModel().getColumn(2).setPreferredWidth(490);
         table.getColumnModel().getColumn(3).setPreferredWidth(90);
         table.getColumnModel().getColumn(3).setMaxWidth(90);
-        //table.removeColumn(table.getColumnModel().getColumn(4)); // Скрыть 4 колонку со ссылкой на новость
+
         table.getColumnModel().getColumn(4).setPreferredWidth(20);
         table.getColumnModel().getColumn(4).setMaxWidth(100);
         table.getColumnModel().getColumn(5).setPreferredWidth(20);
         table.getColumnModel().getColumn(5).setMaxWidth(100);
+        table.removeColumn(table.getColumnModel().getColumn(5));// Скрыть описание новости
         scrollPane.setViewportView(table);
 
         table.addMouseListener(new MouseAdapter() {
