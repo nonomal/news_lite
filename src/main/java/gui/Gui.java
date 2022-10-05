@@ -940,16 +940,19 @@ public class Gui extends JFrame {
         JMenuItem menuDeleteRow = new JMenuItem("Delete");
         menuDeleteRow.addActionListener(e -> {
             int row = table.convertRowIndexToModel(table.getSelectedRow());
-            model.removeRow(row);
+            if (row != -1) model.removeRow(row);
         });
         popup.add(menuDeleteRow);
 
         // Add to favorites (menu)
         JMenuItem menuFavorite = new JMenuItem("Favorite");
         menuFavorite.addActionListener((e) -> {
-            String title = (String) table.getValueAt(table.getSelectedRow(), 2);
-            String link = (String) table.getValueAt(table.getSelectedRow(), 4);
-            jdbcQueries.addFavoriteTitle(title, link);
+            int row = table.getSelectedRow();
+            if (row != -1) {
+                String title = (String) table.getValueAt(row, 2);
+                String link = (String) table.getValueAt(row, 4);
+                jdbcQueries.addFavoriteTitle(title, link);
+            }
         });
         popup.add(menuFavorite);
 
@@ -957,9 +960,11 @@ public class Gui extends JFrame {
         JMenuItem menuDescribe = new JMenuItem("Describe");
         menuDescribe.addActionListener((e) -> {
             int row = table.convertRowIndexToModel(table.getSelectedRow());
-            Common.console("- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -");
-            Common.console((String) table.getModel().getValueAt(row, 5));
-            Common.console("- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -");
+            if (row != -1) {
+                Common.console("- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -");
+                Common.console((String) table.getModel().getValueAt(row, 5));
+                Common.console("- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -");
+            }
         });
         popup.add(menuDescribe);
 

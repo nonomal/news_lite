@@ -164,8 +164,8 @@ public class Search {
 
                 isSearchFinished.set(true);
                 Gui.progressBar.setValue(100);
-                Gui.table.setAutoCreateRowSorter(true);
-                Gui.tableForAnalysis.setAutoCreateRowSorter(true);
+                //Gui.table.setAutoCreateRowSorter(true);
+                //Gui.tableForAnalysis.setAutoCreateRowSorter(true);
 
                 // итоги в трей
                 if (newsCount != 0 && newsCount != modelRowCount && Gui.GUI_IN_TRAY.get())
