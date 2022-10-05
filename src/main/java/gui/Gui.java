@@ -6,12 +6,8 @@ import email.EmailManager;
 import gui.buttons.Icons;
 import gui.buttons.SetButton;
 import gui.checkboxes.SetCheckbox;
-import lombok.extern.slf4j.Slf4j;
 import search.Search;
-import utils.Common;
-import utils.ExportToExcel;
-import utils.MyTimerTask;
-import utils.Translator;
+import utils.*;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -42,7 +38,6 @@ import java.util.regex.Pattern;
 
 import static java.awt.GraphicsDevice.WindowTranslucency.TRANSLUCENT;
 
-@Slf4j
 public class Gui extends JFrame {
     final SQLite sqLite = new SQLite();
     final JdbcQueries jdbcQueries = new JdbcQueries();
@@ -66,7 +61,7 @@ public class Gui extends JFrame {
     public static JComboBox<String> newsInterval;
     public static JLabel labelSign, labelSum, lblLogSourceSqlite;
     public static JButton searchBtnTop, searchBtnBottom, stopBtnTop, stopBtnBottom,
-            sendEmailBtn, smiBtn, logBtn, exclBtn, exclTitlesBtn, favoritesBtn;
+            sendEmailBtn, smiBtn, anotherBtn, exclBtn, exclTitlesBtn, favoritesBtn;
     public static Checkbox autoUpdateNewsTop, autoUpdateNewsBottom, autoSendMessage, onlyNewNews;
     public static JProgressBar progressBar;
     public static Timer timer;
@@ -175,7 +170,6 @@ public class Gui extends JFrame {
                             uri = new URI(url);
                         } catch (URISyntaxException ex) {
                             ex.printStackTrace();
-                            log.warn(ex.getMessage());
                         }
                         Desktop desktop = Desktop.getDesktop();
                         assert uri != null;
@@ -183,7 +177,6 @@ public class Gui extends JFrame {
                             desktop.browse(uri);
                         } catch (IOException ex) {
                             ex.printStackTrace();
-                            log.warn(ex.getMessage());
                         }
                     }
                 }
@@ -472,7 +465,6 @@ public class Gui extends JFrame {
             } catch (Exception t) {
                 Common.console(t.getMessage());
                 t.printStackTrace();
-                log.warn(t.getMessage());
             }
         });
         getContentPane().add(clearBtnTop);
@@ -545,7 +537,6 @@ public class Gui extends JFrame {
             Search.isSearchFinished.set(true);
             Common.saveState();
             sqLite.closeConnection();
-            log.info("Application closed");
             System.exit(0);
         });
         animation(exitBtn, Icons.EXIT_BUTTON_ICON, Icons.WHEN_MOUSE_ON_EXIT_BUTTON_ICON);
@@ -798,15 +789,17 @@ public class Gui extends JFrame {
         animation(addNewSource, "add source");
 
         // Диалоговое окно лога "log"
-        logBtn = new JButton();
-        logBtn.setContentAreaFilled(true);
-        logBtn.setBorderPainted(false);
-        logBtn.setFocusable(false);
-        logBtn.setBackground(new Color(248, 206, 165));
-        logBtn.setBounds(921, 479, 14, 14);
-        getContentPane().add(logBtn);
-        logBtn.addActionListener(e -> new Dialogs("logDlg"));
-        animation(logBtn, "log");
+        anotherBtn = new JButton();
+        anotherBtn.setContentAreaFilled(true);
+        anotherBtn.setBorderPainted(false);
+        anotherBtn.setFocusable(false);
+        anotherBtn.setBackground(new Color(248, 206, 165));
+        anotherBtn.setBounds(921, 479, 14, 14);
+        getContentPane().add(anotherBtn);
+        anotherBtn.addActionListener(e -> {
+            Common.console("Надо что-то придумать для этой кнопки");
+        });
+        animation(anotherBtn, "log");
 
         // SQLite
         JButton sqliteBtn = new JButton();
@@ -914,7 +907,6 @@ public class Gui extends JFrame {
                         desktop.browse(uri);
                     } catch (IOException ex) {
                         ex.printStackTrace();
-                        log.warn(ex.getMessage());
                     }
                 }
             }

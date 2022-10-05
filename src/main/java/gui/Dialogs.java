@@ -89,16 +89,6 @@ public class Dialogs extends JDialog implements KeyListener {
                 showDialogs("smi");
                 break;
             }
-            case "logDlg": {
-                this.setBounds(600, 200, 350, 306);
-                this.setTitle("Log");
-                this.setLocationRelativeTo(Gui.logBtn);
-                scrollPane.setBounds(10, 27, 324, 233);
-                this.getContentPane().add(scrollPane);
-                scrollPane.setViewportView(textAreaForDialogs);
-                showDialogs("log");
-                break;
-            }
             case "exclDlg": {
                 this.setBounds(600, 200, 250, 306);
                 this.setTitle("Excluded from analysis");
@@ -315,23 +305,6 @@ public class Dialogs extends JDialog implements KeyListener {
                 java.util.List<Source> sources = jdbcQueries.getSources("all");
                 for (Source s : sources) {
                     Dialogs.model.addRow(new Object[]{++id, s.getSource(), s.getIsActive()});
-                }
-                break;
-            }
-            case "log": {
-                String path = Common.DIRECTORY_PATH + "app.log"; // TODO dynamic path
-
-                try (BufferedReader reader = new BufferedReader(
-                        new InputStreamReader(Files.newInputStream(Paths.get(path)), StandardCharsets.UTF_8))) {
-                    String line;
-                    StringBuilder allTab = new StringBuilder();
-
-                    while ((line = reader.readLine()) != null) {
-                        allTab.append(line).append("\n");
-                    }
-                    Dialogs.textAreaForDialogs.setText(allTab.toString());
-                } catch (IOException e) {
-                    e.printStackTrace();
                 }
                 break;
             }

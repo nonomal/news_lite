@@ -6,7 +6,6 @@ import database.SQLite;
 import email.EmailManager;
 import exception.IncorrectEmail;
 import gui.Gui;
-import lombok.extern.slf4j.Slf4j;
 import model.Source;
 import model.TableRow;
 import utils.Common;
@@ -20,7 +19,6 @@ import java.util.Date;
 import java.util.Locale;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-@Slf4j
 public class ConsoleSearch {
     SQLite sqlite;
     JdbcQueries jdbcQueries;

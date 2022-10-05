@@ -4,7 +4,6 @@ import com.formdev.flatlaf.intellijthemes.FlatHiberbeeDarkIJTheme;
 import gui.FrameDragListener;
 import gui.Gui;
 import lombok.experimental.UtilityClass;
-import lombok.extern.slf4j.Slf4j;
 import search.ConsoleSearch;
 import search.Search;
 
@@ -23,7 +22,6 @@ import java.util.Objects;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.stream.Stream;
 
-@Slf4j
 @UtilityClass
 public class Common {
     public static final String DIRECTORY_PATH = System.getProperty("user.home") +
@@ -71,8 +69,9 @@ public class Common {
             try {
                 logIsExists.createNewFile();
             } catch (IOException e) {
-                log.error("log create failed");
+            e.printStackTrace();
             }
+
         }
 
         // создание файлов программы
@@ -195,7 +194,7 @@ public class Common {
         }
     }
 
-    // Получить путь к базе данных (в config.txt можно поменять путь БД)
+    // Получить путь к базе данных (в config.txt можно поменять путь к БД)
     public String getPathToDatabase() {
         File file = null;
         try {
@@ -284,7 +283,6 @@ public class Common {
             Common.delSettings("email");
         } catch (IOException io) {
             io.printStackTrace();
-            log.warn(io.getMessage());
         }
         // write new values
         Common.writeToConfig(Gui.sendEmailTo.getText(), "email");

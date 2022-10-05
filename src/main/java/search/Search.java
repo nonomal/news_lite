@@ -5,7 +5,6 @@ import database.JdbcQueries;
 import database.SQLite;
 import gui.Gui;
 import gui.buttons.Icons;
-import lombok.extern.slf4j.Slf4j;
 import model.Keyword;
 import model.Source;
 import model.TableRow;
@@ -22,7 +21,6 @@ import java.util.List;
 import java.util.Locale;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-@Slf4j
 public class Search {
     private int newsCount = 0;
     private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("dd.MMM HH:mm", Locale.ENGLISH);
@@ -150,11 +148,9 @@ public class Search {
                                     .replaceAll(("https://|http://|www."), "");
                             smi = smi.substring(0, smi.indexOf("/"));
                             Common.console("rss is not available: " + smi);
-                            log.warn("rss is not available: " + smi);
                         }
                     } catch (Exception e) {
                         Common.console("error: restart the application!");
-                        log.warn("error: restart the application!");
                         isStop.set(true);
                     }
                 }
@@ -174,7 +170,6 @@ public class Search {
                 // итоги в трей
                 if (newsCount != 0 && newsCount != modelRowCount && Gui.GUI_IN_TRAY.get())
                     Common.trayMessage("News found: " + newsCount);
-                log.info("News found: " + newsCount);
 
                 if (isWord) {
                     Gui.searchBtnTop.setVisible(true);
@@ -204,13 +199,11 @@ public class Search {
                 Gui.WAS_CLICK_IN_TABLE_FOR_ANALYSIS.set(false);
                 if (isWord)
                     Common.console("info: number of news items in the archive = " + jdbcQueries.archiveNewsCount());
-                log.info("number of news items in the archive = " + jdbcQueries.archiveNewsCount());
             } catch (Exception e) {
-                log.warn(e.getMessage());
                 try {
                     sqLite.transaction("ROLLBACK");
                 } catch (SQLException i) {
-                    log.warn(i.getMessage());
+                    i.printStackTrace();
                 }
                 isStop.set(true);
             }

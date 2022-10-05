@@ -1,7 +1,6 @@
 package database;
 
 import gui.Gui;
-import lombok.extern.slf4j.Slf4j;
 import model.Excluded;
 import model.Favorite;
 import model.Keyword;
@@ -16,7 +15,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-@Slf4j
 public class JdbcQueries {
     private static final int WORD_FREQ_MATCHES = 2;
     private final Connection connection = SQLite.connection;
@@ -76,7 +74,6 @@ public class JdbcQueries {
                 statement.close();
 
                 Common.console("status: source added");
-                log.info("New source added: " + rss.getText());
             } else {
                 Common.console("status: adding source canceled");
             }
@@ -95,7 +92,6 @@ public class JdbcQueries {
             statement.close();
 
             Common.console("status: word \"" + word + "\" excluded from analysis");
-            log.info("New word excluded from analysis: " + word);
         } catch (Exception e) {
             Common.console("addExcludedWord error: " + e.getMessage());
         }
@@ -112,7 +108,6 @@ public class JdbcQueries {
             statement.close();
 
             Common.console("info: title added to favorites");
-            log.info("title added to favorites");
         } catch (Exception e) {
             Common.console("addFavoriteTitles error: " + e.getMessage());
         }
@@ -159,7 +154,6 @@ public class JdbcQueries {
                 statement.close();
 
                 Common.console("status: word \"" + word + "\" excluded from search");
-                log.info("New word excluded from search: " + word);
             } catch (Exception e) {
                 Common.console("addWordToExcludeTitles error: " + e.getMessage());
             }

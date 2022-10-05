@@ -1,6 +1,5 @@
 package utils;
 
-import lombok.extern.slf4j.Slf4j;
 import org.apache.poi.common.usermodel.HyperlinkType;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.*;
@@ -13,7 +12,6 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.nio.file.Files;
 
-@Slf4j
 public class ExportToExcel {
     private static final String[] HEADERS = {"Number", "Source", "Title", "Date", "Link"};
     private static final String SHEET_FONT = "Arial";
@@ -135,7 +133,6 @@ public class ExportToExcel {
             }
         } catch (IOException e) {
             Common.console("info: export is done");
-            log.error("export to excel error:\n" + e.getMessage());
         }
     }
 }
