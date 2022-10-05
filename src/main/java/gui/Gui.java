@@ -154,7 +154,7 @@ public class Gui extends JFrame {
         table.getColumnModel().getColumn(4).setMaxWidth(100);
         table.getColumnModel().getColumn(5).setPreferredWidth(20);
         table.getColumnModel().getColumn(5).setMaxWidth(100);
-        table.removeColumn(table.getColumnModel().getColumn(5));// Скрыть описание новости
+        //table.removeColumn(table.getColumnModel().getColumn(5));// Скрыть описание новости
         scrollPane.setViewportView(table);
 
         table.addMouseListener(new MouseAdapter() {
@@ -956,6 +956,16 @@ public class Gui extends JFrame {
             jdbcQueries.addFavoriteTitle(title, link);
         });
         popup.add(menuFavorite);
+
+        // Show describe (menu)
+        JMenuItem menuDescribe = new JMenuItem("Describe");
+        menuDescribe.addActionListener((e) -> {
+            int row = table.convertRowIndexToModel(table.getSelectedRow());
+            Common.console("--------------------------------------------------------");
+            Common.console((String) table.getModel().getValueAt(row, 5));
+            Common.console("--------------------------------------------------------");
+        });
+        popup.add(menuDescribe);
 
         // Translate from ENG to RUS (menu)
         JMenuItem menuTranslate = new JMenuItem("Translate");
