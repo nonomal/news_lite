@@ -88,9 +88,12 @@ public class Common {
         if (!sqliteDefIsExists.exists()) {
             copyFiles(Common.class.getResource("/sqlite3.def"), DIRECTORY_PATH + "sqlite3.def");
         }
-        File dbIsExists = new File(DIRECTORY_PATH + "news.db");
+
+        String pathToDatabase = DIRECTORY_PATH + "news.db";
+        File dbIsExists = new File(pathToDatabase);
         if (!dbIsExists.exists()) {
-            copyFiles(Common.class.getResource("/news.db"), DIRECTORY_PATH + "news.db");
+            copyFiles(Common.class.getResource("/news.db"), pathToDatabase);
+            writeToConfig(pathToDatabase, "db");
         }
         File configIsExists = new File(DIRECTORY_PATH + "config.txt");
         if (!configIsExists.exists()) {
@@ -120,6 +123,11 @@ public class Common {
     public void writeToConfig(String value, String type) {
         try (OutputStreamWriter writer = new OutputStreamWriter(new FileOutputStream(CONFIG_FILE, true), StandardCharsets.UTF_8)) {
             switch (type) {
+                case "db": {
+                    String text = "db_path=" + value + "\n";
+                    writer.write(text);
+                    break;
+                }
                 case "keyword": {
                     String text = "keyword=" + value + "\n";
                     writer.write(text);
@@ -182,10 +190,24 @@ public class Common {
                 }
             }
             writer.flush();
-            //writer.close();
         } catch (IOException ex) {
             ex.printStackTrace();
         }
+    }
+
+    // Получить путь к базе данных (в config.txt можно поменять путь БД)
+    public String getPathToDatabase() {
+        File file = null;
+        try {
+            for (String s : Files.readAllLines(Paths.get(CONFIG_FILE))) {
+                if (s.startsWith("db_path="))
+                    file = new File(s.replace("db_path=", ""));
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        assert file != null;
+        return file.getPath();
     }
 
     // Считывание конфигураций до запуска интерфейса

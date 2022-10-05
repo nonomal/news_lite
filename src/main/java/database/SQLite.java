@@ -16,7 +16,11 @@ public class SQLite {
     public void openConnection() {
         try {
             Class.forName("org.sqlite.JDBC");
-            connection = DriverManager.getConnection("jdbc:sqlite:" + Common.DIRECTORY_PATH + "news.db");
+            // config.txt
+            // default  db_path=C:\Users\User\News\news.db
+            // work     db_path=C:\Users\User\Seafile\Seafile\files\java\news\news.db
+            // home     db_path=
+            connection = DriverManager.getConnection("jdbc:sqlite:" + Common.getPathToDatabase());
             log.info("Connected to database");
         } catch (Exception e) {
             log.error("Failed to connect to database:\n" + e.getMessage());
@@ -26,8 +30,8 @@ public class SQLite {
 
     public void closeConnection() {
         try {
-                log.info("Connection closed");
-                connection.close();
+            log.info("Connection closed");
+            connection.close();
         } catch (Exception e) {
             log.error("Connection closed failed:\n" + e.getMessage());
         }
