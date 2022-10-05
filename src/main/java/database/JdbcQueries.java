@@ -304,6 +304,26 @@ public class JdbcQueries {
         return favorites;
     }
 
+    // Список избранных новостей
+    public String getRandomWord(int index) {
+       String word = null;
+        try {
+            String query = "SELECT eng||' - '||rus words FROM english WHERE id = ?";
+            statement = connection.prepareStatement(query);
+            statement.setInt(1, index);
+
+            ResultSet rs = statement.executeQuery();
+            while (rs.next()) {
+                word = rs.getString("words");
+            }
+            rs.close();
+            statement.close();
+        } catch (Exception e) {
+            Common.console("getRandomWord error: " + e.getMessage());
+        }
+        return word;
+    }
+
     /* REMOVE */
     // удаление слов из разных таблиц
     public void removeItem(String item, int activeWindow) {

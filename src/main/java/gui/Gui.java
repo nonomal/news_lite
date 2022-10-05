@@ -149,7 +149,6 @@ public class Gui extends JFrame {
         table.getColumnModel().getColumn(2).setPreferredWidth(490);
         table.getColumnModel().getColumn(3).setPreferredWidth(90);
         table.getColumnModel().getColumn(3).setMaxWidth(90);
-
         table.getColumnModel().getColumn(4).setPreferredWidth(20);
         table.getColumnModel().getColumn(4).setMaxWidth(100);
         table.getColumnModel().getColumn(5).setPreferredWidth(20);
@@ -790,7 +789,7 @@ public class Gui extends JFrame {
         addNewSource.addActionListener(e -> jdbcQueries.addNewSource());
         animation(addNewSource, "add source");
 
-        // Диалоговое окно лога "log"
+        // Случайное английское слово
         anotherBtn = new JButton();
         anotherBtn.setContentAreaFilled(true);
         anotherBtn.setBorderPainted(false);
@@ -798,8 +797,8 @@ public class Gui extends JFrame {
         anotherBtn.setBackground(new Color(248, 206, 165));
         anotherBtn.setBounds(921, 479, 14, 14);
         getContentPane().add(anotherBtn);
-        anotherBtn.addActionListener(e -> new RandomFact().get());
-        animation(anotherBtn, "random");
+        anotherBtn.addActionListener(e -> new RandomWord().get());
+        animation(anotherBtn, "vocabulary");
 
         // SQLite
         JButton sqliteBtn = new JButton();
@@ -965,7 +964,6 @@ public class Gui extends JFrame {
             if (row != -1) {
                 Common.console("- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -");
                 Common.console((String) table.getModel().getValueAt(row, 5));
-                Common.console("- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -");
             }
         });
         popup.add(menuDescribe);
