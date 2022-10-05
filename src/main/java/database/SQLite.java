@@ -14,10 +14,6 @@ public class SQLite {
     public void openConnection() {
         try {
             Class.forName("org.sqlite.JDBC");
-            // config.txt
-            // default  db_path=C:\Users\User\News\news.db
-            // work     db_path=C:\Users\User\Seafile\Seafile\files\java\news\news.db
-            // home     db_path=
             connection = DriverManager.getConnection("jdbc:sqlite:" + Common.getPathToDatabase());
         } catch (Exception e) {
             throw new NotConnectedToDatabase("Failed to connect to database");

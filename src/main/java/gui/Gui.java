@@ -796,9 +796,7 @@ public class Gui extends JFrame {
         anotherBtn.setBackground(new Color(248, 206, 165));
         anotherBtn.setBounds(921, 479, 14, 14);
         getContentPane().add(anotherBtn);
-        anotherBtn.addActionListener(e -> {
-            new RandomFact().get();
-        });
+        anotherBtn.addActionListener(e -> new RandomFact().get());
         animation(anotherBtn, "random");
 
         // SQLite
@@ -938,13 +936,11 @@ public class Gui extends JFrame {
         });
         popup.add(menuCopy);
 
-        // Delete rows (menu)
+        // Delete row (menu)
         JMenuItem menuDeleteRow = new JMenuItem("Delete");
-        menuDeleteRow.addActionListener((e) -> {
-            int[] rows = table.getSelectedRows();
-            for (int i = rows.length - 1; i >= 0; --i) {
-                model.removeRow(rows[i]);
-            }
+        menuDeleteRow.addActionListener(e -> {
+            int row = table.convertRowIndexToModel(table.getSelectedRow());
+            model.removeRow(row);
         });
         popup.add(menuDeleteRow);
 
@@ -961,9 +957,9 @@ public class Gui extends JFrame {
         JMenuItem menuDescribe = new JMenuItem("Describe");
         menuDescribe.addActionListener((e) -> {
             int row = table.convertRowIndexToModel(table.getSelectedRow());
-            Common.console("--------------------------------------------------------");
+            Common.console("- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -");
             Common.console((String) table.getModel().getValueAt(row, 5));
-            Common.console("--------------------------------------------------------");
+            Common.console("- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -");
         });
         popup.add(menuDescribe);
 
