@@ -155,6 +155,7 @@ public class Gui extends JFrame {
         table.getColumnModel().getColumn(5).setPreferredWidth(20);
         table.getColumnModel().getColumn(5).setMaxWidth(100);
         //table.removeColumn(table.getColumnModel().getColumn(5));// Скрыть описание новости
+        table.setAutoCreateRowSorter(true);
         scrollPane.setViewportView(table);
 
         table.addMouseListener(new MouseAdapter() {
@@ -221,6 +222,7 @@ public class Gui extends JFrame {
         tableForAnalysis.getColumnModel().getColumn(1).setPreferredWidth(40);
         tableForAnalysis.getColumnModel().getColumn(1).setMaxWidth(40);
         tableForAnalysis.getColumnModel().getColumn(2).setMaxWidth(30);
+        tableForAnalysis.setAutoCreateRowSorter(true);
         scrollForAnalysis.setViewportView(tableForAnalysis);
 
         // запуск поиска по слову из таблицы анализа
