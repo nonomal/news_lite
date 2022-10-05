@@ -797,9 +797,9 @@ public class Gui extends JFrame {
         anotherBtn.setBounds(921, 479, 14, 14);
         getContentPane().add(anotherBtn);
         anotherBtn.addActionListener(e -> {
-            Common.console("Надо что-то придумать для этой кнопки");
+            new RandomFact().get();
         });
-        animation(anotherBtn, "log");
+        animation(anotherBtn, "random");
 
         // SQLite
         JButton sqliteBtn = new JButton();
