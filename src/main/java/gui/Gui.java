@@ -738,32 +738,14 @@ public class Gui extends JFrame {
         sendEmailBtn.addActionListener(e -> {
             if (model.getRowCount() > 0 && sendEmailTo.getText().contains("@")) {
                 Common.console("sending e-mail");
-                //sendTo = sendEmailTo.getText();
                 Common.IS_SENDING.set(false);
                 new Thread(Common::fillProgressLine).start();
                 EmailManager email = new EmailManager();
                 new Thread(email::sendMessage).start();
             }
         });
-        sendEmailBtn.addMouseListener(new MouseAdapter() {
-            // наведение мышки на письмо
-            @Override
-            public void mouseEntered(MouseEvent e) {
-                if (sendEmailBtn.getIcon() == Icons.SEND_EMAIL_ICON) {
-                    sendEmailBtn.setIcon(Icons.WHEN_MOUSE_ON_SEND_ICON);
-                }
-            }
-
-            @Override
-            // убрали мышку с письма
-            public void mouseExited(MouseEvent e) {
-                if (sendEmailBtn.getIcon() == Icons.WHEN_MOUSE_ON_SEND_ICON) {
-                    sendEmailBtn.setIcon(Icons.SEND_EMAIL_ICON);
-                }
-            }
-
-        });
         getContentPane().add(sendEmailBtn);
+        animation(sendEmailBtn, Icons.SEND_EMAIL_ICON, Icons.WHEN_MOUSE_ON_SEND_ICON);
 
         // Диалоговое окно со списком источников "sources"
         smiBtn = new JButton();
@@ -1020,7 +1002,6 @@ public class Gui extends JFrame {
 
     private void animation(JLabel label, String url) {
         label.addMouseListener(new MouseAdapter() {
-            // наведение мышки на письмо
             @Override
             public void mouseEntered(MouseEvent e) {
                 if (!label.isEnabled()) {
@@ -1028,7 +1009,6 @@ public class Gui extends JFrame {
                 }
             }
 
-            // убрали мышку с письма
             @Override
             public void mouseExited(MouseEvent e) {
                 if (label.isEnabled()) {
@@ -1045,7 +1025,7 @@ public class Gui extends JFrame {
         });
     }
 
-    private static void openPage(String url) {
+    private void openPage(String url) {
         URI uri = null;
         try {
             uri = new URI(url);
