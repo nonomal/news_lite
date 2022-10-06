@@ -59,7 +59,7 @@ public class Gui extends JFrame {
     public static JTextField topKeyword, sendEmailTo, addKeywordToList;
     public static JTextArea consoleTextArea;
     public static JComboBox<String> newsInterval;
-    public static JLabel labelSign, labelSum, lblLogSourceSqlite, appInfo;
+    public static JLabel labelSum, lblLogSourceSqlite, appInfo;
     public static JButton searchBtnTop, searchBtnBottom, stopBtnTop, stopBtnBottom,
             sendEmailBtn, smiBtn, anotherBtn, exclBtn, exclTitlesBtn, favoritesBtn;
     public static Checkbox autoUpdateNewsTop, autoUpdateNewsBottom, autoSendMessage, onlyNewNews;
@@ -872,50 +872,30 @@ public class Gui extends JFrame {
         labelSum.setBackground(new Color(240, 255, 240));
         getContentPane().add(labelSum);
 
-        //My sign
-        labelSign = new JLabel("mrprogre");
+        /* WEB PAGES */
+        JLabel google = new JLabel("maps");
+        google.setForeground(new Color(255, 160, 122));
+        google.setEnabled(false);
+        google.setFont(new Font("Tahoma", Font.BOLD, 11));
+        google.setBounds(1130, 525, 57, 14);
+        getContentPane().add(google);
+        animation(google, "https://www.google.ru/maps");
+
+        JLabel labelSign = new JLabel("gitHub");
         labelSign.setForeground(new Color(255, 160, 122));
         labelSign.setEnabled(false);
         labelSign.setFont(new Font("Tahoma", Font.BOLD, 11));
-        labelSign.setBounds(1110, 555, 57, 14);
+        labelSign.setBounds(1130, 540, 57, 14);
         getContentPane().add(labelSign);
-        labelSign.addMouseListener(new MouseAdapter() {
-            // наведение мышки на письмо
-            @Override
-            public void mouseEntered(MouseEvent e) {
-                if (!labelSign.isEnabled()) {
-                    labelSign.setEnabled(true);
-                }
-            }
+        animation(labelSign, "https://github.com/mrprogre");
 
-            // убрали мышку с письма
-            @Override
-            public void mouseExited(MouseEvent e) {
-                if (labelSign.isEnabled()) {
-                    labelSign.setEnabled(false);
-                }
-            }
-
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                if (e.getButton() == MouseEvent.BUTTON1) {
-                    String url = "https://github.com/mrprogre";
-                    URI uri = null;
-                    try {
-                        uri = new URI(url);
-                    } catch (URISyntaxException ex) {
-                        ex.printStackTrace();
-                    }
-                    Desktop desktop = Desktop.getDesktop();
-                    assert uri != null;
-                    try {
-                        desktop.browse(uri);
-                    } catch (IOException ex) {
-                        ex.printStackTrace();
-                    }
-                }
-            }
-        });
+        JLabel yandex = new JLabel("yandex");
+        yandex.setForeground(new Color(255, 160, 122));
+        yandex.setEnabled(false);
+        yandex.setFont(new Font("Tahoma", Font.BOLD, 11));
+        yandex.setBounds(1130, 555, 57, 14);
+        getContentPane().add(yandex);
+        animation(yandex,"https://ya.ru/");
 
         // Mouse right click menu
         final JPopupMenu popup = new JPopupMenu();
@@ -1036,5 +1016,48 @@ public class Gui extends JFrame {
                 lblLogSourceSqlite.setText("");
             }
         });
+    }
+
+    private void animation(JLabel label, String url) {
+        label.addMouseListener(new MouseAdapter() {
+            // наведение мышки на письмо
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                if (!label.isEnabled()) {
+                    label.setEnabled(true);
+                }
+            }
+
+            // убрали мышку с письма
+            @Override
+            public void mouseExited(MouseEvent e) {
+                if (label.isEnabled()) {
+                    label.setEnabled(false);
+                }
+            }
+
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                if (e.getButton() == MouseEvent.BUTTON1) {
+                    openPage(url);
+                }
+            }
+        });
+    }
+
+    private static void openPage(String url) {
+        URI uri = null;
+        try {
+            uri = new URI(url);
+        } catch (URISyntaxException ex) {
+            ex.printStackTrace();
+        }
+        Desktop desktop = Desktop.getDesktop();
+        assert uri != null;
+        try {
+            desktop.browse(uri);
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
     }
 }
