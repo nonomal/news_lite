@@ -18,14 +18,13 @@ import java.util.List;
 public class JdbcQueries {
     private static final int WORD_FREQ_MATCHES = 2;
     private final Connection connection = SQLite.connection;
-    private PreparedStatement statement;
 
     /* INSERT */
     // Вставка заголовков разбитых на слова
     public void addCutTitlesForAnalysis(String title) {
         try {
             String query = "INSERT INTO NEWS_DUAL(TITLE) VALUES (?)";
-            statement = connection.prepareStatement(query);
+            PreparedStatement statement = connection.prepareStatement(query);
             String[] substr = title.split(" ");
 
             for (String s : substr) {
@@ -36,7 +35,7 @@ public class JdbcQueries {
             }
             statement.close();
         } catch (Exception e) {
-            Common.console("addTitlesNewsDual error: " + e.getMessage());
+            Common.console("addCutTitlesForAnalysis error: " + e.getMessage());
         }
     }
 
@@ -44,7 +43,7 @@ public class JdbcQueries {
     public void addKeyword(String word) {
         try {
             String query = "INSERT INTO keywords(word) VALUES (?)";
-            statement = connection.prepareStatement(query);
+            PreparedStatement statement = connection.prepareStatement(query);
             statement.setString(1, word);
             statement.executeUpdate();
             statement.close();
@@ -67,7 +66,7 @@ public class JdbcQueries {
 
             if (result == JOptionPane.YES_OPTION) {
                 String query = "INSERT INTO rss_list(source, link, is_active) VALUES (?, ?, 1)";
-                statement = connection.prepareStatement(query);
+                PreparedStatement statement = connection.prepareStatement(query);
                 statement.setString(1, rss.getText());
                 statement.setString(2, link.getText());
                 statement.executeUpdate();
@@ -86,7 +85,7 @@ public class JdbcQueries {
     public void addExcludedWord(String word) {
         try {
             String query = "INSERT INTO exclude(word) VALUES (?)";
-            statement = connection.prepareStatement(query);
+            PreparedStatement statement = connection.prepareStatement(query);
             statement.setString(1, word);
             statement.executeUpdate();
             statement.close();
@@ -101,7 +100,7 @@ public class JdbcQueries {
     public void addFavoriteTitle(String title, String link) {
         try {
             String query = "INSERT INTO favorites(title, link) VALUES (?, ?)";
-            statement = connection.prepareStatement(query);
+            PreparedStatement statement = connection.prepareStatement(query);
             statement.setString(1, title);
             statement.setString(2, link);
             statement.executeUpdate();
@@ -117,7 +116,7 @@ public class JdbcQueries {
     public void addTitles(String title, String type) {
         try {
             String query = "INSERT INTO titles(title, type) VALUES (?, ?)";
-            statement = connection.prepareStatement(query);
+            PreparedStatement statement = connection.prepareStatement(query);
             statement.setString(1, title);
             statement.setString(2, type);
             statement.executeUpdate();
@@ -131,7 +130,7 @@ public class JdbcQueries {
     public void addAllTitlesToArchive(String title, String date, String link, String source) {
         try {
             String query = "INSERT INTO all_news(title, news_date, link, source) VALUES (?, ?, ?, ?)";
-            statement = connection.prepareStatement(query);
+            PreparedStatement statement = connection.prepareStatement(query);
             statement.setString(1, title);
             statement.setString(2, date);
             statement.setString(3, link);
@@ -148,7 +147,7 @@ public class JdbcQueries {
         if (word != null && word.length() > 0) {
             try {
                 String query = "INSERT INTO exclude_from_main_search(word) VALUES (?)";
-                statement = connection.prepareStatement(query);
+                PreparedStatement statement = connection.prepareStatement(query);
                 statement.setString(1, word);
                 statement.executeUpdate();
                 statement.close();
@@ -173,7 +172,7 @@ public class JdbcQueries {
         }
 
         try {
-            statement = connection.prepareStatement(query);
+            PreparedStatement statement = connection.prepareStatement(query);
             ResultSet rs = statement.executeQuery();
 
             while (rs.next()) {
@@ -198,7 +197,7 @@ public class JdbcQueries {
         List<Excluded> excludedWords = new ArrayList<>();
         try {
             String query = "SELECT id, word FROM exclude ORDER BY word";
-            statement = connection.prepareStatement(query);
+            PreparedStatement statement = connection.prepareStatement(query);
 
             ResultSet rs = statement.executeQuery();
             while (rs.next()) {
@@ -219,7 +218,7 @@ public class JdbcQueries {
         List<Excluded> excludedWords = new ArrayList<>();
         try {
             String query = "SELECT id, word FROM exclude_from_main_search ORDER BY id";
-            statement = connection.prepareStatement(query);
+            PreparedStatement statement = connection.prepareStatement(query);
 
             ResultSet rs = statement.executeQuery();
             while (rs.next()) {
@@ -242,7 +241,7 @@ public class JdbcQueries {
             if (isActive == 0 || isActive == 1) {
                 query = "SELECT word, is_active FROM keywords WHERE is_active = " + isActive + " ORDER BY word";
             }
-            statement = connection.prepareStatement(query);
+            PreparedStatement statement = connection.prepareStatement(query);
 
             ResultSet rs = statement.executeQuery();
             while (rs.next()) {
@@ -265,7 +264,7 @@ public class JdbcQueries {
         int isExists = 0;
         try {
             String query = "SELECT MAX(1) FROM keywords WHERE exists (select word from keywords where word = ?)";
-            statement = connection.prepareStatement(query);
+            PreparedStatement statement = connection.prepareStatement(query);
             statement.setString(1, word);
 
             ResultSet rs = statement.executeQuery();
@@ -285,7 +284,7 @@ public class JdbcQueries {
         List<Favorite> favorites = new ArrayList<>();
         try {
             String query = "SELECT title, link, add_date FROM main.favorites ORDER BY add_date";
-            statement = connection.prepareStatement(query);
+            PreparedStatement statement = connection.prepareStatement(query);
 
             ResultSet rs = statement.executeQuery();
             while (rs.next()) {
@@ -304,7 +303,7 @@ public class JdbcQueries {
         return favorites;
     }
 
-    // Список избранных новостей
+    // Список слов с переводом
     public List<String> getRandomWords() {
         List<String> words = new ArrayList<>();
         try {
@@ -341,7 +340,7 @@ public class JdbcQueries {
             }
 
 
-            statement = connection.prepareStatement(query);
+            PreparedStatement statement = connection.prepareStatement(query);
             statement.setString(1, item);
             statement.executeUpdate();
             statement.close();
@@ -357,7 +356,7 @@ public class JdbcQueries {
         try {
             String query = "DELETE FROM all_news WHERE ROWID NOT IN (SELECT MIN(ROWID) " +
                     "FROM all_news GROUP BY source, title, news_date)";
-            statement = connection.prepareStatement(query);
+            PreparedStatement statement = connection.prepareStatement(query);
             statement.executeUpdate();
             statement.close();
         } catch (Exception e) {
@@ -369,7 +368,7 @@ public class JdbcQueries {
     public void removeEmptyRows() {
         try {
             String query = "DELETE FROM NEWS_DUAL WHERE TITLE = ''";
-            statement = connection.prepareStatement(query);
+            PreparedStatement statement = connection.prepareStatement(query);
             statement.executeUpdate();
             statement.close();
         } catch (Exception e) {
@@ -381,7 +380,7 @@ public class JdbcQueries {
     public void removeFromTable(String tableName) {
         try {
             String query = "DELETE FROM " + tableName;
-            statement = connection.prepareStatement(query);
+            PreparedStatement statement = connection.prepareStatement(query);
             statement.executeUpdate();
             statement.close();
         } catch (Exception e) {
@@ -396,7 +395,7 @@ public class JdbcQueries {
         try {
             String query = "SELECT MAX(1) FROM titles " +
                     "WHERE EXISTS (SELECT title FROM titles t WHERE t.title = ? AND t.type = ?)";
-            statement = connection.prepareStatement(query);
+            PreparedStatement statement = connection.prepareStatement(query);
             statement.setString(1, title);
             statement.setString(2, type);
 
@@ -419,7 +418,7 @@ public class JdbcQueries {
 
         try {
             String query = "SELECT word FROM exclude_from_main_search";
-            statement = connection.prepareStatement(query);
+            PreparedStatement statement = connection.prepareStatement(query);
 
             ResultSet rs = statement.executeQuery();
             while (rs.next()) {
@@ -440,7 +439,7 @@ public class JdbcQueries {
             String query = "SELECT SUM, TITLE FROM V_NEWS_DUAL WHERE SUM > ? " +
                     "AND TITLE NOT IN (SELECT WORD FROM ALL_TITLES_TO_EXCLUDE) " +
                     "ORDER BY SUM DESC";
-            statement = connection.prepareStatement(query);
+            PreparedStatement statement = connection.prepareStatement(query);
             statement.setInt(1, WORD_FREQ_MATCHES);
 
             ResultSet rs = statement.executeQuery();
@@ -463,7 +462,7 @@ public class JdbcQueries {
         int countNews = 0;
         try {
             String query = "SELECT COUNT(*) FROM ALL_NEWS";
-            statement = connection.prepareStatement(query);
+            PreparedStatement statement = connection.prepareStatement(query);
 
             ResultSet rs = statement.executeQuery();
             while (rs.next()) {
@@ -487,7 +486,7 @@ public class JdbcQueries {
                 query = "UPDATE keywords SET is_active = ? WHERE word = ?";
             }
 
-            statement = connection.prepareStatement(query);
+            PreparedStatement statement = connection.prepareStatement(query);
             statement.setBoolean(1, check);
             statement.setString(2, name);
             statement.executeUpdate();

@@ -59,7 +59,7 @@ public class Gui extends JFrame {
     public static JTextField topKeyword, sendEmailTo, addKeywordToList;
     public static JTextArea consoleTextArea;
     public static JComboBox<String> newsInterval;
-    public static JLabel labelSign, labelSum, lblLogSourceSqlite;
+    public static JLabel labelSign, labelSum, lblLogSourceSqlite, appInfo;
     public static JButton searchBtnTop, searchBtnBottom, stopBtnTop, stopBtnBottom,
             sendEmailBtn, smiBtn, anotherBtn, exclBtn, exclTitlesBtn, favoritesBtn;
     public static Checkbox autoUpdateNewsTop, autoUpdateNewsBottom, autoSendMessage, onlyNewNews;
@@ -471,6 +471,7 @@ public class Gui extends JFrame {
         getContentPane().add(clearBtnTop);
         animation(clearBtnTop, Icons.CLEAR_BUTTON_ICON, Icons.WHEN_MOUSE_ON_CLEAR_BUTTON_ICON);
 
+        /* TOP-RIGHT CLOSE*/
         /* Сворачивание в трей */
         JButton toTrayBtn = new JButton(Icons.HIDE_BUTTON_ICON);
         toTrayBtn.setFocusable(false);
@@ -653,6 +654,7 @@ public class Gui extends JFrame {
         /* CONSOLE */
         //Console - textarea
         consoleTextArea = new JTextArea();
+        consoleTextArea.setForeground(Color.BLACK);
         // авто скроллинг
         DefaultCaret caret = (DefaultCaret) consoleTextArea.getCaret();
         caret.setUpdatePolicy(DefaultCaret.ALWAYS_UPDATE);
@@ -662,8 +664,7 @@ public class Gui extends JFrame {
         consoleTextArea.setEditable(false);
         consoleTextArea.setBounds(20, 11, 145, 51);
         consoleTextArea.setFont(new Font("Tahoma", Font.BOLD, 13));
-        consoleTextArea.setForeground(SystemColor.white);
-        consoleTextArea.setBackground(new Color(83, 82, 82)); // 83, 82, 82
+        consoleTextArea.setBackground(new Color(222, 222, 222)); // 83, 82, 82
         getContentPane().add(consoleTextArea);
 
         //Console - scroll
@@ -845,12 +846,19 @@ public class Gui extends JFrame {
         });
         animation(settingsDirectoryBtn, "files");
 
-        // Источники, лог, sqlite лейбл
+        // Источники, sqlite лейбл
         lblLogSourceSqlite = new JLabel();
         lblLogSourceSqlite.setForeground(Color.WHITE);
         lblLogSourceSqlite.setFont(GUI_FONT);
         lblLogSourceSqlite.setBounds(979, 479, 70, 14);
         getContentPane().add(lblLogSourceSqlite);
+
+        appInfo = new JLabel();
+        appInfo.setText("news archive: " + jdbcQueries.archiveNewsCount());
+        appInfo.setForeground(Color.LIGHT_GRAY);
+        appInfo.setFont(GUI_FONT);
+        appInfo.setBounds(1060, 479, 200, 14);
+        getContentPane().add(appInfo);
 
         // Border different bottoms
         Box queryTableBox = Box.createVerticalBox();

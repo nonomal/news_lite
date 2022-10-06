@@ -198,7 +198,7 @@ public class Search {
 
                 Gui.WAS_CLICK_IN_TABLE_FOR_ANALYSIS.set(false);
                 if (isWord)
-                    Common.console("info: " + jdbcQueries.archiveNewsCount() + " titles in the archive");
+                    Gui.appInfo.setText("news archive: " + jdbcQueries.archiveNewsCount());
             } catch (Exception e) {
                 try {
                     sqLite.transaction("ROLLBACK");
