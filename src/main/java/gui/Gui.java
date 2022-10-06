@@ -661,7 +661,7 @@ public class Gui extends JFrame {
         consoleTextArea.setLineWrap(true);
         consoleTextArea.setEditable(false);
         consoleTextArea.setBounds(20, 11, 145, 51);
-        consoleTextArea.setFont(GUI_FONT);
+        consoleTextArea.setFont(new Font("Tahoma", Font.BOLD, 13));
         consoleTextArea.setForeground(SystemColor.white);
         consoleTextArea.setBackground(new Color(83, 82, 82)); // 83, 82, 82
         getContentPane().add(consoleTextArea);
@@ -798,7 +798,7 @@ public class Gui extends JFrame {
         anotherBtn.setBounds(921, 479, 14, 14);
         getContentPane().add(anotherBtn);
         anotherBtn.addActionListener(e -> new RandomWord().get());
-        animation(anotherBtn, "vocabulary");
+        animation(anotherBtn, "english words");
 
         // SQLite
         JButton sqliteBtn = new JButton();
@@ -849,7 +849,7 @@ public class Gui extends JFrame {
         lblLogSourceSqlite = new JLabel();
         lblLogSourceSqlite.setForeground(Color.WHITE);
         lblLogSourceSqlite.setFont(GUI_FONT);
-        lblLogSourceSqlite.setBounds(979, 479, 60, 14);
+        lblLogSourceSqlite.setBounds(979, 479, 70, 14);
         getContentPane().add(lblLogSourceSqlite);
 
         // Border different bottoms
@@ -962,7 +962,6 @@ public class Gui extends JFrame {
         menuDescribe.addActionListener((e) -> {
             int row = table.convertRowIndexToModel(table.getSelectedRow());
             if (row != -1) {
-                Common.console("- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -");
                 Common.console((String) table.getModel().getValueAt(row, 5));
             }
         });

@@ -1,15 +1,17 @@
 package utils;
 
-import database.JdbcQueries;
-
+import java.util.List;
 import java.util.Random;
 
 public class RandomWord {
-    final JdbcQueries jdbcQueries = new JdbcQueries();
-    private final Random random = new Random();
+    private final Random random;
+    private final List<String> list = Common.words;
+
+    public RandomWord() {
+        this.random = new Random();
+    }
 
     public void get() {
-        Common.console("- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -");
-        Common.console(jdbcQueries.getRandomWord(random.nextInt(5002)));
+        Common.console(list.get(random.nextInt(list.size())));
     }
 }

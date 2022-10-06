@@ -1,6 +1,7 @@
 package utils;
 
 import com.formdev.flatlaf.intellijthemes.FlatHiberbeeDarkIJTheme;
+import database.JdbcQueries;
 import gui.FrameDragListener;
 import gui.Gui;
 import lombok.experimental.UtilityClass;
@@ -18,6 +19,7 @@ import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import java.util.Objects;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.stream.Stream;
@@ -32,6 +34,7 @@ public class Common {
     public final AtomicBoolean IS_SENDING = new AtomicBoolean(true);
     public String SCRIPT_URL = null;
     public float OPACITY;
+    public List<String> words;
 
     public void showGui() {
         getSettingsBeforeGui();
@@ -69,7 +72,7 @@ public class Common {
             try {
                 logIsExists.createNewFile();
             } catch (IOException e) {
-            e.printStackTrace();
+                e.printStackTrace();
             }
 
         }
@@ -236,6 +239,8 @@ public class Common {
     // Считывание конфигураций после запуска интерфейса
     public void getSettingsAfterGui() {
         try {
+            words = new JdbcQueries().getRandomWords();
+
             for (String s : Files.readAllLines(Paths.get(CONFIG_FILE))) {
                 // Интервал поиска interval=1m
                 if (s.startsWith("interval=")) {
@@ -320,13 +325,8 @@ public class Common {
 
     //Console
     public void console(String text) {
-        //try {
-            //Thread.sleep(100);
-            Gui.consoleTextArea.setText(Gui.consoleTextArea.getText() + text + "\n");
-            //Thread.sleep(100);
-       // } catch (InterruptedException e) {
-        //    e.printStackTrace();
-        //}
+        Gui.consoleTextArea.setText(Gui.consoleTextArea.getText() +
+                "- - - - - - - - - - - - - - - - - - - - - - - - - - -\n" + text + "\n");
     }
 
     // Шкала прогресса

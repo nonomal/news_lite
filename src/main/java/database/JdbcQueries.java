@@ -305,23 +305,22 @@ public class JdbcQueries {
     }
 
     // Список избранных новостей
-    public String getRandomWord(int index) {
-       String word = null;
+    public List<String> getRandomWords() {
+        List<String> words = new ArrayList<>();
         try {
-            String query = "SELECT eng||' - '||rus words FROM english WHERE id = ?";
-            statement = connection.prepareStatement(query);
-            statement.setInt(1, index);
+            String query = "SELECT lang1||' - '||lang2 words FROM dictionary WHERE is_active = 1";
+            PreparedStatement statement = connection.prepareStatement(query);
 
             ResultSet rs = statement.executeQuery();
             while (rs.next()) {
-                word = rs.getString("words");
+                words.add(rs.getString("words"));
             }
             rs.close();
             statement.close();
         } catch (Exception e) {
             Common.console("getRandomWord error: " + e.getMessage());
         }
-        return word;
+        return words;
     }
 
     /* REMOVE */
