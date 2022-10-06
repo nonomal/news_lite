@@ -877,25 +877,25 @@ public class Gui extends JFrame {
         google.setForeground(new Color(255, 160, 122));
         google.setEnabled(false);
         google.setFont(new Font("Tahoma", Font.BOLD, 11));
-        google.setBounds(1130, 525, 57, 14);
+        google.setBounds(732, 545, 32, 14);
         getContentPane().add(google);
         animation(google, "https://www.google.ru/maps");
-
-        JLabel labelSign = new JLabel("gitHub");
-        labelSign.setForeground(new Color(255, 160, 122));
-        labelSign.setEnabled(false);
-        labelSign.setFont(new Font("Tahoma", Font.BOLD, 11));
-        labelSign.setBounds(1130, 540, 57, 14);
-        getContentPane().add(labelSign);
-        animation(labelSign, "https://github.com/mrprogre");
 
         JLabel yandex = new JLabel("yandex");
         yandex.setForeground(new Color(255, 160, 122));
         yandex.setEnabled(false);
         yandex.setFont(new Font("Tahoma", Font.BOLD, 11));
-        yandex.setBounds(1130, 555, 57, 14);
+        yandex.setBounds(768, 545, 44, 14);
         getContentPane().add(yandex);
         animation(yandex,"https://ya.ru/");
+
+        JLabel labelSign = new JLabel("mrprogre");
+        labelSign.setForeground(new Color(255, 160, 122));
+        labelSign.setEnabled(false);
+        labelSign.setFont(new Font("Tahoma", Font.BOLD, 11));
+        labelSign.setBounds(815, 545, 56, 14);
+        getContentPane().add(labelSign);
+        animation(labelSign, "https://github.com/mrprogre");
 
         // Mouse right click menu
         final JPopupMenu popup = new JPopupMenu();
