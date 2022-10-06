@@ -855,6 +855,14 @@ public class Gui extends JFrame {
         getContentPane().add(labelSum);
 
         /* WEB PAGES */
+        JLabel translator = new JLabel("translator");
+        translator.setForeground(new Color(255, 160, 122));
+        translator.setEnabled(false);
+        translator.setFont(new Font("Tahoma", Font.BOLD, 11));
+        translator.setBounds(670, 545, 57, 14);
+        getContentPane().add(translator);
+        animation(translator, "https://translate.google.com/");
+
         JLabel google = new JLabel("maps");
         google.setForeground(new Color(255, 160, 122));
         google.setEnabled(false);
