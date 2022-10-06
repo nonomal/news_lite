@@ -127,12 +127,12 @@ public class ExportToExcel {
                 workbook.write(outputStream);
                 workbook.close();
                 outputStream.close();
-                Common.console("info: export is done");
+                Common.console("export is done");
             } else {
-                Common.console("info: export canceled");
+                Common.console("export canceled");
             }
         } catch (IOException e) {
-            Common.console("info: export is done");
+            Common.console("export is done");
         }
     }
 }

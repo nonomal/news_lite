@@ -60,7 +60,7 @@ public class Sender {
                 smtp = "smtp.rambler.ru";
                 break;
             default:
-                Common.console("info: mail is sent only from Mail.ru, Gmail, Yandex, Yahoo, Rambler");
+                Common.console("only Mail.ru, Gmail, Yandex, Yahoo, Rambler");
         }
         return smtp;
     }

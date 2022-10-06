@@ -53,7 +53,7 @@ public class Common {
         // check internet
         try {
             if (!InternetAvailabilityChecker.isInternetAvailable()) {
-                console("status: no internet connection");
+                console("no internet connection");
             }
         } catch (IOException e) {
             throw new RuntimeException(e);

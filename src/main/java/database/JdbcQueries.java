@@ -48,7 +48,7 @@ public class JdbcQueries {
             statement.executeUpdate();
             statement.close();
 
-            Common.console("info: слово \"" + word + "\" добавлено в список ключевых слов");
+            Common.console("\"" + word + "\" добавлено в список ключевых слов");
         } catch (Exception e) {
             Common.console("addKeyword error: " + e.getMessage());
         }
@@ -72,9 +72,9 @@ public class JdbcQueries {
                 statement.executeUpdate();
                 statement.close();
 
-                Common.console("status: source added");
+                Common.console("rss added");
             } else {
-                Common.console("status: adding source canceled");
+                Common.console("adding source canceled");
             }
         } catch (Exception e) {
             Common.console("addNewSource error: " + e.getMessage());
@@ -90,7 +90,7 @@ public class JdbcQueries {
             statement.executeUpdate();
             statement.close();
 
-            Common.console("status: word \"" + word + "\" excluded from analysis");
+            Common.console("\"" + word + "\" excluded from analysis");
         } catch (Exception e) {
             Common.console("addExcludedWord error: " + e.getMessage());
         }
@@ -106,7 +106,7 @@ public class JdbcQueries {
             statement.executeUpdate();
             statement.close();
 
-            Common.console("info: title added to favorites");
+            Common.console("title added to favorites");
         } catch (Exception e) {
             Common.console("addFavoriteTitles error: " + e.getMessage());
         }
@@ -152,7 +152,7 @@ public class JdbcQueries {
                 statement.executeUpdate();
                 statement.close();
 
-                Common.console("status: word \"" + word + "\" excluded from search");
+                Common.console("\"" + word + "\" excluded from search");
             } catch (Exception e) {
                 Common.console("addWordToExcludeTitles error: " + e.getMessage());
             }

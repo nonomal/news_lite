@@ -291,7 +291,7 @@ public class Gui extends JFrame {
             try {
                 Search.isSearchFinished.set(true);
                 Search.isStop.set(true);
-                Common.console("status: search stopped");
+                Common.console("search stopped");
                 searchBtnTop.setVisible(true);
                 stopBtnTop.setVisible(false);
                 Search.isSearchNow.set(false);
@@ -300,7 +300,7 @@ public class Gui extends JFrame {
                 } catch (SQLException ignored) {
                 }
             } catch (Exception t) {
-                Common.console("status: there is no threads to stop");
+                Common.console("there is no threads to stop");
             }
         });
         getContentPane().add(stopBtnTop);
@@ -438,9 +438,8 @@ public class Gui extends JFrame {
         exportBtn.addActionListener(e -> {
             if (model.getRowCount() != 0) {
                 new Thread(new ExportToExcel()::exportResultsToExcel).start();
-                Common.console("status: export");
             } else {
-                Common.console("status: there is no data to export");
+                Common.console("there is no data to export");
             }
         });
         getContentPane().add(exportBtn);
@@ -455,14 +454,13 @@ public class Gui extends JFrame {
         clearBtnTop.addActionListener(e -> {
             try {
                 if (model.getRowCount() == 0) {
-                    Common.console("status: no data to clear");
+                    Common.console("no data to clear");
                     return;
                 }
                 model.setRowCount(0);
                 modelForAnalysis.setRowCount(0);
                 newsCount = 0;
                 labelSum.setText("" + newsCount);
-                Common.console("status: clear");
             } catch (Exception t) {
                 Common.console(t.getMessage());
                 t.printStackTrace();
@@ -637,7 +635,7 @@ public class Gui extends JFrame {
             try {
                 Search.isSearchFinished.set(true);
                 Search.isStop.set(true);
-                Common.console("status: search stopped");
+                Common.console("search stopped");
                 searchBtnBottom.setVisible(true);
                 stopBtnBottom.setVisible(false);
                 Search.isSearchNow.set(false);
@@ -646,7 +644,7 @@ public class Gui extends JFrame {
                 } catch (SQLException ignored) {
                 }
             } catch (Exception t) {
-                Common.console("status: there is no threads to stop");
+                Common.console("there is no threads to stop");
             }
         });
         getContentPane().add(stopBtnBottom);
@@ -739,7 +737,7 @@ public class Gui extends JFrame {
         sendEmailBtn.setBorderPainted(false);
         sendEmailBtn.addActionListener(e -> {
             if (model.getRowCount() > 0 && sendEmailTo.getText().contains("@")) {
-                Common.console("status: sending e-mail");
+                Common.console("sending e-mail");
                 //sendTo = sendEmailTo.getText();
                 Common.IS_SENDING.set(false);
                 new Thread(Common::fillProgressLine).start();

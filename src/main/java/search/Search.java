@@ -156,7 +156,7 @@ public class Search {
                 }
 
                 //Время поиска
-                if (!Gui.GUI_IN_TRAY.get()) Common.console("status: search completed in " +
+                if (!Gui.GUI_IN_TRAY.get()) Common.console("search completed in " +
                         Duration.between(timeStart, LocalTime.now()).getSeconds() + " s.");
                 isSearchNow.set(false);
 

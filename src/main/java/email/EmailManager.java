@@ -49,14 +49,14 @@ public class EmailManager {
 
                 //отправка
                 new Sender().send(subject, text.toString(), fromAdr, fromPwd, to);
-                Common.console("status: e-mail sent successfully");
+                Common.console("e-mail sent successfully");
                 Gui.sendEmailBtn.setIcon(Icons.WHEN_SENT_ICON);
                 Common.IS_SENDING.set(true);
                 Search.isSearchFinished.set(true);
                 Gui.progressBar.setValue(100);
             } catch (Exception mex) {
                 mex.printStackTrace();
-                Common.console("status: e-mail wasn't send: " + mex.getMessage() + "\n" + mex.getCause());
+                Common.console("e-mail wasn't send: " + mex.getMessage() + "\n" + mex.getCause());
                 Common.IS_SENDING.set(true);
                 Search.isSearchFinished.set(true);
                 Gui.progressBar.setValue(100);
