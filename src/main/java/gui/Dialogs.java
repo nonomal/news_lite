@@ -86,7 +86,7 @@ public class Dialogs extends JDialog implements KeyListener {
             case "exclDlg": {
                 this.setBounds(600, 200, 250, 306);
                 this.setTitle("Excluded from analysis");
-                this.setLocationRelativeTo(Gui.exclBtn);
+                this.setLocationRelativeTo(Gui.excludedLabel);
                 Object[] columns = {"Num", "Word", "Del"};
                 model = new DefaultTableModel(new Object[][]{
                 }, columns) {
@@ -128,7 +128,7 @@ public class Dialogs extends JDialog implements KeyListener {
             case "exclTitlesDlg": {
                 this.setBounds(600, 200, 250, 306);
                 this.setTitle("Excluded headlines");
-                this.setLocationRelativeTo(Gui.exclTitlesBtn);
+                this.setLocationRelativeTo(Gui.excludedTitlesLabel);
 
                 Object[] columns = {"Num", "Word", "Del"};
                 model = new DefaultTableModel(new Object[][]{
@@ -216,8 +216,7 @@ public class Dialogs extends JDialog implements KeyListener {
             case "favoritesDlg": {
                 this.setBounds(640, 215, 800, 400);
                 this.setTitle("Favorites");
-                this.setLocationRelativeTo(Gui.favoritesBtn);
-
+                //this.setLocationRelativeTo(Gui.favoritesLabel);
                 Object[] columns = {"", "title", "added", "link", " "};
                 model = new DefaultTableModel(new Object[][]{
                 }, columns) {

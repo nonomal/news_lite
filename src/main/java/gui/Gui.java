@@ -60,9 +60,9 @@ public class Gui extends JFrame {
     public static JTextField topKeyword, sendEmailTo, addKeywordToList;
     public static JTextArea consoleTextArea;
     public static JComboBox<String> newsInterval;
-    public static JLabel labelSum, lblLogSourceSqlite, appInfo;
+    public static JLabel labelSum, lblLogSourceSqlite, appInfo, excludedTitlesLabel, favoritesLabel, excludedLabel;
     public static JButton searchBtnTop, searchBtnBottom, stopBtnTop, stopBtnBottom,
-            sendEmailBtn, smiBtn, anotherBtn, exclBtn, exclTitlesBtn, favoritesBtn;
+            sendEmailBtn, smiBtn, anotherBtn;
     public static Checkbox autoUpdateNewsTop, autoUpdateNewsBottom, autoSendMessage, onlyNewNews;
     public static JProgressBar progressBar;
     public static Timer timer;
@@ -340,36 +340,24 @@ public class Gui extends JFrame {
         });
 
         // Диалоговое окно со списком исключенных слов из поиска
-        exclTitlesBtn = new JButton();
-        exclTitlesBtn.setFocusable(false);
-        exclTitlesBtn.setContentAreaFilled(true);
-        exclTitlesBtn.setBackground(new Color(0, 52, 96));
-        exclTitlesBtn.setBounds(topLeftActionX + 490, topLeftActionY + 3, 14, 14);
-        getContentPane().add(exclTitlesBtn);
-        exclTitlesBtn.addActionListener((e) -> new Dialogs("exclTitlesDlg"));
-
-        JLabel excludedTitlesLabel = new JLabel("excluded headlines");
+        excludedTitlesLabel = new JLabel("excluded");
+        excludedTitlesLabel.setEnabled(false);
         excludedTitlesLabel.setHorizontalAlignment(SwingConstants.LEFT);
         excludedTitlesLabel.setForeground(new Color(255, 179, 131));
         excludedTitlesLabel.setFont(GUI_FONT);
-        excludedTitlesLabel.setBounds(topLeftActionX + 510, topLeftActionY + 3, 96, 14);
+        excludedTitlesLabel.setBounds(topLeftActionX + 490, topLeftActionY + 3, 44, 14);
         getContentPane().add(excludedTitlesLabel);
+        openDialog(excludedTitlesLabel, "exclTitlesDlg");
 
         // Диалоговое окно со списком избранных заголовков
-        favoritesBtn = new JButton();
-        favoritesBtn.setFocusable(false);
-        favoritesBtn.setContentAreaFilled(true);
-        favoritesBtn.setBackground(new Color(0, 52, 96));
-        favoritesBtn.setBounds(topLeftActionX + 610, topLeftActionY + 3, 14, 14);
-        getContentPane().add(favoritesBtn);
-        favoritesBtn.addActionListener((e) -> new Dialogs("favoritesDlg"));
-
-        JLabel favoritesLabel = new JLabel("favorites");
+        favoritesLabel = new JLabel("favorites");
+        favoritesLabel.setEnabled(false);
         favoritesLabel.setHorizontalAlignment(SwingConstants.LEFT);
         favoritesLabel.setForeground(new Color(114, 237, 161));
         favoritesLabel.setFont(GUI_FONT);
-        favoritesLabel.setBounds(topLeftActionX + 630, topLeftActionY + 3, 86, 14);
+        favoritesLabel.setBounds(topLeftActionX + 540, topLeftActionY + 3, 44, 14);
         getContentPane().add(favoritesLabel);
+        openDialog(favoritesLabel, "favoritesDlg");
 
         /* TOP-RIGHT ACTION PANEL */
         int topRightX = 740;
@@ -657,20 +645,38 @@ public class Gui extends JFrame {
         consoleScroll.setBounds(879, 303, 290, 142);
         consoleScroll.setBorder(null);
         getContentPane().add(consoleScroll);
-        //Console - label
-        JLabel lblConsole = new JLabel();
-        lblConsole.setText("clear");
-        lblConsole.setForeground(new Color(255, 255, 153));
-        lblConsole.setFont(GUI_FONT);
-        lblConsole.setBounds(1128, 447, 64, 14);
-        getContentPane().add(lblConsole);
 
-        // Clear console
-        JButton clearConsoleBtn = new JButton();
-        clearConsoleBtn.setBackground(new Color(0, 52, 96));
-        clearConsoleBtn.setBounds(1155, 448, 14, 14);
-        clearConsoleBtn.addActionListener(e -> consoleTextArea.setText(""));
-        getContentPane().add(clearConsoleBtn);
+        //Console - label
+        JLabel clearConsoleLabel = new JLabel();
+        clearConsoleLabel.setEnabled(false);
+        clearConsoleLabel.setText("clear");
+        clearConsoleLabel.setForeground(new Color(255, 255, 153));
+        clearConsoleLabel.setFont(GUI_FONT);
+        clearConsoleLabel.setBounds(1145, 447, 24, 14);
+        getContentPane().add(clearConsoleLabel);
+        clearConsoleLabel.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                if (!clearConsoleLabel.isEnabled()) {
+                    clearConsoleLabel.setEnabled(true);
+                }
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+                if (clearConsoleLabel.isEnabled()) {
+                    clearConsoleLabel.setEnabled(false);
+                }
+            }
+
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                if (e.getButton() == MouseEvent.BUTTON1) {
+                    consoleTextArea.setText("");
+                }
+            }
+        });
+
 
         // Шкала прогресса
         progressBar = new JProgressBar();
@@ -683,22 +689,14 @@ public class Gui extends JFrame {
         getContentPane().add(progressBar);
 
         // Диалоговое окно со списком исключенных слов из анализа
-        exclBtn = new JButton();
-        exclBtn.setFocusable(false);
-        exclBtn.setContentAreaFilled(true);
-        //exclBtn.setBorderPainted(false);
-        exclBtn.setBackground(new Color(0, 52, 96));
-        exclBtn.setBounds(1157, 278, 14, 14);
-        getContentPane().add(exclBtn);
-        exclBtn.addActionListener((e) -> new Dialogs("exclDlg"));
-
-        //label
-        JLabel excludedLabel = new JLabel("excluded");
+        excludedLabel = new JLabel("excluded");
+        excludedLabel.setEnabled(false);
         excludedLabel.setHorizontalAlignment(SwingConstants.LEFT);
         excludedLabel.setForeground(new Color(255, 255, 153));
         excludedLabel.setFont(GUI_FONT);
-        excludedLabel.setBounds(1110, 278, 64, 14);
+        excludedLabel.setBounds(1126, 278, 44, 14);
         getContentPane().add(excludedLabel);
+        openDialog(excludedLabel, "exclDlg");
 
         /* BOTTOM RIGHT AREA */
         //send e-mail to - label
@@ -1045,6 +1043,31 @@ public class Gui extends JFrame {
             public void mouseClicked(MouseEvent e) {
                 if (e.getButton() == MouseEvent.BUTTON1) {
                     openPage(url);
+                }
+            }
+        });
+    }
+
+    private void openDialog(JLabel label, String dialog) {
+        label.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                if (!label.isEnabled()) {
+                    label.setEnabled(true);
+                }
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+                if (label.isEnabled()) {
+                    label.setEnabled(false);
+                }
+            }
+
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                if (e.getButton() == MouseEvent.BUTTON1) {
+                    new Dialogs(dialog);
                 }
             }
         });
