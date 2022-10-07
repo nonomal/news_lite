@@ -67,17 +67,6 @@ public class Common {
         File mainDirectory = new File(DIRECTORY_PATH);
         if (!mainDirectory.exists()) mainDirectory.mkdirs();
 
-        // log file create
-        File logIsExists = new File(DIRECTORY_PATH + "app.log"); // TODO logback.xml: property "LOG" = DIRECTORY_PATH + "app.log"
-        if (!logIsExists.exists()) {
-            try {
-                logIsExists.createNewFile();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-
-        }
-
         // создание файлов программы
         File sqliteExeIsExists = new File(DIRECTORY_PATH + "sqlite3.exe");
         if (!sqliteExeIsExists.exists()) {
