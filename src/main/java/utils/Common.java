@@ -34,7 +34,7 @@ public class Common {
     public static final String CONFIG_FILE = DIRECTORY_PATH + "config.txt";
     public final AtomicBoolean IS_SENDING = new AtomicBoolean(true);
     public String SCRIPT_URL = null;
-    public float OPACITY;
+    public float TRANSPARENCY;
     public List<String> words;
 
     public void showGui() {
@@ -107,19 +107,15 @@ public class Common {
     // установка темы интерфейса
     public static void setGuiTheme() {
         // FlatLaf theme
-        // https://github.com/JFormDesigner/FlatLaf
-        // https://docs.oracle.com/javase/tutorial/uiswing/lookandfeel/_nimbusDefaults.html
         UIManager.put("Component.arc", 10);
         UIManager.put("ProgressBar.arc", 6);
         UIManager.put("Button.arc", 8);
-//        getColorsSettingsFromFile();
         UIManager.put("Table.background", new Color(GUI_BACKGROUND[0], GUI_BACKGROUND[1], GUI_BACKGROUND[2]));
         UIManager.put("Table.alternateRowColor", new Color(59, 59, 59));
         UIManager.put("Table.foreground", new Color(GUI_FONT[0], GUI_FONT[1], GUI_FONT[2]));
         UIManager.put("TextField.background", Color.GRAY);
         UIManager.put("TextField.foreground", Color.BLACK);
         FlatHiberbeeDarkIJTheme.setup();
-        //getOpacity();
     }
 
     // Запись конфигураций приложения
@@ -217,8 +213,8 @@ public class Common {
     public void getSettingsBeforeGui() {
         try {
             for (String s : Files.readAllLines(Paths.get(CONFIG_FILE))) {
-                if (s.startsWith("opacity="))
-                    OPACITY = Float.parseFloat(s.replace("opacity=", ""));
+                if (s.startsWith("transparency="))
+                    TRANSPARENCY = Float.parseFloat(s.replace("transparency=", ""));
                 else if (s.startsWith("fontColorRed="))
                     GUI_FONT[0] = Integer.parseInt(s.replace("fontColorRed=", ""));
                 else if (s.startsWith("fontColorGreen="))
