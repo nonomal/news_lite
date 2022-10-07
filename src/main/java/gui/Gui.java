@@ -847,50 +847,60 @@ public class Gui extends JFrame {
         int webHeight = 18;
         int webWidth = 18;
 
+        String urlTradingView = "https://www.tradingview.com/";
         JLabel tradingView = new JLabel("trading");
+        tradingView.setToolTipText(urlTradingView);
         tradingView.setIcon(Icons.TRADING_BUTTON_ICON);
         tradingView.setForeground(new Color(255, 160, 122));
         tradingView.setEnabled(false);
         tradingView.setFont(GUI_FONT_BOLD);
         tradingView.setBounds(webX, webY, webWidth, webHeight);
         getContentPane().add(tradingView);
-        animation(tradingView, "https://www.tradingview.com/");
+        animation(tradingView, urlTradingView);
 
+        String urlTranslator = "https://translate.google.com/";
         JLabel translator = new JLabel();
         translator.setIcon(Icons.TRANSLATOR_BUTTON_ICON);
+        translator.setToolTipText(urlTranslator);
         translator.setForeground(new Color(255, 160, 122));
         translator.setEnabled(false);
         translator.setFont(GUI_FONT_BOLD);
         translator.setBounds(webX + 24, webY, webWidth, webHeight);
         getContentPane().add(translator);
-        animation(translator, "https://translate.google.com/");
+        animation(translator, urlTranslator);
 
+        String urlMaps = "https://yandex.ru/maps";
         JLabel maps = new JLabel("maps");
         maps.setIcon(Icons.MAPS_BUTTON_ICON);
+        maps.setToolTipText(urlMaps);
         maps.setForeground(new Color(255, 160, 122));
         maps.setEnabled(false);
         maps.setFont(GUI_FONT_BOLD);
         maps.setBounds(webX + 48, webY, webWidth, webHeight);
         getContentPane().add(maps);
-        animation(maps, "https://yandex.ru/maps");
+        animation(maps, urlMaps);
 
+        String urlYandex = "https://ya.ru/";
         JLabel yandex = new JLabel();
         yandex.setIcon(Icons.YANDEX_BUTTON_ICON);
+        yandex.setToolTipText(urlYandex);
         yandex.setForeground(new Color(255, 160, 122));
         yandex.setEnabled(false);
         yandex.setFont(GUI_FONT_BOLD);
         yandex.setBounds(webX + 72, webY, webWidth, webHeight);
         getContentPane().add(yandex);
-        animation(yandex, "https://ya.ru/");
+        animation(yandex, urlYandex);
 
+        String urlGithub = "https://github.com/mrprogre";
         JLabel github = new JLabel();
         github.setIcon(Icons.GITHUB_BUTTON_ICON);
+        github.setToolTipText(urlGithub);
         github.setForeground(new Color(255, 160, 122));
         github.setEnabled(false);
         github.setFont(GUI_FONT_BOLD);
         github.setBounds(webX + 96, webY, webWidth, webHeight);
         getContentPane().add(github);
-        animation(github, "https://github.com/mrprogre");
+        animation(github, urlGithub);
 
         // Mouse right click menu
         final JPopupMenu popup = new JPopupMenu();
