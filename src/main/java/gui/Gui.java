@@ -147,13 +147,15 @@ public class Gui extends JFrame {
         table.getColumnModel().getColumn(1).setPreferredWidth(100);
         table.getColumnModel().getColumn(1).setMaxWidth(180);
         table.getColumnModel().getColumn(2).setPreferredWidth(490);
-        table.getColumnModel().getColumn(3).setPreferredWidth(90);
-        table.getColumnModel().getColumn(3).setMaxWidth(90);
-        table.getColumnModel().getColumn(4).setPreferredWidth(20);
-        table.getColumnModel().getColumn(4).setMaxWidth(100);
-        table.getColumnModel().getColumn(5).setPreferredWidth(20);
-        table.getColumnModel().getColumn(5).setMaxWidth(100);
-        //table.removeColumn(table.getColumnModel().getColumn(5));// Скрыть описание новости
+        table.getColumnModel().getColumn(3).setPreferredWidth(92);
+        table.getColumnModel().getColumn(3).setMaxWidth(92);
+//        table.getColumnModel().getColumn(4).setPreferredWidth(20);
+//        table.getColumnModel().getColumn(4).setMaxWidth(100);
+        table.removeColumn(table.getColumnModel().getColumn(5)); // Скрыть описание заголовка
+        table.removeColumn(table.getColumnModel().getColumn(4)); // Скрыть ссылку заголовка
+//        table.getColumnModel().getColumn(5).setPreferredWidth(20);
+//        table.getColumnModel().getColumn(5).setMaxWidth(100);
+
         table.setAutoCreateRowSorter(true);
         scrollPane.setViewportView(table);
 
@@ -926,9 +928,9 @@ public class Gui extends JFrame {
         menuFavorite.addActionListener((e) -> {
             int row = table.getSelectedRow();
             if (row != -1) {
+                String source = (String) table.getValueAt(row, 1);
                 String title = (String) table.getValueAt(row, 2);
-                String link = (String) table.getValueAt(row, 4);
-                jdbcQueries.addFavoriteTitle(title, link);
+                jdbcQueries.addFavoriteTitle(title, jdbcQueries.getLinkOrDescribeByHash(source, title, "link"));
             }
         });
         popup.add(menuFavorite);
@@ -936,9 +938,11 @@ public class Gui extends JFrame {
         // Show describe (menu)
         JMenuItem menuDescribe = new JMenuItem("Describe");
         menuDescribe.addActionListener((e) -> {
-            int row = table.convertRowIndexToModel(table.getSelectedRow());
+            int row = table.getSelectedRow();
             if (row != -1) {
-                Common.console((String) table.getModel().getValueAt(row, 5));
+                String source = (String) table.getValueAt(row, 1);
+                String title = (String) table.getValueAt(row, 2);
+                Common.console(jdbcQueries.getLinkOrDescribeByHash(source, title, "describe"));
             }
         });
         popup.add(menuDescribe);

@@ -127,14 +127,17 @@ public class JdbcQueries {
     }
 
     // сохранение всех заголовков в архив
-    public void addAllTitlesToArchive(String title, String date, String link, String source) {
+    public void addAllTitlesToArchive(String title, String date, String link, String source, String describe) {
         try {
-            String query = "INSERT INTO all_news(title, news_date, link, source) VALUES (?, ?, ?, ?)";
+            String query = "INSERT INTO all_news(title, news_date, link, source, hash, describe) " +
+                    "VALUES (?, ?, ?, ?, ?, ?)";
             PreparedStatement statement = connection.prepareStatement(query);
             statement.setString(1, title);
             statement.setString(2, date);
             statement.setString(3, link);
             statement.setString(4, source);
+            statement.setString(5, Common.getHash(source+title));
+            statement.setString(6, describe);
             statement.executeUpdate();
             statement.close();
         } catch (SQLException e) {
@@ -146,7 +149,7 @@ public class JdbcQueries {
     public void addWordToExcludeTitles(String word) {
         if (word != null && word.length() > 0) {
             try {
-                String query = "INSERT INTO exclude_from_main_search(word) VALUES (?)";
+                String query = "INSERT INTO excluded_headlines(word) VALUES (?)";
                 PreparedStatement statement = connection.prepareStatement(query);
                 statement.setString(1, word);
                 statement.executeUpdate();
@@ -217,7 +220,7 @@ public class JdbcQueries {
     public List<Excluded> getExcludedTitlesWords() {
         List<Excluded> excludedWords = new ArrayList<>();
         try {
-            String query = "SELECT id, word FROM exclude_from_main_search ORDER BY id";
+            String query = "SELECT id, word FROM excluded_headlines ORDER BY id";
             PreparedStatement statement = connection.prepareStatement(query);
 
             ResultSet rs = statement.executeQuery();
@@ -279,11 +282,11 @@ public class JdbcQueries {
         return isExists == 1;
     }
 
-    // Список избранных новостей
+    // Список избранных новостей TODO добавить проверку на дубли
     public List<Favorite> getFavorites() {
         List<Favorite> favorites = new ArrayList<>();
         try {
-            String query = "SELECT title, link, add_date FROM main.favorites ORDER BY add_date";
+            String query = "SELECT title, link, add_date FROM favorites ORDER BY add_date";
             PreparedStatement statement = connection.prepareStatement(query);
 
             ResultSet rs = statement.executeQuery();
@@ -322,6 +325,32 @@ public class JdbcQueries {
         return words;
     }
 
+    // Link, Describe by hash code
+    public String getLinkOrDescribeByHash(String source, String title, String type) {
+        String response = "Нет информации";
+        String query = null;
+        try {
+            if (type.equals("link")) {
+                query = "SELECT link FROM all_news WHERE hash = ?";
+            } else if (type.equals("describe")) {
+                query = "SELECT describe FROM all_news WHERE hash = ?";
+            }
+
+            PreparedStatement statement = connection.prepareStatement(query);
+            statement.setString(1, Common.getHash(source + title));
+
+            ResultSet rs = statement.executeQuery();
+            while (rs.next()) {
+                response = rs.getString(type);
+            }
+            rs.close();
+            statement.close();
+        } catch (Exception e) {
+            Common.console("getLinkByHash error: " + e.getMessage());
+        }
+        return response;
+    }
+
     /* REMOVE */
     // удаление слов из разных таблиц
     public void removeItem(String item, int activeWindow) {
@@ -332,7 +361,7 @@ public class JdbcQueries {
             } else if (activeWindow == 3) {
                 query = "DELETE FROM exclude WHERE word = ?";
             } else if (activeWindow == 4) {
-                query = "DELETE FROM exclude_from_main_search WHERE word = ?";
+                query = "DELETE FROM excluded_headlines WHERE word = ?";
             } else if (activeWindow == 5) {
                 query = "DELETE FROM keywords WHERE word = ?";
             } else if (activeWindow == 6) {
@@ -417,7 +446,7 @@ public class JdbcQueries {
         List<String> titles = new ArrayList<>();
 
         try {
-            String query = "SELECT word FROM exclude_from_main_search";
+            String query = "SELECT word FROM excluded_headlines";
             PreparedStatement statement = connection.prepareStatement(query);
 
             ResultSet rs = statement.executeQuery();

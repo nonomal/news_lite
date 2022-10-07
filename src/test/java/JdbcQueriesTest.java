@@ -26,7 +26,7 @@ public class JdbcQueriesTest {
     }
 
     @Test
-    public void shouldExcludedListIncludeMoreThanNull() {
+    public void shouldGetExcludedListIncludeMoreThanNull() {
         List<Excluded> excluded = jdbcQueries.getExcludedWords();
         Assertions.assertTrue(excluded.size() > 0);
     }
@@ -35,5 +35,20 @@ public class JdbcQueriesTest {
     public void shouldGetFavorites() {
         List<Favorite> excluded = jdbcQueries.getFavorites();
         Assertions.assertTrue(excluded.size() > 0);
+    }
+
+    @Test
+    public void shouldGetLink() {
+        String link = jdbcQueries.getLinkOrDescribeByHash("C-Main",
+                "Selectel заключил соглашение с правительством Ленобласти о развитии ИТ-инфраструктуры региона", "link");
+        Assertions.assertEquals("https://www.cnews.ru/news/line/2022-10-06_selectel_zaklyuchil_soglashenie", link);
+    }
+
+    @Test
+    public void shouldGetDescribe() {
+        String hash = jdbcQueries.getLinkOrDescribeByHash("C-Main",
+                "Selectel заключил соглашение с правительством Ленобласти о развитии ИТ-инфраструктуры региона", "describe");
+        Assertions.assertEquals("Провайдер ИТ-инфраструктуры Selectel заключил соглашение с правительством " +
+                "Ленинградской области о сотрудничестве...", hash);
     }
 }

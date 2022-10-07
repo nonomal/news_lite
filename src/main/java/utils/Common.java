@@ -17,6 +17,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.security.MessageDigest;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -440,5 +441,22 @@ public class Common {
         writeToConfig(String.valueOf(color.getRed()), "backgroundColorRed");
         writeToConfig(String.valueOf(color.getGreen()), "backgroundColorGreen");
         writeToConfig(String.valueOf(color.getBlue()), "backgroundColorBlue");
+    }
+
+    // преобразование строки в строку с хэш-кодом
+    public String getHash(String base) {
+        try{
+            MessageDigest digest = MessageDigest.getInstance("MD5"); // MD2, MD5, SHA-1, SHA-256, SHA-384, SHA-512
+            byte[] hash = digest.digest(base.getBytes(StandardCharsets.UTF_8));
+            StringBuilder hexString = new StringBuilder();
+            for (byte b : hash) {
+                String hex = Integer.toHexString(0xff & b);
+                if (hex.length() == 1) hexString.append('0');
+                hexString.append(hex);
+            }
+            return hexString.toString();
+        } catch(Exception ex){
+            throw new RuntimeException(ex);
+        }
     }
 }

@@ -115,7 +115,9 @@ public class Search {
                                         jdbcQueries.addAllTitlesToArchive(title,
                                                 pubDate.toString(),
                                                 tableRow.getLink(),
-                                                tableRow.getSource());
+                                                tableRow.getSource(),
+                                                tableRow.getDescribe());
+
                                         if (dateDiff != 0) {
                                             searchProcess(tableRow, searchType, title);
                                         }
