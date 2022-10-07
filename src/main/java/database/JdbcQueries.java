@@ -327,7 +327,7 @@ public class JdbcQueries {
 
     // Link, Describe by hash code
     public String getLinkOrDescribeByHash(String source, String title, String type) {
-        String response = "Нет информации";
+        String response = "no data found";
         String query = null;
         try {
             if (type.equals("link")) {

@@ -5,7 +5,6 @@ import model.Excluded;
 import model.Favorite;
 import model.Keyword;
 import model.Source;
-import utils.Common;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableCellRenderer;
@@ -16,14 +15,6 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.List;
 
 public class Dialogs extends JDialog implements KeyListener {
@@ -31,14 +22,14 @@ public class Dialogs extends JDialog implements KeyListener {
     public static DefaultTableModel model;
     public static JTextArea textAreaForDialogs;
 
-    public Dialogs(String name) {        
+    public Dialogs(String name) {
         textAreaForDialogs = new JTextArea();
         textAreaForDialogs.setFont(new Font("Dialog", Font.PLAIN, 13));
         textAreaForDialogs.setTabSize(10);
         textAreaForDialogs.setEditable(false);
         textAreaForDialogs.setLineWrap(true);
         textAreaForDialogs.setWrapStyleWord(true);
-        textAreaForDialogs.setBounds(12, 27, 22, 233);        
+        textAreaForDialogs.setBounds(12, 27, 22, 233);
         this.setResizable(true);
         this.setFont(new Font("Tahoma", Font.PLAIN, 14));
         this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
@@ -51,16 +42,19 @@ public class Dialogs extends JDialog implements KeyListener {
             case "smiDlg": {
                 this.setBounds(600, 200, 250, 306);
                 this.setTitle("Sources");
-                this.setLocationRelativeTo(Gui.smiBtn);                
+                this.setLocationRelativeTo(Gui.smiBtn);
                 Object[] columns = {"Pos", "Source", "", " "};
                 model = new DefaultTableModel(new Object[][]{
                 }, columns) {
                     final boolean[] columnEditable = new boolean[]{false, false, true, true};
+
                     public boolean isCellEditable(int row, int column) {
                         return columnEditable[column];
                     }
+
                     // Сортировка
                     final Class[] types_unique = {Integer.class, String.class, Boolean.class, Button.class};
+
                     @Override
                     public Class getColumnClass(int columnIndex) {
                         return this.types_unique[columnIndex];
@@ -178,16 +172,19 @@ public class Dialogs extends JDialog implements KeyListener {
                 this.setBounds(600, 200, 250, 306);
                 this.setTitle("Keywords");
                 this.setLocationRelativeTo(Gui.addKeywordToList);
-                
+
                 Object[] columns = {"Pos", "Keyword", "", " "};
                 model = new DefaultTableModel(new Object[][]{
                 }, columns) {
                     final boolean[] columnEditable = new boolean[]{false, false, true, true};
+
                     public boolean isCellEditable(int row, int column) {
                         return columnEditable[column];
                     }
+
                     // Сортировка
                     final Class[] types_unique = {Integer.class, String.class, Boolean.class, Button.class};
+
                     @Override
                     public Class getColumnClass(int columnIndex) {
                         return this.types_unique[columnIndex];
@@ -220,16 +217,19 @@ public class Dialogs extends JDialog implements KeyListener {
                 this.setBounds(640, 215, 800, 400);
                 this.setTitle("Favorites");
                 this.setLocationRelativeTo(Gui.favoritesBtn);
-                
+
                 Object[] columns = {"", "title", "added", "link", " "};
                 model = new DefaultTableModel(new Object[][]{
                 }, columns) {
                     final boolean[] columnEditable = new boolean[]{false, false, false, false, true};
+
                     public boolean isCellEditable(int row, int column) {
                         return columnEditable[column];
                     }
+
                     // Сортировка
                     final Class[] types_unique = {Integer.class, String.class, String.class, String.class, Button.class};
+
                     @Override
                     public Class getColumnClass(int columnIndex) {
                         return this.types_unique[columnIndex];
@@ -264,19 +264,7 @@ public class Dialogs extends JDialog implements KeyListener {
                             int col = table.columnAtPoint(new Point(e.getX(), e.getY()));
                             if (col == 1 || col == 3) {
                                 String url = (String) table.getModel().getValueAt(row, 3);
-                                URI uri = null;
-                                try {
-                                    uri = new URI(url);
-                                } catch (URISyntaxException ex) {
-                                    ex.printStackTrace();
-                                }
-                                Desktop desktop = Desktop.getDesktop();
-                                assert uri != null;
-                                try {
-                                    desktop.browse(uri);
-                                } catch (IOException ex) {
-                                    ex.printStackTrace();
-                                }
+                                Gui.openPage(url);
                             }
                         }
                     }
@@ -293,7 +281,7 @@ public class Dialogs extends JDialog implements KeyListener {
 
         // делаем фокус на окно, чтобы работал захват клавиш
         this.requestFocusInWindow();
-        
+
     }
 
     // Заполнение диалоговых окон данными

@@ -45,6 +45,7 @@ public class Gui extends JFrame {
     private static final Object[] MAIN_TABLE_HEADERS = {"Num", "Source", "Title", "Date", "Link", "Description"};
     private static final String[] TABLE_FOR_ANALYZE_HEADERS = {"top 10", "freq.", " "};
     private static final Font GUI_FONT = new Font("Tahoma", Font.PLAIN, 11);
+    private static final Font GUI_FONT_BOLD = new Font("Tahoma", Font.BOLD, 11);
     private static final String[] INTERVALS = {"1 min", "5 min", "15 min", "30 min", "45 min", "1 hour", "2 hours",
             "4 hours", "8 hours", "12 hours", "24 hours", "48 hours", "72 hours", "all"};
     private static final long AUTO_START_TIMER = 60000L; // 60 секунд
@@ -149,12 +150,8 @@ public class Gui extends JFrame {
         table.getColumnModel().getColumn(2).setPreferredWidth(490);
         table.getColumnModel().getColumn(3).setPreferredWidth(92);
         table.getColumnModel().getColumn(3).setMaxWidth(92);
-//        table.getColumnModel().getColumn(4).setPreferredWidth(20);
-//        table.getColumnModel().getColumn(4).setMaxWidth(100);
         table.removeColumn(table.getColumnModel().getColumn(5)); // Скрыть описание заголовка
         table.removeColumn(table.getColumnModel().getColumn(4)); // Скрыть ссылку заголовка
-//        table.getColumnModel().getColumn(5).setPreferredWidth(20);
-//        table.getColumnModel().getColumn(5).setMaxWidth(100);
 
         table.setAutoCreateRowSorter(true);
         scrollPane.setViewportView(table);
@@ -167,19 +164,7 @@ public class Gui extends JFrame {
                     int col = table.columnAtPoint(new Point(e.getX(), e.getY()));
                     if (col == 2 || col == 4 || col == 5) {
                         String url = (String) table.getModel().getValueAt(row, 4);
-                        URI uri = null;
-                        try {
-                            uri = new URI(url);
-                        } catch (URISyntaxException ex) {
-                            ex.printStackTrace();
-                        }
-                        Desktop desktop = Desktop.getDesktop();
-                        assert uri != null;
-                        try {
-                            desktop.browse(uri);
-                        } catch (IOException ex) {
-                            ex.printStackTrace();
-                        }
+                        openPage(url);
                     }
                 }
             }
@@ -857,35 +842,46 @@ public class Gui extends JFrame {
         getContentPane().add(labelSum);
 
         /* WEB PAGES */
+        int webX = 643;
+        int webY = 545;
+
+        JLabel tradingView = new JLabel("trading");
+        tradingView.setForeground(new Color(255, 160, 122));
+        tradingView.setEnabled(false);
+        tradingView.setFont(GUI_FONT_BOLD);
+        tradingView.setBounds(webX, webY, 42, 14);
+        getContentPane().add(tradingView);
+        animation(tradingView, "https://www.tradingview.com/");
+
         JLabel translator = new JLabel("translator");
         translator.setForeground(new Color(255, 160, 122));
         translator.setEnabled(false);
-        translator.setFont(new Font("Tahoma", Font.BOLD, 11));
-        translator.setBounds(670, 545, 57, 14);
+        translator.setFont(GUI_FONT_BOLD);
+        translator.setBounds(webX + 45, webY, 57, 14);
         getContentPane().add(translator);
         animation(translator, "https://translate.google.com/");
 
         JLabel google = new JLabel("maps");
         google.setForeground(new Color(255, 160, 122));
         google.setEnabled(false);
-        google.setFont(new Font("Tahoma", Font.BOLD, 11));
-        google.setBounds(732, 545, 32, 14);
+        google.setFont(GUI_FONT_BOLD);
+        google.setBounds(webX + 107, webY, 32, 14);
         getContentPane().add(google);
         animation(google, "https://www.google.ru/maps");
 
         JLabel yandex = new JLabel("yandex");
         yandex.setForeground(new Color(255, 160, 122));
         yandex.setEnabled(false);
-        yandex.setFont(new Font("Tahoma", Font.BOLD, 11));
-        yandex.setBounds(768, 545, 44, 14);
+        yandex.setFont(GUI_FONT_BOLD);
+        yandex.setBounds(webX + 143, webY, 42, 14);
         getContentPane().add(yandex);
-        animation(yandex,"https://ya.ru/");
+        animation(yandex, "https://ya.ru/");
 
-        JLabel labelSign = new JLabel("mrprogre");
+        JLabel labelSign = new JLabel("github");
         labelSign.setForeground(new Color(255, 160, 122));
         labelSign.setEnabled(false);
-        labelSign.setFont(new Font("Tahoma", Font.BOLD, 11));
-        labelSign.setBounds(815, 545, 56, 14);
+        labelSign.setFont(GUI_FONT_BOLD);
+        labelSign.setBounds(webX + 190, webY, 36, 14);
         getContentPane().add(labelSign);
         animation(labelSign, "https://github.com/mrprogre");
 
@@ -1037,19 +1033,21 @@ public class Gui extends JFrame {
         });
     }
 
-    private void openPage(String url) {
-        URI uri = null;
-        try {
-            uri = new URI(url);
-        } catch (URISyntaxException ex) {
-            ex.printStackTrace();
-        }
-        Desktop desktop = Desktop.getDesktop();
-        assert uri != null;
-        try {
-            desktop.browse(uri);
-        } catch (IOException ex) {
-            ex.printStackTrace();
+    public static void openPage(String url) {
+        if (!url.equals("no data found")) {
+            URI uri = null;
+            try {
+                uri = new URI(url);
+            } catch (URISyntaxException ex) {
+                ex.printStackTrace();
+            }
+            Desktop desktop = Desktop.getDesktop();
+            assert uri != null;
+            try {
+                desktop.browse(uri);
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
         }
     }
 }
