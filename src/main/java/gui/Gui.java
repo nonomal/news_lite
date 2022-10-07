@@ -842,48 +842,55 @@ public class Gui extends JFrame {
         getContentPane().add(labelSum);
 
         /* WEB PAGES */
-        int webX = 643;
+        int webX = 758;
         int webY = 545;
+        int webHeight = 18;
+        int webWidth = 18;
 
         JLabel tradingView = new JLabel("trading");
+        tradingView.setIcon(Icons.TRADING_BUTTON_ICON);
         tradingView.setForeground(new Color(255, 160, 122));
         tradingView.setEnabled(false);
         tradingView.setFont(GUI_FONT_BOLD);
-        tradingView.setBounds(webX, webY, 42, 14);
+        tradingView.setBounds(webX, webY, webWidth, webHeight);
         getContentPane().add(tradingView);
         animation(tradingView, "https://www.tradingview.com/");
 
-        JLabel translator = new JLabel("translator");
+        JLabel translator = new JLabel();
+        translator.setIcon(Icons.TRANSLATOR_BUTTON_ICON);
         translator.setForeground(new Color(255, 160, 122));
         translator.setEnabled(false);
         translator.setFont(GUI_FONT_BOLD);
-        translator.setBounds(webX + 45, webY, 57, 14);
+        translator.setBounds(webX + 24, webY, webWidth, webHeight);
         getContentPane().add(translator);
         animation(translator, "https://translate.google.com/");
 
-        JLabel google = new JLabel("maps");
-        google.setForeground(new Color(255, 160, 122));
-        google.setEnabled(false);
-        google.setFont(GUI_FONT_BOLD);
-        google.setBounds(webX + 107, webY, 32, 14);
-        getContentPane().add(google);
-        animation(google, "https://www.google.ru/maps");
+        JLabel maps = new JLabel("maps");
+        maps.setIcon(Icons.MAPS_BUTTON_ICON);
+        maps.setForeground(new Color(255, 160, 122));
+        maps.setEnabled(false);
+        maps.setFont(GUI_FONT_BOLD);
+        maps.setBounds(webX + 48, webY, webWidth, webHeight);
+        getContentPane().add(maps);
+        animation(maps, "https://yandex.ru/maps");
 
-        JLabel yandex = new JLabel("yandex");
+        JLabel yandex = new JLabel();
+        yandex.setIcon(Icons.YANDEX_BUTTON_ICON);
         yandex.setForeground(new Color(255, 160, 122));
         yandex.setEnabled(false);
         yandex.setFont(GUI_FONT_BOLD);
-        yandex.setBounds(webX + 143, webY, 42, 14);
+        yandex.setBounds(webX + 72, webY, webWidth, webHeight);
         getContentPane().add(yandex);
         animation(yandex, "https://ya.ru/");
 
-        JLabel labelSign = new JLabel("github");
-        labelSign.setForeground(new Color(255, 160, 122));
-        labelSign.setEnabled(false);
-        labelSign.setFont(GUI_FONT_BOLD);
-        labelSign.setBounds(webX + 190, webY, 36, 14);
-        getContentPane().add(labelSign);
-        animation(labelSign, "https://github.com/mrprogre");
+        JLabel github = new JLabel();
+        github.setIcon(Icons.GITHUB_BUTTON_ICON);
+        github.setForeground(new Color(255, 160, 122));
+        github.setEnabled(false);
+        github.setFont(GUI_FONT_BOLD);
+        github.setBounds(webX + 96, webY, webWidth, webHeight);
+        getContentPane().add(github);
+        animation(github, "https://github.com/mrprogre");
 
         // Mouse right click menu
         final JPopupMenu popup = new JPopupMenu();

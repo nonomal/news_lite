@@ -55,4 +55,14 @@ public class Icons {
             .createImage(Icons.class.getResource("/icons/list.png")));
     public static final ImageIcon WHEN_MOUSE_ON_LIST_BUTTON_ICON = new ImageIcon(Toolkit.getDefaultToolkit()
             .createImage(Icons.class.getResource("/icons/list2.png")));
+    public static final ImageIcon YANDEX_BUTTON_ICON = new ImageIcon(Toolkit.getDefaultToolkit()
+            .createImage(Icons.class.getResource("/icons/yandex.png")));
+    public static final ImageIcon GITHUB_BUTTON_ICON = new ImageIcon(Toolkit.getDefaultToolkit()
+            .createImage(Icons.class.getResource("/icons/github.png")));
+    public static final ImageIcon TRANSLATOR_BUTTON_ICON = new ImageIcon(Toolkit.getDefaultToolkit()
+            .createImage(Icons.class.getResource("/icons/translator.png")));
+    public static final ImageIcon MAPS_BUTTON_ICON = new ImageIcon(Toolkit.getDefaultToolkit()
+            .createImage(Icons.class.getResource("/icons/maps.png")));
+    public static final ImageIcon TRADING_BUTTON_ICON = new ImageIcon(Toolkit.getDefaultToolkit()
+            .createImage(Icons.class.getResource("/icons/trading.png")));
 }
