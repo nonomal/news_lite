@@ -6,7 +6,7 @@ Download: https://github.com/mrprogre/news_lite/raw/master/news.jar
 
 Download Java: https://www.java.com/download/
 
-![image](https://user-images.githubusercontent.com/45883640/193683997-12cae46a-b181-4840-a5d3-5c6b3b2b1d82.png)
+![image](https://user-images.githubusercontent.com/45883640/194561609-a8e9389c-b5fb-4f3d-9688-9d7778ff88d2.png)
 
 Особенность программы в удобном, автоматическом поиске новостей по нескольким ключевым словам с отправкой результатов поиска на электронную почту.
 
