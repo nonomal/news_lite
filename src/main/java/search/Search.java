@@ -213,23 +213,25 @@ public class Search {
     }
 
     private void searchProcess(TableRow tableRow, String searchType, String title) {
-        newsCount++;
-        Gui.labelSum.setText(String.valueOf(newsCount));
-
         // Добавление строки в таблицу интерфейса (заголовок модифицирован как # + слово исключение)
-        Gui.model.addRow(new Object[]{
-                newsCount,
-                tableRow.getSource(),
-                tableRow.getTitle(),
-                tableRow.getDate(),
-                tableRow.getLink(),
-                tableRow.getDescribe()
-        });
+        if (!tableRow.getTitle().contains("#")) {
+            newsCount++;
+            Gui.labelSum.setText(String.valueOf(newsCount));
 
-        // Преобразование модифицированного заголовка с # к изначальному виду
+            Gui.model.addRow(new Object[]{
+                    newsCount,
+                    tableRow.getSource(),
+                    tableRow.getTitle(),
+                    tableRow.getDate(),
+                    tableRow.getLink(),
+                    tableRow.getDescribe()
+            });
+        }
+
+        // Преобразование модифицированного заголовка с # к изначальному виду для сохранения всех результатов
         tableRow.setTitle(title);
 
-        // Данные для отправки результатов на почту и выгрузки эксель-файла
+        // Данные для отправки результатов на почту и выгрузки эксель-файла + исключённые из показа
         emailAndExcelData.add(tableRow);
 
         jdbcQueries.addCutTitlesForAnalysis(tableRow.getTitle());

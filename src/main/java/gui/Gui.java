@@ -677,7 +677,6 @@ public class Gui extends JFrame {
             }
         });
 
-
         // Шкала прогресса
         progressBar = new JProgressBar();
         progressBar.setFocusable(false);
