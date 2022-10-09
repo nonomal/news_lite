@@ -119,7 +119,7 @@ public class Search {
                                                 tableRow.getDescribe());
 
                                         if (dateDiff != 0) {
-                                            searchProcess(tableRow, searchType, title);
+                                            searchProcess(tableRow, searchType);
                                         }
                                     }
                                 } else if (isWords) {
@@ -136,7 +136,7 @@ public class Search {
                                             int dateDiff = Common.compareDatesOnly(new Date(), pubDate);
 
                                             if (dateDiff != 0) {
-                                                searchProcess(tableRow, searchType, tableRow.getTitle());
+                                                searchProcess(tableRow, searchType);
                                             }
                                         }
                                     }
@@ -212,7 +212,7 @@ public class Search {
         }
     }
 
-    private void searchProcess(TableRow tableRow, String searchType, String title) {
+    private void searchProcess(TableRow tableRow, String searchType) {
         // Добавление строки в таблицу интерфейса (заголовок модифицирован как # + слово исключение)
         if (!tableRow.getTitle().contains("#")) {
             newsCount++;
@@ -226,17 +226,14 @@ public class Search {
                     tableRow.getLink(),
                     tableRow.getDescribe()
             });
-        }
 
-        // Преобразование модифицированного заголовка с # к изначальному виду для сохранения всех результатов
-        tableRow.setTitle(title);
+            // Данные для отправки результатов на почту и выгрузки эксель-файла + исключённые из показа
+            emailAndExcelData.add(tableRow);
 
-        // Данные для отправки результатов на почту и выгрузки эксель-файла + исключённые из показа
-        emailAndExcelData.add(tableRow);
-
-        jdbcQueries.addCutTitlesForAnalysis(tableRow.getTitle());
-        if (Gui.isOnlyLastNews) {
-            jdbcQueries.addTitles(tableRow.getTitle(), searchType);
+            jdbcQueries.addCutTitlesForAnalysis(tableRow.getTitle());
+            if (Gui.isOnlyLastNews) {
+                jdbcQueries.addTitles(tableRow.getTitle(), searchType);
+            }
         }
     }
 
