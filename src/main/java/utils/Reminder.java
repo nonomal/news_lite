@@ -15,7 +15,6 @@ public class Reminder {
         int day = Integer.parseInt(now[2]);
 
         String [] tomorrow = LocalDate.now().plusDays(1).toString().split("-");
-        int yearTomorrow = Integer.parseInt(tomorrow[0]);
         int monthTomorrow = Integer.parseInt(tomorrow[1]);
         int dayTomorrow = Integer.parseInt(tomorrow[2]);
 
@@ -23,13 +22,21 @@ public class Reminder {
 
         for (Dates date : dates) {
             if (date.getMonth() == month && date.getDay() == day) {
-                Common.console("Сегодня: " + date.getType() + " - " + date.getDescription());
+                if (date.getType().equals("День Рождения")) {
+                    Common.console("Сегодня: " + date.getDescription() + " исполняется " +
+                            (year - date.getYear()));
+                } else {
+                    Common.console("Сегодня: " + date.getType() + " - " + date.getDescription());
+                }
             }
             if (date.getMonth() == monthTomorrow && date.getDay() == dayTomorrow) {
-                Common.console("Завтра: " + date.getType() + " - " + date.getDescription());
+                if (date.getType().equals("День Рождения")) {
+                    Common.console("Завтра: " + date.getDescription() + " исполняется " +
+                            (year - date.getYear()));
+                } else {
+                    Common.console("Завтра: " + date.getType() + " - " + date.getDescription());
+                }
             }
         }
-
-
     }
 }
