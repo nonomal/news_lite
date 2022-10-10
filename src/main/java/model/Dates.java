@@ -1,0 +1,14 @@
+package model;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+
+@Data
+@AllArgsConstructor
+public class Dates {
+    private String type;
+    private String description;
+    private int day;
+    private int month;
+    private int year;
+}

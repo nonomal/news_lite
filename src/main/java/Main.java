@@ -1,6 +1,7 @@
 import database.SQLite;
 import search.ConsoleSearch;
 import utils.Common;
+import utils.Reminder;
 
 public class Main {
 
@@ -10,6 +11,7 @@ public class Main {
 
         if (args.length == 0) {
             Common.showGui();
+            new Reminder().remind();
         } else {
             /*
               Main arguments for console search:

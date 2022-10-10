@@ -1,10 +1,7 @@
 package database;
 
 import gui.Gui;
-import model.Excluded;
-import model.Favorite;
-import model.Keyword;
-import model.Source;
+import model.*;
 import utils.Common;
 
 import javax.swing.*;
@@ -136,7 +133,7 @@ public class JdbcQueries {
             statement.setString(2, date);
             statement.setString(3, link);
             statement.setString(4, source);
-            statement.setString(5, Common.getHash(source+title));
+            statement.setString(5, Common.getHash(source + title));
             statement.setString(6, describe);
             statement.executeUpdate();
             statement.close();
@@ -214,6 +211,31 @@ public class JdbcQueries {
             Common.console("getExcludedWords error: " + e.getMessage());
         }
         return excludedWords;
+    }
+
+    // Список значимых дат
+    public List<Dates> getDates() {
+        List<Dates> dates = new ArrayList<>();
+        try {
+            String query = "SELECT type, description, day, month, year FROM dates ORDER BY month, day";
+            PreparedStatement statement = connection.prepareStatement(query);
+
+            ResultSet rs = statement.executeQuery();
+            while (rs.next()) {
+                dates.add(new Dates(
+                        rs.getString("type"),
+                        rs.getString("description"),
+                        rs.getInt("day"),
+                        rs.getInt("month"),
+                        rs.getInt("year")
+                ));
+            }
+            rs.close();
+            statement.close();
+        } catch (Exception e) {
+            Common.console("getExcludedWords error: " + e.getMessage());
+        }
+        return dates;
     }
 
     // Список исключённые из поиска слов
