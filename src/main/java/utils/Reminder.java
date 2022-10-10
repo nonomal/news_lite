@@ -1,7 +1,6 @@
 package utils;
 
 import database.JdbcQueries;
-import database.SQLite;
 import model.Dates;
 
 import java.time.LocalDate;
@@ -20,7 +19,6 @@ public class Reminder {
         int monthTomorrow = Integer.parseInt(tomorrow[1]);
         int dayTomorrow = Integer.parseInt(tomorrow[2]);
 
-        new SQLite().openConnection();
         List<Dates> dates = new JdbcQueries().getDates();
 
         for (Dates date : dates) {
