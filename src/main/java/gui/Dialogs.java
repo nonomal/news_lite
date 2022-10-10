@@ -1,10 +1,7 @@
 package gui;
 
 import database.JdbcQueries;
-import model.Excluded;
-import model.Favorite;
-import model.Keyword;
-import model.Source;
+import model.*;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableCellRenderer;
@@ -276,6 +273,58 @@ public class Dialogs extends JDialog implements KeyListener {
                 showDialogs("favorites");
                 break;
             }
+            case "datesDlg": {
+                this.setBounds(600, 200, 600, 306);
+                this.setTitle("Dates");
+                this.setLocationRelativeTo(Gui.datesLabel);
+                Object[] columns = {"Type", "Description", "Day", "Month", "Year", "Del"};
+                model = new DefaultTableModel(new Object[][]{
+                }, columns) {
+                    final boolean[] columnEditable = new boolean[]{false, false, false, false, false, true};
+
+                    public boolean isCellEditable(int row, int column) {
+                        return columnEditable[column];
+                    }
+
+                    // Сортировка
+                    final Class[] types_unique = {String.class, String.class, Integer.class, Integer.class,
+                            Integer.class, Button.class};
+
+                    @Override
+                    public Class getColumnClass(int columnIndex) {
+                        return this.types_unique[columnIndex];
+                    }
+                };
+                table = new JTable(model);
+                table.getColumn("Del").setCellRenderer(new ButtonColumn(table, 5));
+                table.setAutoCreateRowSorter(true);
+                DefaultTableCellRenderer renderer = new DefaultTableCellRenderer();
+                renderer.setHorizontalAlignment(JLabel.CENTER);
+                table.setRowHeight(20);
+                table.setFont(new Font("SansSerif", Font.PLAIN, 13));
+                JTableHeader header = table.getTableHeader();
+                header.setFont(new Font("Tahoma", Font.BOLD, 13));
+                table.getColumnModel().getColumn(0).setPreferredWidth(140);
+                table.getColumnModel().getColumn(0).setMaxWidth(140);
+                table.getColumnModel().getColumn(2).setPreferredWidth(60);
+                table.getColumnModel().getColumn(2).setMaxWidth(60);
+                table.getColumnModel().getColumn(2).setCellRenderer(renderer);
+                table.getColumnModel().getColumn(3).setPreferredWidth(60);
+                table.getColumnModel().getColumn(3).setMaxWidth(60);
+                table.getColumnModel().getColumn(3).setCellRenderer(renderer);
+                table.getColumnModel().getColumn(4).setPreferredWidth(60);
+                table.getColumnModel().getColumn(4).setMaxWidth(60);
+                table.getColumnModel().getColumn(4).setCellRenderer(renderer);
+                table.getColumnModel().getColumn(5).setMaxWidth(40);
+                getContentPane().add(table, BorderLayout.CENTER);
+
+                scrollPane.setBounds(10, 27, 324, 233);
+                this.getContentPane().add(scrollPane);
+                scrollPane.setViewportView(table);
+
+                showDialogs("dates");
+                break;
+            }
         }
 
         // делаем фокус на окно, чтобы работал захват клавиш
@@ -323,7 +372,16 @@ public class Dialogs extends JDialog implements KeyListener {
             case "favorites": {
                 List<Favorite> favorites = jdbcQueries.getFavorites();
                 for (Favorite favorite : favorites) {
-                    Dialogs.model.addRow(new Object[]{++id, favorite.getTitle(), favorite.getDate(), favorite.getLink()});
+                    Dialogs.model.addRow(new Object[]{++id, favorite.getTitle(),
+                            favorite.getDate(), favorite.getLink()});
+                }
+                break;
+            }
+            case "dates": {
+                List<Dates> dates = jdbcQueries.getDates();
+                for (Dates date : dates) {
+                    Dialogs.model.addRow(new Object[]{date.getType(), date.getDescription(), date.getDay(),
+                            date.getMonth(), date.getYear()});
                 }
                 break;
             }

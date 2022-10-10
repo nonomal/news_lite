@@ -60,7 +60,8 @@ public class Gui extends JFrame {
     public static JTextField topKeyword, sendEmailTo, addKeywordToList;
     public static JTextArea consoleTextArea;
     public static JComboBox<String> newsInterval;
-    public static JLabel labelSum, lblLogSourceSqlite, appInfo, excludedTitlesLabel, favoritesLabel, excludedLabel;
+    public static JLabel labelSum, lblLogSourceSqlite, appInfo, excludedTitlesLabel,
+            favoritesLabel, excludedLabel, datesLabel;
     public static JButton searchBtnTop, searchBtnBottom, stopBtnTop, stopBtnBottom,
             sendEmailBtn, smiBtn, anotherBtn;
     public static Checkbox autoUpdateNewsTop, autoUpdateNewsBottom, autoSendMessage, onlyNewNews;
@@ -358,6 +359,16 @@ public class Gui extends JFrame {
         favoritesLabel.setBounds(topLeftActionX + 540, topLeftActionY + 3, 44, 14);
         getContentPane().add(favoritesLabel);
         openDialog(favoritesLabel, "favoritesDlg");
+
+        // Диалоговое окно со списком избранных заголовков
+        datesLabel = new JLabel("dates");
+        datesLabel.setEnabled(false);
+        datesLabel.setHorizontalAlignment(SwingConstants.LEFT);
+        datesLabel.setForeground(new Color(237, 114, 114));
+        datesLabel.setFont(GUI_FONT);
+        datesLabel.setBounds(topLeftActionX + 590, topLeftActionY + 3, 27, 14);
+        getContentPane().add(datesLabel);
+        openDialog(datesLabel, "datesDlg");
 
         /* TOP-RIGHT ACTION PANEL */
         int topRightX = 740;

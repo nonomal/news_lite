@@ -388,6 +388,8 @@ public class JdbcQueries {
                 query = "DELETE FROM keywords WHERE word = ?";
             } else if (activeWindow == 6) {
                 query = "DELETE FROM favorites WHERE title = ?";
+            } else if (activeWindow == 7) {
+                query = "DELETE FROM dates WHERE main.dates.description = ?";
             }
 
 
