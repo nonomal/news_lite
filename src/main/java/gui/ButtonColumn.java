@@ -159,7 +159,7 @@ public class ButtonColumn extends AbstractCellEditor implements TableCellRendere
             String description = (String) Dialogs.model.getValueAt(delDate, 1);
             // удаление из диалогового окна
             Dialogs.model.removeRow(delDate);
-            jdbcQueries.removeItem(type+description, 7);
+            jdbcQueries.removeItem(type + " " + description, 7);
         }
     }
 

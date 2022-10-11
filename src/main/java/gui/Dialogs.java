@@ -322,6 +322,67 @@ public class Dialogs extends JDialog implements KeyListener {
                 this.getContentPane().add(scrollPane);
                 scrollPane.setViewportView(table);
 
+                // Mouse right click menu
+                final JPopupMenu popup = new JPopupMenu();
+
+                // Add date (menu)
+                JMenuItem menuCopy = new JMenuItem("Add date");
+                menuCopy.addActionListener(e -> {
+                            String[] dateTypes = {"День Рождения", "Событие", "Праздник"};
+                            Integer[] months = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12};
+                            JComboBox<String> typesComboBox = new JComboBox<>(dateTypes);
+                            JTextField description = new JTextField(12);
+                            JTextField day = new JTextField(3);
+                            JComboBox<Integer> monthsComboBox = new JComboBox<>(months);
+                            JTextField year = new JTextField(3);
+
+                            JPanel panel = new JPanel();
+                            panel.add(new JLabel("Тип даты:"));
+                            panel.add(typesComboBox);
+                            panel.add(new JLabel("Описание"));
+                            panel.add(description);
+                            panel.add(new JLabel("День"));
+                            panel.add(day);
+                            panel.add(new JLabel("Месяц"));
+                            panel.add(monthsComboBox);
+                            panel.add(new JLabel("Год"));
+                            panel.add(year);
+
+                            int result = JOptionPane.showConfirmDialog(null, panel,
+                                    "Добавьте новое событие", JOptionPane.OK_CANCEL_OPTION);
+                            if (result == JOptionPane.OK_OPTION) {
+                                String type = String.valueOf(typesComboBox.getSelectedItem());
+                                String descr = description.getText();
+                                int dayToDatabase = Integer.parseInt(day.getText());
+                                int monthToDatabase = (int) monthsComboBox.getSelectedItem();
+                                int yearToDatabase = Integer.parseInt(year.getText());
+
+                                if (descr.length() > 0 && dayToDatabase != 0 && monthToDatabase != 0) {
+                                    new JdbcQueries().addDate(type, descr, dayToDatabase, monthToDatabase, yearToDatabase);
+                                    this.setVisible(false);
+                                    new Dialogs("datesDlg");
+                                }
+                            }
+                        }
+                );
+                popup.add(menuCopy);
+
+                // Mouse right click listener
+                table.addMouseListener(new MouseAdapter() {
+                    public void mouseReleased(MouseEvent e) {
+                        if (e.isPopupTrigger()) {
+                            JTable source = (JTable) e.getSource();
+                            //int row = source.rowAtPoint(e.getPoint());
+                            int row = source.convertRowIndexToModel(source.rowAtPoint(e.getPoint()));
+                            int column = source.columnAtPoint(e.getPoint());
+                            if (source.isRowSelected(row)) {
+                                source.changeSelection(row, column, false, false);
+                            }
+                            popup.show(e.getComponent(), e.getX(), e.getY());
+                        }
+                    }
+                });
+
                 showDialogs("dates");
                 break;
             }

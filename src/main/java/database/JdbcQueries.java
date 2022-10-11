@@ -159,6 +159,25 @@ public class JdbcQueries {
         }
     }
 
+    // вставка нового события
+    public void addDate(String type, String description, int day, int month, int year) {
+        try {
+            String query = "INSERT INTO dates(type, description, day, month, year) VALUES (?, ?, ?, ?, ?)";
+            PreparedStatement statement = connection.prepareStatement(query);
+            statement.setString(1, type);
+            statement.setString(2, description);
+            statement.setInt(3, day);
+            statement.setInt(4, month);
+            statement.setInt(5, year);
+            statement.executeUpdate();
+            statement.close();
+
+            Common.console("Событие добавлено: " + type + " " + description);
+        } catch (Exception e) {
+            Common.console("addDate error: " + e.getMessage());
+        }
+    }
+
     /* SELECT */
     // Источники новостей
     public List<Source> getSources(String type) {
@@ -389,17 +408,17 @@ public class JdbcQueries {
             } else if (activeWindow == 6) {
                 query = "DELETE FROM favorites WHERE title = ?";
             } else if (activeWindow == 7) {
-                query = "DELETE FROM dates WHERE type||description = ?";
+                query = "DELETE FROM dates WHERE type||' '||description = ?";
             }
-
 
             PreparedStatement statement = connection.prepareStatement(query);
             statement.setString(1, item);
             statement.executeUpdate();
             statement.close();
-        } catch (
-                Exception e) {
-            Common.console("deleteExcluded error: " + e.getMessage());
+
+            Common.console("Удалён элемент: " + item);
+        } catch (Exception e) {
+            Common.console("removeItem error: " + e.getMessage());
         }
 
     }
