@@ -341,7 +341,6 @@ public class Dialogs extends JDialog implements KeyListener {
                             JComboBox<String> typesComboBox = new JComboBox<>(dateTypes);
                             JTextField description = new JTextField(12);
                             JComboBox<Integer> daysComboBox = new JComboBox<>(days);
-                            //JTextField day = new JTextField(3);
                             JComboBox<String> monthsComboBox = new JComboBox<>(months);
                             JTextField year = new JTextField(3);
 
