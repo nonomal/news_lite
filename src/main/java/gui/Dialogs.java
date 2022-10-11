@@ -346,14 +346,15 @@ public class Dialogs extends JDialog implements KeyListener {
                             JTextField year = new JTextField(3);
 
                             JPanel panel = new JPanel();
-                            panel.add(new JLabel("Тип даты:"));
+                            panel.add(new JLabel("Тип:"));
                             panel.add(typesComboBox);
                             panel.add(new JLabel("Описание"));
                             panel.add(description);
-                            panel.add(new JLabel("День"));
+                            panel.add(new JLabel(" "));
                             panel.add(daysComboBox);
-                            panel.add(new JLabel("Месяц"));
+                            panel.add(new JLabel(" "));
                             panel.add(monthsComboBox);
+                            panel.add(new JLabel(" "));
                             panel.add(new JLabel("Год"));
                             panel.add(year);
 
