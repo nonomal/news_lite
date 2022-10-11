@@ -2,15 +2,16 @@
 [![Open Source? Yes!](https://badgen.net/badge/Open%20Source%20%3F/Yes%21/blue?icon=github)](https://github.com/Naereen/badges/)
 [![Ask Me Anything !](https://img.shields.io/badge/Ask%20me-anything-1abc9c.svg)](https://GitHub.com/Naereen/ama)
 
-Поисковик новостей по RSS популярных новостных источников
-
-![image](https://user-images.githubusercontent.com/45883640/195071617-84d167df-9d8d-43f3-bde6-783ac84166e2.png)
+Поисковик новостей по RSS популярных новостных источников с мощным отсевом ненужной информации.
 
 Особенность программы в удобном, автоматическом поиске новостей по нескольким ключевым словам с отправкой результатов поиска на электронную почту.
 
 Актуальная версия прграммы: https://github.com/mrprogre/news_lite/raw/master/news.jar
 
 Для работы приложения на ПК должна быть установлена Java: https://www.java.com/ru/download/
+
+Интерфейс и все диалоговые окна (кроме дат)
+![image](https://user-images.githubusercontent.com/45883640/195071617-84d167df-9d8d-43f3-bde6-783ac84166e2.png)
 
 ----
 **Возможности программы:**
