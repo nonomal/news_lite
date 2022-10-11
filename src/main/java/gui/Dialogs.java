@@ -2,6 +2,7 @@ package gui;
 
 import database.JdbcQueries;
 import model.*;
+import utils.Common;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableCellRenderer;
@@ -326,14 +327,22 @@ public class Dialogs extends JDialog implements KeyListener {
                 final JPopupMenu popup = new JPopupMenu();
 
                 // Add date (menu)
-                JMenuItem menuCopy = new JMenuItem("Add date");
-                menuCopy.addActionListener(e -> {
+                JMenuItem menu = new JMenuItem("Add date");
+                menu.addActionListener(
+                        e -> {
                             String[] dateTypes = {"День Рождения", "Событие", "Праздник"};
-                            Integer[] months = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12};
+                            String[] months = {"Январь", "Февраль", "Март", "Апрель", "Май", "Июнь", "Июль",
+                                    "Август", "Сентябрь", "Октябрь", "Ноябрь", "Декабрь"};
+                            Integer [] days = new Integer[31];
+                            for (int i = 0; i < days.length; i++) {
+                                days[i] = i+1;
+                            }
+
                             JComboBox<String> typesComboBox = new JComboBox<>(dateTypes);
                             JTextField description = new JTextField(12);
-                            JTextField day = new JTextField(3);
-                            JComboBox<Integer> monthsComboBox = new JComboBox<>(months);
+                            JComboBox<Integer> daysComboBox = new JComboBox<>(days);
+                            //JTextField day = new JTextField(3);
+                            JComboBox<String> monthsComboBox = new JComboBox<>(months);
                             JTextField year = new JTextField(3);
 
                             JPanel panel = new JPanel();
@@ -342,37 +351,42 @@ public class Dialogs extends JDialog implements KeyListener {
                             panel.add(new JLabel("Описание"));
                             panel.add(description);
                             panel.add(new JLabel("День"));
-                            panel.add(day);
+                            panel.add(daysComboBox);
                             panel.add(new JLabel("Месяц"));
                             panel.add(monthsComboBox);
                             panel.add(new JLabel("Год"));
                             panel.add(year);
 
                             int result = JOptionPane.showConfirmDialog(null, panel,
-                                    "Добавьте новое событие", JOptionPane.OK_CANCEL_OPTION);
+                                    "Добавьте событие", JOptionPane.OK_CANCEL_OPTION, JOptionPane.INFORMATION_MESSAGE);
                             if (result == JOptionPane.OK_OPTION) {
-                                String type = String.valueOf(typesComboBox.getSelectedItem());
-                                String descr = description.getText();
-                                int dayToDatabase = Integer.parseInt(day.getText());
-                                int monthToDatabase = (int) monthsComboBox.getSelectedItem();
-                                int yearToDatabase = Integer.parseInt(year.getText());
+                                if (description.getText().length() > 0) {
+                                    String type = String.valueOf(typesComboBox.getSelectedItem());
+                                    String descr = description.getText();
+                                    int dayToDatabase = (int) daysComboBox.getSelectedItem();
+                                    int monthToDatabase = monthsComboBox.getSelectedIndex() + 1;
 
-                                if (descr.length() > 0 && dayToDatabase != 0 && monthToDatabase != 0) {
+                                    int yearToDatabase = -1;
+                                    if (year.getText().length() != 0) {
+                                        yearToDatabase = Integer.parseInt(year.getText());
+                                    }
+
                                     new JdbcQueries().addDate(type, descr, dayToDatabase, monthToDatabase, yearToDatabase);
                                     this.setVisible(false);
                                     new Dialogs("datesDlg");
+                                } else {
+                                    Common.console("Укажите описание даты");
                                 }
                             }
                         }
                 );
-                popup.add(menuCopy);
+                popup.add(menu);
 
                 // Mouse right click listener
                 table.addMouseListener(new MouseAdapter() {
                     public void mouseReleased(MouseEvent e) {
                         if (e.isPopupTrigger()) {
                             JTable source = (JTable) e.getSource();
-                            //int row = source.rowAtPoint(e.getPoint());
                             int row = source.convertRowIndexToModel(source.rowAtPoint(e.getPoint()));
                             int column = source.columnAtPoint(e.getPoint());
                             if (source.isRowSelected(row)) {
