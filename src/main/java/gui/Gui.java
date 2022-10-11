@@ -57,13 +57,13 @@ public class Gui extends JFrame {
     public static JScrollPane scrollPane;
     public static JTable table, tableForAnalysis;
     public static DefaultTableModel model, modelForAnalysis;
-    public static JTextField topKeyword, sendEmailTo, addKeywordToList;
+    public static JTextField topKeyword, sendEmailTo;
     public static JTextArea consoleTextArea;
     public static JComboBox<String> newsInterval;
     public static JLabel labelSum, lblLogSourceSqlite, appInfo, excludedTitlesLabel,
             favoritesLabel, excludedLabel, datesLabel;
     public static JButton searchBtnTop, searchBtnBottom, stopBtnTop, stopBtnBottom,
-            sendEmailBtn, smiBtn, anotherBtn;
+            sendEmailBtn, smiBtn, anotherBtn, btnShowKeywordsList;
     public static Checkbox autoUpdateNewsTop, autoUpdateNewsBottom, autoSendMessage, onlyNewNews;
     public static JProgressBar progressBar;
     public static Timer timer;
@@ -536,53 +536,50 @@ public class Gui extends JFrame {
         lblKeywordsSearch.setText("search by keywords");
         lblKeywordsSearch.setForeground(new Color(255, 255, 153));
         lblKeywordsSearch.setFont(GUI_FONT);
-        lblKeywordsSearch.setBounds(bottomLeftX - 100, bottomLeftY + 3, 120, 14);
+        lblKeywordsSearch.setBounds(bottomLeftX - 100, bottomLeftY + 4, 120, 14);
         getContentPane().add(lblKeywordsSearch);
 
         // Открыть список ключевых слов для поиска
-        JButton btnShowKeywordsList = new JButton();
+        btnShowKeywordsList = new JButton();
         btnShowKeywordsList.setBorderPainted(false);
-        setButton = new SetButton(Icons.LIST_BUTTON_ICON, null, bottomLeftX - 5, bottomLeftY - 1);
+        setButton = new SetButton(Icons.LIST_BUTTON_ICON, null, bottomLeftX - 3, bottomLeftY );
         setButton.buttonSetting(btnShowKeywordsList, null);
         btnShowKeywordsList.addActionListener(e -> new Dialogs("keywordsDlg"));
         animation(btnShowKeywordsList, Icons.LIST_BUTTON_ICON, Icons.WHEN_MOUSE_ON_LIST_BUTTON_ICON);
         getContentPane().add(btnShowKeywordsList);
 
-        JLabel lblAddKeywordsSearch = new JLabel();
-        lblAddKeywordsSearch.setText("add keyword");
-        lblAddKeywordsSearch.setForeground(new Color(255, 255, 153));
-        lblAddKeywordsSearch.setFont(GUI_FONT);
-        lblAddKeywordsSearch.setBounds(bottomLeftX + 30, bottomLeftY + 3, 90, 14);
-        getContentPane().add(lblAddKeywordsSearch);
+        //Bottom search by keywords
+        searchBtnBottom = new JButton();
+        setButton = new SetButton(Icons.SEARCH_KEYWORDS_ICON, new Color(154, 237, 196), bottomLeftX + 30, bottomLeftY);
+        setButton.buttonSetting(searchBtnBottom, "Search by keywords");
+        searchBtnBottom.addActionListener(e -> new Thread(() -> search.mainSearch("words")).start());
+        getContentPane().add(searchBtnBottom);
 
-        //Add to combo box
-        addKeywordToList = new JTextField();
-        addKeywordToList.setFont(GUI_FONT);
-        addKeywordToList.setBounds(bottomLeftX + 100, bottomLeftY, 80, 22);
-        getContentPane().add(addKeywordToList);
-
-        //Add to keywords combo box
-        JButton btnAddKeywordToList = new JButton();
-        btnAddKeywordToList.setBorderPainted(false);
-        setButton = new SetButton(Icons.ADD_KEYWORD_ICON, null, bottomLeftX + 176, bottomLeftY);
-        setButton.buttonSetting(btnAddKeywordToList, null);
-        getContentPane().add(btnAddKeywordToList);
-        btnAddKeywordToList.addActionListener(e -> {
-            if (addKeywordToList.getText().length() > 0) {
-                String word = addKeywordToList.getText();
-                if (!jdbcQueries.isKeywordExists(word)) {
-                    jdbcQueries.addKeyword(word);
-                } else {
-                    Common.console("warn: список ключевых слов уже содержит слово: " + word);
+        //Stop (bottom)
+        stopBtnBottom = new JButton();
+        setButton = new SetButton(Icons.STOP_SEARCH_ICON, new Color(255, 208, 202), bottomLeftX + 30, bottomLeftY);
+        setButton.buttonSetting(stopBtnBottom, null);
+        stopBtnBottom.addActionListener(e -> {
+            try {
+                Search.isSearchFinished.set(true);
+                Search.isStop.set(true);
+                Common.console("search stopped");
+                searchBtnBottom.setVisible(true);
+                stopBtnBottom.setVisible(false);
+                Search.isSearchNow.set(false);
+                try {
+                    sqLite.transaction("ROLLBACK");
+                } catch (SQLException ignored) {
                 }
-                addKeywordToList.setText("");
+            } catch (Exception t) {
+                Common.console("there is no threads to stop");
             }
         });
-        animation(btnAddKeywordToList, Icons.ADD_KEYWORD_ICON, Icons.WHEN_MOUSE_ON_ADD_KEYWORD_ICON);
+        getContentPane().add(stopBtnBottom);
 
         // Автозапуск поиска по ключевым словам каждые 60 секунд
         autoUpdateNewsBottom = new Checkbox("auto update");
-        setCheckbox1 = new SetCheckbox(bottomLeftX + 210, bottomLeftY + 1, 75);
+        setCheckbox1 = new SetCheckbox(bottomLeftX + 70, bottomLeftY + 1, 75);
         setCheckbox1.checkBoxSetting(autoUpdateNewsBottom);
         getContentPane().add(autoUpdateNewsBottom);
         autoUpdateNewsBottom.addItemListener(e -> {
@@ -605,35 +602,6 @@ public class Gui extends JFrame {
                 }
             }
         });
-
-        //Bottom search by keywords
-        searchBtnBottom = new JButton();
-        setButton = new SetButton(Icons.SEARCH_KEYWORDS_ICON, new Color(154, 237, 196), bottomLeftX + 290, bottomLeftY);
-        setButton.buttonSetting(searchBtnBottom, "Search by keywords");
-        searchBtnBottom.addActionListener(e -> new Thread(() -> search.mainSearch("words")).start());
-        getContentPane().add(searchBtnBottom);
-
-        //Stop (bottom)
-        stopBtnBottom = new JButton();
-        setButton = new SetButton(Icons.STOP_SEARCH_ICON, new Color(255, 208, 202), bottomLeftX + 290, bottomLeftY);
-        setButton.buttonSetting(stopBtnBottom, null);
-        stopBtnBottom.addActionListener(e -> {
-            try {
-                Search.isSearchFinished.set(true);
-                Search.isStop.set(true);
-                Common.console("search stopped");
-                searchBtnBottom.setVisible(true);
-                stopBtnBottom.setVisible(false);
-                Search.isSearchNow.set(false);
-                try {
-                    sqLite.transaction("ROLLBACK");
-                } catch (SQLException ignored) {
-                }
-            } catch (Exception t) {
-                Common.console("there is no threads to stop");
-            }
-        });
-        getContentPane().add(stopBtnBottom);
 
         /* CONSOLE */
         //Console - textarea

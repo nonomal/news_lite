@@ -169,7 +169,7 @@ public class Dialogs extends JDialog implements KeyListener {
             case "keywordsDlg": {
                 this.setBounds(600, 200, 250, 306);
                 this.setTitle("Keywords");
-                this.setLocationRelativeTo(Gui.addKeywordToList);
+                this.setLocationRelativeTo(Gui.btnShowKeywordsList);
 
                 Object[] columns = {"Pos", "Keyword", "", " "};
                 model = new DefaultTableModel(new Object[][]{
@@ -207,6 +207,45 @@ public class Dialogs extends JDialog implements KeyListener {
                 scrollPane.setBounds(10, 27, 324, 233);
                 this.getContentPane().add(scrollPane);
                 scrollPane.setViewportView(table);
+
+                // Mouse right click menu
+                final JPopupMenu popup = new JPopupMenu();
+
+                // Add date (menu)
+                JMenuItem menu = new JMenuItem("Add word");
+                menu.addActionListener(
+                        e -> {
+                            JTextField word = new JTextField(6);
+
+                            JPanel panel = new JPanel();
+                            panel.add(new JLabel("Ключевое слово: "));
+                            panel.add(word);
+
+                            int result = JOptionPane.showConfirmDialog(null, panel,
+                                    "Добавить слово", JOptionPane.OK_CANCEL_OPTION, JOptionPane.INFORMATION_MESSAGE);
+                            if (result == JOptionPane.OK_OPTION) {
+                                new JdbcQueries().addKeyword(word.getText());
+                                this.setVisible(false);
+                                new Dialogs("keywordsDlg");
+                            }
+                        }
+                );
+                popup.add(menu);
+
+                // Mouse right click listener
+                table.addMouseListener(new MouseAdapter() {
+                    public void mouseReleased(MouseEvent e) {
+                        if (e.isPopupTrigger()) {
+                            JTable source = (JTable) e.getSource();
+                            int row = source.convertRowIndexToModel(source.rowAtPoint(e.getPoint()));
+                            int column = source.columnAtPoint(e.getPoint());
+                            if (source.isRowSelected(row)) {
+                                source.changeSelection(row, column, false, false);
+                            }
+                            popup.show(e.getComponent(), e.getX(), e.getY());
+                        }
+                    }
+                });
 
                 showDialogs("keywords");
                 break;
@@ -333,9 +372,9 @@ public class Dialogs extends JDialog implements KeyListener {
                             String[] dateTypes = {"День Рождения", "Событие", "Праздник"};
                             String[] months = {"Январь", "Февраль", "Март", "Апрель", "Май", "Июнь", "Июль",
                                     "Август", "Сентябрь", "Октябрь", "Ноябрь", "Декабрь"};
-                            Integer [] days = new Integer[31];
+                            Integer[] days = new Integer[31];
                             for (int i = 0; i < days.length; i++) {
-                                days[i] = i+1;
+                                days[i] = i + 1;
                             }
 
                             JComboBox<String> typesComboBox = new JComboBox<>(dateTypes);

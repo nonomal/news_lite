@@ -29,10 +29,6 @@ public class Icons {
             .createImage(Icons.class.getResource("/icons/excel.png")));
     public static final ImageIcon WHEN_MOUSE_ON_EXCEL_BUTTON_ICON = new ImageIcon(Toolkit.getDefaultToolkit()
             .createImage(Icons.class.getResource("/icons/excel2.png")));
-    public static final ImageIcon ADD_KEYWORD_ICON = new ImageIcon(Toolkit.getDefaultToolkit()
-            .createImage(Icons.class.getResource("/icons/add.png")));
-    public static final ImageIcon WHEN_MOUSE_ON_ADD_KEYWORD_ICON = new ImageIcon(Toolkit.getDefaultToolkit()
-            .createImage(Icons.class.getResource("/icons/add2.png")));
     public static final ImageIcon DELETE_UNIT = new ImageIcon(Toolkit.getDefaultToolkit()
             .createImage(Icons.class.getResource("/icons/exit.png")));
     public static final ImageIcon FONT_COLOR_BUTTON_ICON = new ImageIcon(Toolkit.getDefaultToolkit()
