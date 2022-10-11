@@ -10,8 +10,7 @@
 
 Для работы приложения на ПК должна быть установлена Java: https://www.java.com/ru/download/
 
-Интерфейс и все диалоговые окна (кроме дат)
-![image](https://user-images.githubusercontent.com/45883640/195071617-84d167df-9d8d-43f3-bde6-783ac84166e2.png)
+![image](https://user-images.githubusercontent.com/45883640/195074432-7fa22038-d083-4ba5-8100-74c36e3dea5c.png)
 
 ----
 **Возможности программы:**
