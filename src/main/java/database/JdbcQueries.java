@@ -389,7 +389,7 @@ public class JdbcQueries {
             } else if (activeWindow == 6) {
                 query = "DELETE FROM favorites WHERE title = ?";
             } else if (activeWindow == 7) {
-                query = "DELETE FROM dates WHERE main.dates.description = ?";
+                query = "DELETE FROM dates WHERE type||description = ?";
             }
 
 

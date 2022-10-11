@@ -152,13 +152,14 @@ public class ButtonColumn extends AbstractCellEditor implements TableCellRendere
             jdbcQueries.removeItem(title, 6);
         }
 
-        // окно с избранными заголовками (удаляем из базы)
+        // окно с датами (удаляем из базы)
         if (activeWindow == 7 && delDate != -1) {
             delDate = Dialogs.table.convertRowIndexToModel(delDate);
+            String type = (String) Dialogs.model.getValueAt(delDate, 0);
             String description = (String) Dialogs.model.getValueAt(delDate, 1);
             // удаление из диалогового окна
             Dialogs.model.removeRow(delDate);
-            jdbcQueries.removeItem(description, 7);
+            jdbcQueries.removeItem(type+description, 7);
         }
     }
 
