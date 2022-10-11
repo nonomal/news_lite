@@ -354,8 +354,8 @@ public class Dialogs extends JDialog implements KeyListener {
                             panel.add(new JLabel(" "));
                             panel.add(monthsComboBox);
                             panel.add(new JLabel(" "));
-                            panel.add(new JLabel("Год"));
                             panel.add(year);
+                            panel.add(new JLabel("год"));
 
                             int result = JOptionPane.showConfirmDialog(null, panel,
                                     "Добавьте событие", JOptionPane.OK_CANCEL_OPTION, JOptionPane.INFORMATION_MESSAGE);
