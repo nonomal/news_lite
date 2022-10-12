@@ -19,8 +19,6 @@ import javax.swing.text.DefaultCaret;
 import java.awt.*;
 import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.StringSelection;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
@@ -60,10 +58,10 @@ public class Gui extends JFrame {
     public static JTextField topKeyword, sendEmailTo;
     public static JTextArea consoleTextArea;
     public static JComboBox<String> newsInterval;
-    public static JLabel labelSum, lblLogSourceSqlite, appInfo, excludedTitlesLabel,
-            favoritesLabel, excludedLabel, datesLabel;
-    public static JButton searchBtnTop, searchBtnBottom, stopBtnTop, stopBtnBottom,
-            sendEmailBtn, smiBtn, anotherBtn, btnShowKeywordsList;
+    public static JLabel labelSum, lblLogSourceSqlite, appInfo, excludedTitlesLabel, favoritesLabel,
+            excludedLabel, datesLabel;
+    public static JButton searchBtnTop, searchBtnBottom, stopBtnTop, stopBtnBottom, sendEmailBtn, smiBtn,
+            anotherBtn, btnShowKeywordsList;
     public static Checkbox autoUpdateNewsTop, autoUpdateNewsBottom, autoSendMessage, onlyNewNews;
     public static JProgressBar progressBar;
     public static Timer timer;
@@ -243,19 +241,9 @@ public class Gui extends JFrame {
 
         //Keyword field
         topKeyword = new JTextField(findWord);
-        topKeyword.setToolTipText("CTRL+i to exclude news headlines containing this word");
         topKeyword.setBounds(topLeftActionX + 42, topLeftActionY, 100, 22);
         topKeyword.setFont(new Font("Tahoma", Font.BOLD, 13));
         getContentPane().add(topKeyword);
-        topKeyword.addKeyListener(new KeyAdapter() {
-            @Override
-            public void keyPressed(KeyEvent e) {
-                if (e.isControlDown() && e.getKeyCode() == KeyEvent.VK_I) {
-                    jdbcQueries.addWordToExcludeTitles(topKeyword.getText().toLowerCase());
-                    topKeyword.setText("");
-                }
-            }
-        });
 
         //Search
         searchBtnTop = new JButton();
@@ -722,24 +710,13 @@ public class Gui extends JFrame {
         smiBtn.addActionListener((e) -> new Dialogs("smiDlg"));
         animation(smiBtn, "sources");
 
-        // добавить новый RSS источник "add source"
-        JButton addNewSource = new JButton();
-        addNewSource.setFocusable(false);
-        addNewSource.setContentAreaFilled(true);
-        addNewSource.setBorderPainted(false);
-        addNewSource.setBackground(new Color(243, 229, 255));
-        addNewSource.setBounds(902, 479, 14, 14);
-        getContentPane().add(addNewSource);
-        addNewSource.addActionListener(e -> jdbcQueries.addNewSource());
-        animation(addNewSource, "add source");
-
         // Случайное английское слово
         anotherBtn = new JButton();
         anotherBtn.setContentAreaFilled(true);
         anotherBtn.setBorderPainted(false);
         anotherBtn.setFocusable(false);
         anotherBtn.setBackground(new Color(248, 206, 165));
-        anotherBtn.setBounds(921, 479, 14, 14);
+        anotherBtn.setBounds(902, 479, 14, 14);
         getContentPane().add(anotherBtn);
         anotherBtn.addActionListener(e -> new RandomWord().get());
         animation(anotherBtn, "english words");
@@ -751,7 +728,7 @@ public class Gui extends JFrame {
         sqliteBtn.setContentAreaFilled(true);
         sqliteBtn.setBorderPainted(false);
         sqliteBtn.setBackground(new Color(244, 181, 181));
-        sqliteBtn.setBounds(940, 479, 14, 14);
+        sqliteBtn.setBounds(921, 479, 14, 14);
         getContentPane().add(sqliteBtn);
         sqliteBtn.addActionListener(e -> {
             // запуск JdbcQueries
@@ -775,7 +752,7 @@ public class Gui extends JFrame {
         settingsDirectoryBtn.setContentAreaFilled(true);
         settingsDirectoryBtn.setBorderPainted(false);
         settingsDirectoryBtn.setBackground(new Color(219, 229, 252));
-        settingsDirectoryBtn.setBounds(959, 479, 14, 14);
+        settingsDirectoryBtn.setBounds(940, 479, 14, 14);
         getContentPane().add(settingsDirectoryBtn);
         settingsDirectoryBtn.addActionListener(e -> {
             if (Desktop.isDesktopSupported() && Desktop.getDesktop().isSupported(Desktop.Action.OPEN)) {
@@ -793,7 +770,7 @@ public class Gui extends JFrame {
         lblLogSourceSqlite = new JLabel();
         lblLogSourceSqlite.setForeground(Color.WHITE);
         lblLogSourceSqlite.setFont(GUI_FONT);
-        lblLogSourceSqlite.setBounds(979, 479, 70, 14);
+        lblLogSourceSqlite.setBounds(961, 479, 70, 14);
         getContentPane().add(lblLogSourceSqlite);
 
         appInfo = new JLabel();

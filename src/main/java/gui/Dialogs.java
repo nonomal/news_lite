@@ -78,6 +78,47 @@ public class Dialogs extends JDialog implements KeyListener {
                 this.getContentPane().add(scrollPane);
                 scrollPane.setViewportView(table);
 
+                // Mouse right click menu
+                final JPopupMenu popup = new JPopupMenu();
+
+                // Add date (menu)
+                JMenuItem menu = new JMenuItem("Add RSS");
+                menu.addActionListener(e -> {
+                            JTextField rss = new JTextField();
+                            JTextField link = new JTextField();
+
+                            Object[] newSource = {"Source:", rss, "Link to rss:", link};
+                            int result = JOptionPane.showConfirmDialog(Gui.scrollPane, newSource,
+                                    "New source", JOptionPane.OK_CANCEL_OPTION, JOptionPane.INFORMATION_MESSAGE);
+
+                            if (rss.getText().length() > 0 && link.getText().length() > 0) {
+                                if (result == JOptionPane.OK_OPTION) {
+                                    new JdbcQueries().addNewSource(rss.getText(), link.getText());
+                                    this.setVisible(false);
+                                    new Dialogs("smiDlg");
+                                }
+                            } else {
+                                Common.console("Укажите источник и ссылку");
+                            }
+                        }
+                );
+                popup.add(menu);
+
+                // Mouse right click listener
+                table.addMouseListener(new MouseAdapter() {
+                    public void mouseReleased(MouseEvent e) {
+                        if (e.isPopupTrigger()) {
+                            JTable source = (JTable) e.getSource();
+                            int row = source.convertRowIndexToModel(source.rowAtPoint(e.getPoint()));
+                            int column = source.columnAtPoint(e.getPoint());
+                            if (source.isRowSelected(row)) {
+                                source.changeSelection(row, column, false, false);
+                            }
+                            popup.show(e.getComponent(), e.getX(), e.getY());
+                        }
+                    }
+                });
+
                 showDialogs("smi");
                 break;
             }
@@ -163,6 +204,49 @@ public class Dialogs extends JDialog implements KeyListener {
                 this.getContentPane().add(scrollPane);
                 scrollPane.setViewportView(table);
 
+                // Mouse right click menu
+                final JPopupMenu popup = new JPopupMenu();
+
+                // Add date (menu)
+                JMenuItem menu = new JMenuItem("Add word");
+                menu.addActionListener(e -> {
+                            JTextField word = new JTextField(6);
+
+                            JPanel panel = new JPanel();
+                            panel.add(new JLabel("Добавить слово: "));
+                            panel.add(word);
+
+                            int result = JOptionPane.showConfirmDialog(null, panel,
+                                    "Исключить заголовки со словом", JOptionPane.OK_CANCEL_OPTION,
+                                    JOptionPane.INFORMATION_MESSAGE);
+                            if (word.getText().length() > 0) {
+                                if (result == JOptionPane.OK_OPTION) {
+                                    new JdbcQueries().addWordToExcludeTitles(word.getText());
+                                    this.setVisible(false);
+                                    new Dialogs("exclTitlesDlg");
+                                }
+                            } else {
+                                Common.console("Введите слово для исключения");
+                            }
+                        }
+                );
+                popup.add(menu);
+
+                // Mouse right click listener
+                table.addMouseListener(new MouseAdapter() {
+                    public void mouseReleased(MouseEvent e) {
+                        if (e.isPopupTrigger()) {
+                            JTable source = (JTable) e.getSource();
+                            int row = source.convertRowIndexToModel(source.rowAtPoint(e.getPoint()));
+                            int column = source.columnAtPoint(e.getPoint());
+                            if (source.isRowSelected(row)) {
+                                source.changeSelection(row, column, false, false);
+                            }
+                            popup.show(e.getComponent(), e.getX(), e.getY());
+                        }
+                    }
+                });
+
                 showDialogs("title-excl");
                 break;
             }
@@ -213,8 +297,7 @@ public class Dialogs extends JDialog implements KeyListener {
 
                 // Add date (menu)
                 JMenuItem menu = new JMenuItem("Add word");
-                menu.addActionListener(
-                        e -> {
+                menu.addActionListener(e -> {
                             JTextField word = new JTextField(6);
 
                             JPanel panel = new JPanel();
@@ -223,11 +306,17 @@ public class Dialogs extends JDialog implements KeyListener {
 
                             int result = JOptionPane.showConfirmDialog(null, panel,
                                     "Добавить слово", JOptionPane.OK_CANCEL_OPTION, JOptionPane.INFORMATION_MESSAGE);
-                            if (result == JOptionPane.OK_OPTION) {
-                                new JdbcQueries().addKeyword(word.getText());
-                                this.setVisible(false);
-                                new Dialogs("keywordsDlg");
+
+                            if (word.getText().length() > 0) {
+                                if (result == JOptionPane.OK_OPTION) {
+                                    new JdbcQueries().addKeyword(word.getText());
+                                    this.setVisible(false);
+                                    new Dialogs("keywordsDlg");
+                                }
+                            } else {
+                                Common.console("Укажите слово");
                             }
+
                         }
                 );
                 popup.add(menu);
@@ -443,7 +532,6 @@ public class Dialogs extends JDialog implements KeyListener {
 
         // делаем фокус на окно, чтобы работал захват клавиш
         this.requestFocusInWindow();
-
     }
 
     // Заполнение диалоговых окон данными

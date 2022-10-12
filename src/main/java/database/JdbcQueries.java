@@ -52,27 +52,17 @@ public class JdbcQueries {
     }
 
     // Вставка нового источника
-    public void addNewSource() {
+    public void addNewSource(String source, String link) {
         try {
-            // Диалоговое окно добавления источника новостей в базу данных
-            JTextField rss = new JTextField();
-            JTextField link = new JTextField();
-            Object[] newSource = {"Source:", rss, "Link to rss:", link};
-            int result = JOptionPane.showConfirmDialog(Gui.scrollPane, newSource,
-                    "New source", JOptionPane.OK_CANCEL_OPTION);
+            //if (result == JOptionPane.YES_OPTION) {
+            String query = "INSERT INTO rss_list(source, link, is_active) VALUES (?, ?, 1)";
+            PreparedStatement statement = connection.prepareStatement(query);
+            statement.setString(1, source);
+            statement.setString(2, link);
+            statement.executeUpdate();
+            statement.close();
 
-            if (result == JOptionPane.YES_OPTION) {
-                String query = "INSERT INTO rss_list(source, link, is_active) VALUES (?, ?, 1)";
-                PreparedStatement statement = connection.prepareStatement(query);
-                statement.setString(1, rss.getText());
-                statement.setString(2, link.getText());
-                statement.executeUpdate();
-                statement.close();
-
-                Common.console("rss added");
-            } else {
-                Common.console("adding source canceled");
-            }
+            Common.console("source added");
         } catch (Exception e) {
             Common.console("addNewSource error: " + e.getMessage());
         }
