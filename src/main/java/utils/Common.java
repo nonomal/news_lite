@@ -67,7 +67,18 @@ public class Common {
         File mainDirectory = new File(DIRECTORY_PATH);
         if (!mainDirectory.exists()) mainDirectory.mkdirs();
 
-        // создание файлов программы
+        File configIsExists = new File(DIRECTORY_PATH + "config.txt");
+        if (!configIsExists.exists()) {
+            copyFiles(Common.class.getResource("/config.txt"), CONFIG_FILE);
+        }
+
+        String pathToDatabase = DIRECTORY_PATH + "news.db";
+        File dbIsExists = new File(pathToDatabase);
+        if (!dbIsExists.exists()) {
+            copyFiles(Common.class.getResource("/news.db"), pathToDatabase);
+            writeToConfig(pathToDatabase, "db");
+        }
+
         File sqliteExeIsExists = new File(DIRECTORY_PATH + "sqlite3.exe");
         if (!sqliteExeIsExists.exists()) {
             copyFiles(Common.class.getResource("/sqlite3.exe"), DIRECTORY_PATH + "sqlite3.exe");
@@ -79,17 +90,6 @@ public class Common {
         File sqliteDefIsExists = new File(DIRECTORY_PATH + "sqlite3.def");
         if (!sqliteDefIsExists.exists()) {
             copyFiles(Common.class.getResource("/sqlite3.def"), DIRECTORY_PATH + "sqlite3.def");
-        }
-
-        String pathToDatabase = DIRECTORY_PATH + "news.db";
-        File dbIsExists = new File(pathToDatabase);
-        if (!dbIsExists.exists()) {
-            copyFiles(Common.class.getResource("/news.db"), pathToDatabase);
-            writeToConfig(pathToDatabase, "db");
-        }
-        File configIsExists = new File(DIRECTORY_PATH + "config.txt");
-        if (!configIsExists.exists()) {
-            copyFiles(Common.class.getResource("/config.txt"), CONFIG_FILE);
         }
     }
 
@@ -109,10 +109,11 @@ public class Common {
 
     // Запись конфигураций приложения
     public void writeToConfig(String value, String type) {
-        try (OutputStreamWriter writer = new OutputStreamWriter(new FileOutputStream(CONFIG_FILE, true), StandardCharsets.UTF_8)) {
+        try (OutputStreamWriter writer = new OutputStreamWriter(new FileOutputStream(CONFIG_FILE, true),
+                StandardCharsets.UTF_8)) {
             switch (type) {
                 case "db": {
-                    String text = "db_path=" + value + "\n";
+                    String text = "\ndb_path=" + value + "\n";
                     writer.write(text);
                     break;
                 }
@@ -276,13 +277,13 @@ public class Common {
             io.printStackTrace();
         }
         // write new values
-        Common.writeToConfig(Gui.sendEmailTo.getText(), "email");
-        Common.writeToConfig(String.valueOf(Gui.newsInterval.getSelectedItem()), "interval");
-        Common.writeToConfig("todayOrNotChbx", "checkbox");
-        Common.writeToConfig("checkTitle", "checkbox");
-        Common.writeToConfig("checkLink", "checkbox");
-        Common.writeToConfig("filterNewsChbx", "checkbox");
-        Common.writeToConfig("autoSendChbx", "checkbox");
+        writeToConfig(Gui.sendEmailTo.getText(), "email");
+        writeToConfig(String.valueOf(Gui.newsInterval.getSelectedItem()), "interval");
+        writeToConfig("todayOrNotChbx", "checkbox");
+        writeToConfig("checkTitle", "checkbox");
+        writeToConfig("checkLink", "checkbox");
+        writeToConfig("filterNewsChbx", "checkbox");
+        writeToConfig("autoSendChbx", "checkbox");
     }
 
     // Удаление ключевого слова из combo box
@@ -444,5 +445,4 @@ public class Common {
             throw new RuntimeException(ex);
         }
     }
-
 }

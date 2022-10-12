@@ -764,7 +764,7 @@ public class Gui extends JFrame {
             }
 
             // копируем адрес базы в JdbcQueries в системный буфер для быстрого доступа
-            String pathToBase = (".open " + Common.DIRECTORY_PATH + "news.db").replace("\\", "/");
+            String pathToBase = (".open " + Common.getPathToDatabase()).replace("\\", "/");
             Toolkit.getDefaultToolkit().getSystemClipboard().setContents(new StringSelection(pathToBase), null);
         });
         animation(sqliteBtn, "sqlite");
