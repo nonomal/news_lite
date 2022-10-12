@@ -68,6 +68,7 @@ public class EmailManager {
             }
             try {
                 new Sender().send(subject, text.toString(), fromAdr, fromPwd, ConsoleSearch.sendEmailToFromConsole);
+                System.out.println("e-mail sent successfully");
             } catch (MessagingException e) {
                 e.printStackTrace();
             }
