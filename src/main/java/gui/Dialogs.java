@@ -309,9 +309,13 @@ public class Dialogs extends JDialog implements KeyListener {
 
                             if (word.getText().length() > 0) {
                                 if (result == JOptionPane.OK_OPTION) {
-                                    new JdbcQueries().addKeyword(word.getText());
-                                    this.setVisible(false);
-                                    new Dialogs("keywordsDlg");
+                                    if (!new JdbcQueries().isKeywordExists(word.getText())) {
+                                        new JdbcQueries().addKeyword(word.getText());
+                                        this.setVisible(false);
+                                        new Dialogs("keywordsDlg");
+                                    } else {
+                                        Common.console("Слово уже есть в списке");
+                                    }
                                 }
                             } else {
                                 Common.console("Укажите слово");
