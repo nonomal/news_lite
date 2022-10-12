@@ -44,6 +44,7 @@ public class Search {
 
             isSearchNow.set(true);
             Search.isStop.set(false);
+            Gui.sendEmailBtn.setVisible(false);
             LocalTime timeStart = LocalTime.now();
 
             int modelRowCount = Gui.model.getRowCount();
@@ -172,6 +173,7 @@ public class Search {
                 // итоги в трей
                 if (newsCount != 0 && newsCount != modelRowCount && Gui.GUI_IN_TRAY.get())
                     Common.trayMessage("News found: " + newsCount);
+                Gui.sendEmailBtn.setVisible(true);
 
                 if (isWord) {
                     Gui.searchBtnTop.setVisible(true);

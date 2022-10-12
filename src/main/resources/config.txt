@@ -1,11 +1,11 @@
-email=enter your email
-from_pwd=no_password
-from_adr=no_adr
+email_to=enter your email
+from_pwd=enter password
+email_from=enter your email
 interval=24h
 checkbox:filterNewsChbx=false
 checkbox:autoSendChbx=false
 translate-url=https://script.google.com/macros/s/AKfycby5Oh70-SremozUCw4uZl6EopFwkqRCXU4PkuPOYjpcIFWwojpHUq2lQoVia896Doy7fg/exec
-transparency=0.96f
+transparency=0.90f
 fontColorRed=0
 fontColorGreen=0
 fontColorBlue=0

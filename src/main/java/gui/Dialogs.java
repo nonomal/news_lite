@@ -88,7 +88,7 @@ public class Dialogs extends JDialog implements KeyListener {
                             JTextField link = new JTextField();
 
                             Object[] newSource = {"Source:", rss, "Link to rss:", link};
-                            int result = JOptionPane.showConfirmDialog(Gui.scrollPane, newSource,
+                            int result = JOptionPane.showConfirmDialog(this, newSource,
                                     "New source", JOptionPane.OK_CANCEL_OPTION, JOptionPane.INFORMATION_MESSAGE);
 
                             if (rss.getText().length() > 0 && link.getText().length() > 0) {
@@ -97,8 +97,6 @@ public class Dialogs extends JDialog implements KeyListener {
                                     this.setVisible(false);
                                     new Dialogs("smiDlg");
                                 }
-                            } else {
-                                Common.console("Укажите источник и ссылку");
                             }
                         }
                 );
@@ -216,7 +214,7 @@ public class Dialogs extends JDialog implements KeyListener {
                             panel.add(new JLabel("Добавить слово: "));
                             panel.add(word);
 
-                            int result = JOptionPane.showConfirmDialog(null, panel,
+                            int result = JOptionPane.showConfirmDialog(this, panel,
                                     "Исключить заголовки со словом", JOptionPane.OK_CANCEL_OPTION,
                                     JOptionPane.INFORMATION_MESSAGE);
                             if (word.getText().length() > 0) {
@@ -225,8 +223,6 @@ public class Dialogs extends JDialog implements KeyListener {
                                     this.setVisible(false);
                                     new Dialogs("exclTitlesDlg");
                                 }
-                            } else {
-                                Common.console("Введите слово для исключения");
                             }
                         }
                 );
@@ -304,7 +300,7 @@ public class Dialogs extends JDialog implements KeyListener {
                             panel.add(new JLabel("Ключевое слово: "));
                             panel.add(word);
 
-                            int result = JOptionPane.showConfirmDialog(null, panel,
+                            int result = JOptionPane.showConfirmDialog(this, panel,
                                     "Добавить слово", JOptionPane.OK_CANCEL_OPTION, JOptionPane.INFORMATION_MESSAGE);
 
                             if (word.getText().length() > 0) {
@@ -317,10 +313,7 @@ public class Dialogs extends JDialog implements KeyListener {
                                         Common.console("Слово уже есть в списке");
                                     }
                                 }
-                            } else {
-                                Common.console("Укажите слово");
                             }
-
                         }
                 );
                 popup.add(menu);
@@ -489,7 +482,7 @@ public class Dialogs extends JDialog implements KeyListener {
                             panel.add(year);
                             panel.add(new JLabel("год"));
 
-                            int result = JOptionPane.showConfirmDialog(null, panel,
+                            int result = JOptionPane.showConfirmDialog(this, panel,
                                     "Добавьте событие", JOptionPane.OK_CANCEL_OPTION, JOptionPane.INFORMATION_MESSAGE);
                             if (result == JOptionPane.OK_OPTION) {
                                 if (description.getText().length() > 0) {

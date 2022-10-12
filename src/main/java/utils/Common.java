@@ -34,7 +34,10 @@ public class Common {
     public static final String CONFIG_FILE = DIRECTORY_PATH + "config.txt";
     public final AtomicBoolean IS_SENDING = new AtomicBoolean(true);
     public String SCRIPT_URL = null;
-    public float TRANSPARENCY;
+    public float transparency;
+    public String emailFrom;
+    public String emailFromPwd;
+    public String emailTo;
     public List<String> words;
 
     public void showGui() {
@@ -152,8 +155,23 @@ public class Common {
                     writer.write(text);
                     break;
                 }
-                case "email": {
-                    String text = "email=" + value;
+                case "email_from": {
+                    String text = "email_from=" + value;
+                    writer.write(text.trim() + "\n");
+                    break;
+                }
+                case "from_pwd": {
+                    String text = "from_pwd=" + value;
+                    writer.write(text.trim() + "\n");
+                    break;
+                }
+                case "email_to": {
+                    String text = "email_to=" + value;
+                    writer.write(text.trim() + "\n");
+                    break;
+                }
+                case "transparency": {
+                    String text = "transparency=" + value + "f";
                     writer.write(text.trim() + "\n");
                     break;
                 }
@@ -204,7 +222,7 @@ public class Common {
         try {
             for (String s : Files.readAllLines(Paths.get(CONFIG_FILE))) {
                 if (s.startsWith("transparency="))
-                    TRANSPARENCY = Float.parseFloat(s.replace("transparency=", ""));
+                    transparency = Float.parseFloat(s.replace("transparency=", ""));
                 else if (s.startsWith("fontColorRed="))
                     GUI_FONT[0] = Integer.parseInt(s.replace("fontColorRed=", ""));
                 else if (s.startsWith("fontColorGreen="))
@@ -229,7 +247,6 @@ public class Common {
             words = new JdbcQueries().getRandomWords();
 
             for (String s : Files.readAllLines(Paths.get(CONFIG_FILE))) {
-                // Интервал поиска interval=1m
                 if (s.startsWith("interval=")) {
                     String interval = s.replace("interval=", "");
                     switch (interval) {
@@ -250,15 +267,35 @@ public class Common {
                             Gui.newsInterval.setSelectedItem(interval.replace("h", "") + " hours");
                             break;
                     }
-                } else if (s.startsWith("email=")) {
-                    Gui.sendEmailTo.setText(s.replace("email=", ""));
-                } else if (s.startsWith("checkbox:filterNewsChbx=")) {
+                }
+                if (s.startsWith("checkbox:filterNewsChbx=")) {
                     Gui.onlyNewNews.setState(Boolean.parseBoolean(s.replace("checkbox:filterNewsChbx=", "")));
                 } else if (s.startsWith("checkbox:autoSendChbx=")) {
                     Gui.autoSendMessage.setState(Boolean.parseBoolean(s.replace("checkbox:autoSendChbx=", "")));
                 } else if (s.startsWith("translate-url=")) {
                     SCRIPT_URL = s.replace("translate-url=", "");
                 }
+                getSettings();
+            }
+            Gui.isOnlyLastNews = Gui.onlyNewNews.getState();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    // Считывание конфигураций после запуска интерфейса
+    public void getSettings() {
+        try {
+            for (String s : Files.readAllLines(Paths.get(CONFIG_FILE))) {
+                if (s.startsWith("email_from=")) {
+                    emailFrom = s.replace("email_from=", "");
+                } else if (s.startsWith("from_pwd=")) {
+                    emailFromPwd = s.replace("from_pwd=", "");
+                } else if (s.startsWith("email_to=")) {
+                    emailTo = s.replace("email_to=", "");
+                } else if (s.startsWith("transparency="))
+                    transparency = Float.parseFloat(s.replace("transparency=", ""));
+                getPathToDatabase();
             }
             Gui.isOnlyLastNews = Gui.onlyNewNews.getState();
         } catch (IOException e) {
@@ -269,15 +306,9 @@ public class Common {
     // сохранение состояния окна в config.txt
     public void saveState() {
         // delete old values
-        try {
-            Common.delSettings("interval");
-            Common.delSettings("checkbox");
-            Common.delSettings("email");
-        } catch (IOException io) {
-            io.printStackTrace();
-        }
+        Common.delSettings("interval");
+        Common.delSettings("checkbox");
         // write new values
-        writeToConfig(Gui.sendEmailTo.getText(), "email");
         writeToConfig(String.valueOf(Gui.newsInterval.getSelectedItem()), "interval");
         writeToConfig("todayOrNotChbx", "checkbox");
         writeToConfig("checkTitle", "checkbox");
@@ -287,27 +318,31 @@ public class Common {
     }
 
     // Удаление ключевого слова из combo box
-    public void delSettings(String s) throws IOException {
-        Path input = Paths.get(CONFIG_FILE);
-        Path temp = Files.createTempFile("temp", ".txt");
-        try (Stream<String> lines = Files.lines(input)) {
-            try (BufferedWriter writer = Files.newBufferedWriter(temp)) {
-                lines
-                        .filter(line -> {
-                            assert s != null;
-                            return !line.startsWith(s);
-                        })
-                        .forEach(line -> {
-                            try {
-                                writer.write(line);
-                                writer.newLine();
-                            } catch (IOException e) {
-                                throw new RuntimeException(e);
-                            }
-                        });
+    public void delSettings(String s) {
+        try {
+            Path input = Paths.get(CONFIG_FILE);
+            Path temp = Files.createTempFile("temp", ".txt");
+            try (Stream<String> lines = Files.lines(input)) {
+                try (BufferedWriter writer = Files.newBufferedWriter(temp)) {
+                    lines
+                            .filter(line -> {
+                                assert s != null;
+                                return !line.startsWith(s);
+                            })
+                            .forEach(line -> {
+                                try {
+                                    writer.write(line);
+                                    writer.newLine();
+                                } catch (IOException e) {
+                                    throw new RuntimeException(e);
+                                }
+                            });
+                }
             }
+            Files.move(temp, input, StandardCopyOption.REPLACE_EXISTING);
+        } catch (IOException e) {
+            e.printStackTrace();
         }
-        Files.move(temp, input, StandardCopyOption.REPLACE_EXISTING);
     }
 
     //Console
@@ -431,7 +466,7 @@ public class Common {
 
     // преобразование строки в строку с хэш-кодом
     public String getHash(String base) {
-        try{
+        try {
             MessageDigest digest = MessageDigest.getInstance("MD5"); // MD2, MD5, SHA-1, SHA-256, SHA-384, SHA-512
             byte[] hash = digest.digest(base.getBytes(StandardCharsets.UTF_8));
             StringBuilder hexString = new StringBuilder();
@@ -441,7 +476,7 @@ public class Common {
                 hexString.append(hex);
             }
             return hexString.toString();
-        } catch(Exception ex){
+        } catch (Exception ex) {
             throw new RuntimeException(ex);
         }
     }

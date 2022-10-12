@@ -55,7 +55,7 @@ public class Gui extends JFrame {
     public static JScrollPane scrollPane;
     public static JTable table, tableForAnalysis;
     public static DefaultTableModel model, modelForAnalysis;
-    public static JTextField topKeyword, sendEmailTo;
+    public static JTextField topKeyword;
     public static JTextArea consoleTextArea;
     public static JComboBox<String> newsInterval;
     public static JLabel labelSum, lblLogSourceSqlite, appInfo, excludedTitlesLabel, favoritesLabel,
@@ -85,7 +85,7 @@ public class Gui extends JFrame {
         GraphicsDevice gd = ge.getDefaultScreenDevice();
         boolean isUniformTranslucencySupported = gd.isWindowTranslucencySupported(TRANSLUCENT);
         if (isUniformTranslucencySupported) {
-            this.setOpacity(Common.TRANSPARENCY);
+            this.setOpacity(Common.transparency);
         }
 
         //Table
@@ -665,21 +665,24 @@ public class Gui extends JFrame {
         openDialog(excludedLabel, "exclDlg");
 
         /* BOTTOM RIGHT AREA */
-        //send e-mail to
-        sendEmailTo = new JTextField("enter your email");
-        sendEmailTo.setBounds(880, 518, 142, 21);
-        sendEmailTo.setFont(GUI_FONT);
-        getContentPane().add(sendEmailTo);
+        //Amount of news
+        labelSum = new JLabel();
+        labelSum.setBounds(880, 282, 120, 13);
+        labelSum.setFont(GUI_FONT);
+        labelSum.setForeground(new Color(255, 255, 153));
+        labelSum.setBackground(new Color(240, 255, 240));
+        getContentPane().add(labelSum);
 
         //Send current results e-mail
         sendEmailBtn = new JButton();
-        setButton = new SetButton(Icons.SEND_EMAIL_ICON, new Color(255, 255, 153), 1020, 517);
+        sendEmailBtn.setVisible(false);
+        setButton = new SetButton(Icons.SEND_EMAIL_ICON, new Color(255, 255, 153), 930, 277);
         setButton.buttonSetting(sendEmailBtn, "Send current search results");
         sendEmailBtn.setFocusable(false);
         sendEmailBtn.setContentAreaFilled(false);
         sendEmailBtn.setBorderPainted(false);
         sendEmailBtn.addActionListener(e -> {
-            if (model.getRowCount() > 0 && sendEmailTo.getText().contains("@")) {
+            if (model.getRowCount() > 0 && Common.emailTo.contains("@")) {
                 Common.console("sending e-mail");
                 Common.IS_SENDING.set(false);
                 new Thread(Common::fillProgressLine).start();
@@ -747,16 +750,49 @@ public class Gui extends JFrame {
         settingsDirectoryBtn.setBounds(940, 479, 14, 14);
         getContentPane().add(settingsDirectoryBtn);
         settingsDirectoryBtn.addActionListener(e -> {
-            if (Desktop.isDesktopSupported() && Desktop.getDesktop().isSupported(Desktop.Action.OPEN)) {
-                try {
-                    Desktop.getDesktop().open(new File(Common.DIRECTORY_PATH));
-                } catch (IOException io) {
-                    io.printStackTrace();
-                }
+//            if (Desktop.isDesktopSupported() && Desktop.getDesktop().isSupported(Desktop.Action.OPEN)) {
+//                try {
+//                    Desktop.getDesktop().open(new File(Common.DIRECTORY_PATH));
+//                } catch (IOException io) {
+//                    io.printStackTrace();
+//                }
+//            }
+
+            Common.getSettings();
+
+            JTextField emailFrom = new JTextField(Common.emailFrom);
+            JTextField emailFromPwd = new JTextField(Common.emailFromPwd);
+            JTextField emailTo = new JTextField(Common.emailTo);
+            JTextField transparency = new JTextField();
+            transparency.setText(String.valueOf(Common.transparency));
+            JTextField pathToDatabase = new JTextField();
+            pathToDatabase.setText(Common.getPathToDatabase());
+
+            Object[] newSource = {"Email from:", emailFrom,
+                    "Email from password:", emailFromPwd,
+                    "Email to:", emailTo,
+                    "Transparency:", transparency,
+                    "Path to database:", pathToDatabase
+            };
+
+            int result = JOptionPane.showConfirmDialog(null, newSource,
+                    "Settings", JOptionPane.OK_CANCEL_OPTION, JOptionPane.INFORMATION_MESSAGE);
+            if (result == JOptionPane.OK_OPTION) {
+                Common.delSettings("email_to");
+                Common.delSettings("email_from");
+                Common.delSettings("from_pwd");
+                Common.delSettings("transparency");
+                Common.delSettings("db");
+
+                Common.writeToConfig(emailTo.getText(), "email_to");
+                Common.writeToConfig(emailFrom.getText(), "email_from");
+                Common.writeToConfig(emailFromPwd.getText(), "from_pwd");
+                Common.writeToConfig(transparency.getText(), "transparency");
+                Common.writeToConfig(pathToDatabase.getText(), "db");
             }
 
         });
-        animation(settingsDirectoryBtn, "files");
+        animation(settingsDirectoryBtn, "settings");
 
         // Источники, sqlite лейбл
         lblLogSourceSqlite = new JLabel();
@@ -777,14 +813,6 @@ public class Gui extends JFrame {
         queryTableBox.setBorder(new BevelBorder(BevelBorder.RAISED, null, null, null, null));
         queryTableBox.setBounds(879, 473, 290, 26);
         getContentPane().add(queryTableBox);
-
-        //Amount of news
-        labelSum = new JLabel();
-        labelSum.setBounds(880, 278, 120, 13);
-        labelSum.setFont(GUI_FONT);
-        labelSum.setForeground(new Color(255, 255, 153));
-        labelSum.setBackground(new Color(240, 255, 240));
-        getContentPane().add(labelSum);
 
         /* WEB PAGES */
         int webX = 758;

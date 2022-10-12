@@ -8,28 +8,20 @@ import search.Search;
 import utils.Common;
 
 import javax.mail.MessagingException;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 public class EmailManager {
-    private String fromAdr;
-    private String fromPwd;
     private final String today = DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm").format(LocalDateTime.now());
     private final String subject = ("News (" + today + ")");
     private final StringBuilder text = new StringBuilder();
 
     // Отправка письма
     public void sendMessage() {
-        getEmailSettingsFromFile();
-
         if (!ConsoleSearch.IS_CONSOLE_SEARCH.get()) {
-            String to = Gui.sendEmailTo.getText();
 
-            if (!fromAdr.contains("@")||!to.contains("@")) {
-                Common.console("error: incorrect e-mail");
+            if (!Common.emailFrom.contains("@")||!Common.emailTo.contains("@")) {
+                Common.console("incorrect e-mail");
                 return;
             }
 
@@ -40,15 +32,14 @@ public class EmailManager {
             }
             try {
                 // чтобы не было задвоений в настройках - удаляем старую почту и записываем новую при отправке
-                try {
-                    Common.delSettings("email=");
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                Common.writeToConfig(to, "email");
+//                try {
+//                    Common.delSettings("email_to=");
+//                } catch (IOException e) {
+//                    e.printStackTrace();
+//                }
 
                 //отправка
-                new Sender().send(subject, text.toString(), fromAdr, fromPwd, to);
+                new Sender().send(subject, text.toString(), Common.emailFrom, Common.emailFromPwd, Common.emailTo);
                 Common.console("e-mail sent successfully");
                 Gui.sendEmailBtn.setIcon(Icons.WHEN_SENT_ICON);
                 Common.IS_SENDING.set(true);
@@ -67,28 +58,12 @@ public class EmailManager {
                 text.append(s).append("\n\n");
             }
             try {
-                new Sender().send(subject, text.toString(), fromAdr, fromPwd, ConsoleSearch.sendEmailToFromConsole);
+                new Sender().send(subject, text.toString(), Common.emailFrom, Common.emailFromPwd,
+                        ConsoleSearch.sendEmailToFromConsole);
                 System.out.println("e-mail sent successfully");
             } catch (MessagingException e) {
                 e.printStackTrace();
             }
         }
     }
-
-    // Считывание настроек почты из файла
-    private void getEmailSettingsFromFile() {
-        try {
-            for (String s : Files.readAllLines(Paths.get(Common.CONFIG_FILE))) {
-                if (s.startsWith("from_pwd=")) {
-                    fromPwd = s.replace("from_pwd=", "");
-
-                } else if (s.startsWith("from_adr=")) {
-                    fromAdr = s.replace("from_adr=", "");
-                }
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
 }
