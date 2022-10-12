@@ -665,23 +665,15 @@ public class Gui extends JFrame {
         openDialog(excludedLabel, "exclDlg");
 
         /* BOTTOM RIGHT AREA */
-        //send e-mail to - label
-        JLabel lblSendToEmail = new JLabel();
-        lblSendToEmail.setText("send to");
-        lblSendToEmail.setForeground(new Color(255, 255, 153));
-        lblSendToEmail.setFont(GUI_FONT);
-        lblSendToEmail.setBounds(880, 504, 36, 14);
-        getContentPane().add(lblSendToEmail);
-
         //send e-mail to
         sendEmailTo = new JTextField("enter your email");
-        sendEmailTo.setBounds(879, 519, 142, 21);
+        sendEmailTo.setBounds(880, 518, 142, 21);
         sendEmailTo.setFont(GUI_FONT);
         getContentPane().add(sendEmailTo);
 
         //Send current results e-mail
         sendEmailBtn = new JButton();
-        setButton = new SetButton(Icons.SEND_EMAIL_ICON, new Color(255, 255, 153), 1020, 518);
+        setButton = new SetButton(Icons.SEND_EMAIL_ICON, new Color(255, 255, 153), 1020, 517);
         setButton.buttonSetting(sendEmailBtn, "Send current search results");
         sendEmailBtn.setFocusable(false);
         sendEmailBtn.setContentAreaFilled(false);
