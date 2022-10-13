@@ -785,7 +785,7 @@ public class Gui extends JFrame {
 
                 Common.delSettings("db");
                 Common.writeToConfigTxt("db", pathToDatabase.getText());
-                jdbcQueries.updateSettings("db", pathToDatabase.getText());
+                jdbcQueries.updateSettings("db_path", pathToDatabase.getText());
             }
         });
         animation(settingsDirectoryBtn, "settings");
