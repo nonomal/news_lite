@@ -7,6 +7,7 @@ import search.ConsoleSearch;
 import search.Search;
 import utils.Common;
 
+import javax.mail.AuthenticationFailedException;
 import javax.mail.MessagingException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -18,8 +19,9 @@ public class EmailManager {
 
     // Отправка письма
     public void sendMessage() {
-        if (!ConsoleSearch.IS_CONSOLE_SEARCH.get()) {
+        Common.getSettings();
 
+        if (!ConsoleSearch.IS_CONSOLE_SEARCH.get()) {
             if (!Common.emailFrom.contains("@")||!Common.emailTo.contains("@")) {
                 Common.console("incorrect e-mail");
                 return;
@@ -31,17 +33,15 @@ public class EmailManager {
                 text.append(i++).append(") ").append(s).append("\n\n");
             }
             try {
-                // чтобы не было задвоений в настройках - удаляем старую почту и записываем новую при отправке
-//                try {
-//                    Common.delSettings("email_to=");
-//                } catch (IOException e) {
-//                    e.printStackTrace();
-//                }
-
                 //отправка
                 new Sender().send(subject, text.toString(), Common.emailFrom, Common.emailFromPwd, Common.emailTo);
                 Common.console("e-mail sent successfully");
                 Gui.sendEmailBtn.setIcon(Icons.WHEN_SENT_ICON);
+                Common.IS_SENDING.set(true);
+                Search.isSearchFinished.set(true);
+                Gui.progressBar.setValue(100);
+            } catch (AuthenticationFailedException e) {
+                Common.console("Неверный пароль или почта");
                 Common.IS_SENDING.set(true);
                 Search.isSearchFinished.set(true);
                 Gui.progressBar.setValue(100);

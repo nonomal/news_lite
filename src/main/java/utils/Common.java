@@ -18,10 +18,8 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.security.MessageDigest;
-import java.util.Calendar;
-import java.util.Date;
+import java.util.*;
 import java.util.List;
-import java.util.Objects;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.stream.Stream;
 
@@ -202,53 +200,44 @@ public class Common {
         }
     }
 
-    // Получить путь к базе данных (в config.txt можно поменять путь к БД)
-    public String getPathToDatabase() {
-        File file = null;
-        try {
-            for (String s : Files.readAllLines(Paths.get(CONFIG_FILE))) {
-                if (s.startsWith("db_path="))
-                    file = new File(s.replace("db_path=", ""));
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        assert file != null;
-        return file.getPath();
-    }
-
     // Считывание конфигураций до запуска интерфейса
     public void getSettingsBeforeGui() {
-        try {
-            for (String s : Files.readAllLines(Paths.get(CONFIG_FILE))) {
-                if (s.startsWith("transparency="))
-                    transparency = Float.parseFloat(s.replace("transparency=", ""));
-                else if (s.startsWith("fontColorRed="))
-                    GUI_FONT[0] = Integer.parseInt(s.replace("fontColorRed=", ""));
-                else if (s.startsWith("fontColorGreen="))
-                    GUI_FONT[1] = Integer.parseInt(s.replace("fontColorGreen=", ""));
-                else if (s.startsWith("fontColorBlue="))
-                    GUI_FONT[2] = Integer.parseInt(s.replace("fontColorBlue=", ""));
-                else if (s.startsWith("backgroundColorRed="))
-                    GUI_BACKGROUND[0] = Integer.parseInt(s.replace("backgroundColorRed=", ""));
-                else if (s.startsWith("backgroundColorGreen="))
-                    GUI_BACKGROUND[1] = Integer.parseInt(s.replace("backgroundColorGreen=", ""));
-                else if (s.startsWith("backgroundColorBlue="))
-                    GUI_BACKGROUND[2] = Integer.parseInt(s.replace("backgroundColorBlue=", ""));
+        //for (String s : Files.readAllLines(Paths.get(CONFIG_FILE))) {
+        for (Map.Entry<String, String> s : new JdbcQueries().getSettings().entrySet()) {
+            switch (s.getKey()) {
+                case "transparency":
+                    transparency = Float.parseFloat(s.getValue());
+                    break;
+                case "fontColorRed":
+                    GUI_FONT[0] = Integer.parseInt(s.getValue());
+                    break;
+                case "fontColorGreen":
+                    GUI_FONT[1] = Integer.parseInt(s.getValue());
+                    break;
+                case "fontColorBlue":
+                    GUI_FONT[2] = Integer.parseInt(s.getValue());
+                    break;
+                case "backgroundColorRed":
+                    GUI_BACKGROUND[0] = Integer.parseInt(s.getValue());
+                    break;
+                case "backgroundColorGreen":
+                    GUI_BACKGROUND[1] = Integer.parseInt(s.getValue());
+                    break;
+                case "backgroundColorBlue":
+                    GUI_BACKGROUND[2] = Integer.parseInt(s.getValue());
+                    break;
             }
-        } catch (IOException e) {
-            e.printStackTrace();
         }
     }
 
     // Считывание конфигураций после запуска интерфейса
     public void getSettingsAfterGui() {
-        try {
-            words = new JdbcQueries().getRandomWords();
+        words = new JdbcQueries().getRandomWords();
 
-            for (String s : Files.readAllLines(Paths.get(CONFIG_FILE))) {
-                if (s.startsWith("interval=")) {
-                    String interval = s.replace("interval=", "");
+        for (Map.Entry<String, String> s : new JdbcQueries().getSettings().entrySet()) {
+            switch (s.getKey()) {
+                case "interval":
+                    String interval = s.getValue();
                     switch (interval) {
                         case "1h":
                             Gui.newsInterval.setSelectedItem(interval.replace("h", "") + " hour");
@@ -267,39 +256,56 @@ public class Common {
                             Gui.newsInterval.setSelectedItem(interval.replace("h", "") + " hours");
                             break;
                     }
-                }
-                if (s.startsWith("checkbox:filterNewsChbx=")) {
-                    Gui.onlyNewNews.setState(Boolean.parseBoolean(s.replace("checkbox:filterNewsChbx=", "")));
-                } else if (s.startsWith("checkbox:autoSendChbx=")) {
-                    Gui.autoSendMessage.setState(Boolean.parseBoolean(s.replace("checkbox:autoSendChbx=", "")));
-                } else if (s.startsWith("translate-url=")) {
-                    SCRIPT_URL = s.replace("translate-url=", "");
-                }
-                getSettings();
+                    break;
+                case "checkbox:filterNewsChbx":
+                    Gui.onlyNewNews.setState(Boolean.parseBoolean(s.getValue()));
+                    break;
+                case "checkbox:autoSendChbx":
+                    Gui.autoSendMessage.setState(Boolean.parseBoolean(s.getValue()));
+                    break;
+                case "translate-url":
+                    SCRIPT_URL = s.getValue();
+                    break;
             }
-            Gui.isOnlyLastNews = Gui.onlyNewNews.getState();
+        }
+        getSettings();
+        Gui.isOnlyLastNews = Gui.onlyNewNews.getState();
+    }
+
+    // Получить путь к базе данных (в config.txt можно поменять путь к БД)
+    public String getPathToDatabase() {
+        File file = null;
+        try {
+            for (String s : Files.readAllLines(Paths.get(CONFIG_FILE))) {
+                if (s.startsWith("db_path="))
+                    file = new File(s.replace("db_path=", ""));
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }
+        assert file != null;
+        return file.getPath();
     }
 
     // Считывание конфигураций после запуска интерфейса
     public void getSettings() {
-        try {
-            for (String s : Files.readAllLines(Paths.get(CONFIG_FILE))) {
-                if (s.startsWith("email_from=")) {
-                    emailFrom = s.replace("email_from=", "");
-                } else if (s.startsWith("from_pwd=")) {
-                    emailFromPwd = s.replace("from_pwd=", "");
-                } else if (s.startsWith("email_to=")) {
-                    emailTo = s.replace("email_to=", "");
-                } else if (s.startsWith("transparency="))
-                    transparency = Float.parseFloat(s.replace("transparency=", ""));
-                getPathToDatabase();
+        //for (String s : Files.readAllLines(Paths.get(CONFIG_FILE))) {
+        for (Map.Entry<String, String> s : new JdbcQueries().getSettings().entrySet()) {
+            switch (s.getKey()) {
+                case "email_from":
+                    emailFrom = s.getValue();
+                    break;
+                case "from_pwd":
+                    emailFromPwd = s.getValue();
+                    break;
+                case "email_to":
+                    emailTo = s.getValue();
+                    break;
+                case "transparency":
+                    transparency = Float.parseFloat(s.getValue());
+                    break;
             }
-            Gui.isOnlyLastNews = Gui.onlyNewNews.getState();
-        } catch (IOException e) {
-            e.printStackTrace();
+            getPathToDatabase();
         }
     }
 

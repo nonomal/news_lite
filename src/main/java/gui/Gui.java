@@ -761,7 +761,7 @@ public class Gui extends JFrame {
             Common.getSettings();
 
             JTextField emailFrom = new JTextField(Common.emailFrom);
-            JTextField emailFromPwd = new JTextField(Common.emailFromPwd);
+            JPasswordField emailFromPwd = new JPasswordField(Common.emailFromPwd);
             JTextField emailTo = new JTextField(Common.emailTo);
             JTextField transparency = new JTextField();
             transparency.setText(String.valueOf(Common.transparency));
@@ -778,19 +778,12 @@ public class Gui extends JFrame {
             int result = JOptionPane.showConfirmDialog(null, newSource,
                     "Settings", JOptionPane.OK_CANCEL_OPTION, JOptionPane.INFORMATION_MESSAGE);
             if (result == JOptionPane.OK_OPTION) {
-                Common.delSettings("email_to");
-                Common.delSettings("email_from");
-                Common.delSettings("from_pwd");
-                Common.delSettings("transparency");
-                Common.delSettings("db");
-
-                Common.writeToConfig(emailTo.getText(), "email_to");
-                Common.writeToConfig(emailFrom.getText(), "email_from");
-                Common.writeToConfig(emailFromPwd.getText(), "from_pwd");
-                Common.writeToConfig(transparency.getText(), "transparency");
-                Common.writeToConfig(pathToDatabase.getText(), "db");
+                jdbcQueries.updateSettings("email_to", emailTo.getText());
+                jdbcQueries.updateSettings("email_from", emailFrom.getText());
+                jdbcQueries.updateSettings("from_pwd", String.valueOf(emailFromPwd.getPassword()));
+                jdbcQueries.updateSettings("transparency", transparency.getText());
+                jdbcQueries.updateSettings("db", pathToDatabase.getText());
             }
-
         });
         animation(settingsDirectoryBtn, "settings");
 

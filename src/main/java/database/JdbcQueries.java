@@ -4,13 +4,14 @@ import gui.Gui;
 import model.*;
 import utils.Common;
 
-import javax.swing.*;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 public class JdbcQueries {
     private static final int WORD_FREQ_MATCHES = 2;
@@ -168,6 +169,20 @@ public class JdbcQueries {
         }
     }
 
+    // Обновление настроек
+    public void updateSettings(String key, String value) {
+        try {
+            String query = "UPDATE settings SET value = ? WHERE key = ?";
+            PreparedStatement statement = connection.prepareStatement(query);
+            statement.setString(1, value);
+            statement.setString(2, key);
+            statement.executeUpdate();
+            statement.close();
+        } catch (Exception e) {
+            Common.console("updateSettings error: " + e.getMessage());
+        }
+    }
+
     /* SELECT */
     // Источники новостей
     public List<Source> getSources(String type) {
@@ -199,6 +214,50 @@ public class JdbcQueries {
             Common.console("getSources error: " + e.getMessage());
         }
         return sources;
+    }
+
+    // Список настроек
+    public Map<String, String> getSettings() {
+        Map<String, String> settings = new LinkedHashMap<>();
+        String query = "SELECT key, value FROM settings ORDER BY id";
+
+        try {
+            PreparedStatement statement = connection.prepareStatement(query);
+            ResultSet rs = statement.executeQuery();
+
+            while (rs.next()) {
+                settings.put(
+                        rs.getString("key"),
+                        rs.getString("value")
+                );
+            }
+            rs.close();
+            statement.close();
+        } catch (Exception e) {
+            Common.console("getSettings error: " + e.getMessage());
+        }
+        return settings;
+    }
+
+    // Конкретная настройка
+    public String getSettingValueByKey(String key) {
+        String value = null;
+        String query = "SELECT value FROM settings WHERE key = ?";
+
+        try {
+            PreparedStatement statement = connection.prepareStatement(query);
+            statement.setString(1, key);
+            ResultSet rs = statement.executeQuery();
+
+            while (rs.next()) {
+                value = rs.getString("value");
+            }
+            rs.close();
+            statement.close();
+        } catch (Exception e) {
+            Common.console("getSettingValueByKey error: " + e.getMessage());
+        }
+        return value;
     }
 
     // Список исключённые из анализа слова
