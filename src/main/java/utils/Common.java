@@ -159,7 +159,6 @@ public class Common {
             switch (s.getKey()) {
                 case "interval":
                     String interval = s.getValue();
-                    System.out.println("1 = " + s.getValue());
                     switch (interval) {
                         case "1h":
                             Gui.newsInterval.setSelectedItem(interval.replace("h", "") + " hour");
