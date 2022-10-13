@@ -530,7 +530,7 @@ public class Gui extends JFrame {
         // Открыть список ключевых слов для поиска
         btnShowKeywordsList = new JButton();
         btnShowKeywordsList.setBorderPainted(false);
-        setButton = new SetButton(Icons.LIST_BUTTON_ICON, null, bottomLeftX - 3, bottomLeftY );
+        setButton = new SetButton(Icons.LIST_BUTTON_ICON, null, bottomLeftX - 3, bottomLeftY);
         setButton.buttonSetting(btnShowKeywordsList, null);
         btnShowKeywordsList.addActionListener(e -> new Dialogs("keywordsDlg"));
         animation(btnShowKeywordsList, Icons.LIST_BUTTON_ICON, Icons.WHEN_MOUSE_ON_LIST_BUTTON_ICON);
@@ -743,23 +743,17 @@ public class Gui extends JFrame {
 
         //Открыть папку с настройками "files"
         JButton settingsDirectoryBtn = new JButton();
+        settingsDirectoryBtn.setIcon(Icons.SETTINGS_BUTTON_ICON);
         settingsDirectoryBtn.setFocusable(false);
         settingsDirectoryBtn.setContentAreaFilled(true);
         settingsDirectoryBtn.setBorderPainted(false);
         settingsDirectoryBtn.setBackground(new Color(219, 229, 252));
         settingsDirectoryBtn.setBounds(940, 479, 14, 14);
         getContentPane().add(settingsDirectoryBtn);
+        animation(settingsDirectoryBtn, "settings");
+
         settingsDirectoryBtn.addActionListener(e -> {
-//            if (Desktop.isDesktopSupported() && Desktop.getDesktop().isSupported(Desktop.Action.OPEN)) {
-//                try {
-//                    Desktop.getDesktop().open(new File(Common.DIRECTORY_PATH));
-//                } catch (IOException io) {
-//                    io.printStackTrace();
-//                }
-//            }
-
             Common.getSettings();
-
             JTextField emailFrom = new JTextField(Common.emailFrom);
             JPasswordField emailFromPwd = new JPasswordField(Common.emailFromPwd);
             JTextField emailTo = new JTextField(Common.emailTo);
@@ -788,10 +782,9 @@ public class Gui extends JFrame {
                 jdbcQueries.updateSettings("db_path", pathToDatabase.getText());
             }
         });
-        animation(settingsDirectoryBtn, "settings");
 
         // Источники, sqlite лейбл
-        lblLogSourceSqlite = new JLabel("settings");
+        lblLogSourceSqlite = new JLabel("");
         lblLogSourceSqlite.setForeground(Color.WHITE);
         lblLogSourceSqlite.setFont(GUI_FONT);
         lblLogSourceSqlite.setBounds(961, 479, 70, 14);
@@ -989,7 +982,7 @@ public class Gui extends JFrame {
 
             @Override
             public void mouseExited(MouseEvent e) {
-                lblLogSourceSqlite.setText("settings");
+                lblLogSourceSqlite.setText("");
             }
         });
     }

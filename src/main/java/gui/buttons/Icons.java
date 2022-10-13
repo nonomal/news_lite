@@ -61,4 +61,6 @@ public class Icons {
             .createImage(Icons.class.getResource("/icons/maps.png")));
     public static final ImageIcon TRADING_BUTTON_ICON = new ImageIcon(Toolkit.getDefaultToolkit()
             .createImage(Icons.class.getResource("/icons/trading.png")));
+    public static final ImageIcon SETTINGS_BUTTON_ICON = new ImageIcon(Toolkit.getDefaultToolkit()
+            .createImage(Icons.class.getResource("/icons/settings.png")));
 }
