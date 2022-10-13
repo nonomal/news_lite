@@ -112,7 +112,7 @@ public class Common {
     public void writeToConfigTxt(String key, String value) {
         try (OutputStreamWriter writer = new OutputStreamWriter(new FileOutputStream(CONFIG_FILE, true),
                 StandardCharsets.UTF_8)) {
-            if ("db".equals(key)) {
+            if ("db_path".equals(key)) {
                 String text = "db_path=" + value + "\n";
                 writer.write(text);
             }
@@ -160,10 +160,10 @@ public class Common {
                 case "interval":
                     intervalMapper(s.getValue());
                     break;
-                case "checkbox:filterNewsChbx":
+                case "onlyNewNews":
                     Gui.onlyNewNews.setState(Boolean.parseBoolean(s.getValue()));
                     break;
-                case "checkbox:autoSendChbx":
+                case "autoSendMessage":
                     Gui.autoSendMessage.setState(Boolean.parseBoolean(s.getValue()));
                     break;
                 case "translate-url":
@@ -220,8 +220,8 @@ public class Common {
                 .replace(" min", "m");
 
         jdbcQueries.updateSettings("interval", interval);
-        jdbcQueries.updateSettings("checkbox:filterNewsChbx", String.valueOf(Gui.onlyNewNews.getState()));
-        jdbcQueries.updateSettings("checkbox:autoSendChbx", String.valueOf(Gui.autoSendMessage.getState()));
+        jdbcQueries.updateSettings("onlyNewNews", String.valueOf(Gui.onlyNewNews.getState()));
+        jdbcQueries.updateSettings("autoSendMessage", String.valueOf(Gui.autoSendMessage.getState()));
     }
 
     // Удаление ключевого слова из combo box

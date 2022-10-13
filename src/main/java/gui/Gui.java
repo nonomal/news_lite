@@ -783,8 +783,8 @@ public class Gui extends JFrame {
                 jdbcQueries.updateSettings("from_pwd", String.valueOf(emailFromPwd.getPassword()));
                 jdbcQueries.updateSettings("transparency", transparency.getText());
 
-                Common.delSettings("db");
-                Common.writeToConfigTxt("db", pathToDatabase.getText());
+                Common.delSettings("db_path");
+                Common.writeToConfigTxt("db_path", pathToDatabase.getText());
                 jdbcQueries.updateSettings("db_path", pathToDatabase.getText());
             }
         });
