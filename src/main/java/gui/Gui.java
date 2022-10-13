@@ -608,8 +608,9 @@ public class Gui extends JFrame {
         getContentPane().add(consoleTextArea);
 
         //Console - scroll
-        JScrollPane consoleScroll = new JScrollPane(consoleTextArea, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-        consoleScroll.setBounds(879, 303, 290, 142);
+        JScrollPane consoleScroll = new JScrollPane(consoleTextArea, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
+                JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+        consoleScroll.setBounds(879, 303, 290, 148);
         consoleScroll.setBorder(null);
         getContentPane().add(consoleScroll);
 
@@ -619,7 +620,7 @@ public class Gui extends JFrame {
         clearConsoleLabel.setText("clear");
         clearConsoleLabel.setForeground(new Color(255, 255, 153));
         clearConsoleLabel.setFont(GUI_FONT);
-        clearConsoleLabel.setBounds(1145, 447, 24, 14);
+        clearConsoleLabel.setBounds(1145, 452, 24, 14);
         getContentPane().add(clearConsoleLabel);
         clearConsoleLabel.addMouseListener(new MouseAdapter() {
             @Override
