@@ -791,7 +791,7 @@ public class Gui extends JFrame {
         animation(settingsDirectoryBtn, "settings");
 
         // Источники, sqlite лейбл
-        lblLogSourceSqlite = new JLabel();
+        lblLogSourceSqlite = new JLabel("settings");
         lblLogSourceSqlite.setForeground(Color.WHITE);
         lblLogSourceSqlite.setFont(GUI_FONT);
         lblLogSourceSqlite.setBounds(961, 479, 70, 14);
@@ -989,7 +989,7 @@ public class Gui extends JFrame {
 
             @Override
             public void mouseExited(MouseEvent e) {
-                lblLogSourceSqlite.setText("");
+                lblLogSourceSqlite.setText("settings");
             }
         });
     }
