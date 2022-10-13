@@ -784,7 +784,7 @@ public class Gui extends JFrame {
                 jdbcQueries.updateSettings("transparency", transparency.getText());
 
                 Common.delSettings("db");
-                Common.writeToConfig(pathToDatabase.getText(), "db");
+                Common.writeToConfigTxt("db", pathToDatabase.getText());
                 jdbcQueries.updateSettings("db", pathToDatabase.getText());
             }
         });

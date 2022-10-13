@@ -77,7 +77,7 @@ public class Common {
         File dbIsExists = new File(pathToDatabase);
         if (!dbIsExists.exists()) {
             copyFiles(Common.class.getResource("/news.db"), pathToDatabase);
-            writeToConfig(pathToDatabase, "db");
+            writeToConfigTxt(pathToDatabase, "db");
         }
 
         File sqliteExeIsExists = new File(DIRECTORY_PATH + "sqlite3.exe");
@@ -109,68 +109,13 @@ public class Common {
     }
 
     // Запись конфигураций приложения
-    public void writeToConfig(String value, String type) {
+    public void writeToConfigTxt(String key, String value) {
         try (OutputStreamWriter writer = new OutputStreamWriter(new FileOutputStream(CONFIG_FILE, true),
                 StandardCharsets.UTF_8)) {
-            switch (type) {
+            switch (key) {
                 case "db": {
                     String text = "\ndb_path=" + value + "\n";
                     writer.write(text);
-                    break;
-                }
-                case "keyword": {
-                    String text = "keyword=" + value + "\n";
-                    writer.write(text);
-                    break;
-                }
-                case "fontColorRed": {
-                    String text = "fontColorRed=" + value + "\n";
-                    writer.write(text);
-                    break;
-                }
-                case "fontColorGreen": {
-                    String text = "fontColorGreen=" + value + "\n";
-                    writer.write(text);
-                    break;
-                }
-                case "fontColorBlue": {
-                    String text = "fontColorBlue=" + value + "\n";
-                    writer.write(text);
-                    break;
-                }
-                case "backgroundColorRed": {
-                    String text = "backgroundColorRed=" + value + "\n";
-                    writer.write(text);
-                    break;
-                }
-                case "backgroundColorGreen": {
-                    String text = "backgroundColorGreen=" + value + "\n";
-                    writer.write(text);
-                    break;
-                }
-                case "backgroundColorBlue": {
-                    String text = "backgroundColorBlue=" + value + "\n";
-                    writer.write(text);
-                    break;
-                }
-                case "email_from": {
-                    String text = "email_from=" + value;
-                    writer.write(text.trim() + "\n");
-                    break;
-                }
-                case "from_pwd": {
-                    String text = "from_pwd=" + value;
-                    writer.write(text.trim() + "\n");
-                    break;
-                }
-                case "email_to": {
-                    String text = "email_to=" + value;
-                    writer.write(text.trim() + "\n");
-                    break;
-                }
-                case "transparency": {
-                    String text = "transparency=" + value + "f";
-                    writer.write(text.trim() + "\n");
                     break;
                 }
                 case "interval": {
@@ -178,19 +123,6 @@ public class Common {
                             .replace("s", "")
                             .replace(" min", "m");
                     writer.write(text + "\n");
-                    break;
-                }
-                case "checkbox": {
-                    String text = null;
-                    switch (value) {
-                        case "filterNewsChbx":
-                            text = "checkbox:" + value + "=" + Gui.onlyNewNews.getState() + "\n";
-                            break;
-                        case "autoSendChbx":
-                            text = "checkbox:" + value + "=" + Gui.autoSendMessage.getState() + "\n";
-                            break;
-                    }
-                    if (text != null) writer.write(text);
                     break;
                 }
             }
@@ -202,7 +134,6 @@ public class Common {
 
     // Считывание конфигураций до запуска интерфейса
     public void getSettingsBeforeGui() {
-        //for (String s : Files.readAllLines(Paths.get(CONFIG_FILE))) {
         for (Map.Entry<String, String> s : new JdbcQueries().getSettings().entrySet()) {
             switch (s.getKey()) {
                 case "transparency":
@@ -238,6 +169,7 @@ public class Common {
             switch (s.getKey()) {
                 case "interval":
                     String interval = s.getValue();
+                    System.out.println("1 = " + s.getValue());
                     switch (interval) {
                         case "1h":
                             Gui.newsInterval.setSelectedItem(interval.replace("h", "") + " hour");
@@ -289,7 +221,6 @@ public class Common {
 
     // Считывание конфигураций после запуска интерфейса
     public void getSettings() {
-        //for (String s : Files.readAllLines(Paths.get(CONFIG_FILE))) {
         for (Map.Entry<String, String> s : new JdbcQueries().getSettings().entrySet()) {
             switch (s.getKey()) {
                 case "email_from":
@@ -311,16 +242,15 @@ public class Common {
 
     // сохранение состояния окна в config.txt
     public void saveState() {
-        // delete old values
-        Common.delSettings("interval");
-        Common.delSettings("checkbox");
-        // write new values
-        writeToConfig(String.valueOf(Gui.newsInterval.getSelectedItem()), "interval");
-        writeToConfig("todayOrNotChbx", "checkbox");
-        writeToConfig("checkTitle", "checkbox");
-        writeToConfig("checkLink", "checkbox");
-        writeToConfig("filterNewsChbx", "checkbox");
-        writeToConfig("autoSendChbx", "checkbox");
+        JdbcQueries jdbcQueries = new JdbcQueries();
+        String interval = Gui.newsInterval.getSelectedItem().toString()
+                .replace(" hour", "h")
+                .replace("s", "")
+                .replace(" min", "m");
+
+        jdbcQueries.updateSettings("interval", interval);
+        jdbcQueries.updateSettings("checkbox:filterNewsChbx", String.valueOf(Gui.onlyNewNews.getState()));
+        jdbcQueries.updateSettings("checkbox:autoSendChbx", String.valueOf(Gui.autoSendMessage.getState()));
     }
 
     // Удаление ключевого слова из combo box
@@ -452,22 +382,20 @@ public class Common {
         }
     }
 
+    // цвет шрифта
     public void saveFontColor(Color color) throws IOException {
-        delSettings("fontColorRed");
-        delSettings("fontColorGreen");
-        delSettings("fontColorBlue");
-        writeToConfig(String.valueOf(color.getRed()), "fontColorRed");
-        writeToConfig(String.valueOf(color.getGreen()), "fontColorGreen");
-        writeToConfig(String.valueOf(color.getBlue()), "fontColorBlue");
+        JdbcQueries jdbcQueries = new JdbcQueries();
+        jdbcQueries.updateSettings("fontColorRed", String.valueOf(color.getRed()));
+        jdbcQueries.updateSettings("fontColorGreen", String.valueOf(color.getGreen()));
+        jdbcQueries.updateSettings("fontColorBlue", String.valueOf(color.getBlue()));
     }
 
+    // цвет фона таблицы
     public void saveBackgroundColor(Color color) throws IOException {
-        delSettings("backgroundColorRed");
-        delSettings("backgroundColorGreen");
-        delSettings("backgroundColorBlue");
-        writeToConfig(String.valueOf(color.getRed()), "backgroundColorRed");
-        writeToConfig(String.valueOf(color.getGreen()), "backgroundColorGreen");
-        writeToConfig(String.valueOf(color.getBlue()), "backgroundColorBlue");
+        JdbcQueries jdbcQueries = new JdbcQueries();
+        jdbcQueries.updateSettings("backgroundColorRed", String.valueOf(color.getRed()));
+        jdbcQueries.updateSettings("backgroundColorGreen", String.valueOf(color.getGreen()));
+        jdbcQueries.updateSettings("backgroundColorBlue", String.valueOf(color.getBlue()));
     }
 
     // преобразование строки в строку с хэш-кодом
