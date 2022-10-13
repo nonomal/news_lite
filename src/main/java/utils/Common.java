@@ -77,7 +77,7 @@ public class Common {
         File dbIsExists = new File(pathToDatabase);
         if (!dbIsExists.exists()) {
             copyFiles(Common.class.getResource("/news.db"), pathToDatabase);
-            writeToConfigTxt(pathToDatabase, "db");
+            writeToConfigTxt("db", pathToDatabase);
         }
 
         File sqliteExeIsExists = new File(DIRECTORY_PATH + "sqlite3.exe");
@@ -112,19 +112,9 @@ public class Common {
     public void writeToConfigTxt(String key, String value) {
         try (OutputStreamWriter writer = new OutputStreamWriter(new FileOutputStream(CONFIG_FILE, true),
                 StandardCharsets.UTF_8)) {
-            switch (key) {
-                case "db": {
-                    String text = "\ndb_path=" + value + "\n";
-                    writer.write(text);
-                    break;
-                }
-                case "interval": {
-                    String text = "interval=" + value.replace(" hour", "h")
-                            .replace("s", "")
-                            .replace(" min", "m");
-                    writer.write(text + "\n");
-                    break;
-                }
+            if ("db".equals(key)) {
+                String text = "db_path=" + value + "\n";
+                writer.write(text);
             }
             writer.flush();
         } catch (IOException ex) {
