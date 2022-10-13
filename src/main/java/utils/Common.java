@@ -158,25 +158,7 @@ public class Common {
         for (Map.Entry<String, String> s : new JdbcQueries().getSettings().entrySet()) {
             switch (s.getKey()) {
                 case "interval":
-                    String interval = s.getValue();
-                    switch (interval) {
-                        case "1h":
-                            Gui.newsInterval.setSelectedItem(interval.replace("h", "") + " hour");
-                            break;
-                        case "1m":
-                        case "5m":
-                        case "15m":
-                        case "30m":
-                        case "45m":
-                            Gui.newsInterval.setSelectedItem(interval.replace("m", "") + " min");
-                            break;
-                        case "all":
-                            Gui.newsInterval.setSelectedItem("all");
-                            break;
-                        default:
-                            Gui.newsInterval.setSelectedItem(interval.replace("h", "") + " hours");
-                            break;
-                    }
+                    intervalMapper(s.getValue());
                     break;
                 case "checkbox:filterNewsChbx":
                     Gui.onlyNewNews.setState(Boolean.parseBoolean(s.getValue()));
@@ -401,6 +383,28 @@ public class Common {
             return hexString.toString();
         } catch (Exception ex) {
             throw new RuntimeException(ex);
+        }
+    }
+
+    // преобразование интервала
+    private static void intervalMapper(String interval) {
+        switch (interval) {
+            case "1h":
+                Gui.newsInterval.setSelectedItem(interval.replace("h", "") + " hour");
+                break;
+            case "1m":
+            case "5m":
+            case "15m":
+            case "30m":
+            case "45m":
+                Gui.newsInterval.setSelectedItem(interval.replace("m", "") + " min");
+                break;
+            case "all":
+                Gui.newsInterval.setSelectedItem("all");
+                break;
+            default:
+                Gui.newsInterval.setSelectedItem(interval.replace("h", "") + " hours");
+                break;
         }
     }
 }
