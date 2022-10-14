@@ -173,7 +173,8 @@ public class Search {
                 // итоги в трей
                 if (newsCount != 0 && newsCount != modelRowCount && Gui.GUI_IN_TRAY.get())
                     Common.trayMessage("News found: " + newsCount);
-                Gui.sendEmailBtn.setVisible(true);
+
+                if (Gui.model.getRowCount() > 0) Gui.sendEmailBtn.setVisible(true);
 
                 if (isWord) {
                     Gui.searchBtnTop.setVisible(true);
