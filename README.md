@@ -10,7 +10,7 @@
 
 Для работы приложения на ПК должна быть установлена Java: https://www.java.com/ru/download/
 
-![demo](https://user-images.githubusercontent.com/45883640/195603988-4daaacf0-35df-4543-ac8a-2fadbcbe0a50.gif)
+![demo](https://user-images.githubusercontent.com/45883640/195786930-0f4d9ff5-a7ef-42cc-8864-ee04821a744a.gif)
 
 ----
 **Возможности программы:**
