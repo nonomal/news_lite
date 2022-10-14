@@ -178,9 +178,9 @@ public class Search {
 
                     int x;
                     if (newsCount < 10) {
-                        x = 1002;
+                        x = 1008;
                     } else if (newsCount < 100) {
-                        x = 1015;
+                        x = 1020;
                     } else if (newsCount >= 100 && newsCount < 1000) {
                         x = 1033;
                     } else {
