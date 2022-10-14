@@ -169,6 +169,7 @@ public class Search {
                         Duration.between(timeStart, LocalTime.now()).getSeconds() + " s.");
                 isSearchNow.set(false);
 
+                // Итоги поиска
                 if (isWord) {
                     int excludedPercent = (int) Math.round((excludedCount / ((double) newsCount + excludedCount)) * 100);
                     Gui.labelSum.setText("total: " + newsCount + ", excluded: " + excludedCount + " ("
