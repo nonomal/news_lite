@@ -171,10 +171,11 @@ public class Search {
 
                 // Итоги поиска
                 if (isWord) {
-                    int excludedPercent = (int) Math.round((excludedCount / ((double) newsCount + excludedCount)) * 100);
-
-                    Gui.labelSum.setText("total: " + newsCount + ", excluded: " + excludedCount + " ("
-                            + excludedPercent + "%)");
+                    int excludedPercent = (int) Math.round((excludedCount / ((double) newsCount
+                            + excludedCount)) * 100);
+                    String label = String.format("total: %d, excluded: %d (%s)", newsCount, excludedCount,
+                            excludedPercent + "%");
+                    Gui.labelSum.setText(label);
 
                     int x;
                     if (newsCount < 10) {
