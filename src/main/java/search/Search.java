@@ -172,9 +172,22 @@ public class Search {
                 // Итоги поиска
                 if (isWord) {
                     int excludedPercent = (int) Math.round((excludedCount / ((double) newsCount + excludedCount)) * 100);
+
                     Gui.labelSum.setText("total: " + newsCount + ", excluded: " + excludedCount + " ("
                             + excludedPercent + "%)");
-                    Gui.sendCurrentResultsToEmail.setBounds(1038, 277, 30, 22);
+
+                    int x;
+                    if (newsCount < 10) {
+                        x = 1002;
+                    } else if (newsCount < 100) {
+                        x = 1015;
+                    } else if (newsCount >= 100 && newsCount < 1000) {
+                        x = 1033;
+                    } else {
+                        x = 1038;
+                    }
+                    Gui.sendCurrentResultsToEmail.setBounds(x, 277, 30, 22);
+
                 } else if (isWords) {
                     Gui.labelSum.setText("total: " + newsCount);
                     if (newsCount >= 100) {
