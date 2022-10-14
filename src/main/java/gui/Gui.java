@@ -60,7 +60,7 @@ public class Gui extends JFrame {
     public static JComboBox<String> newsInterval;
     public static JLabel labelSum, lblLogSourceSqlite, appInfo, excludedTitlesLabel, favoritesLabel,
             excludedLabel, datesLabel;
-    public static JButton searchBtnTop, searchBtnBottom, stopBtnTop, stopBtnBottom, sendEmailBtn, smiBtn,
+    public static JButton searchBtnTop, searchBtnBottom, stopBtnTop, stopBtnBottom, sendCurrentResultsToEmail, smiBtn,
             anotherBtn, btnShowKeywordsList;
     public static Checkbox autoUpdateNewsTop, autoUpdateNewsBottom, autoSendMessage, onlyNewNews;
     public static JProgressBar progressBar;
@@ -668,21 +668,21 @@ public class Gui extends JFrame {
         /* BOTTOM RIGHT AREA */
         //Amount of news
         labelSum = new JLabel();
-        labelSum.setBounds(880, 282, 120, 13);
+        labelSum.setBounds(880, 282, 180, 13);
         labelSum.setFont(GUI_FONT);
         labelSum.setForeground(new Color(255, 255, 153));
         labelSum.setBackground(new Color(240, 255, 240));
         getContentPane().add(labelSum);
 
         //Send current results e-mail
-        sendEmailBtn = new JButton();
-        sendEmailBtn.setVisible(false);
-        setButton = new SetButton(Icons.SEND_EMAIL_ICON, new Color(255, 255, 153), 930, 277);
-        setButton.buttonSetting(sendEmailBtn, "Send current search results");
-        sendEmailBtn.setFocusable(false);
-        sendEmailBtn.setContentAreaFilled(false);
-        sendEmailBtn.setBorderPainted(false);
-        sendEmailBtn.addActionListener(e -> {
+        sendCurrentResultsToEmail = new JButton();
+        sendCurrentResultsToEmail.setVisible(false);
+        setButton = new SetButton(Icons.SEND_EMAIL_ICON, new Color(255, 255, 153), 1038, 277);
+        setButton.buttonSetting(sendCurrentResultsToEmail, "Send current search results");
+        sendCurrentResultsToEmail.setFocusable(false);
+        sendCurrentResultsToEmail.setContentAreaFilled(false);
+        sendCurrentResultsToEmail.setBorderPainted(false);
+        sendCurrentResultsToEmail.addActionListener(e -> {
             if (model.getRowCount() > 0 && Common.emailTo.contains("@")) {
                 Common.console("sending e-mail");
                 Common.IS_SENDING.set(false);
@@ -691,8 +691,8 @@ public class Gui extends JFrame {
                 new Thread(email::sendMessage).start();
             }
         });
-        getContentPane().add(sendEmailBtn);
-        animation(sendEmailBtn, Icons.SEND_EMAIL_ICON, Icons.WHEN_MOUSE_ON_SEND_ICON);
+        getContentPane().add(sendCurrentResultsToEmail);
+        animation(sendCurrentResultsToEmail, Icons.SEND_EMAIL_ICON, Icons.WHEN_MOUSE_ON_SEND_ICON);
 
         // Диалоговое окно со списком источников "sources"
         smiBtn = new JButton();

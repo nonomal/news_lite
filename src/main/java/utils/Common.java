@@ -51,15 +51,6 @@ public class Common {
         SwingUtilities.invokeLater(runnable);
 
         getSettingsAfterGui();
-
-        // check internet
-        try {
-            if (!InternetAvailabilityChecker.isInternetAvailable()) {
-                console("no internet connection");
-            }
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
     }
 
     // создание файлов и директорий

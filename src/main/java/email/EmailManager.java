@@ -36,7 +36,7 @@ public class EmailManager {
                 //отправка
                 new Sender().send(subject, text.toString(), Common.emailFrom, Common.emailFromPwd, Common.emailTo);
                 Common.console("e-mail sent successfully");
-                Gui.sendEmailBtn.setIcon(Icons.WHEN_SENT_ICON);
+                Gui.sendCurrentResultsToEmail.setIcon(Icons.WHEN_SENT_ICON);
                 Common.IS_SENDING.set(true);
                 Search.isSearchFinished.set(true);
                 Gui.progressBar.setValue(100);

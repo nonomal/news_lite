@@ -44,7 +44,7 @@ public class Search {
 
             isSearchNow.set(true);
             Search.isStop.set(false);
-            Gui.sendEmailBtn.setVisible(false);
+            Gui.sendCurrentResultsToEmail.setVisible(false);
             LocalTime timeStart = LocalTime.now();
 
             int modelRowCount = Gui.model.getRowCount();
@@ -52,8 +52,9 @@ public class Search {
             if (!Gui.GUI_IN_TRAY.get()) Gui.model.setRowCount(0);
             if (!Gui.WAS_CLICK_IN_TABLE_FOR_ANALYSIS.get()) Gui.modelForAnalysis.setRowCount(0);
             newsCount = 0;
+            int excludedCount = 0;
             Gui.labelSum.setText("" + newsCount);
-            Gui.sendEmailBtn.setIcon(Icons.SEND_EMAIL_ICON);
+            Gui.sendCurrentResultsToEmail.setIcon(Icons.SEND_EMAIL_ICON);
             isSearchFinished = new AtomicBoolean(false);
 
             if (isWord) {
@@ -119,8 +120,13 @@ public class Search {
                                                 tableRow.getSource(),
                                                 tableRow.getDescribe());
 
+
                                         if (dateDiff != 0 && !tableRow.getTitle().contains("#")) {
                                             searchProcess(tableRow, searchType);
+                                        }
+
+                                        if (dateDiff != 0 && tableRow.getTitle().contains("#")) {
+                                            ++excludedCount;
                                         }
                                     }
                                 } else if (isWords) {
@@ -163,7 +169,20 @@ public class Search {
                         Duration.between(timeStart, LocalTime.now()).getSeconds() + " s.");
                 isSearchNow.set(false);
 
-                Gui.labelSum.setText("total: " + newsCount);
+                if (isWord) {
+                    int excludedPercent = (int) Math.round((excludedCount / ((double) newsCount + excludedCount)) * 100);
+                    Gui.labelSum.setText("total: " + newsCount + ", excluded: " + excludedCount + " ("
+                            + excludedPercent + "%)");
+                    Gui.sendCurrentResultsToEmail.setBounds(1038, 277, 30, 22);
+                } else if (isWords) {
+                    Gui.labelSum.setText("total: " + newsCount);
+                    if (newsCount >= 100) {
+                        Gui.sendCurrentResultsToEmail.setBounds(923, 277, 30, 22);
+                    } else {
+                        Gui.sendCurrentResultsToEmail.setBounds(917, 277, 30, 22);
+                    }
+
+                }
 
                 isSearchFinished.set(true);
                 Gui.progressBar.setValue(100);
@@ -172,9 +191,9 @@ public class Search {
 
                 // итоги в трей
                 if (newsCount != 0 && newsCount != modelRowCount && Gui.GUI_IN_TRAY.get())
-                    Common.trayMessage("News found: " + newsCount);
+                    Common.trayMessage("News found: " + newsCount + ", excluded: " + excludedCount);
 
-                if (Gui.model.getRowCount() > 0) Gui.sendEmailBtn.setVisible(true);
+                if (Gui.model.getRowCount() > 0) Gui.sendCurrentResultsToEmail.setVisible(true);
 
                 if (isWord) {
                     Gui.searchBtnTop.setVisible(true);
@@ -195,7 +214,7 @@ public class Search {
 
                 // Автоматическая отправка результатов
                 if (Gui.autoSendMessage.getState() && (Gui.model.getRowCount() > 0) && emailAndExcelData.size() > 0) {
-                    Gui.sendEmailBtn.doClick();
+                    Gui.sendCurrentResultsToEmail.doClick();
                 }
 
                 // Удаление дубликатов заголовков
