@@ -83,7 +83,7 @@ public class Search {
                                 String newsDescribe = entry.getDescription().getValue()
                                         .trim()
                                         .replaceAll(("<p>|</p>|<br />|&#"), "");
-                                if (isHref(newsDescribe)) newsDescribe = title;
+                                if (Common.isHref(newsDescribe)) newsDescribe = title;
 
                                 tableRow = new TableRow(
                                         source.getSource(),
@@ -177,16 +177,7 @@ public class Search {
                             excludedPercent + "%");
                     Gui.labelSum.setText(label);
 
-                    int x;
-                    if (newsCount < 10) {
-                        x = 1008;
-                    } else if (newsCount < 100) {
-                        x = 1020;
-                    } else if (newsCount >= 100 && newsCount < 1000) {
-                        x = 1033;
-                    } else {
-                        x = 1038;
-                    }
+                    int x = Common.getXForEmailIcon(label.length());
                     Gui.sendCurrentResultsToEmail.setBounds(x, 277, 30, 22);
 
                 } else if (isWords) {
@@ -201,8 +192,6 @@ public class Search {
 
                 isSearchFinished.set(true);
                 Gui.progressBar.setValue(100);
-                //Gui.table.setAutoCreateRowSorter(true);
-                //Gui.tableForAnalysis.setAutoCreateRowSorter(true);
 
                 // итоги в трей
                 if (newsCount != 0 && newsCount != modelRowCount && Gui.GUI_IN_TRAY.get())
@@ -269,17 +258,5 @@ public class Search {
         if (Gui.isOnlyLastNews) {
             jdbcQueries.addTitles(tableRow.getTitle(), searchType);
         }
-    }
-
-    private boolean isHref(String newsDescribe) {
-        return newsDescribe.contains("<img")
-                || newsDescribe.contains("href")
-                || newsDescribe.contains("<div")
-                || newsDescribe.contains("&#34")
-                || newsDescribe.contains("<p lang")
-                || newsDescribe.contains("&quot")
-                || newsDescribe.contains("<span")
-                || newsDescribe.contains("<ol")
-                || newsDescribe.equals("");
     }
 }

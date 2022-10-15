@@ -398,4 +398,51 @@ public class Common {
                 break;
         }
     }
+
+    // отсеивание описаний содержащих недопустимые символы
+    public boolean isHref(String newsDescribe) {
+        return newsDescribe.contains("<img")
+                || newsDescribe.contains("href")
+                || newsDescribe.contains("<div")
+                || newsDescribe.contains("&#34")
+                || newsDescribe.contains("<p lang")
+                || newsDescribe.contains("&quot")
+                || newsDescribe.contains("<span")
+                || newsDescribe.contains("<ol")
+                || newsDescribe.equals("");
+    }
+
+    // для красоты UI
+    public int getXForEmailIcon(int length) {
+        int x;
+        if (length == 26) {
+            x = 1003;
+        } else if (length == 27) {
+            x = 1009;
+        } else if (length == 28) {
+            x = 1015;
+        } else if (length == 29) {
+            x = 1021;
+        } else if (length == 30) {
+            x = 1027;
+        } else if (length == 31) {
+            x = 1033;
+        } else if (length == 32) {
+            x = 1039;
+        } else if (length == 33) {
+            x = 1045;
+        } else if (length == 34) {
+            x = 1051;
+        } else if (length == 35) {
+            x = 1057;
+        } else if (length == 36) {
+            x = 1063;
+        } else if (length == 37) {
+            x = 1069;
+        } else {
+            x = 1075;
+        }
+        return x;
+    }
+
 }
