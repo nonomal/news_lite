@@ -413,34 +413,36 @@ public class Common {
     }
 
     // для красоты UI
-    public int getXForEmailIcon(int length) {
+    public int getXForEmailIcon(int length, int startValue, int initX, int offset) {
         int x;
-        if (length == 26) {
-            x = 1003;
-        } else if (length == 27) {
-            x = 1009;
-        } else if (length == 28) {
-            x = 1015;
-        } else if (length == 29) {
-            x = 1021;
-        } else if (length == 30) {
-            x = 1027;
-        } else if (length == 31) {
-            x = 1033;
-        } else if (length == 32) {
-            x = 1039;
-        } else if (length == 33) {
-            x = 1045;
-        } else if (length == 34) {
-            x = 1051;
-        } else if (length == 35) {
-            x = 1057;
-        } else if (length == 36) {
-            x = 1063;
-        } else if (length == 37) {
-            x = 1069;
+        if (length == startValue) {
+            x = initX;
+        } else if (length == startValue + 1) {
+            x = initX + offset;
+        } else if (length == startValue + 2) {
+            x = initX + (offset * 2);
+        } else if (length == startValue + 3) {
+            x = initX + (offset * 3);
+        } else if (length == startValue + 4) {
+            x = initX + (offset * 4);
+        } else if (length == startValue + 5) {
+            x = initX + (offset * 5);
+        } else if (length == startValue + 6) {
+            x = initX + (offset * 6);
+        } else if (length == startValue + 7) {
+            x = initX + (offset * 7);
+        } else if (length == startValue + 8) {
+            x = initX + (offset * 8);
+        } else if (length == startValue + 9) {
+            x = initX + (offset * 9);
+        } else if (length == startValue + 10) {
+            x = initX + (offset * 10);
+        } else if (length == startValue + 11) {
+            x = initX + (offset * 11);
+        } else if (length == startValue + 12) {
+            x = initX + (offset * 12);
         } else {
-            x = 1075;
+            x = initX + (offset * 13);
         }
         return x;
     }
