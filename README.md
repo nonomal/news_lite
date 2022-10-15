@@ -47,7 +47,7 @@
 ![image](https://user-images.githubusercontent.com/45883640/188851087-8cdc2147-59f9-4d1e-8a3d-242adb972f41.png)
 
 ----
-*Настройки почты необходимо указать по кнопке settings
+*Настройки почты необходимо указать в settings
 
 *Отправка производится с почтовых сервисов: Mail.ru, Gmail, Yandex, Yahoo, Rambler.*
 
