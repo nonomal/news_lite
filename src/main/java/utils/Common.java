@@ -445,4 +445,18 @@ public class Common {
         return x;
     }
 
+    public int getXForEmailIconKeywords(int count) {
+        int x;
+        if (count < 10) {
+            x = 911;
+        } else if (count < 100) {
+            x = 911 + 6;
+        } else if (count < 1000) {
+            x = 911 + (6 * 2);
+        } else {
+            x = 911 + (6 * 3);
+        }
+        return x;
+    }
+
 }

@@ -173,21 +173,17 @@ public class Search {
                 if (isWord) {
                     int excludedPercent = (int) Math.round((excludedCount / ((double) newsCount
                             + excludedCount)) * 100);
+
                     String label = String.format("total: %d, excluded: %d (%s)", newsCount, excludedCount,
                             excludedPercent + "%");
-                    Gui.labelSum.setText(label);
 
+                    Gui.labelSum.setText(label);
                     int x = Common.getXForEmailIcon(label.length());
                     Gui.sendCurrentResultsToEmail.setBounds(x, 277, 30, 22);
-
                 } else if (isWords) {
                     Gui.labelSum.setText("total: " + newsCount);
-                    if (newsCount >= 100) {
-                        Gui.sendCurrentResultsToEmail.setBounds(923, 277, 30, 22);
-                    } else {
-                        Gui.sendCurrentResultsToEmail.setBounds(917, 277, 30, 22);
-                    }
-
+                    int x = Common.getXForEmailIconKeywords(newsCount);
+                    Gui.sendCurrentResultsToEmail.setBounds(x, 277, 30, 22);
                 }
 
                 isSearchFinished.set(true);
