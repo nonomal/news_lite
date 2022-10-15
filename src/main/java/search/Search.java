@@ -177,7 +177,7 @@ public class Search {
                             excludedPercent + "%");
                     Gui.labelSum.setText(label);
 
-                    int x = Common.getXForEmailIcon(label.length(), 26,1003, 6);
+                    int x = Common.getXForEmailIcon(label.length());
                     Gui.sendCurrentResultsToEmail.setBounds(x, 277, 30, 22);
 
                 } else if (isWords) {
