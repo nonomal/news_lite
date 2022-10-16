@@ -2,56 +2,56 @@
 [![Open Source? Yes!](https://badgen.net/badge/Open%20Source%20%3F/Yes%21/blue?icon=github)](https://github.com/Naereen/badges/)
 [![Ask Me Anything !](https://img.shields.io/badge/Ask%20me-anything-1abc9c.svg)](https://GitHub.com/Naereen/ama)
 
-Поисковик новостей по RSS популярных новостных источников с мощным отсевом ненужной информации.
+RSS news search engine of popular news sources with powerful screening of unnecessary information.
 
-Особенность программы в удобном, автоматическом поиске новостей по нескольким ключевым словам с отправкой результатов поиска на электронную почту.
+A feature of the program is a convenient, automatic news search for several keywords with the search results sent to e-mail.
 
-Актуальная версия прграммы: https://github.com/mrprogre/news_lite/raw/master/news.jar
+The current version of the program: https://github.com/mrprogre/news_lite/raw/master/news.jar
 
-Для работы приложения на ПК должна быть установлена Java: https://www.java.com/ru/download/
+For the application to work on a PC, Java must be installed: https://www.java.com/ru/download/
 
 ![demo](https://user-images.githubusercontent.com/45883640/195786930-0f4d9ff5-a7ef-42cc-8864-ee04821a744a.gif)
 
 ----
-**Возможности программы:**
-- ручной поиск заголовков по одному слову (все новости выводятся при пустом поле)
-- ручной поиск по ключевым словам (в нижней части приложения и без отсева заголовков)
-- автоматический поиск каждые 60 секунд (посредством установки чекбокса)
-- отправка результата поиска на электронную почту (+ возможность выбора автоматической отправки результатов после каждого поиска)
-- экспорт результатов в Excel
-- двойной щелчок по заголовку открывает веб-страницу новости
-- анализ частоты употребления слов в заголовках новостей с использованием базы данных SQLite (отображает всё, что повторяется > 2 раз)
-- отображение журнала работы программы
-- сохранение состояния интерфейса
-- возможность работы в SQLite
-- возможность добавления нового источника RSS. Деактивация существующих или их удаление.
-- возможность исключения слов из таблицы анализа частоты употребления слов (правая часть интерфейса)
-- можно добавлять слова в excluded (верхняя часть интерфейса), и заголовки, содержащие их, не будут отображаться
-- перевод английских заголовков правой кнопкой мыши + Translate
-- изучение английских слов (при нажатии на кнопку выводится очередное словос переводом в консоль)
-- настройка прозрачности окна
-- сохранение избранных заголовков
-- быстрый переход на часто используемые сайты (карта, поисковик и т.д.)
-- уведомление о событиях. Можно добавлять любой праздник или другую значимую дату.
-- можно скопировать файл базы данных в любое место на компьютере и указать путь к нему в settings (я так делаю для синхронизации между компьютерами)
-- предусмотрена работа с приложением в консоли:
+**Program features:**
+- manual search for titles by one word (all news are displayed with an empty field)
+- manual search by keywords (at the bottom of the application and without dropping titles)
+- automatic search every 60 seconds (by setting the checkbox)
+- sending the search result to e-mail (+ the ability to choose the automatic sending of results after each search)
+- export results to Excel
+- double click on the title opens the news webpage
+- analysis of the frequency of words in news headlines using the SQLite database (displays everything that is repeated > 2 times)
+- displaying the log of the program
+- saving interface state
+- ability to work in SQLite
+- Ability to add a new RSS source. Deactivate existing ones or delete them.
+- the ability to exclude words from the word frequency analysis table (right side of the interface)
+- you can add words to excluded (top of the interface), and titles containing them will not be displayed
+- translation of English titles by right click + Translate
+- learning English words (when you press the button, another word is displayed with translation to the console)
+- window transparency setting
+- saving favorite titles
+- quick transition to frequently used sites (map, search engine, etc.)
+- event notification. You can add any holiday or other significant date.
+- you can copy the database file to any place on your computer and specify the path to it in settings (I do this for synchronization between computers)
+- work with the application in the console is provided:
 
-*Пример: jar выкладывается на сервер где установлен Linux и указывается команда в crontab для круглосуточного вызова программы. Ни одна новость не будет упущена! Вот команда, которую указывал я (параметр № 1 - адресат, 2 - интервал (момент вызова минус 1440 минут (сутки), далее ключевые слова через пробел. Т.е. каждый день в 10:30 утра я получаю все новости за сутки по указанным словам + веду лог работы программы):*
+*Example: jar is laid out on a server where Linux is installed and a command is specified in crontab to call the program around the clock. No news will be missed! Here is the command that I indicated (parameter No. 1 - the addressee, 2 - the interval (the moment of the call minus 1440 minutes (day), then the keywords separated by a space. That is, every day at 10:30 am I receive all the news for the day by the specified words + I keep a log of the program):*
 
-        30 10 * * * java -jar /home/user/news.jar user@mail.ru 1440 выплат ипотек рефинанс штраф налог >> /home/user/news.log
+        30 10 * * * java -jar /home/user/news.jar user@mail.ru 1440 tax free >> /home/user/news.log
 
-*В Windows при вызове команды в PowerShell:*
+*Windows PowerShell:*
 
         java -jar .\news.jar user@mail.ru 180 москв хлеб балаших
         
 ![image](https://user-images.githubusercontent.com/45883640/188851087-8cdc2147-59f9-4d1e-8a3d-242adb972f41.png)
 
 ----
-*Настройки почты необходимо указать в settings
+*Mail settings must be specified in settings
 
-*Отправка производится с почтовых сервисов: Mail.ru, Gmail, Yandex, Yahoo, Rambler.*
+*Sending is made from postal services: Mail.ru, Gmail, Yandex, Yahoo, Rambler.*
 
-Путь к файлам программы
+Initial path to program files
 
 **Windows**: C:\Users\user\News
 
