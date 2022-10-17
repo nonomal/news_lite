@@ -5,6 +5,7 @@ import database.JdbcQueries;
 import database.SQLite;
 import gui.Gui;
 import gui.buttons.Icons;
+import model.Excluded;
 import model.Keyword;
 import model.Source;
 import model.TableRow;
@@ -69,7 +70,7 @@ public class Search {
             try {
                 sqLite.transaction("BEGIN TRANSACTION");
                 TableRow tableRow;
-                List<String> excludedTitles = jdbcQueries.excludedTitles();
+                List<Excluded> excludedTitles = jdbcQueries.getExcludedTitlesWords();
 
                 // Актуальные источники новостей
                 for (Source source : jdbcQueries.getSources("active")) {
@@ -99,8 +100,8 @@ public class Search {
                                     if (newsTitle.contains(Gui.findWord) && newsTitle.length() > 15) {
 
                                         // замена не интересующих заголовков в UI на # + слово исключение
-                                        for (String excludedTitle : excludedTitles) {
-                                            if (excludedTitle.length() > 2 && newsTitle.contains(excludedTitle)) {
+                                        for (Excluded excludedTitle : excludedTitles) {
+                                            if (excludedTitle.getWord().length() > 2 && newsTitle.contains(excludedTitle.getWord())) {
                                                 tableRow.setTitle("# " + excludedTitle);
                                             }
                                         }

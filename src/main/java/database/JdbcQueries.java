@@ -239,27 +239,6 @@ public class JdbcQueries {
         return settings;
     }
 
-    // Конкретная настройка
-    public String getSettingValueByKey(String key) {
-        String value = null;
-        String query = "SELECT value FROM settings WHERE key = ?";
-
-        try {
-            PreparedStatement statement = connection.prepareStatement(query);
-            statement.setString(1, key);
-            ResultSet rs = statement.executeQuery();
-
-            while (rs.next()) {
-                value = rs.getString("value");
-            }
-            rs.close();
-            statement.close();
-        } catch (Exception e) {
-            Common.console("getSettingValueByKey error: " + e.getMessage());
-        }
-        return value;
-    }
-
     // Список исключённые из анализа слова
     public List<Excluded> getExcludedWords() {
         List<Excluded> excludedWords = new ArrayList<>();
@@ -310,7 +289,7 @@ public class JdbcQueries {
     public List<Excluded> getExcludedTitlesWords() {
         List<Excluded> excludedWords = new ArrayList<>();
         try {
-            String query = "SELECT id, word FROM excluded_headlines ORDER BY id";
+            String query = "SELECT id, word FROM excluded_headlines  ORDER BY word";
             PreparedStatement statement = connection.prepareStatement(query);
 
             ResultSet rs = statement.executeQuery();
@@ -531,27 +510,6 @@ public class JdbcQueries {
             Common.console("isTitleExists error: " + e.getMessage());
         }
         return isExists == 1;
-    }
-
-    // отсеивание ненужных заголовков
-    public List<String> excludedTitles() {
-        List<String> titles = new ArrayList<>();
-
-        try {
-            String query = "SELECT word FROM excluded_headlines";
-            PreparedStatement statement = connection.prepareStatement(query);
-
-            ResultSet rs = statement.executeQuery();
-            while (rs.next()) {
-                titles.add(rs.getString(1).toLowerCase());
-            }
-            rs.close();
-            statement.close();
-
-        } catch (Exception e) {
-            Common.console("excludedTitles error: " + e.getMessage());
-        }
-        return titles;
     }
 
     // Заполнение таблицы анализа
