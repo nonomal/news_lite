@@ -35,6 +35,7 @@ public class Dialogs extends JDialog implements KeyListener {
         JScrollPane scrollPane = new JScrollPane();
         this.getContentPane().setLayout(new BorderLayout(0, 0));
         this.addKeyListener(this);
+        Container container = getContentPane();
 
         switch (name) {
             case "smiDlg": {
@@ -72,50 +73,31 @@ public class Dialogs extends JDialog implements KeyListener {
                 table.getColumnModel().getColumn(0).setMaxWidth(30);
                 table.getColumnModel().getColumn(2).setMaxWidth(30);
                 table.getColumnModel().getColumn(3).setMaxWidth(30);
-                getContentPane().add(table, BorderLayout.CENTER);
 
                 scrollPane.setBounds(10, 27, 324, 233);
-                this.getContentPane().add(scrollPane);
                 scrollPane.setViewportView(table);
 
-                // Mouse right click menu
-                final JPopupMenu popup = new JPopupMenu();
+                JButton addButton = new JButton("Add RSS");
+                addButton.setForeground(new Color(220, 179, 56));
+                addButton.addActionListener(e -> {
+                    JTextField rss = new JTextField();
+                    JTextField link = new JTextField();
 
-                // Add date (menu)
-                JMenuItem menu = new JMenuItem("Add RSS");
-                menu.addActionListener(e -> {
-                            JTextField rss = new JTextField();
-                            JTextField link = new JTextField();
+                    Object[] newSource = {"Source:", rss, "Link to rss:", link};
+                    int result = JOptionPane.showConfirmDialog(this, newSource,
+                            "New source", JOptionPane.OK_CANCEL_OPTION, JOptionPane.INFORMATION_MESSAGE);
 
-                            Object[] newSource = {"Source:", rss, "Link to rss:", link};
-                            int result = JOptionPane.showConfirmDialog(this, newSource,
-                                    "New source", JOptionPane.OK_CANCEL_OPTION, JOptionPane.INFORMATION_MESSAGE);
-
-                            if (rss.getText().length() > 0 && link.getText().length() > 0) {
-                                if (result == JOptionPane.OK_OPTION) {
-                                    new JdbcQueries().addNewSource(rss.getText(), link.getText());
-                                    this.setVisible(false);
-                                    new Dialogs("smiDlg");
-                                }
-                            }
-                        }
-                );
-                popup.add(menu);
-
-                // Mouse right click listener
-                table.addMouseListener(new MouseAdapter() {
-                    public void mouseReleased(MouseEvent e) {
-                        if (e.isPopupTrigger()) {
-                            JTable source = (JTable) e.getSource();
-                            int row = source.convertRowIndexToModel(source.rowAtPoint(e.getPoint()));
-                            int column = source.columnAtPoint(e.getPoint());
-                            if (source.isRowSelected(row)) {
-                                source.changeSelection(row, column, false, false);
-                            }
-                            popup.show(e.getComponent(), e.getX(), e.getY());
+                    if (rss.getText().length() > 0 && link.getText().length() > 0) {
+                        if (result == JOptionPane.OK_OPTION) {
+                            new JdbcQueries().addNewSource(rss.getText(), link.getText());
+                            this.setVisible(false);
+                            new Dialogs("smiDlg");
                         }
                     }
                 });
+
+                container.add(addButton, "South");
+                container.add(scrollPane);
 
                 showDialogs("smi");
                 break;
@@ -196,52 +178,32 @@ public class Dialogs extends JDialog implements KeyListener {
                 table.getColumnModel().getColumn(0).setCellRenderer(renderer);
                 table.getColumnModel().getColumn(0).setMaxWidth(40);
                 table.getColumnModel().getColumn(2).setMaxWidth(40);
-                getContentPane().add(table, BorderLayout.CENTER);
-
                 scrollPane.setBounds(10, 27, 324, 233);
-                this.getContentPane().add(scrollPane);
                 scrollPane.setViewportView(table);
 
-                // Mouse right click menu
-                final JPopupMenu popup = new JPopupMenu();
+                JButton addButton = new JButton("Add word");
+                addButton.setForeground(new Color(220, 179, 56));
+                addButton.addActionListener(e -> {
+                    JTextField word = new JTextField(6);
 
-                // Add date (menu)
-                JMenuItem menu = new JMenuItem("Add word");
-                menu.addActionListener(e -> {
-                            JTextField word = new JTextField(6);
+                    JPanel panel = new JPanel();
+                    panel.add(new JLabel("Добавить слово: "));
+                    panel.add(word);
 
-                            JPanel panel = new JPanel();
-                            panel.add(new JLabel("Добавить слово: "));
-                            panel.add(word);
-
-                            int result = JOptionPane.showConfirmDialog(this, panel,
-                                    "Исключить заголовки со словом", JOptionPane.OK_CANCEL_OPTION,
-                                    JOptionPane.INFORMATION_MESSAGE);
-                            if (word.getText().length() > 0) {
-                                if (result == JOptionPane.OK_OPTION) {
-                                    new JdbcQueries().addWordToExcludeTitles(word.getText());
-                                    this.setVisible(false);
-                                    new Dialogs("exclTitlesDlg");
-                                }
-                            }
-                        }
-                );
-                popup.add(menu);
-
-                // Mouse right click listener
-                table.addMouseListener(new MouseAdapter() {
-                    public void mouseReleased(MouseEvent e) {
-                        if (e.isPopupTrigger()) {
-                            JTable source = (JTable) e.getSource();
-                            int row = source.convertRowIndexToModel(source.rowAtPoint(e.getPoint()));
-                            int column = source.columnAtPoint(e.getPoint());
-                            if (source.isRowSelected(row)) {
-                                source.changeSelection(row, column, false, false);
-                            }
-                            popup.show(e.getComponent(), e.getX(), e.getY());
+                    int result = JOptionPane.showConfirmDialog(this, panel,
+                            "Исключить заголовки со словом", JOptionPane.OK_CANCEL_OPTION,
+                            JOptionPane.INFORMATION_MESSAGE);
+                    if (word.getText().length() > 0) {
+                        if (result == JOptionPane.OK_OPTION) {
+                            new JdbcQueries().addWordToExcludeTitles(word.getText());
+                            this.setVisible(false);
+                            new Dialogs("exclTitlesDlg");
                         }
                     }
                 });
+
+                container.add(addButton, "South");
+                container.add(scrollPane);
 
                 showDialogs("title-excl");
                 break;
@@ -282,56 +244,36 @@ public class Dialogs extends JDialog implements KeyListener {
                 table.getColumnModel().getColumn(0).setMaxWidth(30);
                 table.getColumnModel().getColumn(2).setMaxWidth(30);
                 table.getColumnModel().getColumn(3).setMaxWidth(30);
-                getContentPane().add(table, BorderLayout.CENTER);
-
                 scrollPane.setBounds(10, 27, 324, 233);
-                this.getContentPane().add(scrollPane);
                 scrollPane.setViewportView(table);
 
-                // Mouse right click menu
-                final JPopupMenu popup = new JPopupMenu();
+                JButton addButton = new JButton("Add word");
+                addButton.setForeground(new Color(220, 179, 56));
+                addButton.addActionListener(e -> {
+                    JTextField word = new JTextField(6);
 
-                // Add date (menu)
-                JMenuItem menu = new JMenuItem("Add word");
-                menu.addActionListener(e -> {
-                            JTextField word = new JTextField(6);
+                    JPanel panel = new JPanel();
+                    panel.add(new JLabel("Ключевое слово: "));
+                    panel.add(word);
 
-                            JPanel panel = new JPanel();
-                            panel.add(new JLabel("Ключевое слово: "));
-                            panel.add(word);
+                    int result = JOptionPane.showConfirmDialog(this, panel,
+                            "Добавить", JOptionPane.OK_CANCEL_OPTION, JOptionPane.INFORMATION_MESSAGE);
 
-                            int result = JOptionPane.showConfirmDialog(this, panel,
-                                    "Добавить слово", JOptionPane.OK_CANCEL_OPTION, JOptionPane.INFORMATION_MESSAGE);
-
-                            if (word.getText().length() > 0) {
-                                if (result == JOptionPane.OK_OPTION) {
-                                    if (!new JdbcQueries().isKeywordExists(word.getText())) {
-                                        new JdbcQueries().addKeyword(word.getText());
-                                        this.setVisible(false);
-                                        new Dialogs("keywordsDlg");
-                                    } else {
-                                        Common.console("Слово уже есть в списке");
-                                    }
-                                }
+                    if (word.getText().length() > 0) {
+                        if (result == JOptionPane.OK_OPTION) {
+                            if (!new JdbcQueries().isKeywordExists(word.getText())) {
+                                new JdbcQueries().addKeyword(word.getText());
+                                this.setVisible(false);
+                                new Dialogs("keywordsDlg");
+                            } else {
+                                Common.console("Слово уже есть в списке");
                             }
-                        }
-                );
-                popup.add(menu);
-
-                // Mouse right click listener
-                table.addMouseListener(new MouseAdapter() {
-                    public void mouseReleased(MouseEvent e) {
-                        if (e.isPopupTrigger()) {
-                            JTable source = (JTable) e.getSource();
-                            int row = source.convertRowIndexToModel(source.rowAtPoint(e.getPoint()));
-                            int column = source.columnAtPoint(e.getPoint());
-                            if (source.isRowSelected(row)) {
-                                source.changeSelection(row, column, false, false);
-                            }
-                            popup.show(e.getComponent(), e.getX(), e.getY());
                         }
                     }
                 });
+
+                container.add(addButton, "South");
+                container.add(scrollPane);
 
                 showDialogs("keywords");
                 break;
@@ -339,7 +281,6 @@ public class Dialogs extends JDialog implements KeyListener {
             case "favoritesDlg": {
                 this.setBounds(640, 215, 800, 400);
                 this.setTitle("Favorites");
-                //this.setLocationRelativeTo(Gui.favoritesLabel);
                 Object[] columns = {"", "title", "added", "link", " "};
                 model = new DefaultTableModel(new Object[][]{
                 }, columns) {
@@ -510,15 +451,7 @@ public class Dialogs extends JDialog implements KeyListener {
                 // Mouse right click listener
                 table.addMouseListener(new MouseAdapter() {
                     public void mouseReleased(MouseEvent e) {
-                        if (e.isPopupTrigger()) {
-                            JTable source = (JTable) e.getSource();
-                            int row = source.convertRowIndexToModel(source.rowAtPoint(e.getPoint()));
-                            int column = source.columnAtPoint(e.getPoint());
-                            if (source.isRowSelected(row)) {
-                                source.changeSelection(row, column, false, false);
-                            }
-                            popup.show(e.getComponent(), e.getX(), e.getY());
-                        }
+                        popup.show(e.getComponent(), e.getX(), e.getY());
                     }
                 });
 
