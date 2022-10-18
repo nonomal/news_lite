@@ -181,28 +181,23 @@ public class Dialogs extends JDialog implements KeyListener {
                 scrollPane.setBounds(10, 27, 324, 233);
                 scrollPane.setViewportView(table);
 
-                JButton addButton = new JButton("Add word");
+                JPanel addPanel = new JPanel();
+
+                JTextField word = new JTextField(8);
+                addPanel.add(word);
+
+                JButton addButton = new JButton("add word");
                 addButton.setForeground(new Color(220, 179, 56));
                 addButton.addActionListener(e -> {
-                    JTextField word = new JTextField(6);
-
-                    JPanel panel = new JPanel();
-                    panel.add(new JLabel("Добавить слово: "));
-                    panel.add(word);
-
-                    int result = JOptionPane.showConfirmDialog(this, panel,
-                            "Исключить заголовки со словом", JOptionPane.OK_CANCEL_OPTION,
-                            JOptionPane.INFORMATION_MESSAGE);
                     if (word.getText().length() > 0) {
-                        if (result == JOptionPane.OK_OPTION) {
-                            new JdbcQueries().addWordToExcludeTitles(word.getText());
-                            this.setVisible(false);
-                            new Dialogs("exclTitlesDlg");
-                        }
+                        new JdbcQueries().addWordToExcludeTitles(word.getText());
+                        this.setVisible(false);
+                        new Dialogs("exclTitlesDlg");
                     }
                 });
+                addPanel.add(addButton);
 
-                container.add(addButton, "South");
+                container.add(addPanel, "South");
                 container.add(scrollPane);
 
                 showDialogs("title-excl");
@@ -247,32 +242,27 @@ public class Dialogs extends JDialog implements KeyListener {
                 scrollPane.setBounds(10, 27, 324, 233);
                 scrollPane.setViewportView(table);
 
-                JButton addButton = new JButton("Add word");
+                JPanel addPanel = new JPanel();
+
+                JTextField word = new JTextField(8);
+                addPanel.add(word);
+
+                JButton addButton = new JButton("add word");
                 addButton.setForeground(new Color(220, 179, 56));
                 addButton.addActionListener(e -> {
-                    JTextField word = new JTextField(6);
-
-                    JPanel panel = new JPanel();
-                    panel.add(new JLabel("Ключевое слово: "));
-                    panel.add(word);
-
-                    int result = JOptionPane.showConfirmDialog(this, panel,
-                            "Добавить", JOptionPane.OK_CANCEL_OPTION, JOptionPane.INFORMATION_MESSAGE);
-
                     if (word.getText().length() > 0) {
-                        if (result == JOptionPane.OK_OPTION) {
-                            if (!new JdbcQueries().isKeywordExists(word.getText())) {
-                                new JdbcQueries().addKeyword(word.getText());
-                                this.setVisible(false);
-                                new Dialogs("keywordsDlg");
-                            } else {
-                                Common.console("Слово уже есть в списке");
-                            }
+                        if (!new JdbcQueries().isKeywordExists(word.getText())) {
+                            new JdbcQueries().addKeyword(word.getText());
+                            this.setVisible(false);
+                            new Dialogs("keywordsDlg");
+                        } else {
+                            Common.console("Слово уже есть в списке");
                         }
                     }
                 });
 
-                container.add(addButton, "South");
+                addPanel.add(addButton);
+                container.add(addPanel, "South");
                 container.add(scrollPane);
 
                 showDialogs("keywords");
