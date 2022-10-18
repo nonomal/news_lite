@@ -42,8 +42,9 @@ public class Gui extends JFrame {
     final Search search = new Search();
     private static final Object[] MAIN_TABLE_HEADERS = {"Num", "Source", "Title", "Date", "Link", "Description"};
     private static final String[] TABLE_FOR_ANALYZE_HEADERS = {"top 10", "freq.", " "};
-    private static final Font GUI_FONT = new Font("Tahoma", Font.PLAIN, 11);
-    private static final Font GUI_FONT_BOLD = new Font("Tahoma", Font.BOLD, 11);
+    private static final String GUI_FONT_NAME = "Tahoma";
+    private static final Font GUI_FONT = new Font(GUI_FONT_NAME, Font.PLAIN, 11);
+    private static final Font GUI_FONT_BOLD = new Font(GUI_FONT_NAME, Font.BOLD, 11);
     private static final String[] INTERVALS = {"1 min", "5 min", "15 min", "30 min", "45 min", "1 hour", "2 hours",
             "4 hours", "8 hours", "12 hours", "24 hours", "48 hours", "72 hours", "all"};
     private static final long AUTO_START_TIMER = 60000L; // 60 секунд
@@ -132,7 +133,7 @@ public class Gui extends JFrame {
         };
         //headers
         JTableHeader header = table.getTableHeader();
-        header.setFont(new Font("Tahoma", Font.BOLD, 13));
+        header.setFont(new Font(GUI_FONT_NAME, Font.BOLD, 13));
         //Cell alignment
         DefaultTableCellRenderer Renderer = new DefaultTableCellRenderer();
         Renderer.setHorizontalAlignment(JLabel.CENTER);
@@ -142,7 +143,7 @@ public class Gui extends JFrame {
         table.setColumnSelectionAllowed(true);
         table.setCellSelectionEnabled(true);
         table.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
-        table.setFont(new Font("Tahoma", Font.PLAIN, 14));
+        table.setFont(new Font(GUI_FONT_NAME, Font.PLAIN, 14));
         table.getColumnModel().getColumn(0).setMaxWidth(40);
         table.getColumnModel().getColumn(1).setPreferredWidth(100);
         table.getColumnModel().getColumn(1).setMaxWidth(180);
@@ -191,7 +192,7 @@ public class Gui extends JFrame {
         };
         tableForAnalysis = new JTable(modelForAnalysis);
         JTableHeader header_for_analysis = tableForAnalysis.getTableHeader();
-        header_for_analysis.setFont(new Font("Tahoma", Font.BOLD, 13));
+        header_for_analysis.setFont(new Font(GUI_FONT_NAME, Font.BOLD, 13));
         //Cell alignment
         DefaultTableCellRenderer rendererForAnalysis = new DefaultTableCellRenderer();
         rendererForAnalysis.setHorizontalAlignment(JLabel.CENTER);
@@ -202,7 +203,7 @@ public class Gui extends JFrame {
         tableForAnalysis.setColumnSelectionAllowed(true);
         tableForAnalysis.setCellSelectionEnabled(true);
         tableForAnalysis.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
-        tableForAnalysis.setFont(new Font("Tahoma", Font.PLAIN, 14));
+        tableForAnalysis.setFont(new Font(GUI_FONT_NAME, Font.PLAIN, 14));
         tableForAnalysis.getColumnModel().getColumn(0).setPreferredWidth(140);
         tableForAnalysis.getColumnModel().getColumn(1).setPreferredWidth(40);
         tableForAnalysis.getColumnModel().getColumn(1).setMaxWidth(40);
@@ -235,21 +236,21 @@ public class Gui extends JFrame {
         JLabel lblNewLabel = new JLabel("find:");
         lblNewLabel.setForeground(new Color(255, 179, 131));
         lblNewLabel.setBounds(topLeftActionX, topLeftActionY, 36, 19);
-        lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 15));
+        lblNewLabel.setFont(new Font(GUI_FONT_NAME, Font.BOLD, 15));
         lblNewLabel.setHorizontalAlignment(SwingConstants.LEFT);
         getContentPane().add(lblNewLabel);
 
         //Keyword field
         topKeyword = new JTextField(findWord);
         topKeyword.setBounds(topLeftActionX + 42, topLeftActionY, 100, 22);
-        topKeyword.setFont(new Font("Tahoma", Font.BOLD, 13));
+        topKeyword.setFont(new Font(GUI_FONT_NAME, Font.BOLD, 13));
         getContentPane().add(topKeyword);
 
         //Search
         searchBtnTop = new JButton();
         searchBtnTop.setIcon(Icons.SEARCH_KEYWORDS_ICON);
         searchBtnTop.setBackground(new Color(154, 237, 196));
-        searchBtnTop.setFont(new Font("Tahoma", Font.BOLD, 10));
+        searchBtnTop.setFont(new Font(GUI_FONT_NAME, Font.BOLD, 10));
         searchBtnTop.setBounds(topLeftActionX + 147, topLeftActionY, 30, 22);
         getContentPane().add(searchBtnTop);
         // Search by Enter
@@ -603,7 +604,7 @@ public class Gui extends JFrame {
         consoleTextArea.setLineWrap(true);
         consoleTextArea.setEditable(false);
         consoleTextArea.setBounds(20, 11, 145, 51);
-        consoleTextArea.setFont(new Font("Tahoma", Font.BOLD, 13));
+        consoleTextArea.setFont(new Font(GUI_FONT_NAME, Font.BOLD, 13));
         consoleTextArea.setBackground(new Color(222, 222, 222)); // 83, 82, 82
         getContentPane().add(consoleTextArea);
 
