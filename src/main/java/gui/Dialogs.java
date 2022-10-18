@@ -39,7 +39,7 @@ public class Dialogs extends JDialog implements KeyListener {
 
         switch (name) {
             case "smiDlg": {
-                this.setBounds(600, 200, 250, 306);
+                this.setBounds(600, 200, 250, 307);
                 this.setTitle("Sources");
                 this.setLocationRelativeTo(Gui.smiBtn);
                 Object[] columns = {"Pos", "Source", "", " "};
@@ -145,7 +145,7 @@ public class Dialogs extends JDialog implements KeyListener {
                 break;
             }
             case "exclTitlesDlg": {
-                this.setBounds(600, 200, 250, 306);
+                this.setBounds(600, 200, 250, 298);
                 this.setTitle("Excluded headlines");
                 this.setLocationRelativeTo(Gui.excludedTitlesLabel);
 
@@ -204,7 +204,7 @@ public class Dialogs extends JDialog implements KeyListener {
                 break;
             }
             case "keywordsDlg": {
-                this.setBounds(600, 200, 250, 306);
+                this.setBounds(600, 200, 250, 298);
                 this.setTitle("Keywords");
                 this.setLocationRelativeTo(Gui.btnShowKeywordsList);
 
