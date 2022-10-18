@@ -38,7 +38,7 @@ public class Dialogs extends JDialog implements KeyListener {
         Container container = getContentPane();
 
         switch (name) {
-            case "smiDlg": {
+            case "sourcesDialog": {
                 this.setBounds(600, 200, 250, 307);
                 this.setTitle("Sources");
                 this.setLocationRelativeTo(Gui.smiBtn);
@@ -91,7 +91,7 @@ public class Dialogs extends JDialog implements KeyListener {
                         if (result == JOptionPane.OK_OPTION) {
                             new JdbcQueries().addNewSource(rss.getText(), link.getText());
                             this.setVisible(false);
-                            new Dialogs("smiDlg");
+                            new Dialogs("sourcesDialog");
                         }
                     }
                 });
@@ -102,7 +102,7 @@ public class Dialogs extends JDialog implements KeyListener {
                 showDialogs("smi");
                 break;
             }
-            case "exclDlg": {
+            case "excludedFromAnalysisDialog": {
                 this.setBounds(600, 200, 250, 306);
                 this.setTitle("Excluded from analysis");
                 this.setLocationRelativeTo(Gui.excludedLabel);
@@ -144,7 +144,7 @@ public class Dialogs extends JDialog implements KeyListener {
                 showDialogs("excl");
                 break;
             }
-            case "exclTitlesDlg": {
+            case "excludedTitlesByWordsDialog": {
                 this.setBounds(600, 200, 250, 298);
                 this.setTitle("Excluded headlines");
                 this.setLocationRelativeTo(Gui.excludedTitlesLabel);
@@ -183,7 +183,7 @@ public class Dialogs extends JDialog implements KeyListener {
 
                 JPanel addPanel = new JPanel();
 
-                JTextField word = new JTextField(8);
+                JTextField word = new JTextField(11);
                 addPanel.add(word);
 
                 JButton addButton = new JButton("add word");
@@ -192,7 +192,7 @@ public class Dialogs extends JDialog implements KeyListener {
                     if (word.getText().length() > 0) {
                         new JdbcQueries().addWordToExcludeTitles(word.getText());
                         this.setVisible(false);
-                        new Dialogs("exclTitlesDlg");
+                        new Dialogs("excludedTitlesByWordsDialog");
                     }
                 });
                 addPanel.add(addButton);
@@ -203,7 +203,7 @@ public class Dialogs extends JDialog implements KeyListener {
                 showDialogs("title-excl");
                 break;
             }
-            case "keywordsDlg": {
+            case "keywordsDialog": {
                 this.setBounds(600, 200, 250, 298);
                 this.setTitle("Keywords");
                 this.setLocationRelativeTo(Gui.btnShowKeywordsList);
@@ -244,7 +244,7 @@ public class Dialogs extends JDialog implements KeyListener {
 
                 JPanel addPanel = new JPanel();
 
-                JTextField word = new JTextField(8);
+                JTextField word = new JTextField(11);
                 addPanel.add(word);
 
                 JButton addButton = new JButton("add word");
@@ -254,7 +254,7 @@ public class Dialogs extends JDialog implements KeyListener {
                         if (!new JdbcQueries().isKeywordExists(word.getText())) {
                             new JdbcQueries().addKeyword(word.getText());
                             this.setVisible(false);
-                            new Dialogs("keywordsDlg");
+                            new Dialogs("keywordsDialog");
                         } else {
                             Common.console("Слово уже есть в списке");
                         }
@@ -268,7 +268,7 @@ public class Dialogs extends JDialog implements KeyListener {
                 showDialogs("keywords");
                 break;
             }
-            case "favoritesDlg": {
+            case "favoriteTitlesDialog": {
                 this.setBounds(640, 215, 800, 400);
                 this.setTitle("Favorites");
                 Object[] columns = {"", "title", "added", "link", " "};
@@ -330,7 +330,7 @@ public class Dialogs extends JDialog implements KeyListener {
                 showDialogs("favorites");
                 break;
             }
-            case "datesDlg": {
+            case "datesDialog": {
                 this.setBounds(600, 200, 600, 338);
                 this.setTitle("Dates");
                 this.setLocationRelativeTo(Gui.datesLabel);
@@ -415,7 +415,7 @@ public class Dialogs extends JDialog implements KeyListener {
 
                         new JdbcQueries().addDate(type, descr, dayToDatabase, monthToDatabase, yearToDatabase);
                         this.setVisible(false);
-                        new Dialogs("datesDlg");
+                        new Dialogs("datesDialog");
                     } else {
                         Common.console("Укажите описание даты");
                     }

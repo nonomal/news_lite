@@ -91,7 +91,7 @@ public class Gui extends JFrame {
 
         //Table
         scrollPane = new JScrollPane();
-        scrollPane.setBounds(10, 40, 860, 500);
+        scrollPane.setBounds(10, 40, 860, 502);
         getContentPane().add(scrollPane);
         model = new DefaultTableModel(new Object[][]{
         }, MAIN_TABLE_HEADERS) {
@@ -337,7 +337,7 @@ public class Gui extends JFrame {
         excludedTitlesLabel.setFont(GUI_FONT);
         excludedTitlesLabel.setBounds(topLeftActionX + 490, topLeftActionY + 3, 44, 14);
         getContentPane().add(excludedTitlesLabel);
-        openDialog(excludedTitlesLabel, "exclTitlesDlg");
+        openDialog(excludedTitlesLabel, "excludedTitlesByWordsDialog");
 
         // Диалоговое окно со списком избранных заголовков
         favoritesLabel = new JLabel("favorites");
@@ -347,7 +347,7 @@ public class Gui extends JFrame {
         favoritesLabel.setFont(GUI_FONT);
         favoritesLabel.setBounds(topLeftActionX + 540, topLeftActionY + 3, 44, 14);
         getContentPane().add(favoritesLabel);
-        openDialog(favoritesLabel, "favoritesDlg");
+        openDialog(favoritesLabel, "favoriteTitlesDialog");
 
         // Диалоговое окно со списком избранных заголовков
         datesLabel = new JLabel("dates");
@@ -357,7 +357,7 @@ public class Gui extends JFrame {
         datesLabel.setFont(GUI_FONT);
         datesLabel.setBounds(topLeftActionX + 590, topLeftActionY + 3, 27, 14);
         getContentPane().add(datesLabel);
-        openDialog(datesLabel, "datesDlg");
+        openDialog(datesLabel, "datesDialog");
 
         /* TOP-RIGHT ACTION PANEL */
         int topRightX = 740;
@@ -533,7 +533,7 @@ public class Gui extends JFrame {
         btnShowKeywordsList.setBorderPainted(false);
         setButton = new SetButton(Icons.LIST_BUTTON_ICON, null, bottomLeftX - 3, bottomLeftY);
         setButton.buttonSetting(btnShowKeywordsList, null);
-        btnShowKeywordsList.addActionListener(e -> new Dialogs("keywordsDlg"));
+        btnShowKeywordsList.addActionListener(e -> new Dialogs("keywordsDialog"));
         animation(btnShowKeywordsList, Icons.LIST_BUTTON_ICON, Icons.WHEN_MOUSE_ON_LIST_BUTTON_ICON);
         getContentPane().add(btnShowKeywordsList);
 
@@ -664,7 +664,7 @@ public class Gui extends JFrame {
         excludedLabel.setFont(GUI_FONT);
         excludedLabel.setBounds(1126, 278, 44, 14);
         getContentPane().add(excludedLabel);
-        openDialog(excludedLabel, "exclDlg");
+        openDialog(excludedLabel, "excludedFromAnalysisDialog");
 
         /* BOTTOM RIGHT AREA */
         //Amount of news
@@ -704,7 +704,7 @@ public class Gui extends JFrame {
         smiBtn.setBounds(883, 479, 14, 14);
         smiBtn.setBackground(new Color(221, 255, 221));
         getContentPane().add(smiBtn);
-        smiBtn.addActionListener((e) -> new Dialogs("smiDlg"));
+        smiBtn.addActionListener((e) -> new Dialogs("sourcesDialog"));
         animation(smiBtn, "sources");
 
         // Случайное английское слово
@@ -807,7 +807,7 @@ public class Gui extends JFrame {
 
         /* WEB PAGES */
         int webX = 758;
-        int webY = 545;
+        int webY = 547;
         int webHeight = 18;
         int webWidth = 18;
 
