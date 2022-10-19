@@ -30,7 +30,7 @@ public class Parser {
         urlToConsole = urlToConsole.substring(0, urlToConsole.indexOf("/"));
 
         if (!Gui.GUI_IN_TRAY.get() && searchTime.getSeconds() > LONG_SEARCH)
-            Common.console("info: long search - " + urlToConsole + " - " + searchTime.getSeconds() + " s.");
+            Common.console("long search - " + urlToConsole + " - " + searchTime.getSeconds() + " s.");
 
         return new SyndFeedInput().build(reader);
     }

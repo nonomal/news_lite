@@ -771,7 +771,7 @@ public class Gui extends JFrame {
                     "Path to database:", pathToDatabase
             };
 
-            int result = JOptionPane.showConfirmDialog(null, newSource,
+            int result = JOptionPane.showConfirmDialog(settingsDirectoryBtn, newSource,
                     "Settings", JOptionPane.OK_CANCEL_OPTION, JOptionPane.INFORMATION_MESSAGE);
             if (result == JOptionPane.OK_OPTION) {
                 jdbcQueries.updateSettings("email_to", emailTo.getText());
@@ -815,7 +815,6 @@ public class Gui extends JFrame {
         JLabel tradingView = new JLabel("trading");
         tradingView.setToolTipText(urlTradingView);
         tradingView.setIcon(Icons.TRADING_BUTTON_ICON);
-        tradingView.setForeground(new Color(255, 160, 122));
         tradingView.setEnabled(false);
         tradingView.setFont(GUI_FONT_BOLD);
         tradingView.setBounds(webX, webY, webWidth, webHeight);
@@ -826,7 +825,6 @@ public class Gui extends JFrame {
         JLabel translator = new JLabel();
         translator.setIcon(Icons.TRANSLATOR_BUTTON_ICON);
         translator.setToolTipText(urlTranslator);
-        translator.setForeground(new Color(255, 160, 122));
         translator.setEnabled(false);
         translator.setFont(GUI_FONT_BOLD);
         translator.setBounds(webX + 24, webY, webWidth, webHeight);
@@ -837,7 +835,6 @@ public class Gui extends JFrame {
         JLabel maps = new JLabel("maps");
         maps.setIcon(Icons.MAPS_BUTTON_ICON);
         maps.setToolTipText(urlMaps);
-        maps.setForeground(new Color(255, 160, 122));
         maps.setEnabled(false);
         maps.setFont(GUI_FONT_BOLD);
         maps.setBounds(webX + 48, webY, webWidth, webHeight);
@@ -848,7 +845,6 @@ public class Gui extends JFrame {
         JLabel yandex = new JLabel();
         yandex.setIcon(Icons.YANDEX_BUTTON_ICON);
         yandex.setToolTipText(urlYandex);
-        yandex.setForeground(new Color(255, 160, 122));
         yandex.setEnabled(false);
         yandex.setFont(GUI_FONT_BOLD);
         yandex.setBounds(webX + 72, webY, webWidth, webHeight);
@@ -859,7 +855,6 @@ public class Gui extends JFrame {
         JLabel github = new JLabel();
         github.setIcon(Icons.GITHUB_BUTTON_ICON);
         github.setToolTipText(urlGithub);
-        github.setForeground(new Color(255, 160, 122));
         github.setEnabled(false);
         github.setFont(GUI_FONT_BOLD);
         github.setBounds(webX + 96, webY, webWidth, webHeight);

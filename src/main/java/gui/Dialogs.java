@@ -39,9 +39,10 @@ public class Dialogs extends JDialog implements KeyListener {
 
         switch (name) {
             case "sourcesDialog": {
-                this.setBounds(600, 200, 250, 307);
+                this.setBounds(0, 0, 250, 307);
                 this.setTitle("Sources");
                 this.setLocationRelativeTo(Gui.smiBtn);
+
                 Object[] columns = {"Pos", "Source", "", " "};
                 model = new DefaultTableModel(new Object[][]{
                 }, columns) {
@@ -103,7 +104,7 @@ public class Dialogs extends JDialog implements KeyListener {
                 break;
             }
             case "excludedFromAnalysisDialog": {
-                this.setBounds(600, 200, 250, 306);
+                this.setBounds(0, 0, 250, 306);
                 this.setTitle("Excluded from analysis");
                 this.setLocationRelativeTo(Gui.excludedLabel);
                 Object[] columns = {"Num", "Word", "Del"};
@@ -145,7 +146,7 @@ public class Dialogs extends JDialog implements KeyListener {
                 break;
             }
             case "excludedTitlesByWordsDialog": {
-                this.setBounds(600, 200, 250, 298);
+                this.setBounds(0, 0, 250, 298);
                 this.setTitle("Excluded headlines");
                 this.setLocationRelativeTo(Gui.excludedTitlesLabel);
 
@@ -204,7 +205,7 @@ public class Dialogs extends JDialog implements KeyListener {
                 break;
             }
             case "keywordsDialog": {
-                this.setBounds(600, 200, 250, 298);
+                this.setBounds(0, 0, 250, 298);
                 this.setTitle("Keywords");
                 this.setLocationRelativeTo(Gui.btnShowKeywordsList);
 
@@ -269,8 +270,10 @@ public class Dialogs extends JDialog implements KeyListener {
                 break;
             }
             case "favoriteTitlesDialog": {
-                this.setBounds(640, 215, 800, 400);
+                this.setBounds(0, 0, 800, 400);
                 this.setTitle("Favorites");
+                this.setLocationRelativeTo(Gui.favoritesLabel);
+
                 Object[] columns = {"", "title", "added", "link", " "};
                 model = new DefaultTableModel(new Object[][]{
                 }, columns) {
