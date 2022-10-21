@@ -27,19 +27,11 @@ import java.util.stream.Stream;
 public class Common {
     public static final String DIRECTORY_PATH = System.getProperty("user.home") +
             File.separator + "News" + File.separator;
-    private final int[] GUI_FONT = new int[3];
-    private final int[] GUI_BACKGROUND = new int[3];
     public static final String CONFIG_FILE = DIRECTORY_PATH + "config.txt";
     public final AtomicBoolean IS_SENDING = new AtomicBoolean(true);
-    public String SCRIPT_URL = null;
-    public float transparency;
-    public String emailFrom;
-    public String emailFromPwd;
-    public String emailTo;
     public List<String> words;
 
     public void showGui() {
-        getSettingsBeforeGui();
         setGuiTheme();
 
         Gui gui = new Gui();
@@ -51,6 +43,7 @@ public class Common {
         SwingUtilities.invokeLater(runnable);
 
         getSettingsAfterGui();
+        getPathToDatabase();
     }
 
     // создание файлов и директорий
@@ -68,7 +61,7 @@ public class Common {
         File dbIsExists = new File(pathToDatabase);
         if (!dbIsExists.exists()) {
             copyFiles(Common.class.getResource("/news.db"), pathToDatabase);
-            writeToConfigTxt("db", pathToDatabase);
+            writeToConfigTxt("db_path", pathToDatabase);
         }
 
         File sqliteExeIsExists = new File(DIRECTORY_PATH + "sqlite3.exe");
@@ -87,13 +80,21 @@ public class Common {
 
     // установка темы интерфейса
     public static void setGuiTheme() {
+        JdbcQueries jdbcQueries = new JdbcQueries();
+        int fontColorRed = Integer.parseInt(jdbcQueries.getSetting("fontColorRed"));
+        int fontColorGreen = Integer.parseInt(jdbcQueries.getSetting("fontColorGreen"));
+        int fontColorBlue = Integer.parseInt(jdbcQueries.getSetting("fontColorBlue"));
+        int backgroundColorRed = Integer.parseInt(jdbcQueries.getSetting("backgroundColorRed"));
+        int backgroundColorGreen = Integer.parseInt(jdbcQueries.getSetting("backgroundColorGreen"));
+        int backgroundColorBlue = Integer.parseInt(jdbcQueries.getSetting("backgroundColorBlue"));
+
         // FlatLaf theme
         UIManager.put("Component.arc", 10);
         UIManager.put("ProgressBar.arc", 6);
         UIManager.put("Button.arc", 8);
-        UIManager.put("Table.background", new Color(GUI_BACKGROUND[0], GUI_BACKGROUND[1], GUI_BACKGROUND[2]));
+        UIManager.put("Table.background", new Color(backgroundColorRed, backgroundColorGreen, backgroundColorBlue));
         UIManager.put("Table.alternateRowColor", new Color(59, 59, 59));
-        UIManager.put("Table.foreground", new Color(GUI_FONT[0], GUI_FONT[1], GUI_FONT[2]));
+        UIManager.put("Table.foreground", new Color(fontColorRed, fontColorGreen, fontColorBlue));
         UIManager.put("TextField.background", Color.GRAY);
         UIManager.put("TextField.foreground", Color.BLACK);
         FlatHiberbeeDarkIJTheme.setup();
@@ -113,56 +114,13 @@ public class Common {
         }
     }
 
-    // Считывание конфигураций до запуска интерфейса
-    public void getSettingsBeforeGui() {
-        for (Map.Entry<String, String> s : new JdbcQueries().getSettings().entrySet()) {
-            switch (s.getKey()) {
-                case "transparency":
-                    transparency = Float.parseFloat(s.getValue());
-                    break;
-                case "fontColorRed":
-                    GUI_FONT[0] = Integer.parseInt(s.getValue());
-                    break;
-                case "fontColorGreen":
-                    GUI_FONT[1] = Integer.parseInt(s.getValue());
-                    break;
-                case "fontColorBlue":
-                    GUI_FONT[2] = Integer.parseInt(s.getValue());
-                    break;
-                case "backgroundColorRed":
-                    GUI_BACKGROUND[0] = Integer.parseInt(s.getValue());
-                    break;
-                case "backgroundColorGreen":
-                    GUI_BACKGROUND[1] = Integer.parseInt(s.getValue());
-                    break;
-                case "backgroundColorBlue":
-                    GUI_BACKGROUND[2] = Integer.parseInt(s.getValue());
-                    break;
-            }
-        }
-    }
-
     // Считывание конфигураций после запуска интерфейса
     public void getSettingsAfterGui() {
-        words = new JdbcQueries().getRandomWords();
-
-        for (Map.Entry<String, String> s : new JdbcQueries().getSettings().entrySet()) {
-            switch (s.getKey()) {
-                case "interval":
-                    intervalMapper(s.getValue());
-                    break;
-                case "onlyNewNews":
-                    Gui.onlyNewNews.setState(Boolean.parseBoolean(s.getValue()));
-                    break;
-                case "autoSendMessage":
-                    Gui.autoSendMessage.setState(Boolean.parseBoolean(s.getValue()));
-                    break;
-                case "translate-url":
-                    SCRIPT_URL = s.getValue();
-                    break;
-            }
-        }
-        getSettings();
+        JdbcQueries jdbcQueries = new JdbcQueries();
+        words = jdbcQueries.getRandomWords();
+        intervalMapper(jdbcQueries.getSetting("interval"));
+        Gui.onlyNewNews.setState(Boolean.parseBoolean(jdbcQueries.getSetting("onlyNewNews")));
+        Gui.autoSendMessage.setState(Boolean.parseBoolean(jdbcQueries.getSetting("autoSendMessage")));
         Gui.isOnlyLastNews = Gui.onlyNewNews.getState();
     }
 
@@ -179,27 +137,6 @@ public class Common {
         }
         assert file != null;
         return file.getPath();
-    }
-
-    // Считывание конфигураций после запуска интерфейса
-    public void getSettings() {
-        for (Map.Entry<String, String> s : new JdbcQueries().getSettings().entrySet()) {
-            switch (s.getKey()) {
-                case "email_from":
-                    emailFrom = s.getValue();
-                    break;
-                case "from_pwd":
-                    emailFromPwd = s.getValue();
-                    break;
-                case "email_to":
-                    emailTo = s.getValue();
-                    break;
-                case "transparency":
-                    transparency = Float.parseFloat(s.getValue());
-                    break;
-            }
-            getPathToDatabase();
-        }
     }
 
     // сохранение состояния окна в config.txt

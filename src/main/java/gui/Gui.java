@@ -19,6 +19,7 @@ import javax.swing.text.DefaultCaret;
 import java.awt.*;
 import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.StringSelection;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
@@ -86,7 +87,7 @@ public class Gui extends JFrame {
         GraphicsDevice gd = ge.getDefaultScreenDevice();
         boolean isUniformTranslucencySupported = gd.isWindowTranslucencySupported(TRANSLUCENT);
         if (isUniformTranslucencySupported) {
-            this.setOpacity(Common.transparency);
+            this.setOpacity(Float.parseFloat(new JdbcQueries().getSetting("transparency")));
         }
 
         //Table
@@ -133,7 +134,10 @@ public class Gui extends JFrame {
         };
         //headers
         JTableHeader header = table.getTableHeader();
+        int mainHeaderFontSize = Integer.parseInt(jdbcQueries.getSetting("font_size"));
+
         header.setFont(new Font(GUI_FONT_NAME, Font.BOLD, 13));
+        header.setForeground(new Color(241, 217, 84));
         //Cell alignment
         DefaultTableCellRenderer Renderer = new DefaultTableCellRenderer();
         Renderer.setHorizontalAlignment(JLabel.CENTER);
@@ -143,7 +147,7 @@ public class Gui extends JFrame {
         table.setColumnSelectionAllowed(true);
         table.setCellSelectionEnabled(true);
         table.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
-        table.setFont(new Font(GUI_FONT_NAME, Font.PLAIN, 14));
+        table.setFont(new Font(GUI_FONT_NAME, Font.PLAIN, mainHeaderFontSize));
         table.getColumnModel().getColumn(0).setMaxWidth(40);
         table.getColumnModel().getColumn(1).setPreferredWidth(100);
         table.getColumnModel().getColumn(1).setMaxWidth(180);
@@ -684,7 +688,7 @@ public class Gui extends JFrame {
         sendCurrentResultsToEmail.setContentAreaFilled(false);
         sendCurrentResultsToEmail.setBorderPainted(false);
         sendCurrentResultsToEmail.addActionListener(e -> {
-            if (model.getRowCount() > 0 && Common.emailTo.contains("@")) {
+            if (model.getRowCount() > 0) {
                 Common.console("sending e-mail");
                 Common.IS_SENDING.set(false);
                 new Thread(Common::fillProgressLine).start();
@@ -743,7 +747,7 @@ public class Gui extends JFrame {
         });
         animation(sqliteBtn, "sqlite");
 
-        //Открыть папку с настройками "files"
+        //Открыть settings
         JButton settingsDirectoryBtn = new JButton();
         settingsDirectoryBtn.setIcon(Icons.SETTINGS_BUTTON_ICON);
         settingsDirectoryBtn.setFocusable(false);
@@ -754,21 +758,29 @@ public class Gui extends JFrame {
         getContentPane().add(settingsDirectoryBtn);
         animation(settingsDirectoryBtn, "settings");
 
-        settingsDirectoryBtn.addActionListener(e -> {
-            Common.getSettings();
-            JTextField emailFrom = new JTextField(Common.emailFrom);
-            JPasswordField emailFromPwd = new JPasswordField(Common.emailFromPwd);
-            JTextField emailTo = new JTextField(Common.emailTo);
+        ActionListener actionListener = e -> {
+            String emailFromValue = jdbcQueries.getSetting("email_from");
+            String fromPwdValue = jdbcQueries.getSetting("from_pwd");
+            String emailToValue = jdbcQueries.getSetting("email_to");
+            String transparencyValue = jdbcQueries.getSetting("transparency");
+            String fontSizeValue = jdbcQueries.getSetting("font_size");
+
+            JTextField emailFrom = new JTextField(emailFromValue);
+            JPasswordField emailFromPwd = new JPasswordField(fromPwdValue);
+            JTextField emailTo = new JTextField(emailToValue);
             JTextField transparency = new JTextField();
-            transparency.setText(String.valueOf(Common.transparency));
+            transparency.setText(String.valueOf(transparencyValue));
             JTextField pathToDatabase = new JTextField();
             pathToDatabase.setText(Common.getPathToDatabase());
+            JTextField fontSize = new JTextField();
+            fontSize.setText(String.valueOf(fontSizeValue));
 
             Object[] newSource = {"Email from:", emailFrom,
                     "Email from password:", emailFromPwd,
                     "Email to:", emailTo,
                     "Transparency:", transparency,
-                    "Path to database:", pathToDatabase
+                    "Path to database:", pathToDatabase,
+                    "Font size:", fontSize
             };
 
             int result = JOptionPane.showConfirmDialog(settingsDirectoryBtn, newSource,
@@ -778,12 +790,13 @@ public class Gui extends JFrame {
                 jdbcQueries.updateSettings("email_from", emailFrom.getText());
                 jdbcQueries.updateSettings("from_pwd", String.valueOf(emailFromPwd.getPassword()));
                 jdbcQueries.updateSettings("transparency", transparency.getText());
-
                 Common.delSettings("db_path");
                 Common.writeToConfigTxt("db_path", pathToDatabase.getText());
                 jdbcQueries.updateSettings("db_path", pathToDatabase.getText());
+                jdbcQueries.updateSettings("font_size", fontSize.getText());
             }
-        });
+        };
+        settingsDirectoryBtn.addActionListener(actionListener);
 
         // Источники, sqlite лейбл
         lblLogSourceSqlite = new JLabel("");

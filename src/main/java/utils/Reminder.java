@@ -20,7 +20,6 @@ public class Reminder {
 
         for (Dates date : new JdbcQueries().getDates()) {
             if (date.getMonth() == month && date.getDay() == day) {
-                System.out.println(date.getYear());
                 if (date.getType().equals("День Рождения") && date.getYear() != 0) {
                     Common.console("Сегодня: " + date.getDescription() + " исполняется " +
                             (year - date.getYear()));

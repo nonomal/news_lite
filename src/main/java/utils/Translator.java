@@ -1,5 +1,7 @@
 package utils;
 
+import database.JdbcQueries;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -12,7 +14,7 @@ public class Translator {
 
     public String translate(String langFrom, String langTo, String text) {
         StringBuilder response;
-        String scriptUrl = Common.SCRIPT_URL;
+        String scriptUrl = new JdbcQueries().getSetting("translate-url");
         try {
             String urlStr = scriptUrl +
                     "?q=" + URLEncoder.encode(text, "UTF-8") +

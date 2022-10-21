@@ -9,9 +9,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 
 public class JdbcQueries {
     private static final int WORD_FREQ_MATCHES = 2;
@@ -216,27 +214,25 @@ public class JdbcQueries {
         return sources;
     }
 
-    // Список настроек
-    public Map<String, String> getSettings() {
-        Map<String, String> settings = new LinkedHashMap<>();
-        String query = "SELECT key, value FROM settings ORDER BY id";
+    // Настройки по ключу
+    public String getSetting(String key) {
+        String setting = null;
+        String query = "SELECT value FROM settings WHERE key = ?";
 
         try {
             PreparedStatement statement = connection.prepareStatement(query);
+            statement.setString(1, key);
             ResultSet rs = statement.executeQuery();
 
             while (rs.next()) {
-                settings.put(
-                        rs.getString("key"),
-                        rs.getString("value")
-                );
+                setting = rs.getString("value");
             }
             rs.close();
             statement.close();
         } catch (Exception e) {
             Common.console("getSettings error: " + e.getMessage());
         }
-        return settings;
+        return setting;
     }
 
     // Список исключённые из анализа слова
