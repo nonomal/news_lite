@@ -765,22 +765,40 @@ public class Gui extends JFrame {
             String transparencyValue = jdbcQueries.getSetting("transparency");
             String fontSizeValue = jdbcQueries.getSetting("font_size");
 
+            Color color = new Color(255, 255, 255);
             JTextField emailFrom = new JTextField(emailFromValue);
+            emailFrom.setBackground(color);
             JPasswordField emailFromPwd = new JPasswordField(fromPwdValue);
+            emailFromPwd.setBackground(color);
+            emailFromPwd.setForeground(Color.BLACK);
             JTextField emailTo = new JTextField(emailToValue);
+            emailTo.setBackground(color);
             JTextField transparency = new JTextField();
+            transparency.setBackground(color);
             transparency.setText(String.valueOf(transparencyValue));
             JTextField pathToDatabase = new JTextField();
+            pathToDatabase.setBackground(color);
             pathToDatabase.setText(Common.getPathToDatabase());
             JTextField fontSize = new JTextField();
             fontSize.setText(String.valueOf(fontSizeValue));
+            fontSize.setBackground(color);
 
-            Object[] newSource = {"Email from:", emailFrom,
-                    "Email from password:", emailFromPwd,
-                    "Email to:", emailTo,
-                    "Transparency:", transparency,
-                    "Path to database:", pathToDatabase,
-                    "Font size:", fontSize
+            JPanel miniPanel = new JPanel();
+            miniPanel.setLayout(new GridLayout(5, 1));
+            miniPanel.add(new JLabel("Email from"));
+            miniPanel.add(emailFrom);
+            miniPanel.add(new JLabel("Email from password"));
+            miniPanel.add(emailFromPwd);
+            miniPanel.add(new JLabel("Email to"));
+            miniPanel.add(emailTo);
+            miniPanel.add(new JLabel("Font size"));
+            miniPanel.add(fontSize);
+            miniPanel.add(new JLabel("Transparency"));
+            miniPanel.add(transparency);
+
+            Object[] newSource = {
+                    miniPanel,
+                    "Path to database:", pathToDatabase
             };
 
             int result = JOptionPane.showConfirmDialog(settingsDirectoryBtn, newSource,
