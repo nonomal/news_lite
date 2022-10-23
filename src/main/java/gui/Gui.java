@@ -52,6 +52,7 @@ public class Gui extends JFrame {
     public static final AtomicBoolean WAS_CLICK_IN_TABLE_FOR_ANALYSIS = new AtomicBoolean(false);
     public static final AtomicBoolean GUI_IN_TRAY = new AtomicBoolean(false);
     public static int newsCount = 1;
+    private static final int toolTipShowLength = 75;
     public static boolean isOnlyLastNews = false;
     public static String findWord;
     public static JScrollPane scrollPane;
@@ -129,7 +130,7 @@ public class Gui extends JFrame {
                 } catch (RuntimeException ignored) {
                 }
                 assert tip != null;
-                if (tip.length() > 82) {
+                if (tip.length() > toolTipShowLength) {
                     return tip;
                 } else {
                     return null;
