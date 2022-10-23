@@ -819,6 +819,10 @@ public class Gui extends JFrame {
                 jdbcQueries.updateSettings("db_path", pathToDatabase.getText());
                 jdbcQueries.updateSettings("font_size", fontSizeCombobox.getSelectedItem().toString());
                 jdbcQueries.updateSettings("row_height", rowHeightCombobox.getSelectedItem().toString());
+
+                // удалить старый frame
+                this.dispose();
+                Common.showGui();
             }
         };
         settingsDirectoryBtn.addActionListener(actionListener);
