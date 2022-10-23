@@ -70,8 +70,12 @@ public class Gui extends JFrame {
     public static TimerTask timerTask;
 
     public Gui() {
+        int guiRed = Integer.parseInt(jdbcQueries.getSetting("gui_red"));
+        int guiGreen = Integer.parseInt(jdbcQueries.getSetting("gui_green"));
+        int guiBlue = Integer.parseInt(jdbcQueries.getSetting("gui_blue"));
+
         this.setResizable(false);
-        this.getContentPane().setBackground(new Color(42, 42, 42));
+        this.getContentPane().setBackground(new Color(guiRed, guiGreen, guiBlue));
         this.setTitle("Avandy News");
         this.setIconImage(Icons.LOGO_ICON.getImage());
         this.setFont(GUI_FONT);
@@ -135,6 +139,7 @@ public class Gui extends JFrame {
         //headers
         JTableHeader header = table.getTableHeader();
         int mainHeaderFontSize = Integer.parseInt(jdbcQueries.getSetting("font_size"));
+        int mainHeaderRowHeight = Integer.parseInt(jdbcQueries.getSetting("row_height"));
 
         header.setFont(new Font(GUI_FONT_NAME, Font.BOLD, 13));
         header.setForeground(new Color(241, 217, 84));
@@ -143,7 +148,7 @@ public class Gui extends JFrame {
         Renderer.setHorizontalAlignment(JLabel.CENTER);
 
         table.getColumnModel().getColumn(0).setCellRenderer(Renderer);
-        table.setRowHeight(28);
+        table.setRowHeight(mainHeaderRowHeight);
         table.setColumnSelectionAllowed(true);
         table.setCellSelectionEnabled(true);
         table.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
@@ -367,50 +372,9 @@ public class Gui extends JFrame {
         int topRightX = 740;
         int topRightY = 8;
 
-        // Выбор цвета фона
-        JButton backgroundColorBtn = new JButton();
-        SetButton setButton = new SetButton(Icons.BACK_GROUND_COLOR_ICON, null, topRightX, topRightY);
-        setButton.buttonSetting(backgroundColorBtn, "Background color");
-        backgroundColorBtn.setContentAreaFilled(false);
-
-        backgroundColorBtn.addActionListener(e -> {
-            Color color = JColorChooser.showDialog(null, "Color", Color.black);
-            if (color != null) {
-                try {
-                    table.setBackground(color);
-                    Common.saveBackgroundColor(color);
-                } catch (IOException ex) {
-                    ex.printStackTrace();
-                }
-            }
-        });
-        getContentPane().add(backgroundColorBtn);
-        animation(backgroundColorBtn, Icons.BACK_GROUND_COLOR_ICON, Icons.WHEN_MOUSE_ON_BACK_GROUND_COLOR_ICON);
-
-        // Выбор цвета шрифта в таблице
-        JButton fontColorBtn = new JButton();
-        setButton = new SetButton(Icons.FONT_COLOR_BUTTON_ICON, null, topRightX + 35, topRightY);
-        setButton.buttonSetting(fontColorBtn, "Font color");
-        fontColorBtn.setContentAreaFilled(false);
-
-        fontColorBtn.addActionListener(e -> {
-            Color color = JColorChooser.showDialog(null, "Color", Color.black);
-            if (color != null) {
-                try {
-                    table.setForeground(color);
-                    tableForAnalysis.setForeground(color);
-                    Common.saveFontColor(color);
-                } catch (IOException ex) {
-                    ex.printStackTrace();
-                }
-            }
-        });
-        getContentPane().add(fontColorBtn);
-        animation(fontColorBtn, Icons.FONT_COLOR_BUTTON_ICON, Icons.WHEN_MOUSE_ON_FONT_COLOR_BUTTON_ICON);
-
         //Export to excel
         JButton exportBtn = new JButton();
-        setButton = new SetButton(Icons.EXCEL_BUTTON_ICON, null, topRightX + 70, topRightY);
+        SetButton setButton = new SetButton(Icons.EXCEL_BUTTON_ICON, null, topRightX + 70, topRightY);
         setButton.buttonSetting(exportBtn, "Export news to excel");
         exportBtn.setContentAreaFilled(false);
 
@@ -763,7 +727,8 @@ public class Gui extends JFrame {
             String fromPwdValue = jdbcQueries.getSetting("from_pwd");
             String emailToValue = jdbcQueries.getSetting("email_to");
             String transparencyValue = jdbcQueries.getSetting("transparency");
-            String fontSizeValue = jdbcQueries.getSetting("font_size");
+            Integer fontSizeValue = Integer.valueOf(jdbcQueries.getSetting("font_size"));
+            Integer rowHeightValue = Integer.valueOf(jdbcQueries.getSetting("row_height"));
 
             Color color = new Color(255, 255, 255);
             JTextField emailFrom = new JTextField(emailFromValue);
@@ -779,25 +744,66 @@ public class Gui extends JFrame {
             JTextField pathToDatabase = new JTextField();
             pathToDatabase.setBackground(color);
             pathToDatabase.setText(Common.getPathToDatabase());
-            JTextField fontSize = new JTextField();
-            fontSize.setText(String.valueOf(fontSizeValue));
-            fontSize.setBackground(color);
+            JComboBox<Integer> fontSizeCombobox = new JComboBox<>(new Integer[]{13, 14, 15, 16, 17, 18, 19, 20});
+            fontSizeCombobox.setSelectedItem(fontSizeValue);
+            JComboBox<Integer> rowHeightCombobox = new JComboBox<>(new Integer[]{19, 20, 21, 22, 23, 24, 25, 26, 27, 28,
+                    29, 30, 31, 32, 33});
+            rowHeightCombobox.setSelectedItem(rowHeightValue);
+            JButton guiColorButton = new JButton("select");
+            // Выбор цвета фона UI
+            guiColorButton.addActionListener(x -> {
+                Color backgroundColorValue = JColorChooser.showDialog(null, "Gui background", Color.black);
+                if (backgroundColorValue != null) {
+                    this.setBackground(backgroundColorValue);
+                    Common.saveColor("gui-bg", backgroundColorValue);
+                }
+            });
 
-            JPanel miniPanel = new JPanel();
-            miniPanel.setLayout(new GridLayout(5, 1));
-            miniPanel.add(new JLabel("Email from"));
-            miniPanel.add(emailFrom);
-            miniPanel.add(new JLabel("Email from password"));
-            miniPanel.add(emailFromPwd);
-            miniPanel.add(new JLabel("Email to"));
-            miniPanel.add(emailTo);
-            miniPanel.add(new JLabel("Font size"));
-            miniPanel.add(fontSize);
-            miniPanel.add(new JLabel("Transparency"));
-            miniPanel.add(transparency);
+            // Выбор цвета фона таблиц
+            JButton tablesColorButton = new JButton("select");
+            tablesColorButton.addActionListener(et -> {
+                Color tablesColor = JColorChooser.showDialog(null, "Tables background", Color.black);
+                if (tablesColor != null) {
+                    table.setBackground(tablesColor);
+                    tableForAnalysis.setBackground(tablesColor);
+                    Common.saveColor("table-bg", tablesColor);
+                }
+            });
+
+            // Выбор цвета шрифта в таблице
+            JButton fontColorButton = new JButton("select");
+            fontColorButton.addActionListener(ef -> {
+                Color fontColor = JColorChooser.showDialog(null, "Font color", Color.black);
+                if (fontColor != null) {
+                    table.setForeground(fontColor);
+                    tableForAnalysis.setForeground(fontColor);
+                    Common.saveColor("font", fontColor);
+                }
+            });
+
+            JPanel settingsPanel = new JPanel();
+            settingsPanel.setLayout(new GridLayout(9, 1));
+            settingsPanel.add(new JLabel("Email from"));
+            settingsPanel.add(emailFrom);
+            settingsPanel.add(new JLabel("Email from password"));
+            settingsPanel.add(emailFromPwd);
+            settingsPanel.add(new JLabel("Email to"));
+            settingsPanel.add(emailTo);
+            settingsPanel.add(new JLabel("Font size"));
+            settingsPanel.add(fontSizeCombobox);
+            settingsPanel.add(new JLabel("Row height"));
+            settingsPanel.add(rowHeightCombobox);
+            settingsPanel.add(new JLabel("Transparency"));
+            settingsPanel.add(transparency);
+            settingsPanel.add(new JLabel("Interface color"));
+            settingsPanel.add(guiColorButton);
+            settingsPanel.add(new JLabel("Tables color"));
+            settingsPanel.add(tablesColorButton);
+            settingsPanel.add(new JLabel("Font color"));
+            settingsPanel.add(fontColorButton);
 
             Object[] newSource = {
-                    miniPanel,
+                    settingsPanel,
                     "Path to database:", pathToDatabase
             };
 
@@ -811,7 +817,8 @@ public class Gui extends JFrame {
                 Common.delSettings("db_path");
                 Common.writeToConfigTxt("db_path", pathToDatabase.getText());
                 jdbcQueries.updateSettings("db_path", pathToDatabase.getText());
-                jdbcQueries.updateSettings("font_size", fontSize.getText());
+                jdbcQueries.updateSettings("font_size", fontSizeCombobox.getSelectedItem().toString());
+                jdbcQueries.updateSettings("row_height", rowHeightCombobox.getSelectedItem().toString());
             }
         };
         settingsDirectoryBtn.addActionListener(actionListener);

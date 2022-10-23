@@ -31,14 +31,6 @@ public class Icons {
             .createImage(Icons.class.getResource("/icons/excel2.png")));
     public static final ImageIcon DELETE_UNIT = new ImageIcon(Toolkit.getDefaultToolkit()
             .createImage(Icons.class.getResource("/icons/exit.png")));
-    public static final ImageIcon FONT_COLOR_BUTTON_ICON = new ImageIcon(Toolkit.getDefaultToolkit()
-            .createImage(Icons.class.getResource("/icons/font.png")));
-    public static final ImageIcon  WHEN_MOUSE_ON_FONT_COLOR_BUTTON_ICON = new ImageIcon(Toolkit.getDefaultToolkit()
-            .createImage(Icons.class.getResource("/icons/font2.png")));
-    public static final ImageIcon BACK_GROUND_COLOR_ICON = new ImageIcon(Toolkit.getDefaultToolkit()
-            .createImage(Icons.class.getResource("/icons/background.png")));
-    public static final ImageIcon WHEN_MOUSE_ON_BACK_GROUND_COLOR_ICON = new ImageIcon(Toolkit.getDefaultToolkit()
-            .createImage(Icons.class.getResource("/icons/background2.png")));
     public static final ImageIcon EXIT_BUTTON_ICON = new ImageIcon(Toolkit.getDefaultToolkit()
             .createImage(Icons.class.getResource("/icons/exit.png")));
     public static final ImageIcon WHEN_MOUSE_ON_EXIT_BUTTON_ICON = new ImageIcon(Toolkit.getDefaultToolkit()

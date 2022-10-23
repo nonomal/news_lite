@@ -81,20 +81,20 @@ public class Common {
     // установка темы интерфейса
     public static void setGuiTheme() {
         JdbcQueries jdbcQueries = new JdbcQueries();
-        int fontColorRed = Integer.parseInt(jdbcQueries.getSetting("fontColorRed"));
-        int fontColorGreen = Integer.parseInt(jdbcQueries.getSetting("fontColorGreen"));
-        int fontColorBlue = Integer.parseInt(jdbcQueries.getSetting("fontColorBlue"));
-        int backgroundColorRed = Integer.parseInt(jdbcQueries.getSetting("backgroundColorRed"));
-        int backgroundColorGreen = Integer.parseInt(jdbcQueries.getSetting("backgroundColorGreen"));
-        int backgroundColorBlue = Integer.parseInt(jdbcQueries.getSetting("backgroundColorBlue"));
+        int fontRed = Integer.parseInt(jdbcQueries.getSetting("font_red"));
+        int fontGreen = Integer.parseInt(jdbcQueries.getSetting("font_green"));
+        int fontBlue = Integer.parseInt(jdbcQueries.getSetting("font_blue"));
+        int tablesRed = Integer.parseInt(jdbcQueries.getSetting("tables_red"));
+        int tablesGreen = Integer.parseInt(jdbcQueries.getSetting("tables_green"));
+        int tablesBlue = Integer.parseInt(jdbcQueries.getSetting("tables_blue"));
 
         // FlatLaf theme
         UIManager.put("Component.arc", 10);
         UIManager.put("ProgressBar.arc", 6);
         UIManager.put("Button.arc", 8);
-        UIManager.put("Table.background", new Color(backgroundColorRed, backgroundColorGreen, backgroundColorBlue));
+        UIManager.put("Table.background", new Color(tablesRed, tablesGreen, tablesBlue));
         UIManager.put("Table.alternateRowColor", new Color(59, 59, 59));
-        UIManager.put("Table.foreground", new Color(fontColorRed, fontColorGreen, fontColorBlue));
+        UIManager.put("Table.foreground", new Color(fontRed, fontGreen, fontBlue));
         UIManager.put("TextField.background", Color.GRAY);
         UIManager.put("TextField.foreground", Color.BLACK);
         FlatHiberbeeDarkIJTheme.setup();
@@ -281,20 +281,22 @@ public class Common {
         }
     }
 
-    // цвет шрифта
-    public void saveFontColor(Color color) throws IOException {
+    public void saveColor(String type, Color color) {
         JdbcQueries jdbcQueries = new JdbcQueries();
-        jdbcQueries.updateSettings("fontColorRed", String.valueOf(color.getRed()));
-        jdbcQueries.updateSettings("fontColorGreen", String.valueOf(color.getGreen()));
-        jdbcQueries.updateSettings("fontColorBlue", String.valueOf(color.getBlue()));
-    }
 
-    // цвет фона таблицы
-    public void saveBackgroundColor(Color color) throws IOException {
-        JdbcQueries jdbcQueries = new JdbcQueries();
-        jdbcQueries.updateSettings("backgroundColorRed", String.valueOf(color.getRed()));
-        jdbcQueries.updateSettings("backgroundColorGreen", String.valueOf(color.getGreen()));
-        jdbcQueries.updateSettings("backgroundColorBlue", String.valueOf(color.getBlue()));
+        if ("font".equals(type)) {
+            jdbcQueries.updateSettings("font_red", String.valueOf(color.getRed()));
+            jdbcQueries.updateSettings("font_green", String.valueOf(color.getGreen()));
+            jdbcQueries.updateSettings("font_blue", String.valueOf(color.getBlue()));
+        } else if ("table-bg".equals(type)) {
+            jdbcQueries.updateSettings("tables_red", String.valueOf(color.getRed()));
+            jdbcQueries.updateSettings("tables_green", String.valueOf(color.getGreen()));
+            jdbcQueries.updateSettings("tables_blue", String.valueOf(color.getBlue()));
+        } else if ("gui-bg".equals(type)) {
+            jdbcQueries.updateSettings("gui_red", String.valueOf(color.getRed()));
+            jdbcQueries.updateSettings("gui_green", String.valueOf(color.getGreen()));
+            jdbcQueries.updateSettings("gui_blue", String.valueOf(color.getBlue()));
+        }
     }
 
     // преобразование строки в строку с хэш-кодом
