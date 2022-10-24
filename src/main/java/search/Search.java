@@ -21,8 +21,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 public class Search {
     private int newsCount = 0;
-    private static final int WORD_FREQ_MATCHES = 5;
-
+    private static final int WORD_FREQ_MATCHES = 2;
     private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("dd.MMM HH:mm", Locale.ENGLISH);
     private final SQLite sqLite;
     private final JdbcQueries jdbcQueries;
