@@ -326,7 +326,7 @@ public class JdbcQueries {
         return isExists == 1;
     }
 
-    // Список избранных новостей TODO добавить проверку на дубли
+    // Список избранных новостей
     public List<Favorite> getFavorites() {
         List<Favorite> favorites = new ArrayList<>();
         try {
