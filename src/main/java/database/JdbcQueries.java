@@ -1,6 +1,5 @@
 package database;
 
-import gui.Gui;
 import model.*;
 import utils.Common;
 
@@ -12,29 +11,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class JdbcQueries {
-    private static final int WORD_FREQ_MATCHES = 2;
     private final Connection connection = SQLite.connection;
 
     /* INSERT */
-    // Вставка заголовков разбитых на слова
-    public void addCutTitlesForAnalysis(String title) {
-        try {
-            String query = "INSERT INTO NEWS_DUAL(TITLE) VALUES (?)";
-            PreparedStatement statement = connection.prepareStatement(query);
-            String[] substr = title.split(" ");
-
-            for (String s : substr) {
-                if (s.length() > 3) {
-                    statement.setString(1, s);
-                    statement.executeUpdate();
-                }
-            }
-            statement.close();
-        } catch (Exception e) {
-            Common.console("addCutTitlesForAnalysis error: " + e.getMessage());
-        }
-    }
-
     // Вставка ключевого слова
     public void addKeyword(String word) {
         try {
@@ -416,6 +395,26 @@ public class JdbcQueries {
         return response;
     }
 
+
+    // Список слов с переводом
+    public List<String> getExcludedWordsFromAnalysis() {
+        List<String> words = new ArrayList<>();
+        try {
+            String query = "SELECT word FROM all_titles_to_exclude";
+            PreparedStatement statement = connection.prepareStatement(query);
+
+            ResultSet rs = statement.executeQuery();
+            while (rs.next()) {
+                words.add(rs.getString("word"));
+            }
+            rs.close();
+            statement.close();
+        } catch (Exception e) {
+            Common.console("getRandomWord error: " + e.getMessage());
+        }
+        return words;
+    }
+
     /* REMOVE */
     // удаление слов из разных таблиц
     public void removeItem(String item, int activeWindow) {
@@ -460,18 +459,6 @@ public class JdbcQueries {
         }
     }
 
-    // удаляем все пустые строки
-    public void removeEmptyRows() {
-        try {
-            String query = "DELETE FROM NEWS_DUAL WHERE TITLE = ''";
-            PreparedStatement statement = connection.prepareStatement(query);
-            statement.executeUpdate();
-            statement.close();
-        } catch (Exception e) {
-            Common.console("deleteEmptyRows error: " + e.getMessage());
-        }
-    }
-
     // Очистка данных любой передаваемой таблицы
     public void removeFromTable(String tableName) {
         try {
@@ -506,30 +493,6 @@ public class JdbcQueries {
             Common.console("isTitleExists error: " + e.getMessage());
         }
         return isExists == 1;
-    }
-
-    // Заполнение таблицы анализа
-    public void setAnalysis() {
-        try {
-            String query = "SELECT SUM, TITLE FROM V_NEWS_DUAL WHERE SUM > ? " +
-                    "AND TITLE NOT IN (SELECT WORD FROM ALL_TITLES_TO_EXCLUDE) " +
-                    "ORDER BY SUM DESC";
-            PreparedStatement statement = connection.prepareStatement(query);
-            statement.setInt(1, WORD_FREQ_MATCHES);
-
-            ResultSet rs = statement.executeQuery();
-            while (rs.next()) {
-                String word = rs.getString("TITLE");
-                int sum = rs.getInt("SUM");
-                Object[] row = new Object[]{word, sum};
-                Gui.modelForAnalysis.addRow(row);
-            }
-            removeFromTable("NEWS_DUAL");
-            rs.close();
-            statement.close();
-        } catch (Exception e) {
-            Common.console("setAnalysis error: " + e.getMessage());
-        }
     }
 
     // новостей в архиве всего

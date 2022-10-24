@@ -121,7 +121,7 @@ public class ConsoleSearch {
                 sqlite.transaction("COMMIT");
 
                 // удаляем все пустые строки
-                jdbcQueries.removeEmptyRows();
+                //jdbcQueries.removeEmptyRows();
 
                 // Автоматическая отправка результатов
                 if (dataForEmail.size() > 0) {
@@ -136,8 +136,7 @@ public class ConsoleSearch {
                 e.printStackTrace();
                 try {
                     sqlite.transaction("ROLLBACK");
-                } catch (SQLException sql) {
-                    sql.printStackTrace();
+                } catch (SQLException ignored) {
                 }
             }
         }

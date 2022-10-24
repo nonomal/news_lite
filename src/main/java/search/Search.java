@@ -16,19 +16,20 @@ import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.time.Duration;
 import java.time.LocalTime;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Locale;
+import java.util.*;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 public class Search {
     private int newsCount = 0;
+    private static final int WORD_FREQ_MATCHES = 5;
+
     private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("dd.MMM HH:mm", Locale.ENGLISH);
     private final SQLite sqLite;
     private final JdbcQueries jdbcQueries;
     public static AtomicBoolean isStop, isSearchNow, isSearchFinished;
     public static final List<TableRow> emailAndExcelData = new ArrayList<>();
+    public Map<String, Integer> wordsCount = new HashMap<>();
+    public List<String> excludedWordsFromAnalysis;
 
     public Search() {
         sqLite = new SQLite();
@@ -36,6 +37,7 @@ public class Search {
         isStop = new AtomicBoolean(false);
         isSearchNow = new AtomicBoolean(false);
         isSearchFinished = new AtomicBoolean(false);
+        excludedWordsFromAnalysis = jdbcQueries.getExcludedWordsFromAnalysis();
     }
 
     public void mainSearch(String searchType) {
@@ -50,6 +52,7 @@ public class Search {
 
             int modelRowCount = Gui.model.getRowCount();
             emailAndExcelData.clear();
+            wordsCount.clear();
             if (!Gui.GUI_IN_TRAY.get()) Gui.model.setRowCount(0);
             if (!Gui.WAS_CLICK_IN_TABLE_FOR_ANALYSIS.get()) Gui.modelForAnalysis.setRowCount(0);
             newsCount = 0;
@@ -208,10 +211,18 @@ public class Search {
                 sqLite.transaction("COMMIT");
 
                 // удаляем все пустые строки
-                jdbcQueries.removeEmptyRows();
+                //jdbcQueries.removeEmptyRows();
 
-                // Заполняем таблицу анализа
-                if (!Gui.WAS_CLICK_IN_TABLE_FOR_ANALYSIS.get()) jdbcQueries.setAnalysis();
+                // Удаление исключённых слов из мап для анализа
+                for (String word : excludedWordsFromAnalysis) {
+                    wordsCount.remove(word);
+                }
+
+                // Сортировка DESC и заполнение таблицы анализа
+                wordsCount.entrySet().stream()
+                        .filter(x -> x.getValue() > WORD_FREQ_MATCHES)
+                        .sorted(Collections.reverseOrder(Map.Entry.comparingByValue()))
+                        .forEach(x -> Gui.modelForAnalysis.addRow(new Object[]{x.getKey(), x.getValue()}));
 
                 // Автоматическая отправка результатов
                 if (Gui.autoSendMessage.getState() && (Gui.model.getRowCount() > 0) && emailAndExcelData.size() > 0) {
@@ -227,8 +238,7 @@ public class Search {
             } catch (Exception e) {
                 try {
                     sqLite.transaction("ROLLBACK");
-                } catch (SQLException i) {
-                    i.printStackTrace();
+                } catch (SQLException ignored) {
                 }
                 isStop.set(true);
             }
@@ -251,7 +261,14 @@ public class Search {
         // Данные для отправки результатов на почту и выгрузки эксель-файла + исключённые из показа
         emailAndExcelData.add(tableRow);
 
-        jdbcQueries.addCutTitlesForAnalysis(tableRow.getTitle());
+        // Данные для анализа через мап
+        String[] substr = tableRow.getTitle().split(" ");
+        for (String s : substr) {
+            if (s.length() > 3) {
+                wordsCount.put(s, wordsCount.getOrDefault(s, 0) + 1);
+            }
+        }
+
         if (Gui.isOnlyLastNews) {
             jdbcQueries.addTitles(tableRow.getTitle(), searchType);
         }
