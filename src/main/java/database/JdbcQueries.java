@@ -92,21 +92,25 @@ public class JdbcQueries {
     }
 
     // сохранение всех заголовков в архив
-    public void addAllTitlesToArchive(String title, String date, String link, String source, String describe) {
+    public void addAllTitlesToArchive(List<TableRow> tableRows) {
         try {
             String query = "INSERT INTO all_news(title, news_date, link, source, hash, describe) " +
                     "VALUES (?, ?, ?, ?, ?, ?)";
             PreparedStatement statement = connection.prepareStatement(query);
-            statement.setString(1, title);
-            statement.setString(2, date);
-            statement.setString(3, link);
-            statement.setString(4, source);
-            statement.setString(5, Common.getHash(source + title));
-            statement.setString(6, describe);
+
+            for (TableRow row : tableRows) {
+                statement.setString(1, row.getTitle());
+                statement.setString(2, row.getDate());
+                statement.setString(3, row.getLink());
+                statement.setString(4, row.getSource());
+                statement.setString(5, Common.getHash(row.getSource() + row.getTitle()));
+                statement.setString(6, row.getDescribe());
+            }
             statement.executeUpdate();
             statement.close();
+
         } catch (SQLException e) {
-            Common.console("addAllTitlesToArchive error: " + e.getMessage());
+            Common.console("addAllTitlesToArchive 2 error: " + e.getMessage());
         }
     }
 

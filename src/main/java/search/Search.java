@@ -5,10 +5,7 @@ import database.JdbcQueries;
 import database.SQLite;
 import gui.Gui;
 import gui.buttons.Icons;
-import model.Excluded;
-import model.Keyword;
-import model.Source;
-import model.TableRow;
+import model.*;
 import utils.Common;
 import utils.Parser;
 
@@ -27,6 +24,7 @@ public class Search {
     private final JdbcQueries jdbcQueries;
     public static AtomicBoolean isStop, isSearchNow, isSearchFinished;
     public static final List<TableRow> emailAndExcelData = new ArrayList<>();
+    public static final List<TableRow> allNewsData = new ArrayList<>();
     public Map<String, Integer> wordsCount = new HashMap<>();
     public List<String> excludedWordsFromAnalysis;
 
@@ -51,6 +49,7 @@ public class Search {
 
             int modelRowCount = Gui.model.getRowCount();
             emailAndExcelData.clear();
+            allNewsData.clear();
             wordsCount.clear();
             if (!Gui.GUI_IN_TRAY.get()) Gui.model.setRowCount(0);
             if (!Gui.WAS_CLICK_IN_TABLE_FOR_ANALYSIS.get()) Gui.modelForAnalysis.setRowCount(0);
@@ -116,15 +115,8 @@ public class Search {
                                         //Data for a table
                                         int dateDiff = Common.compareDatesOnly(new Date(), pubDate);
 
-                                        // вставка всех без исключения новостей в архив
-                                        jdbcQueries.addAllTitlesToArchive(title,
-                                                pubDate.toString(),
-                                                tableRow.getLink(),
-                                                tableRow.getSource(),
-                                                tableRow.getDescribe());
-
-
                                         if (dateDiff != 0 && !tableRow.getTitle().contains("#")) {
+                                            allNewsData.add(tableRow);
                                             searchProcess(tableRow, searchType);
                                         }
 
@@ -153,8 +145,9 @@ public class Search {
                                 }
                                 if (isStop.get()) return;
                             }
-                            if (!Gui.isOnlyLastNews)
+                            if (!Gui.isOnlyLastNews) {
                                 jdbcQueries.removeFromTable("TITLES");
+                            }
                         } catch (Exception noRss) {
                             String smi = source.getLink()
                                     .replaceAll(("https://|http://|www."), "");
@@ -228,12 +221,17 @@ public class Search {
                     Gui.sendCurrentResultsToEmail.doClick();
                 }
 
+                Gui.WAS_CLICK_IN_TABLE_FOR_ANALYSIS.set(false);
+
+                // Добавить новости в архив
+                jdbcQueries.addAllTitlesToArchive(allNewsData);
+
                 // Удаление дубликатов заголовков
                 jdbcQueries.removeDuplicates();
 
-                Gui.WAS_CLICK_IN_TABLE_FOR_ANALYSIS.set(false);
-                if (isWord)
+                if (isWord) {
                     Gui.appInfo.setText("news archive: " + jdbcQueries.archiveNewsCount());
+                }
             } catch (Exception e) {
                 try {
                     sqLite.transaction("ROLLBACK");
