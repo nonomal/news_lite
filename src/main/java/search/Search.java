@@ -24,7 +24,6 @@ public class Search {
     private final JdbcQueries jdbcQueries;
     public static AtomicBoolean isStop, isSearchNow, isSearchFinished;
     public static final List<TableRow> emailAndExcelData = new ArrayList<>();
-    public static final List<TableRow> allNewsData = new ArrayList<>();
     public Map<String, Integer> wordsCount = new HashMap<>();
     public List<String> excludedWordsFromAnalysis;
 
@@ -49,7 +48,6 @@ public class Search {
 
             int modelRowCount = Gui.model.getRowCount();
             emailAndExcelData.clear();
-            allNewsData.clear();
             wordsCount.clear();
             if (!Gui.GUI_IN_TRAY.get()) Gui.model.setRowCount(0);
             if (!Gui.WAS_CLICK_IN_TABLE_FOR_ANALYSIS.get()) Gui.modelForAnalysis.setRowCount(0);
@@ -115,8 +113,14 @@ public class Search {
                                         //Data for a table
                                         int dateDiff = Common.compareDatesOnly(new Date(), pubDate);
 
+                                        // вставка всех без исключения новостей в архив
+                                        jdbcQueries.addAllTitlesToArchive(title,
+                                                pubDate.toString(),
+                                                tableRow.getLink(),
+                                                tableRow.getSource(),
+                                                tableRow.getDescribe());
+
                                         if (dateDiff != 0 && !tableRow.getTitle().contains("#")) {
-                                            allNewsData.add(tableRow);
                                             searchProcess(tableRow, searchType);
                                         }
 
@@ -222,9 +226,6 @@ public class Search {
                 }
 
                 Gui.WAS_CLICK_IN_TABLE_FOR_ANALYSIS.set(false);
-
-                // Добавить новости в архив
-                jdbcQueries.addAllTitlesToArchive(allNewsData);
 
                 // Удаление дубликатов заголовков
                 jdbcQueries.removeDuplicates();
