@@ -92,7 +92,12 @@ public class Gui extends JFrame {
         GraphicsDevice gd = ge.getDefaultScreenDevice();
         boolean isUniformTranslucencySupported = gd.isWindowTranslucencySupported(TRANSLUCENT);
         if (isUniformTranslucencySupported) {
-            this.setOpacity(Float.parseFloat(new JdbcQueries().getSetting("transparency")));
+            String transparencyValue = new JdbcQueries().getSetting("transparency");
+            if (transparencyValue != null) {
+                this.setOpacity(Float.parseFloat(transparencyValue));
+            } else {
+                this.setOpacity(0.9f);
+            }
         }
 
         //Table
