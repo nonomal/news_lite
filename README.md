@@ -10,7 +10,7 @@ The current version of the program: https://github.com/mrprogre/news_lite/raw/ma
 
 For the application to work on a PC, Java must be installed: https://www.java.com/ru/download/
 
-![demo](https://user-images.githubusercontent.com/45883640/195786930-0f4d9ff5-a7ef-42cc-8864-ee04821a744a.gif)
+![demo](https://user-images.githubusercontent.com/45883640/198367076-56accd93-b412-4bf5-a54b-b59d60fb433f.gif)
 
 ----
 **Program features:**
