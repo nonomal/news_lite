@@ -374,50 +374,6 @@ public class Gui extends JFrame {
         getContentPane().add(datesLabel);
         openDialog(datesLabel, "datesDialog");
 
-        /* TOP-RIGHT ACTION PANEL */
-        int topRightX = 740;
-        int topRightY = 8;
-
-        //Export to excel
-        JButton exportBtn = new JButton();
-        SetButton setButton = new SetButton(Icons.EXCEL_BUTTON_ICON, null, topRightX + 70, topRightY);
-        setButton.buttonSetting(exportBtn, "Export news to excel");
-        exportBtn.setContentAreaFilled(false);
-
-        exportBtn.addActionListener(e -> {
-            if (model.getRowCount() != 0) {
-                new Thread(new ExportToExcel()::exportResultsToExcel).start();
-            } else {
-                Common.console("there is no data to export");
-            }
-        });
-        getContentPane().add(exportBtn);
-        animation(exportBtn, Icons.EXCEL_BUTTON_ICON, Icons.WHEN_MOUSE_ON_EXCEL_BUTTON_ICON);
-
-        // Clear
-        JButton clearBtnTop = new JButton();
-        setButton = new SetButton(Icons.CLEAR_BUTTON_ICON, null, topRightX + 105, topRightY);
-        setButton.buttonSetting(clearBtnTop, "Clear the list");
-        clearBtnTop.setContentAreaFilled(false);
-
-        clearBtnTop.addActionListener(e -> {
-            try {
-                if (model.getRowCount() == 0) {
-                    Common.console("no data to clear");
-                    return;
-                }
-                model.setRowCount(0);
-                modelForAnalysis.setRowCount(0);
-                newsCount = 0;
-                labelSum.setText("" + newsCount);
-            } catch (Exception t) {
-                Common.console(t.getMessage());
-                t.printStackTrace();
-            }
-        });
-        getContentPane().add(clearBtnTop);
-        animation(clearBtnTop, Icons.CLEAR_BUTTON_ICON, Icons.WHEN_MOUSE_ON_CLEAR_BUTTON_ICON);
-
         /* TOP-RIGHT CLOSE*/
         /* Сворачивание в трей */
         JButton toTrayBtn = new JButton(Icons.HIDE_BUTTON_ICON);
@@ -505,7 +461,7 @@ public class Gui extends JFrame {
         // Открыть список ключевых слов для поиска
         btnShowKeywordsList = new JButton();
         btnShowKeywordsList.setBorderPainted(false);
-        setButton = new SetButton(Icons.LIST_BUTTON_ICON, null, bottomLeftX - 3, bottomLeftY);
+        SetButton setButton = new SetButton(Icons.LIST_BUTTON_ICON, null, bottomLeftX - 3, bottomLeftY);
         setButton.buttonSetting(btnShowKeywordsList, null);
         btnShowKeywordsList.addActionListener(e -> new Dialogs("keywordsDialog"));
         animation(btnShowKeywordsList, Icons.LIST_BUTTON_ICON, Icons.WHEN_MOUSE_ON_LIST_BUTTON_ICON);
@@ -912,6 +868,18 @@ public class Gui extends JFrame {
         // Mouse right click menu
         final JPopupMenu popup = new JPopupMenu();
 
+        // Add to favorites (menu)
+        JMenuItem menuFavorite = new JMenuItem("Add to favorites");
+        menuFavorite.addActionListener((e) -> {
+            int row = table.getSelectedRow();
+            if (row != -1) {
+                String source = (String) table.getValueAt(row, 1);
+                String title = (String) table.getValueAt(row, 2);
+                jdbcQueries.addFavoriteTitle(title, jdbcQueries.getLinkOrDescribeByHash(source, title, "link"));
+            }
+        });
+        popup.add(menuFavorite);
+
         // Copy (menu)
         JMenuItem menuCopy = new JMenuItem("Copy");
         menuCopy.addActionListener((e) -> {
@@ -935,25 +903,44 @@ public class Gui extends JFrame {
         });
         popup.add(menuCopy);
 
+
         // Delete row (menu)
-        JMenuItem menuDeleteRow = new JMenuItem("Delete");
+        JMenuItem menuDeleteRow = new JMenuItem("Remove");
         menuDeleteRow.addActionListener(e -> {
             int row = table.convertRowIndexToModel(table.getSelectedRow());
             if (row != -1) model.removeRow(row);
         });
         popup.add(menuDeleteRow);
 
-        // Add to favorites (menu)
-        JMenuItem menuFavorite = new JMenuItem("Favorite");
-        menuFavorite.addActionListener((e) -> {
-            int row = table.getSelectedRow();
-            if (row != -1) {
-                String source = (String) table.getValueAt(row, 1);
-                String title = (String) table.getValueAt(row, 2);
-                jdbcQueries.addFavoriteTitle(title, jdbcQueries.getLinkOrDescribeByHash(source, title, "link"));
+        // Clear news list
+        JMenuItem menuRemoveAll = new JMenuItem("Remove all");
+        menuRemoveAll.addActionListener(e -> {
+            try {
+                if (model.getRowCount() == 0) {
+                    Common.console("no data to clear");
+                    return;
+                }
+                model.setRowCount(0);
+                modelForAnalysis.setRowCount(0);
+                newsCount = 0;
+                labelSum.setText("" + newsCount);
+            } catch (Exception t) {
+                Common.console(t.getMessage());
+                t.printStackTrace();
             }
         });
-        popup.add(menuFavorite);
+        popup.add(menuRemoveAll);
+
+        // Export titles to excel file (menu)
+        JMenuItem exportToXls = new JMenuItem("Export");
+        exportToXls.addActionListener((e) -> {
+            if (model.getRowCount() != 0) {
+                new Thread(new ExportToExcel()::exportResultsToExcel).start();
+            } else {
+                Common.console("there is no data to export");
+            }
+        });
+        popup.add(exportToXls);
 
         // Show describe (menu)
         JMenuItem menuDescribe = new JMenuItem("Describe");

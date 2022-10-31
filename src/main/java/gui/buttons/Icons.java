@@ -21,14 +21,6 @@ public class Icons {
             .createImage(Icons.class.getResource("/icons/search.png")));
     public static final ImageIcon STOP_SEARCH_ICON = new ImageIcon(Toolkit.getDefaultToolkit()
             .createImage(Icons.class.getResource("/icons/stop.png")));
-    public static final ImageIcon CLEAR_BUTTON_ICON = new ImageIcon(Toolkit.getDefaultToolkit()
-            .createImage(Icons.class.getResource("/icons/clear.png")));
-    public static final ImageIcon WHEN_MOUSE_ON_CLEAR_BUTTON_ICON = new ImageIcon(Toolkit.getDefaultToolkit()
-            .createImage(Icons.class.getResource("/icons/clear2.png")));
-    public static final ImageIcon EXCEL_BUTTON_ICON = new ImageIcon(Toolkit.getDefaultToolkit()
-            .createImage(Icons.class.getResource("/icons/excel.png")));
-    public static final ImageIcon WHEN_MOUSE_ON_EXCEL_BUTTON_ICON = new ImageIcon(Toolkit.getDefaultToolkit()
-            .createImage(Icons.class.getResource("/icons/excel2.png")));
     public static final ImageIcon DELETE_UNIT = new ImageIcon(Toolkit.getDefaultToolkit()
             .createImage(Icons.class.getResource("/icons/exit.png")));
     public static final ImageIcon EXIT_BUTTON_ICON = new ImageIcon(Toolkit.getDefaultToolkit()
