@@ -337,7 +337,7 @@ public class Dialogs extends JDialog implements KeyListener {
                 this.setBounds(600, 200, 600, 338);
                 this.setTitle("Dates");
                 this.setLocationRelativeTo(Gui.datesLabel);
-                Object[] columns = {"Type", "Description", "Day", "Month", "Year", "Del", ""};
+                Object[] columns = {"Type", "Description", "Day", "Month", "Year", "", "Del"};
                 model = new DefaultTableModel(new Object[][]{
                 }, columns) {
                     final boolean[] columnEditable = new boolean[]{false, false, false, false, false, true, true};
@@ -348,7 +348,7 @@ public class Dialogs extends JDialog implements KeyListener {
 
                     // Сортировка
                     final Class[] types_unique = {String.class, String.class, Integer.class, Integer.class,
-                            Integer.class, Button.class, Boolean.class};
+                            Integer.class, Boolean.class, Button.class};
 
                     @Override
                     public Class getColumnClass(int columnIndex) {
@@ -356,8 +356,8 @@ public class Dialogs extends JDialog implements KeyListener {
                     }
                 };
                 table = new JTable(model);
-                table.getColumn("Del").setCellRenderer(new ButtonColumn(table, 5));
-                table.getColumnModel().getColumn(6).setCellEditor(new CheckBoxEditor(new JCheckBox()));
+                table.getColumnModel().getColumn(5).setCellEditor(new CheckBoxEditor(new JCheckBox()));
+                table.getColumn("Del").setCellRenderer(new ButtonColumn(table, 6));
                 table.setAutoCreateRowSorter(true);
                 DefaultTableCellRenderer renderer = new DefaultTableCellRenderer();
                 renderer.setHorizontalAlignment(JLabel.CENTER);
@@ -487,7 +487,7 @@ public class Dialogs extends JDialog implements KeyListener {
                 List<Dates> dates = jdbcQueries.getDates(1);
                 for (Dates date : dates) {
                     Dialogs.model.addRow(new Object[]{date.getType(), date.getDescription(), date.getDay(),
-                            date.getMonth(), date.getYear(), null, date.getIsActive()});
+                            date.getMonth(), date.getYear(), date.getIsActive()});
                 }
                 break;
             }
