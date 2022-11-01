@@ -350,7 +350,7 @@ public class Gui extends JFrame {
         excludedTitlesLabel.setHorizontalAlignment(SwingConstants.LEFT);
         excludedTitlesLabel.setForeground(new Color(255, 179, 131));
         excludedTitlesLabel.setFont(GUI_FONT);
-        excludedTitlesLabel.setBounds(topLeftActionX + 490, topLeftActionY + 3, 44, 14);
+        excludedTitlesLabel.setBounds(topLeftActionX + 733, topLeftActionY + 3, 44, 14);
         getContentPane().add(excludedTitlesLabel);
         openDialog(excludedTitlesLabel, "excludedTitlesByWordsDialog");
 
@@ -360,7 +360,7 @@ public class Gui extends JFrame {
         favoritesLabel.setHorizontalAlignment(SwingConstants.LEFT);
         favoritesLabel.setForeground(new Color(114, 237, 161));
         favoritesLabel.setFont(GUI_FONT);
-        favoritesLabel.setBounds(topLeftActionX + 540, topLeftActionY + 3, 44, 14);
+        favoritesLabel.setBounds(topLeftActionX + 783, topLeftActionY + 3, 44, 14);
         getContentPane().add(favoritesLabel);
         openDialog(favoritesLabel, "favoriteTitlesDialog");
 
@@ -370,7 +370,7 @@ public class Gui extends JFrame {
         datesLabel.setHorizontalAlignment(SwingConstants.LEFT);
         datesLabel.setForeground(new Color(237, 114, 114));
         datesLabel.setFont(GUI_FONT);
-        datesLabel.setBounds(topLeftActionX + 590, topLeftActionY + 3, 27, 14);
+        datesLabel.setBounds(topLeftActionX + 833, topLeftActionY + 3, 27, 14);
         getContentPane().add(datesLabel);
         openDialog(datesLabel, "datesDialog");
 
@@ -874,6 +874,7 @@ public class Gui extends JFrame {
 
     private void showRightClickMenu() {
         final JPopupMenu popup = new JPopupMenu();
+
         // Add to favorites (menu)
         JMenuItem menuFavorite = new JMenuItem("Add to favorites");
         menuFavorite.addActionListener((e) -> {
@@ -885,6 +886,18 @@ public class Gui extends JFrame {
             }
         });
         popup.add(menuFavorite);
+
+        // Show describe (menu)
+        JMenuItem menuDescribe = new JMenuItem("Describe");
+        menuDescribe.addActionListener((e) -> {
+            int row = table.getSelectedRow();
+            if (row != -1) {
+                String source = (String) table.getValueAt(row, 1);
+                String title = (String) table.getValueAt(row, 2);
+                Common.console(jdbcQueries.getLinkOrDescribeByHash(source, title, "describe"));
+            }
+        });
+        popup.add(menuDescribe);
 
         // Copy (menu)
         JMenuItem menuCopy = new JMenuItem("Copy");
@@ -918,6 +931,17 @@ public class Gui extends JFrame {
         });
         popup.add(menuDeleteRow);
 
+        // Export titles to excel file (menu)
+        JMenuItem exportToXls = new JMenuItem("Export all");
+        exportToXls.addActionListener((e) -> {
+            if (model.getRowCount() != 0) {
+                new Thread(new ExportToExcel()::exportResultsToExcel).start();
+            } else {
+                Common.console("there is no data to export");
+            }
+        });
+        popup.add(exportToXls);
+
         // Clear news list
         JMenuItem menuRemoveAll = new JMenuItem("Remove all");
         menuRemoveAll.addActionListener(e -> {
@@ -937,29 +961,6 @@ public class Gui extends JFrame {
             }
         });
         popup.add(menuRemoveAll);
-
-        // Export titles to excel file (menu)
-        JMenuItem exportToXls = new JMenuItem("Export");
-        exportToXls.addActionListener((e) -> {
-            if (model.getRowCount() != 0) {
-                new Thread(new ExportToExcel()::exportResultsToExcel).start();
-            } else {
-                Common.console("there is no data to export");
-            }
-        });
-        popup.add(exportToXls);
-
-        // Show describe (menu)
-        JMenuItem menuDescribe = new JMenuItem("Describe");
-        menuDescribe.addActionListener((e) -> {
-            int row = table.getSelectedRow();
-            if (row != -1) {
-                String source = (String) table.getValueAt(row, 1);
-                String title = (String) table.getValueAt(row, 2);
-                Common.console(jdbcQueries.getLinkOrDescribeByHash(source, title, "describe"));
-            }
-        });
-        popup.add(menuDescribe);
 
         // Translate from ENG to RUS (menu)
         JMenuItem menuTranslate = new JMenuItem("Translate");
