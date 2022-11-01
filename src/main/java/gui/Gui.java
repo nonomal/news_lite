@@ -924,6 +924,7 @@ public class Gui extends JFrame {
                 modelForAnalysis.setRowCount(0);
                 newsCount = 0;
                 labelSum.setText("" + newsCount);
+                Gui.sendCurrentResultsToEmail.setVisible(false);
             } catch (Exception t) {
                 Common.console(t.getMessage());
                 t.printStackTrace();
