@@ -18,7 +18,7 @@ public class Reminder {
         int monthTomorrow = Integer.parseInt(tomorrow[1]);
         int dayTomorrow = Integer.parseInt(tomorrow[2]);
 
-        for (Dates date : new JdbcQueries().getDates()) {
+        for (Dates date : new JdbcQueries().getDates(0)) {
             if (date.getMonth() == month && date.getDay() == day) {
                 if (date.getType().equals("День Рождения") && date.getYear() != 0) {
                     Common.console("Сегодня: " + date.getDescription() + " исполняется " +

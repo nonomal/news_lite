@@ -236,12 +236,17 @@ public class JdbcQueries {
     }
 
     // Список значимых дат
-    public List<Dates> getDates() {
+    public List<Dates> getDates(int isActive) {
         List<Dates> dates = new ArrayList<>();
         try {
-            String query = "SELECT type, description, day, month, year FROM dates ORDER BY month, day";
-            PreparedStatement statement = connection.prepareStatement(query);
+            String query = "SELECT type, description, day, month, year, is_active FROM dates ORDER BY month, day";
 
+            if (isActive == 0) {
+                query = "SELECT type, description, day, month, year, is_active FROM dates " +
+                        "WHERE is_active = 1 ORDER BY month, day";
+            }
+
+            PreparedStatement statement = connection.prepareStatement(query);
             ResultSet rs = statement.executeQuery();
             while (rs.next()) {
                 dates.add(new Dates(
@@ -249,13 +254,14 @@ public class JdbcQueries {
                         rs.getString("description"),
                         rs.getInt("day"),
                         rs.getInt("month"),
-                        rs.getInt("year")
+                        rs.getInt("year"),
+                        rs.getBoolean("is_active")
                 ));
             }
             rs.close();
             statement.close();
         } catch (Exception e) {
-            Common.console("getExcludedWords error: " + e.getMessage());
+            Common.console("getDates error: " + e.getMessage());
         }
         return dates;
     }
@@ -527,6 +533,20 @@ public class JdbcQueries {
             PreparedStatement statement = connection.prepareStatement(query);
             statement.setBoolean(1, check);
             statement.setString(2, name);
+            statement.executeUpdate();
+            statement.close();
+        } catch (Exception e) {
+            Common.console("updateIsActiveStatus error: " + e.getMessage());
+        }
+    }
+
+    public void updateIsActiveDates(boolean check, String type, String description) {
+        try {
+            String query = "UPDATE dates SET is_active = ? WHERE type = ? and description = ?";
+            PreparedStatement statement = connection.prepareStatement(query);
+            statement.setBoolean(1, check);
+            statement.setString(2, type);
+            statement.setString(3, description);
             statement.executeUpdate();
             statement.close();
         } catch (Exception e) {

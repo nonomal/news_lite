@@ -27,15 +27,21 @@ public class CheckBoxEditor extends DefaultCellEditor implements ItemListener {
     public void itemStateChanged(ItemEvent e) {
         JdbcQueries jdbcQueries = new JdbcQueries();
         this.fireEditingStopped();
-        String itemName = (String) Dialogs.model.getValueAt(row, 1);
+        String item = (String) Dialogs.model.getValueAt(row, 1);
         String columnName = Dialogs.model.getColumnName(1);
 
-        if (columnName.equals("Source")) {
-            jdbcQueries.updateIsActiveCheckboxes(checkBox.isSelected(), itemName, "rss");
-        } else if (columnName.equals("Keyword")) {
-            jdbcQueries.updateIsActiveCheckboxes(checkBox.isSelected(), itemName, "keywords");
+        switch (columnName) {
+            case "Source":
+                jdbcQueries.updateIsActiveCheckboxes(checkBox.isSelected(), item, "rss");
+                break;
+            case "Keyword":
+                jdbcQueries.updateIsActiveCheckboxes(checkBox.isSelected(), item, "keywords");
+                break;
+            case "Description":
+                String type = (String) Dialogs.model.getValueAt(row, 0);
+                jdbcQueries.updateIsActiveDates(checkBox.isSelected(), type, item);
+                break;
         }
-
     }
 
 }
