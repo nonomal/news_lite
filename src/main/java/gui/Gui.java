@@ -163,8 +163,8 @@ public class Gui extends JFrame {
         table.getColumnModel().getColumn(1).setPreferredWidth(100);
         table.getColumnModel().getColumn(1).setMaxWidth(180);
         table.getColumnModel().getColumn(2).setPreferredWidth(490);
-        table.getColumnModel().getColumn(3).setPreferredWidth(92);
-        table.getColumnModel().getColumn(3).setMaxWidth(92);
+        table.getColumnModel().getColumn(3).setPreferredWidth(98);
+        table.getColumnModel().getColumn(3).setMaxWidth(98);
         table.removeColumn(table.getColumnModel().getColumn(5)); // Скрыть описание заголовка
         table.removeColumn(table.getColumnModel().getColumn(4)); // Скрыть ссылку заголовка
 
@@ -809,7 +809,13 @@ public class Gui extends JFrame {
         queryTableBox.setBounds(879, 473, 290, 26);
         getContentPane().add(queryTableBox);
 
-        /* WEB PAGES */
+        showWebPagesIcons();
+        showRightClickMenu();
+
+        this.setVisible(true);
+    }
+
+    private void showWebPagesIcons() {
         int webX = 758;
         int webY = 547;
         int webHeight = 18;
@@ -864,10 +870,10 @@ public class Gui extends JFrame {
         github.setBounds(webX + 96, webY, webWidth, webHeight);
         getContentPane().add(github);
         animation(github, urlGithub);
+    }
 
-        // Mouse right click menu
+    private void showRightClickMenu() {
         final JPopupMenu popup = new JPopupMenu();
-
         // Add to favorites (menu)
         JMenuItem menuFavorite = new JMenuItem("Add to favorites");
         menuFavorite.addActionListener((e) -> {
@@ -971,7 +977,6 @@ public class Gui extends JFrame {
             public void mouseReleased(MouseEvent e) {
                 if (e.isPopupTrigger()) {
                     JTable source = (JTable) e.getSource();
-                    //int row = source.rowAtPoint(e.getPoint());
                     int row = source.convertRowIndexToModel(source.rowAtPoint(e.getPoint()));
                     int column = source.columnAtPoint(e.getPoint());
                     if (source.isRowSelected(row)) {
@@ -988,8 +993,6 @@ public class Gui extends JFrame {
                 }
             }
         });
-
-        this.setVisible(true);
     }
 
     private void animation(JButton exitBtn, ImageIcon off, ImageIcon on) {
