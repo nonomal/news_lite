@@ -532,6 +532,7 @@ public class Gui extends JFrame {
         consoleTextArea.setCaretPosition(consoleTextArea.getDocument().getLength());
         consoleTextArea.setAutoscrolls(true);
         consoleTextArea.setLineWrap(true);
+        consoleTextArea.setWrapStyleWord(true);
         consoleTextArea.setEditable(false);
         consoleTextArea.setBounds(20, 11, 145, 51);
         consoleTextArea.setFont(new Font(GUI_FONT_NAME, Font.BOLD, 13));
