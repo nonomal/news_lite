@@ -70,6 +70,7 @@ public class Gui extends JFrame {
     public static JProgressBar progressBar;
     public static Timer timer;
     public static TimerTask timerTask;
+    SystemTray systemTray;
 
     public Gui() {
         int guiRed = Integer.parseInt(jdbcQueries.getSetting("gui_red"));
@@ -413,7 +414,7 @@ public class Gui extends JFrame {
         try {
             BufferedImage Icon = ImageIO.read(Objects.requireNonNull(Icons.APP_IN_TRAY_BUTTON_ICON));
             final TrayIcon trayIcon = new TrayIcon(Icon, "Avandy News");
-            SystemTray systemTray = SystemTray.getSystemTray();
+            systemTray = SystemTray.getSystemTray();
             systemTray.add(trayIcon);
 
             final PopupMenu trayMenu = new PopupMenu();
@@ -803,6 +804,12 @@ public class Gui extends JFrame {
 
                 // удалить старый frame
                 this.dispose();
+
+                // удаление иконки в трее
+                TrayIcon[] trayIcons = systemTray.getTrayIcons();
+                for (TrayIcon t : trayIcons) {
+                    systemTray.remove(t);
+                }
                 Common.showGui();
             }
         };
