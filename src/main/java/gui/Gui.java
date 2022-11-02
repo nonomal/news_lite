@@ -15,6 +15,7 @@ import javax.swing.border.BevelBorder;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
+import javax.swing.table.TableCellRenderer;
 import javax.swing.text.DefaultCaret;
 import java.awt.*;
 import java.awt.datatransfer.Clipboard;
@@ -140,6 +141,23 @@ public class Gui extends JFrame {
                 } else {
                     return null;
                 }
+            }
+
+            // Альтернативный цвет для строки таблицы
+            public Component prepareRenderer(TableCellRenderer renderer, int row, int column) {
+                Component component = super.prepareRenderer(renderer, row, column);
+                int tablesRed = Integer.parseInt(jdbcQueries.getSetting("tables_red"));
+                int tablesGreen = Integer.parseInt(jdbcQueries.getSetting("tables_green"));
+                int tablesBlue = Integer.parseInt(jdbcQueries.getSetting("tables_blue"));
+
+                Color mainTableColor = new Color(tablesRed, tablesGreen, tablesBlue);
+                Color alternateColor = new Color(230, 230, 230);
+
+                if(!component.getBackground().equals(getSelectionBackground())) {
+                    Color color = (row % 2 == 0 ? mainTableColor : alternateColor);
+                    component.setBackground(color);
+                }
+                return component;
             }
         };
         //headers
@@ -980,6 +998,7 @@ public class Gui extends JFrame {
                 if (e.isPopupTrigger()) {
                     JTable source = (JTable) e.getSource();
                     int row = source.convertRowIndexToModel(source.rowAtPoint(e.getPoint()));
+                    table.setRowSelectionInterval(row, row);
                     int column = source.columnAtPoint(e.getPoint());
                     if (source.isRowSelected(row)) {
                         source.changeSelection(row, column, false, false);
