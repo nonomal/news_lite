@@ -73,19 +73,8 @@ public class Gui extends JFrame {
     SystemTray systemTray;
 
     public Gui() {
-        // загрузка актуальных цветов UI
-        int guiRed = Integer.parseInt(jdbcQueries.getSetting("gui_red"));
-        int guiGreen = Integer.parseInt(jdbcQueries.getSetting("gui_green"));
-        int guiBlue = Integer.parseInt(jdbcQueries.getSetting("gui_blue"));
-        int tablesRed = Integer.parseInt(jdbcQueries.getSetting("tables_red"));
-        int tablesGreen = Integer.parseInt(jdbcQueries.getSetting("tables_green"));
-        int tablesBlue = Integer.parseInt(jdbcQueries.getSetting("tables_blue"));
-        int tablesAltRed = Integer.parseInt(jdbcQueries.getSetting("tables_alt_red"));
-        int tablesAltGreen = Integer.parseInt(jdbcQueries.getSetting("tables_alt_green"));
-        int tablesAltBlue = Integer.parseInt(jdbcQueries.getSetting("tables_alt_blue"));
-
         this.setResizable(false);
-        this.getContentPane().setBackground(new Color(guiRed, guiGreen, guiBlue));
+        this.getContentPane().setBackground(Common.guiColor);
         this.setTitle("Avandy News");
         this.setIconImage(Icons.LOGO_ICON.getImage());
         this.setFont(GUI_FONT);
@@ -154,8 +143,8 @@ public class Gui extends JFrame {
             public Component prepareRenderer(TableCellRenderer renderer, int row, int column) {
                 Component component = super.prepareRenderer(renderer, row, column);
 
-                Color mainTableColor = new Color(tablesRed, tablesGreen, tablesBlue);
-                Color alternateColor = new Color(tablesAltRed, tablesAltGreen, tablesAltBlue);
+                Color mainTableColor = Common.tablesColor;
+                Color alternateColor = Common.tablesAltColor;
 
                 if (!component.getBackground().equals(getSelectionBackground())) {
                     Color color = (row % 2 == 0 ? mainTableColor : alternateColor);
@@ -232,8 +221,8 @@ public class Gui extends JFrame {
             public Component prepareRenderer(TableCellRenderer renderer, int row, int column) {
                 Component component = super.prepareRenderer(renderer, row, column);
 
-                Color mainTableColor = new Color(tablesRed, tablesGreen, tablesBlue);
-                Color alternateColor = new Color(tablesAltRed, tablesAltGreen, tablesAltBlue);
+                Color mainTableColor = Common.tablesColor;
+                Color alternateColor = Common.tablesAltColor;
 
                 if (!component.getBackground().equals(getSelectionBackground())) {
                     Color color = (row % 2 == 0 ? mainTableColor : alternateColor);
@@ -754,7 +743,7 @@ public class Gui extends JFrame {
                 Color backgroundColorValue = JColorChooser.showDialog(null, "Gui background", Color.black);
                 if (backgroundColorValue != null) {
                     this.setBackground(backgroundColorValue);
-                    Common.saveColor("gui-bg", backgroundColorValue);
+                    Common.saveColor("gui_color", backgroundColorValue);
                 }
             });
 
@@ -765,7 +754,7 @@ public class Gui extends JFrame {
                 if (tablesColor != null) {
                     table.setBackground(tablesColor);
                     tableForAnalysis.setBackground(tablesColor);
-                    Common.saveColor("table-bg", tablesColor);
+                    Common.saveColor("tables_color", tablesColor);
                 }
             });
 
@@ -776,7 +765,7 @@ public class Gui extends JFrame {
                 if (tablesColor != null) {
                     table.setBackground(tablesColor);
                     tableForAnalysis.setBackground(tablesColor);
-                    Common.saveColor("table-alt-bg", tablesColor);
+                    Common.saveColor("tables_alt_blue", tablesColor);
                 }
             });
 
@@ -787,7 +776,7 @@ public class Gui extends JFrame {
                 if (fontColor != null) {
                     table.setForeground(fontColor);
                     tableForAnalysis.setForeground(fontColor);
-                    Common.saveColor("font", fontColor);
+                    Common.saveColor("font_color", fontColor);
                 }
             });
 

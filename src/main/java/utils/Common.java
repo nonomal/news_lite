@@ -30,6 +30,10 @@ public class Common {
     public static final String CONFIG_FILE = DIRECTORY_PATH + "config.txt";
     public final AtomicBoolean IS_SENDING = new AtomicBoolean(true);
     public List<String> words;
+    public Color guiColor;
+    public Color fontColor;
+    public Color tablesColor;
+    public Color tablesAltColor;
 
     public void showGui() {
         setGuiTheme();
@@ -81,20 +85,26 @@ public class Common {
     // установка темы интерфейса
     public static void setGuiTheme() {
         JdbcQueries jdbcQueries = new JdbcQueries();
-        int fontRed = Integer.parseInt(jdbcQueries.getSetting("font_red"));
-        int fontGreen = Integer.parseInt(jdbcQueries.getSetting("font_green"));
-        int fontBlue = Integer.parseInt(jdbcQueries.getSetting("font_blue"));
-        int tablesRed = Integer.parseInt(jdbcQueries.getSetting("tables_red"));
-        int tablesGreen = Integer.parseInt(jdbcQueries.getSetting("tables_green"));
-        int tablesBlue = Integer.parseInt(jdbcQueries.getSetting("tables_blue"));
+        String[] guiColors = jdbcQueries.getSetting("gui_color").split(",");
+        String[] fontColors = jdbcQueries.getSetting("font_color").split(",");
+        String[] tablesColors = jdbcQueries.getSetting("tables_color").split(",");
+        String[] tablesAltColors = jdbcQueries.getSetting("tables_alt_color").split(",");
+
+        guiColor = new Color(Integer.parseInt(guiColors[0]), Integer.parseInt(guiColors[1]),
+                Integer.parseInt(guiColors[2]));
+        fontColor = new Color(Integer.parseInt(fontColors[0]), Integer.parseInt(fontColors[1]),
+                Integer.parseInt(fontColors[2]));
+        tablesColor = new Color(Integer.parseInt(tablesColors[0]), Integer.parseInt(tablesColors[1]),
+                Integer.parseInt(tablesColors[2]));
+        tablesAltColor = new Color(Integer.parseInt(tablesAltColors[0]), Integer.parseInt(tablesAltColors[1]),
+                Integer.parseInt(tablesAltColors[2]));
 
         // FlatLaf theme
         UIManager.put("Component.arc", 10);
         UIManager.put("ProgressBar.arc", 6);
         UIManager.put("Button.arc", 8);
-        UIManager.put("Table.background", new Color(tablesRed, tablesGreen, tablesBlue));
-        UIManager.put("Table.alternateRowColor", new Color(59, 59, 59));
-        UIManager.put("Table.foreground", new Color(fontRed, fontGreen, fontBlue));
+        UIManager.put("Table.background", tablesColor);
+        UIManager.put("Table.foreground", fontColor);
         UIManager.put("TextField.background", Color.GRAY);
         UIManager.put("TextField.foreground", Color.BLACK);
         FlatHiberbeeDarkIJTheme.setup();
@@ -282,41 +292,15 @@ public class Common {
     }
 
     public void saveColor(String type, Color color) {
-        JdbcQueries jdbcQueries = new JdbcQueries();
-
-        if ("font".equals(type)) {
-            jdbcQueries.updateSettings("font_red", String.valueOf(color.getRed()));
-            jdbcQueries.updateSettings("font_green", String.valueOf(color.getGreen()));
-            jdbcQueries.updateSettings("font_blue", String.valueOf(color.getBlue()));
-        } else if ("table-bg".equals(type)) {
-            jdbcQueries.updateSettings("tables_red", String.valueOf(color.getRed()));
-            jdbcQueries.updateSettings("tables_green", String.valueOf(color.getGreen()));
-            jdbcQueries.updateSettings("tables_blue", String.valueOf(color.getBlue()));
-        } else if ("gui-bg".equals(type)) {
-            jdbcQueries.updateSettings("gui_red", String.valueOf(color.getRed()));
-            jdbcQueries.updateSettings("gui_green", String.valueOf(color.getGreen()));
-            jdbcQueries.updateSettings("gui_blue", String.valueOf(color.getBlue()));
-        } else if ("table-alt-bg".equals(type)) {
-            jdbcQueries.updateSettings("tables_alt_red", String.valueOf(color.getRed()));
-            jdbcQueries.updateSettings("tables_alt_green", String.valueOf(color.getGreen()));
-            jdbcQueries.updateSettings("tables_alt_blue", String.valueOf(color.getBlue()));
-        }
+        new JdbcQueries().updateSettings(type, color.getRed() + "," + color.getGreen() + "," + color.getBlue());
     }
 
     public void setDefaultColors() {
         JdbcQueries jdbcQueries = new JdbcQueries();
-        jdbcQueries.updateSettings("font_red", "0");
-        jdbcQueries.updateSettings("font_green", "0");
-        jdbcQueries.updateSettings("font_blue", "0");
-        jdbcQueries.updateSettings("tables_red", "255");
-        jdbcQueries.updateSettings("tables_green", "255");
-        jdbcQueries.updateSettings("tables_blue", "255");
-        jdbcQueries.updateSettings("gui_red", "47");
-        jdbcQueries.updateSettings("gui_green", "47");
-        jdbcQueries.updateSettings("gui_blue", "47");
-        jdbcQueries.updateSettings("tables_alt_red", "237");
-        jdbcQueries.updateSettings("tables_alt_green", "237");
-        jdbcQueries.updateSettings("tables_alt_blue", "237");
+        jdbcQueries.updateSettings("font_color", "0,0,0");
+        jdbcQueries.updateSettings("gui_color", "47,47,47");
+        jdbcQueries.updateSettings("tables_color", "255,255,255");
+        jdbcQueries.updateSettings("tables_alt_color", "237,237,237");
     }
 
     // преобразование строки в строку с хэш-кодом
