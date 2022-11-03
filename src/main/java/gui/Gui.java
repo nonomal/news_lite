@@ -73,16 +73,22 @@ public class Gui extends JFrame {
     SystemTray systemTray;
 
     public Gui() {
+        // загрузка актуальных цветов UI
         int guiRed = Integer.parseInt(jdbcQueries.getSetting("gui_red"));
         int guiGreen = Integer.parseInt(jdbcQueries.getSetting("gui_green"));
         int guiBlue = Integer.parseInt(jdbcQueries.getSetting("gui_blue"));
+        int tablesRed = Integer.parseInt(jdbcQueries.getSetting("tables_red"));
+        int tablesGreen = Integer.parseInt(jdbcQueries.getSetting("tables_green"));
+        int tablesBlue = Integer.parseInt(jdbcQueries.getSetting("tables_blue"));
+        int tablesAltRed = Integer.parseInt(jdbcQueries.getSetting("tables_alt_red"));
+        int tablesAltGreen = Integer.parseInt(jdbcQueries.getSetting("tables_alt_green"));
+        int tablesAltBlue = Integer.parseInt(jdbcQueries.getSetting("tables_alt_blue"));
 
         this.setResizable(false);
         this.getContentPane().setBackground(new Color(guiRed, guiGreen, guiBlue));
         this.setTitle("Avandy News");
         this.setIconImage(Icons.LOGO_ICON.getImage());
         this.setFont(GUI_FONT);
-        //this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setBounds(360, 180, 1181, 575);
         this.getContentPane().setLayout(null);
 
@@ -147,14 +153,11 @@ public class Gui extends JFrame {
             // Альтернативный цвет для строки таблицы
             public Component prepareRenderer(TableCellRenderer renderer, int row, int column) {
                 Component component = super.prepareRenderer(renderer, row, column);
-                int tablesRed = Integer.parseInt(jdbcQueries.getSetting("tables_red"));
-                int tablesGreen = Integer.parseInt(jdbcQueries.getSetting("tables_green"));
-                int tablesBlue = Integer.parseInt(jdbcQueries.getSetting("tables_blue"));
 
                 Color mainTableColor = new Color(tablesRed, tablesGreen, tablesBlue);
-                Color alternateColor = new Color(230, 230, 230);
+                Color alternateColor = new Color(tablesAltRed, tablesAltGreen, tablesAltBlue);
 
-                if(!component.getBackground().equals(getSelectionBackground())) {
+                if (!component.getBackground().equals(getSelectionBackground())) {
                     Color color = (row % 2 == 0 ? mainTableColor : alternateColor);
                     component.setBackground(color);
                 }
@@ -224,7 +227,21 @@ public class Gui extends JFrame {
                 return this.types_unique[columnIndex];
             }
         };
-        tableForAnalysis = new JTable(modelForAnalysis);
+        tableForAnalysis = new JTable(modelForAnalysis) {
+            // Альтернативный цвет для строки таблицы
+            public Component prepareRenderer(TableCellRenderer renderer, int row, int column) {
+                Component component = super.prepareRenderer(renderer, row, column);
+
+                Color mainTableColor = new Color(tablesRed, tablesGreen, tablesBlue);
+                Color alternateColor = new Color(tablesAltRed, tablesAltGreen, tablesAltBlue);
+
+                if (!component.getBackground().equals(getSelectionBackground())) {
+                    Color color = (row % 2 == 0 ? mainTableColor : alternateColor);
+                    component.setBackground(color);
+                }
+                return component;
+            }
+        };
         JTableHeader header_for_analysis = tableForAnalysis.getTableHeader();
         header_for_analysis.setFont(new Font(GUI_FONT_NAME, Font.BOLD, 13));
         //Cell alignment
@@ -752,6 +769,17 @@ public class Gui extends JFrame {
                 }
             });
 
+            // Выбор цвета фона чётной строки таблицы
+            JButton tablesAlternateColorButton = new JButton("select");
+            tablesAlternateColorButton.addActionListener(et -> {
+                Color tablesColor = JColorChooser.showDialog(null, "Tables alternate background", Color.black);
+                if (tablesColor != null) {
+                    table.setBackground(tablesColor);
+                    tableForAnalysis.setBackground(tablesColor);
+                    Common.saveColor("table-alt-bg", tablesColor);
+                }
+            });
+
             // Выбор цвета шрифта в таблице
             JButton fontColorButton = new JButton("select");
             fontColorButton.addActionListener(ef -> {
@@ -763,8 +791,12 @@ public class Gui extends JFrame {
                 }
             });
 
+            // Установить цвета приложения по-умолчанию
+            JButton defaultGuiColors = new JButton("set");
+            defaultGuiColors.addActionListener(x -> Common.setDefaultColors());
+
             JPanel settingsPanel = new JPanel();
-            settingsPanel.setLayout(new GridLayout(9, 1));
+            settingsPanel.setLayout(new GridLayout(11, 1));
             settingsPanel.add(new JLabel("Email from"));
             settingsPanel.add(emailFrom);
             settingsPanel.add(new JLabel("Email from password"));
@@ -781,8 +813,12 @@ public class Gui extends JFrame {
             settingsPanel.add(guiColorButton);
             settingsPanel.add(new JLabel("Tables color"));
             settingsPanel.add(tablesColorButton);
+            settingsPanel.add(new JLabel("Tables alternate"));
+            settingsPanel.add(tablesAlternateColorButton);
             settingsPanel.add(new JLabel("Font color"));
             settingsPanel.add(fontColorButton);
+            settingsPanel.add(new JLabel("Default colors"));
+            settingsPanel.add(defaultGuiColors);
 
             Object[] newSource = {
                     settingsPanel,

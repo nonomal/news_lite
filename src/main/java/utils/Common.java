@@ -296,7 +296,27 @@ public class Common {
             jdbcQueries.updateSettings("gui_red", String.valueOf(color.getRed()));
             jdbcQueries.updateSettings("gui_green", String.valueOf(color.getGreen()));
             jdbcQueries.updateSettings("gui_blue", String.valueOf(color.getBlue()));
+        } else if ("table-alt-bg".equals(type)) {
+            jdbcQueries.updateSettings("tables_alt_red", String.valueOf(color.getRed()));
+            jdbcQueries.updateSettings("tables_alt_green", String.valueOf(color.getGreen()));
+            jdbcQueries.updateSettings("tables_alt_blue", String.valueOf(color.getBlue()));
         }
+    }
+
+    public void setDefaultColors() {
+        JdbcQueries jdbcQueries = new JdbcQueries();
+        jdbcQueries.updateSettings("font_red", "0");
+        jdbcQueries.updateSettings("font_green", "0");
+        jdbcQueries.updateSettings("font_blue", "0");
+        jdbcQueries.updateSettings("tables_red", "255");
+        jdbcQueries.updateSettings("tables_green", "255");
+        jdbcQueries.updateSettings("tables_blue", "255");
+        jdbcQueries.updateSettings("gui_red", "47");
+        jdbcQueries.updateSettings("gui_green", "47");
+        jdbcQueries.updateSettings("gui_blue", "47");
+        jdbcQueries.updateSettings("tables_alt_red", "237");
+        jdbcQueries.updateSettings("tables_alt_green", "237");
+        jdbcQueries.updateSettings("tables_alt_blue", "237");
     }
 
     // преобразование строки в строку с хэш-кодом
