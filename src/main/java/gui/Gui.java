@@ -765,7 +765,7 @@ public class Gui extends JFrame {
                 if (tablesColor != null) {
                     table.setBackground(tablesColor);
                     tableForAnalysis.setBackground(tablesColor);
-                    Common.saveColor("tables_alt_blue", tablesColor);
+                    Common.saveColor("tables_alt_color", tablesColor);
                 }
             });
 
