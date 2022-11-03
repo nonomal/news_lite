@@ -785,7 +785,7 @@ public class Gui extends JFrame {
             defaultGuiColors.addActionListener(x -> Common.setDefaultColors());
 
             JPanel settingsPanel = new JPanel();
-            settingsPanel.setLayout(new GridLayout(11, 1));
+            settingsPanel.setLayout(new GridLayout(11, 1, 0, 5));
             settingsPanel.add(new JLabel("Email from"));
             settingsPanel.add(emailFrom);
             settingsPanel.add(new JLabel("Email from password"));
