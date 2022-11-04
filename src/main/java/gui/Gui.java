@@ -827,15 +827,7 @@ public class Gui extends JFrame {
                 jdbcQueries.updateSettings("font_size", fontSizeCombobox.getSelectedItem().toString());
                 jdbcQueries.updateSettings("row_height", rowHeightCombobox.getSelectedItem().toString());
 
-                // удалить старый frame
-                this.dispose();
-
-                // удаление иконки в трее
-                TrayIcon[] trayIcons = systemTray.getTrayIcons();
-                for (TrayIcon t : trayIcons) {
-                    systemTray.remove(t);
-                }
-                Common.showGui();
+                refreshGui();
             }
         };
         settingsDirectoryBtn.addActionListener(actionListener);
@@ -864,6 +856,18 @@ public class Gui extends JFrame {
         showRightClickMenu();
 
         this.setVisible(true);
+    }
+
+    private void refreshGui() {
+        // удалить старый frame
+        this.dispose();
+
+        // удаление иконки в трее
+        TrayIcon[] trayIcons = systemTray.getTrayIcons();
+        for (TrayIcon t : trayIcons) {
+            systemTray.remove(t);
+        }
+        Common.showGui();
     }
 
     private void showWebPagesIcons() {
