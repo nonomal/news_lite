@@ -38,7 +38,9 @@ For the application to work on a PC, Java must be installed: https://www.java.co
 
 *Example: jar is laid out on a server where Linux is installed and a command is specified in crontab to call the program around the clock. No news will be missed! Here is the command that I indicated (parameter No. 1 - the addressee, 2 - the interval (the moment of the call minus 1440 minutes (day), then the keywords separated by a space. That is, every day at 10:30 am I receive all the news for the day by the specified words + I keep a log of the program):*
 
-        30 10 * * * java -jar /home/user/news.jar user@mail.ru 1440 tax free >> /home/user/news.log
+        crontab -e
+        
+![image](https://user-images.githubusercontent.com/45883640/199977996-76cfda44-d6de-4508-ae4c-b36c72516a9a.png)
 
 *Windows PowerShell:*
 
