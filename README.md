@@ -49,9 +49,14 @@ For the application to work on a PC, Java must be installed: https://www.java.co
 ![image](https://user-images.githubusercontent.com/45883640/188851087-8cdc2147-59f9-4d1e-8a3d-242adb972f41.png)
 
 ----
-*Mail settings must be specified in settings
+*Mail settings must be specified in the settings when using the GUI
 
 *Sending is made from postal services: Mail.ru, Gmail, Yandex, Yahoo, Rambler.*
+
+Message example:
+
+![email](https://user-images.githubusercontent.com/45883640/199978551-366c6a72-1285-4648-b446-32ca0b12b009.png)
+
 
 Initial path to program files
 
