@@ -926,20 +926,19 @@ public class Gui extends JFrame {
     private void showRightClickMenu() {
         final JPopupMenu popup = new JPopupMenu();
 
-        // Add to favorites (menu)
-        JMenuItem menuFavorite = new JMenuItem("Add to favorites");
-        menuFavorite.addActionListener((e) -> {
-            int row = table.getSelectedRow();
-            if (row != -1) {
-                String source = (String) table.getValueAt(row, 1);
-                String title = (String) table.getValueAt(row, 2);
-                jdbcQueries.addFavoriteTitle(title, jdbcQueries.getLinkOrDescribeByHash(source, title, "link"));
-            }
+        // Translate from ENG to RUS (menu)
+        JMenuItem menuTranslate = new JMenuItem("Translate", Icons.SETTINGS_TRANSLATE_ICON);
+        menuTranslate.setVisible(false);
+        menuTranslate.addActionListener((e) -> {
+            int rowIndex = table.getSelectedRow();
+            int colIndex = 2;
+            String tip = (String) table.getValueAt(rowIndex, colIndex);
+            new Thread(() -> Common.console(new Translator().translate("en", "ru", tip))).start();
         });
-        popup.add(menuFavorite);
+        popup.add(menuTranslate);
 
         // Show describe (menu)
-        JMenuItem menuDescribe = new JMenuItem("Describe");
+        JMenuItem menuDescribe = new JMenuItem("Describe", Icons.SETTINGS_DESCRIBE_ICON);
         menuDescribe.addActionListener((e) -> {
             int row = table.getSelectedRow();
             if (row != -1) {
@@ -950,8 +949,20 @@ public class Gui extends JFrame {
         });
         popup.add(menuDescribe);
 
+        // Add to favorites (menu)
+        JMenuItem menuFavorite = new JMenuItem("To favorites", Icons.WHEN_SENT_ICON);
+        menuFavorite.addActionListener((e) -> {
+            int row = table.getSelectedRow();
+            if (row != -1) {
+                String source = (String) table.getValueAt(row, 1);
+                String title = (String) table.getValueAt(row, 2);
+                jdbcQueries.addFavoriteTitle(title, jdbcQueries.getLinkOrDescribeByHash(source, title, "link"));
+            }
+        });
+        popup.add(menuFavorite);
+
         // Copy (menu)
-        JMenuItem menuCopy = new JMenuItem("Copy");
+        JMenuItem menuCopy = new JMenuItem("Copy", Icons.SETTINGS_COPY_ICON);
         menuCopy.addActionListener((e) -> {
             StringBuilder sbf = new StringBuilder();
             int cols = table.getSelectedColumnCount();
@@ -973,17 +984,8 @@ public class Gui extends JFrame {
         });
         popup.add(menuCopy);
 
-
-        // Delete row (menu)
-        JMenuItem menuDeleteRow = new JMenuItem("Remove");
-        menuDeleteRow.addActionListener(e -> {
-            int row = table.convertRowIndexToModel(table.getSelectedRow());
-            if (row != -1) model.removeRow(row);
-        });
-        popup.add(menuDeleteRow);
-
         // Export titles to excel file (menu)
-        JMenuItem exportToXls = new JMenuItem("Export all");
+        JMenuItem exportToXls = new JMenuItem("Export", Icons.SETTINGS_EXPORT_ICON);
         exportToXls.addActionListener((e) -> {
             if (model.getRowCount() != 0) {
                 new Thread(new ExportToExcel()::exportResultsToExcel).start();
@@ -993,8 +995,16 @@ public class Gui extends JFrame {
         });
         popup.add(exportToXls);
 
+        // Delete row (menu)
+        JMenuItem menuDeleteRow = new JMenuItem("Remove", Icons.EXIT_BUTTON_ICON);
+        menuDeleteRow.addActionListener(e -> {
+            int row = table.convertRowIndexToModel(table.getSelectedRow());
+            if (row != -1) model.removeRow(row);
+        });
+        popup.add(menuDeleteRow);
+
         // Clear news list
-        JMenuItem menuRemoveAll = new JMenuItem("Remove all");
+        JMenuItem menuRemoveAll = new JMenuItem("Remove all", Icons.EXIT_BUTTON_ICON);
         menuRemoveAll.addActionListener(e -> {
             try {
                 if (model.getRowCount() == 0) {
@@ -1012,17 +1022,6 @@ public class Gui extends JFrame {
             }
         });
         popup.add(menuRemoveAll);
-
-        // Translate from ENG to RUS (menu)
-        JMenuItem menuTranslate = new JMenuItem("Translate");
-        menuTranslate.setVisible(false);
-        menuTranslate.addActionListener((e) -> {
-            int rowIndex = table.getSelectedRow();
-            int colIndex = 2;
-            String tip = (String) table.getValueAt(rowIndex, colIndex);
-            new Thread(() -> Common.console(new Translator().translate("en", "ru", tip))).start();
-        });
-        popup.add(menuTranslate);
 
         // Mouse right click listener
         table.addMouseListener(new MouseAdapter() {

@@ -47,4 +47,12 @@ public class Icons {
             .createImage(Icons.class.getResource("/icons/trading.png")));
     public static final ImageIcon SETTINGS_BUTTON_ICON = new ImageIcon(Toolkit.getDefaultToolkit()
             .createImage(Icons.class.getResource("/icons/settings.png")));
+    public static final ImageIcon SETTINGS_EXPORT_ICON = new ImageIcon(Toolkit.getDefaultToolkit()
+            .createImage(Icons.class.getResource("/icons/excel.png")));
+    public static final ImageIcon SETTINGS_COPY_ICON = new ImageIcon(Toolkit.getDefaultToolkit()
+            .createImage(Icons.class.getResource("/icons/copy.png")));
+    public static final ImageIcon SETTINGS_DESCRIBE_ICON = new ImageIcon(Toolkit.getDefaultToolkit()
+            .createImage(Icons.class.getResource("/icons/describe.png")));
+    public static final ImageIcon SETTINGS_TRANSLATE_ICON = new ImageIcon(Toolkit.getDefaultToolkit()
+            .createImage(Icons.class.getResource("/icons/translate.png")));
 }
