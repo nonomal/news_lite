@@ -1027,12 +1027,11 @@ public class Gui extends JFrame {
         table.addMouseListener(new MouseAdapter() {
             public void mouseReleased(MouseEvent e) {
                 if (e.isPopupTrigger()) {
-                    JTable source = (JTable) e.getSource();
-                    int row = source.convertRowIndexToModel(source.rowAtPoint(e.getPoint()));
-                    table.setRowSelectionInterval(row, row);
-                    int column = source.columnAtPoint(e.getPoint());
-                    if (source.isRowSelected(row)) {
-                        source.changeSelection(row, column, false, false);
+                    int row = table.convertRowIndexToModel(table.rowAtPoint(e.getPoint()));
+                    //table.setRowSelectionInterval(row, row);
+                    int column = table.columnAtPoint(e.getPoint());
+                    if (table.isRowSelected(row)) {
+                        table.changeSelection(row, column, false, false);
                     }
 
                     // Показывать кнопку с переводом только для английских заголовков
