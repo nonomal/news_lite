@@ -121,6 +121,7 @@ public class JdbcQueries {
                 statement.close();
 
                 Common.console("\"" + word + "\" excluded from search");
+            } catch (SQLException ignored) {
             } catch (Exception e) {
                 Common.console("addWordToExcludeTitles error: " + e.getMessage());
             }

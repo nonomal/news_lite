@@ -861,7 +861,6 @@ public class Gui extends JFrame {
     private void refreshGui() {
         // удалить старый frame
         this.dispose();
-
         // удаление иконки в трее
         TrayIcon[] trayIcons = systemTray.getTrayIcons();
         for (TrayIcon t : trayIcons) {
