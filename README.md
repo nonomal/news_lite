@@ -12,8 +12,6 @@ For the application to work on a PC, Java must be installed: https://www.java.co
 
 ![image](https://user-images.githubusercontent.com/45883640/199975450-469f5a23-d96d-4557-8496-e0d840c1507d.png)
 
-![demo](https://user-images.githubusercontent.com/45883640/198367076-56accd93-b412-4bf5-a54b-b59d60fb433f.gif)
-
 ----
 **Program features:**
 - manual search for titles by one word (all news are displayed with an empty field)
