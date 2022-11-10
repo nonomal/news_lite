@@ -153,14 +153,15 @@ public class Search {
                                 jdbcQueries.removeFromTable("TITLES");
                             }
                         } catch (Exception noRss) {
+                            isStop.set(true);
                             String smi = source.getLink()
                                     .replaceAll(("https://|http://|www."), "");
                             smi = smi.substring(0, smi.indexOf("/"));
                             Common.console("rss is not available: " + smi);
                         }
                     } catch (Exception e) {
-                        Common.console("error: restart the application!");
                         isStop.set(true);
+                        Common.console("error: restart the application!");
                     }
                 }
 
