@@ -75,37 +75,64 @@ public class Search {
                 for (Source source : jdbcQueries.getSources("active")) {
                     if (isStop.get()) return;
                     try {
-                        try {
-                            for (Object message : new Parser().parseFeed(source.getLink()).getEntries()) {
-                                SyndEntry entry = (SyndEntry) message;
-                                String title = entry.getTitle();
-                                Date pubDate = entry.getPublishedDate();
-                                String newsDescribe = entry.getDescription().getValue()
-                                        .trim()
-                                        .replaceAll(("<p>|</p>|<br />|&#"), "");
-                                if (Common.isHref(newsDescribe)) newsDescribe = title;
+                        for (Object message : new Parser().parseFeed(source.getLink()).getEntries()) {
+                            SyndEntry entry = (SyndEntry) message;
+                            String title = entry.getTitle();
+                            Date pubDate = entry.getPublishedDate();
+                            String newsDescribe = entry.getDescription().getValue()
+                                    .trim()
+                                    .replaceAll(("<p>|</p>|<br />|&#"), "");
+                            if (Common.isHref(newsDescribe)) newsDescribe = title;
 
-                                tableRow = new TableRow(
-                                        source.getSource(),
-                                        title,
-                                        newsDescribe,
-                                        DATE_FORMAT.format(pubDate),
-                                        entry.getLink());
+                            tableRow = new TableRow(
+                                    source.getSource(),
+                                    title,
+                                    newsDescribe,
+                                    DATE_FORMAT.format(pubDate),
+                                    entry.getLink());
 
-                                if (isWord) {
-                                    Gui.findWord = Gui.topKeyword.getText().toLowerCase();
-                                    String newsTitle = tableRow.getTitle().toLowerCase();
+                            if (isWord) {
+                                Gui.findWord = Gui.topKeyword.getText().toLowerCase();
+                                String newsTitle = tableRow.getTitle().toLowerCase();
 
-                                    if (newsTitle.contains(Gui.findWord) && newsTitle.length() > 15) {
+                                if (newsTitle.contains(Gui.findWord) && newsTitle.length() > 15) {
 
-                                        // замена не интересующих заголовков в UI на # + слово исключение
-                                        for (Excluded excludedTitle : excludedTitles) {
-                                            if (excludedTitle.getWord().length() > 2 && newsTitle.contains(excludedTitle.getWord())) {
-                                                tableRow.setTitle("# " + excludedTitle);
-                                            }
+                                    // замена не интересующих заголовков в UI на # + слово исключение
+                                    for (Excluded excludedTitle : excludedTitles) {
+                                        if (excludedTitle.getWord().length() > 2 && newsTitle.contains(excludedTitle.getWord())) {
+                                            tableRow.setTitle("# " + excludedTitle);
                                         }
+                                    }
 
-                                        //отсеиваем новости, которые уже были найдены ранее при включенном чекбоксе
+                                    //отсеиваем новости, которые уже были найдены ранее при включенном чекбоксе
+                                    if (jdbcQueries.isTitleExists(title, searchType)) {
+                                        continue;
+                                    }
+
+                                    //Data for a table
+                                    int dateDiff = Common.compareDatesOnly(new Date(), pubDate);
+
+                                    // вставка всех без исключения новостей в архив
+                                    jdbcQueries.addAllTitlesToArchive(title,
+                                            pubDate.toString(),
+                                            tableRow.getLink(),
+                                            tableRow.getSource(),
+                                            tableRow.getDescribe());
+
+                                    if (dateDiff != 0 && !tableRow.getTitle().contains("#")) {
+                                        searchProcess(tableRow, searchType);
+                                    }
+
+                                    if (dateDiff != 0 && tableRow.getTitle().contains("#")) {
+                                        ++excludedCount;
+                                    }
+                                }
+                            } else if (isWords) {
+                                for (Keyword keyword : jdbcQueries.getKeywords(1)) {
+                                    if (tableRow.getTitle().toLowerCase().contains(keyword.getKeyword().toLowerCase())
+                                            && tableRow.getTitle().length() > 15) {
+
+                                        // отсеиваем новости которые были обнаружены ранее
                                         if (jdbcQueries.isTitleExists(title, searchType)) {
                                             continue;
                                         }
@@ -113,54 +140,22 @@ public class Search {
                                         //Data for a table
                                         int dateDiff = Common.compareDatesOnly(new Date(), pubDate);
 
-                                        // вставка всех без исключения новостей в архив
-                                        jdbcQueries.addAllTitlesToArchive(title,
-                                                pubDate.toString(),
-                                                tableRow.getLink(),
-                                                tableRow.getSource(),
-                                                tableRow.getDescribe());
-
-                                        if (dateDiff != 0 && !tableRow.getTitle().contains("#")) {
+                                        if (dateDiff != 0) {
                                             searchProcess(tableRow, searchType);
-                                        }
-
-                                        if (dateDiff != 0 && tableRow.getTitle().contains("#")) {
-                                            ++excludedCount;
-                                        }
-                                    }
-                                } else if (isWords) {
-                                    for (Keyword keyword : jdbcQueries.getKeywords(1)) {
-                                        if (tableRow.getTitle().toLowerCase().contains(keyword.getKeyword().toLowerCase())
-                                                && tableRow.getTitle().length() > 15) {
-
-                                            // отсеиваем новости которые были обнаружены ранее
-                                            if (jdbcQueries.isTitleExists(title, searchType)) {
-                                                continue;
-                                            }
-
-                                            //Data for a table
-                                            int dateDiff = Common.compareDatesOnly(new Date(), pubDate);
-
-                                            if (dateDiff != 0) {
-                                                searchProcess(tableRow, searchType);
-                                            }
                                         }
                                     }
                                 }
-                                if (isStop.get()) return;
                             }
-                            if (!Gui.isOnlyLastNews) {
-                                jdbcQueries.removeFromTable("TITLES");
-                            }
-                        } catch (Exception noRss) {
-                            String smi = source.getLink()
-                                    .replaceAll(("https://|http://|www."), "");
-                            smi = smi.substring(0, smi.indexOf("/"));
-                            Common.console("rss is not available: " + smi);
+                            if (isStop.get()) return;
+                        }
+                        if (!Gui.isOnlyLastNews) {
+                            jdbcQueries.removeFromTable("TITLES");
                         }
                     } catch (Exception e) {
-                        isStop.set(true);
-                        Common.console("error: restart the application!");
+                        String smi = source.getLink()
+                                .replaceAll(("https://|http://|www."), "");
+                        smi = smi.substring(0, smi.indexOf("/"));
+                        Common.console(smi + " is not available");
                     }
                 }
 

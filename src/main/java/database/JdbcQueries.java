@@ -166,7 +166,8 @@ public class JdbcQueries {
     public List<Source> getSources(String type) {
         List<Source> sources = new ArrayList<>();
         String query = "SELECT id, source, link, is_active, position FROM rss_list " +
-                "WHERE is_active = 1 ORDER BY position";
+                "WHERE is_active = 1 and link LIKE '%/%.%' " +
+                "ORDER BY position";
 
         if (type.equals("all")) {
             query = "SELECT id, source, link, is_active, position FROM rss_list " +
