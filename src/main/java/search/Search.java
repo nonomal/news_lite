@@ -153,7 +153,6 @@ public class Search {
                                 jdbcQueries.removeFromTable("TITLES");
                             }
                         } catch (Exception noRss) {
-                            isStop.set(true);
                             String smi = source.getLink()
                                     .replaceAll(("https://|http://|www."), "");
                             smi = smi.substring(0, smi.indexOf("/"));
