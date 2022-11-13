@@ -31,18 +31,21 @@ public class JdbcQueries {
 
     // Вставка нового источника
     public void addNewSource(String source, String link) {
-        try {
-            //if (result == JOptionPane.YES_OPTION) {
-            String query = "INSERT INTO rss_list(source, link, is_active) VALUES (?, ?, 1)";
-            PreparedStatement statement = connection.prepareStatement(query);
-            statement.setString(1, source);
-            statement.setString(2, link);
-            statement.executeUpdate();
-            statement.close();
+        if (link.contains("/") && link.contains(".")) {
+            try {
+                String query = "INSERT INTO rss_list(source, link, is_active) VALUES (?, ?, 1)";
+                PreparedStatement statement = connection.prepareStatement(query);
+                statement.setString(1, source);
+                statement.setString(2, link);
+                statement.executeUpdate();
+                statement.close();
 
-            Common.console("source added");
-        } catch (Exception e) {
-            Common.console("addNewSource error: " + e.getMessage());
+                Common.console("source added");
+            } catch (Exception e) {
+                Common.console("addNewSource error: " + e.getMessage());
+            }
+        } else {
+            Common.console("Enter a valid URL");
         }
     }
 
@@ -166,7 +169,7 @@ public class JdbcQueries {
     public List<Source> getSources(String type) {
         List<Source> sources = new ArrayList<>();
         String query = "SELECT id, source, link, is_active, position FROM rss_list " +
-                "WHERE is_active = 1 and link LIKE '%/%.%' " +
+                "WHERE is_active = 1 " +
                 "ORDER BY position";
 
         if (type.equals("all")) {
