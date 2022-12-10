@@ -99,7 +99,7 @@ public class Gui extends JFrame {
 
         //Table
         scrollPane = new JScrollPane();
-        scrollPane.setBounds(10, 40, 860, 502);
+        scrollPane.setBounds(10, 40, 860, 504);
         getContentPane().add(scrollPane);
         model = new DefaultTableModel(new Object[][]{
         }, MAIN_TABLE_HEADERS) {
@@ -473,7 +473,7 @@ public class Gui extends JFrame {
 
         /* KEYWORDS BOTTOM SEARCH */
         int bottomLeftX = 110;
-        int bottomLeftY = 545;
+        int bottomLeftY = 547;
 
         // label
         JLabel lblKeywordsSearch = new JLabel();
