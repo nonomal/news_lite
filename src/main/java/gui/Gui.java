@@ -198,7 +198,7 @@ public class Gui extends JFrame {
 
         //Table for analysis
         JScrollPane scrollForAnalysis = new JScrollPane();
-        scrollForAnalysis.setBounds(880, 40, 290, 236);
+        scrollForAnalysis.setBounds(880, 40, 290, 237);
         getContentPane().add(scrollForAnalysis);
 
         modelForAnalysis = new DefaultTableModel(new Object[][]{}, TABLE_FOR_ANALYZE_HEADERS) {
