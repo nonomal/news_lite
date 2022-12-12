@@ -66,13 +66,10 @@ public class Search {
                 Gui.stopBtnBottom.setVisible(true);
             }
 
+            // search animation
             new Thread(Common::fillProgressLine).start();
             StringBuilder animation = new StringBuilder();
-            Gui.model.addRow(new Object[]{
-            });
-
-
-            //Gui.model.setRowCount(0);
+            Gui.model.addRow(new Object[]{});
 
             try {
                 sqLite.transaction("BEGIN TRANSACTION");
@@ -89,7 +86,6 @@ public class Search {
 
                     try {
                         for (Object message : new Parser().parseFeed(source.getLink()).getEntries()) {
-
                             SyndEntry entry = (SyndEntry) message;
                             String title = entry.getTitle();
                             Date pubDate = entry.getPublishedDate();
@@ -197,6 +193,7 @@ public class Search {
 
                 // Сортировка DESC и заполнение таблицы анализа
                 List<TableRow> list = headlinesList.stream()
+                        .distinct()
                         .sorted(Collections.reverseOrder())
                         .collect(Collectors.toList());
 
@@ -213,7 +210,6 @@ public class Search {
                             row.getDescribe()
                     });
                 }
-
 
                 isSearchFinished.set(true);
                 Gui.progressBar.setValue(100);
@@ -235,9 +231,6 @@ public class Search {
                 // коммит транзакции
                 sqLite.transaction("COMMIT");
 
-                // удаляем все пустые строки
-                //jdbcQueries.removeEmptyRows();
-
                 // Удаление исключённых слов из мап для анализа
                 for (String word : excludedWordsFromAnalysis) {
                     wordsCount.remove(word);
@@ -255,9 +248,6 @@ public class Search {
                 }
 
                 Gui.WAS_CLICK_IN_TABLE_FOR_ANALYSIS.set(false);
-
-                // Удаление дубликатов заголовков
-                jdbcQueries.removeDuplicates();
 
                 if (isWord) {
                     Gui.appInfo.setText("news archive: " + jdbcQueries.archiveNewsCount());
