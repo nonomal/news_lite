@@ -67,6 +67,13 @@ public class Search {
             }
 
             new Thread(Common::fillProgressLine).start();
+            StringBuilder animation = new StringBuilder();
+            Gui.model.addRow(new Object[]{
+            });
+
+
+            //Gui.model.setRowCount(0);
+
             try {
                 sqLite.transaction("BEGIN TRANSACTION");
                 TableRow tableRow;
@@ -75,8 +82,14 @@ public class Search {
                 // Актуальные источники новостей
                 for (Source source : jdbcQueries.getSources("active")) {
                     if (isStop.get()) return;
+
+                    if (animation.toString().length() < 110) {
+                        Gui.model.setValueAt(animation.append("       *").toString(), 0, 2);
+                    }
+
                     try {
                         for (Object message : new Parser().parseFeed(source.getLink()).getEntries()) {
+
                             SyndEntry entry = (SyndEntry) message;
                             String title = entry.getTitle();
                             Date pubDate = entry.getPublishedDate();
@@ -188,6 +201,7 @@ public class Search {
                         .collect(Collectors.toList());
 
                 int i = 1;
+                Gui.model.removeRow(0);
                 for (TableRow row : list) {
 
                     Gui.model.addRow(new Object[]{
@@ -199,7 +213,6 @@ public class Search {
                             row.getDescribe()
                     });
                 }
-
 
 
                 isSearchFinished.set(true);
