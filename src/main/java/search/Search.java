@@ -15,6 +15,7 @@ import java.time.Duration;
 import java.time.LocalTime;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.stream.Collectors;
 
 public class Search {
     private int newsCount = 0;
@@ -23,7 +24,7 @@ public class Search {
     private final SQLite sqLite;
     private final JdbcQueries jdbcQueries;
     public static AtomicBoolean isStop, isSearchNow, isSearchFinished;
-    public static final List<TableRow> emailAndExcelData = new ArrayList<>();
+    public static final List<TableRow> headlinesList = new ArrayList<>();
     public Map<String, Integer> wordsCount = new HashMap<>();
     public List<String> excludedWordsFromAnalysis;
 
@@ -47,7 +48,7 @@ public class Search {
             LocalTime timeStart = LocalTime.now();
 
             int modelRowCount = Gui.model.getRowCount();
-            emailAndExcelData.clear();
+            headlinesList.clear();
             wordsCount.clear();
             if (!Gui.GUI_IN_TRAY.get()) Gui.model.setRowCount(0);
             if (!Gui.WAS_CLICK_IN_TABLE_FOR_ANALYSIS.get()) Gui.modelForAnalysis.setRowCount(0);
@@ -181,6 +182,26 @@ public class Search {
                     Gui.sendCurrentResultsToEmail.setBounds(x, 277, 30, 22);
                 }
 
+                // Сортировка DESC и заполнение таблицы анализа
+                List<TableRow> list = headlinesList.stream()
+                        .sorted(Collections.reverseOrder())
+                        .collect(Collectors.toList());
+
+                int i = 1;
+                for (TableRow row : list) {
+
+                    Gui.model.addRow(new Object[]{
+                            i++,
+                            row.getSource(),
+                            row.getTitle(),
+                            row.getDate(),
+                            row.getLink(),
+                            row.getDescribe()
+                    });
+                }
+
+
+
                 isSearchFinished.set(true);
                 Gui.progressBar.setValue(100);
 
@@ -216,7 +237,7 @@ public class Search {
                         .forEach(x -> Gui.modelForAnalysis.addRow(new Object[]{x.getKey(), x.getValue()}));
 
                 // Автоматическая отправка результатов
-                if (Gui.autoSendMessage.getState() && (Gui.model.getRowCount() > 0) && emailAndExcelData.size() > 0) {
+                if (Gui.autoSendMessage.getState() && (Gui.model.getRowCount() > 0) && headlinesList.size() > 0) {
                     Gui.sendCurrentResultsToEmail.doClick();
                 }
 
@@ -242,17 +263,17 @@ public class Search {
         newsCount++;
         Gui.labelSum.setText(String.valueOf(newsCount));
 
-        Gui.model.addRow(new Object[]{
-                newsCount,
-                tableRow.getSource(),
-                tableRow.getTitle(),
-                tableRow.getDate(),
-                tableRow.getLink(),
-                tableRow.getDescribe()
-        });
+//        Gui.model.addRow(new Object[]{
+//                newsCount,
+//                tableRow.getSource(),
+//                tableRow.getTitle(),
+//                tableRow.getDate(),
+//                tableRow.getLink(),
+//                tableRow.getDescribe()
+//        });
 
         // Данные для отправки результатов на почту и выгрузки эксель-файла + исключённые из показа
-        emailAndExcelData.add(tableRow);
+        headlinesList.add(tableRow);
 
         // Данные для анализа через мап
         String[] substr = tableRow.getTitle().split(" ");

@@ -179,7 +179,7 @@ public class Gui extends JFrame {
         table.removeColumn(table.getColumnModel().getColumn(5)); // Скрыть описание заголовка
         table.removeColumn(table.getColumnModel().getColumn(4)); // Скрыть ссылку заголовка
 
-        table.setAutoCreateRowSorter(true);
+        //table.setAutoCreateRowSorter(true);
         scrollPane.setViewportView(table);
 
         table.addMouseListener(new MouseAdapter() {
@@ -248,7 +248,7 @@ public class Gui extends JFrame {
         tableForAnalysis.getColumnModel().getColumn(1).setPreferredWidth(40);
         tableForAnalysis.getColumnModel().getColumn(1).setMaxWidth(40);
         tableForAnalysis.getColumnModel().getColumn(2).setMaxWidth(30);
-        tableForAnalysis.setAutoCreateRowSorter(true);
+        //tableForAnalysis.setAutoCreateRowSorter(true);
         scrollForAnalysis.setViewportView(tableForAnalysis);
 
         // запуск поиска по слову из таблицы анализа
@@ -1031,7 +1031,7 @@ public class Gui extends JFrame {
             public void mouseReleased(MouseEvent e) {
                 if (e.isPopupTrigger()) {
                     int row = table.convertRowIndexToModel(table.rowAtPoint(e.getPoint()));
-                    //table.setRowSelectionInterval(row, row);
+                    table.setRowSelectionInterval(row, row);
                     int column = table.columnAtPoint(e.getPoint());
                     if (table.isRowSelected(row)) {
                         table.changeSelection(row, column, false, false);

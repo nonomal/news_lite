@@ -33,7 +33,7 @@ public class EmailManager {
 
             // Отправка из GUI
             int i = 1;
-            for (TableRow s : Search.emailAndExcelData) {
+            for (TableRow s : Search.headlinesList) {
                 text.append(i++).append(") ").append(s).append("\n\n");
             }
             try {
