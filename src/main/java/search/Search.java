@@ -84,7 +84,7 @@ public class Search {
                     if (isStop.get()) return;
 
                     if (animation.toString().length() < 110) {
-                        Gui.model.setValueAt(animation.append("       ›").toString(), 0, 2);
+                        Gui.model.setValueAt(animation.append("       »").toString(), 0, 2);
                     }
 
                     try {
