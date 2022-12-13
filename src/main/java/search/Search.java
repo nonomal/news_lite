@@ -80,6 +80,7 @@ public class Search {
 
                 for (Source source : sourcesList) {
                     if (isStop.get()) return;
+                    Gui.model.setValueAt(source.getSource(), 0, 1);
 
                     if (animation.toString().length() < 104) {
                         Gui.model.setValueAt(animation.append("       ").append("»").toString(), 0, 2);
