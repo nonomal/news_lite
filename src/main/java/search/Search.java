@@ -73,17 +73,16 @@ public class Search {
             Gui.model.addRow(new Object[]{});
 
             try {
-                sqLite.transaction("BEGIN TRANSACTION");
                 TableRow tableRow;
                 List<Excluded> excludedTitles = jdbcQueries.getExcludedTitlesWords();
                 List<Source> sourcesList = jdbcQueries.getSources("active");
+                sqLite.transaction("BEGIN TRANSACTION");
 
-                // Актуальные источники новостей
                 for (Source source : sourcesList) {
                     if (isStop.get()) return;
 
-                    if (animation.toString().length() < 110) {
-                        Gui.model.setValueAt(animation.append("       »").toString(), 0, 2);
+                    if (animation.toString().length() < 104) {
+                        Gui.model.setValueAt(animation.append("       ").append("»").toString(), 0, 2);
                     }
 
                     try {
