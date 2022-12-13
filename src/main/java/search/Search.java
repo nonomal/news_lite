@@ -76,9 +76,10 @@ public class Search {
                 sqLite.transaction("BEGIN TRANSACTION");
                 TableRow tableRow;
                 List<Excluded> excludedTitles = jdbcQueries.getExcludedTitlesWords();
+                List<Source> sourcesList = jdbcQueries.getSources("active");
 
                 // Актуальные источники новостей
-                for (Source source : jdbcQueries.getSources("active")) {
+                for (Source source : sourcesList) {
                     if (isStop.get()) return;
 
                     if (animation.toString().length() < 110) {
