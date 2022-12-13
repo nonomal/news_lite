@@ -128,6 +128,8 @@ public class ConsoleSearch {
                     Common.IS_SENDING.set(false);
                     System.out.println("sending an email..");
                     new EmailManager().sendMessage();
+                } else {
+                    System.out.println("news headlines not found");
                 }
                 jdbcQueries.removeDuplicates();
                 Gui.WAS_CLICK_IN_TABLE_FOR_ANALYSIS.set(false);
