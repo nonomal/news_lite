@@ -39,16 +39,17 @@ public class JdbcQueriesTest {
 
     @Test
     public void shouldGetLink() {
-        String link = jdbcQueries.getLinkOrDescribeByHash("C-Main",
-                "Selectel заключил соглашение с правительством Ленобласти о развитии ИТ-инфраструктуры региона", "link");
-        Assertions.assertEquals("https://www.cnews.ru/news/line/2022-10-06_selectel_zaklyuchil_soglashenie", link);
+        String link = jdbcQueries.getLinkOrDescribeByHash("Эксперт",
+                "Премьером Великобритании станет Риши Сунак", "link");
+        Assertions.assertEquals("https://expert.ru/2022/10/24/premerom-velikobritanii-stanet-rishi-sunak/" +
+                "?utm_source=mis&utm_medium=vk&utm_campaign=rss&utm_term=/2022/10/24/" +
+                "premerom-velikobritanii-stanet-rishi-sunak/", link);
     }
 
     @Test
     public void shouldGetDescribe() {
-        String hash = jdbcQueries.getLinkOrDescribeByHash("C-Main",
-                "Selectel заключил соглашение с правительством Ленобласти о развитии ИТ-инфраструктуры региона", "describe");
-        Assertions.assertEquals("Провайдер ИТ-инфраструктуры Selectel заключил соглашение с правительством " +
-                "Ленинградской области о сотрудничестве...", hash);
+        String hash = jdbcQueries.getLinkOrDescribeByHash("Эксперт",
+                "Премьером Великобритании станет Риши Сунак", "describe");
+        Assertions.assertEquals("Лидер Палаты общин британского парламента Пенни Мордонт отказалась от борьбы за пост", hash);
     }
 }
