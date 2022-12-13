@@ -106,6 +106,12 @@ public class Search {
                                 String newsTitle = tableRow.getTitle().toLowerCase();
 
                                 if (newsTitle.contains(Gui.findWord) && newsTitle.length() > 15) {
+                                    int dateDiff = Common.compareDatesOnly(new Date(), pubDate);
+
+                                    if (dateDiff != 0) {
+                                        // Данные для таблицы топ-10 без отсева заголовков
+                                        getTopTenData(tableRow);
+                                    }
 
                                     // замена не интересующих заголовков в UI на # + слово исключение
                                     for (Excluded excludedTitle : excludedTitles) {
@@ -118,9 +124,6 @@ public class Search {
                                     if (jdbcQueries.isTitleExists(title, searchType)) {
                                         continue;
                                     }
-
-                                    //Data for a table
-                                    int dateDiff = Common.compareDatesOnly(new Date(), pubDate);
 
                                     // вставка всех без исключения новостей в архив
                                     jdbcQueries.addAllTitlesToArchive(title,
@@ -152,6 +155,7 @@ public class Search {
 
                                         if (dateDiff != 0) {
                                             searchProcess(tableRow, searchType);
+                                            getTopTenData(tableRow);
                                         }
                                     }
                                 }
@@ -200,7 +204,6 @@ public class Search {
                 int i = 1;
                 Gui.model.removeRow(0);
                 for (TableRow row : list) {
-
                     Gui.model.addRow(new Object[]{
                             i++,
                             row.getSource(),
@@ -266,28 +269,20 @@ public class Search {
         newsCount++;
         Gui.labelSum.setText(String.valueOf(newsCount));
 
-//        Gui.model.addRow(new Object[]{
-//                newsCount,
-//                tableRow.getSource(),
-//                tableRow.getTitle(),
-//                tableRow.getDate(),
-//                tableRow.getLink(),
-//                tableRow.getDescribe()
-//        });
-
-        // Данные для отправки результатов на почту и выгрузки эксель-файла + исключённые из показа
         headlinesList.add(tableRow);
 
-        // Данные для анализа через мап
+        if (Gui.isOnlyLastNews) {
+            jdbcQueries.addTitles(tableRow.getTitle(), searchType);
+        }
+    }
+
+    private void getTopTenData(TableRow tableRow) {
         String[] substr = tableRow.getTitle().split(" ");
         for (String s : substr) {
             if (s.length() > 3) {
                 wordsCount.put(s, wordsCount.getOrDefault(s, 0) + 1);
             }
         }
-
-        if (Gui.isOnlyLastNews) {
-            jdbcQueries.addTitles(tableRow.getTitle(), searchType);
-        }
     }
+
 }
