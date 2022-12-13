@@ -41,6 +41,7 @@ public class Search {
         if (!isSearchNow.get()) {
             boolean isWord = searchType.equals("word");
             boolean isWords = searchType.equals("words");
+            boolean isTopTen = searchType.equals("top-ten");
 
             isSearchNow.set(true);
             Search.isStop.set(false);
@@ -101,7 +102,7 @@ public class Search {
                                     DATE_FORMAT.format(pubDate),
                                     entry.getLink());
 
-                            if (isWord) {
+                            if (isWord || isTopTen) {
                                 Gui.findWord = Gui.topKeyword.getText().toLowerCase();
                                 String newsTitle = tableRow.getTitle().toLowerCase();
 
@@ -109,20 +110,8 @@ public class Search {
                                     int dateDiff = Common.compareDatesOnly(new Date(), pubDate);
 
                                     if (dateDiff != 0) {
-                                        // Данные для таблицы топ-10 без отсева заголовков
+                                        // Данные за период для таблицы топ-10 без отсева заголовков
                                         getTopTenData(tableRow);
-                                    }
-
-                                    // замена не интересующих заголовков в UI на # + слово исключение
-                                    for (Excluded excludedTitle : excludedTitles) {
-                                        if (excludedTitle.getWord().length() > 2 && newsTitle.contains(excludedTitle.getWord())) {
-                                            tableRow.setTitle("# " + excludedTitle);
-                                        }
-                                    }
-
-                                    //отсеиваем новости, которые уже были найдены ранее при включенном чекбоксе
-                                    if (jdbcQueries.isTitleExists(title, searchType)) {
-                                        continue;
                                     }
 
                                     // вставка всех без исключения новостей в архив
@@ -132,12 +121,36 @@ public class Search {
                                             tableRow.getSource(),
                                             tableRow.getDescribe());
 
-                                    if (dateDiff != 0 && !tableRow.getTitle().contains("#")) {
-                                        searchProcess(tableRow, searchType);
-                                    }
+                                    if (isTopTen) {
+                                        if (dateDiff != 0) {
+                                            searchProcess(tableRow, searchType);
+                                        }
+                                    } else {
+                                        //отсеиваем новости, которые уже были найдены ранее при включенном чекбоксе
+                                        if (jdbcQueries.isTitleExists(title, searchType)) {
+                                            continue;
+                                        }
 
-                                    if (dateDiff != 0 && tableRow.getTitle().contains("#")) {
-                                        ++excludedCount;
+                                        if (Gui.findWord.length() == 0) {
+                                            // замена не интересующих заголовков в UI на # + слово исключение
+                                            for (Excluded excludedTitle : excludedTitles) {
+                                                if (excludedTitle.getWord().length() > 2 && newsTitle.contains(excludedTitle.getWord())) {
+                                                    tableRow.setTitle("# " + excludedTitle);
+                                                }
+                                            }
+
+                                            if (dateDiff != 0 && !tableRow.getTitle().contains("#")) {
+                                                searchProcess(tableRow, searchType);
+                                            }
+
+                                            if (dateDiff != 0 && tableRow.getTitle().contains("#")) {
+                                                ++excludedCount;
+                                            }
+                                        } else {
+                                            if (dateDiff != 0) {
+                                                searchProcess(tableRow, searchType);
+                                            }
+                                        }
                                     }
                                 }
                             } else if (isWords) {

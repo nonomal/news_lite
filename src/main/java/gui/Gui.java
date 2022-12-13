@@ -261,7 +261,8 @@ public class Gui extends JFrame {
                     if (col == 0) {
                         Gui.topKeyword.setText((String) tableForAnalysis.getModel().getValueAt(row, 0));
                         jdbcQueries.removeFromTable("TITLES");
-                        searchBtnTop.doClick();
+                        //searchBtnTop.doClick();
+                        new Thread(() -> search.mainSearch("top-ten")).start();
                         WAS_CLICK_IN_TABLE_FOR_ANALYSIS.set(true);
                     }
                 }
