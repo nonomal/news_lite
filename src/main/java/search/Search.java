@@ -78,17 +78,21 @@ public class Search {
                 List<Source> sourcesList = jdbcQueries.getSources("active");
                 sqLite.transaction("BEGIN TRANSACTION");
 
-                //int q = 0;
+                StringBuilder processString = new StringBuilder("[");
+                for (int i = 1; i < sourcesList.size(); i++) {
+                    processString.append(". ");
+                }
+                processString.append("]");
+                String process = processString.toString();
+
+                int q = 1;
                 for (Source source : sourcesList) {
                     if (isStop.get()) return;
 
-                    if (animation.toString().length() <= 9) {
-                        Gui.model.setValueAt(animation.append("»"), 0, 1);
-                    }
-                    Gui.model.setValueAt(source.getSource(), 0, 2);
-
-                    //int process = (int) Math.round((double) q++/sourcesList.size() * 100);
-                    //Gui.model.setValueAt(process + "%", 0, 3);
+                    int processPercent = (int) Math.round((double) q++/sourcesList.size() * 100);
+                    Gui.model.setValueAt("Progress: [" + processPercent + "%] " + process, 0, 2);
+                    process = process.replaceFirst(". ", "#");
+                    Gui.model.setValueAt(source.getSource(), 0, 1);
 
                     try {
                         for (Object message : new Parser().parseFeed(source.getLink()).getEntries()) {
