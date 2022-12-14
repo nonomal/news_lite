@@ -39,7 +39,7 @@ public class Dialogs extends JDialog implements KeyListener {
 
         switch (name) {
             case "sourcesDialog": {
-                this.setBounds(0, 0, 250, 307);
+                this.setBounds(0, 0, 250, 308);
                 this.setTitle("Sources");
                 this.setLocationRelativeTo(Gui.smiBtn);
 
