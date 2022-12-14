@@ -266,8 +266,6 @@ public class Gui extends JFrame {
                         //searchBtnTop.doClick();
                         //new Thread(() -> search.mainSearch("top-ten")).start();
                         new Thread(() -> jdbcQueries.getNewsForTopTen(valueAt)).start();
-                        System.out.println(valueAt);
-
                         WAS_CLICK_IN_TABLE_FOR_ANALYSIS.set(true);
                     }
                 }

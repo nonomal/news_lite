@@ -367,35 +367,56 @@ public class JdbcQueries {
 
     // Список избранных новостей
     public void getNewsForTopTen(String word) {
-        TableRow tableRow;
         try {
             String query = "SELECT source, title, describe, news_date, link FROM all_news " +
-                    "where lower(title) like '%'|| ? ||'%'";
+                    "WHERE lower(title) like '%'|| ? ||'%' " +
+                    "ORDER BY substr(news_date, 24)||" +
+                    "case\n" +
+                    "   when substr(news_date, 5, 3) = 'Jan' then '01'" +
+                    "   when substr(news_date, 5, 3) = 'Feb' then '02'" +
+                    "   when substr(news_date, 5, 3) = 'Mar' then '03'" +
+                    "   when substr(news_date, 5, 3) = 'Apr' then '04'" +
+                    "   when substr(news_date, 5, 3) = 'May' then '05'" +
+                    "   when substr(news_date, 5, 3) = 'Jun' then '06'" +
+                    "   when substr(news_date, 5, 3) = 'Jul' then '07'" +
+                    "   when substr(news_date, 5, 3) = 'Aug' then '08'" +
+                    "   when substr(news_date, 5, 3) = 'Sep' then '09'" +
+                    "   when substr(news_date, 5, 3) = 'Oct' then '10'" +
+                    "   when substr(news_date, 5, 3) = 'Nov' then '11'" +
+                    "   when substr(news_date, 5, 3) = 'Dec' then '12'" +
+                    "end ||" +
+                    "substr(news_date, 9, 2)||" +
+                    "substr(news_date, 12, 2)||" +
+                    "substr(news_date, 15, 2)" +
+                    "DESC";
+
             PreparedStatement statement = connection.prepareStatement(query);
             statement.setString(1, word);
 
             ResultSet rs = statement.executeQuery();
             int i = 1;
             while (rs.next()) {
-                String source = rs.getString("source");
-                String title = rs.getString("title");
-                String describe = rs.getString("describe");
-                String news_date = rs.getString("news_date");
-                String link = rs.getString("link");
+                //Wed Dec 14 17:03:41 MSK 2022
+                String date = rs.getString("news_date");
+                //String year = date.substring(24);
+                String month = date.substring(4, 7);
+                String day = date.substring(8, 10);
+                String hour = date.substring(11, 13);
+                String minute = date.substring(14, 16);
 
                 Gui.model.addRow(new Object[]{
                         i++,
-                        source,
-                        title,
-                        news_date,
-                        link,
-                        describe
+                        rs.getString("source"),
+                        rs.getString("title"),
+                        day + "." + month + " " + hour + ":" + minute,
+                        rs.getString("link"),
+                        rs.getString("describe")
                 });
             }
             rs.close();
             statement.close();
         } catch (Exception e) {
-            Common.console("getExcludedTitlesWords error: " + e.getMessage());
+            Common.console("getNewsForTopTen error: " + e.getMessage());
         }
     }
 
