@@ -5,7 +5,10 @@ import database.JdbcQueries;
 import database.SQLite;
 import gui.Gui;
 import gui.buttons.Icons;
-import model.*;
+import model.Excluded;
+import model.Keyword;
+import model.Source;
+import model.TableRow;
 import utils.Common;
 import utils.Parser;
 
@@ -67,16 +70,15 @@ public class Search {
                 Gui.stopBtnBottom.setVisible(true);
             }
 
-            // search animation
-            new Thread(Common::fillProgressLine).start();
-            StringBuilder animation = new StringBuilder();
-            Gui.model.addRow(new Object[]{});
-
             try {
                 TableRow tableRow;
                 List<Excluded> excludedTitles = jdbcQueries.getExcludedTitlesWords();
                 List<Source> sourcesList = jdbcQueries.getSources("active");
                 sqLite.transaction("BEGIN TRANSACTION");
+
+                // search animation
+                new Thread(Common::fillProgressLine).start();
+                Gui.model.addRow(new Object[]{});
 
                 StringBuilder processString = new StringBuilder("[");
                 for (int i = 1; i < sourcesList.size(); i++) {
@@ -89,7 +91,7 @@ public class Search {
                 for (Source source : sourcesList) {
                     if (isStop.get()) return;
 
-                    int processPercent = (int) Math.round((double) q++/sourcesList.size() * 100);
+                    int processPercent = (int) Math.round((double) q++ / sourcesList.size() * 100);
                     Gui.model.setValueAt("Progress: [" + processPercent + "%] " + process, 0, 2);
                     process = process.replaceFirst(". ", "#");
                     Gui.model.setValueAt(source.getSource(), 0, 1);
@@ -271,6 +273,8 @@ public class Search {
                 if (Gui.autoSendMessage.getState() && (Gui.model.getRowCount() > 0) && headlinesList.size() > 0) {
                     Gui.sendCurrentResultsToEmail.doClick();
                 }
+
+                //jdbcQueries.removeDuplicates();
 
                 Gui.WAS_CLICK_IN_TABLE_FOR_ANALYSIS.set(false);
 

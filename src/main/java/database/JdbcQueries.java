@@ -109,7 +109,10 @@ public class JdbcQueries {
             statement.executeUpdate();
             statement.close();
         } catch (SQLException e) {
-            Common.console("addAllTitlesToArchive error: " + e.getMessage());
+            if (e.getMessage().contains("SQLITE_CONSTRAINT_UNIQUE")) {
+            } else {
+                Common.console("addAllTitlesToArchive error: " + e.getMessage());
+            }
         }
     }
 
@@ -458,17 +461,17 @@ public class JdbcQueries {
     }
 
     // удаление дубликатов новостей
-    public void removeDuplicates() {
-        try {
-            String query = "DELETE FROM all_news WHERE ROWID NOT IN (SELECT MIN(ROWID) " +
-                    "FROM all_news GROUP BY source, title, news_date)";
-            PreparedStatement statement = connection.prepareStatement(query);
-            statement.executeUpdate();
-            statement.close();
-        } catch (Exception e) {
-            Common.console("deleteDuplicates error: " + e.getMessage());
-        }
-    }
+//    public void removeDuplicates() {
+//        try {
+//            String query = "DELETE FROM all_news WHERE ROWID NOT IN (SELECT MIN(ROWID) " +
+//                    "FROM all_news GROUP BY source, title, news_date)";
+//            PreparedStatement statement = connection.prepareStatement(query);
+//            statement.executeUpdate();
+//            statement.close();
+//        } catch (Exception e) {
+//            Common.console("deleteDuplicates error: " + e.getMessage());
+//        }
+//    }
 
     // Очистка данных любой передаваемой таблицы
     public void removeFromTable(String tableName) {

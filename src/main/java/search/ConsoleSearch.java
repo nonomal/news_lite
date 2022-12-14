@@ -120,9 +120,6 @@ public class ConsoleSearch {
                 // коммит транзакции
                 sqlite.transaction("COMMIT");
 
-                // удаляем все пустые строки
-                //jdbcQueries.removeEmptyRows();
-
                 // Автоматическая отправка результатов
                 if (dataForEmail.size() > 0) {
                     Common.IS_SENDING.set(false);
@@ -131,7 +128,7 @@ public class ConsoleSearch {
                 } else {
                     System.out.println("news headlines not found");
                 }
-                jdbcQueries.removeDuplicates();
+                //jdbcQueries.removeDuplicates();
                 Gui.WAS_CLICK_IN_TABLE_FOR_ANALYSIS.set(false);
 
             } catch (Exception e) {
