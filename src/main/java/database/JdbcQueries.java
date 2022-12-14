@@ -1,5 +1,6 @@
 package database;
 
+import gui.Gui;
 import model.*;
 import utils.Common;
 
@@ -362,6 +363,40 @@ public class JdbcQueries {
             Common.console("getExcludedTitlesWords error: " + e.getMessage());
         }
         return favorites;
+    }
+
+    // Список избранных новостей
+    public void getNewsForTopTen(String word) {
+        TableRow tableRow;
+        try {
+            String query = "SELECT source, title, describe, news_date, link FROM all_news " +
+                    "where lower(title) like '%'|| ? ||'%'";
+            PreparedStatement statement = connection.prepareStatement(query);
+            statement.setString(1, word);
+
+            ResultSet rs = statement.executeQuery();
+            int i = 1;
+            while (rs.next()) {
+                String source = rs.getString("source");
+                String title = rs.getString("title");
+                String describe = rs.getString("describe");
+                String news_date = rs.getString("news_date");
+                String link = rs.getString("link");
+
+                Gui.model.addRow(new Object[]{
+                        i++,
+                        source,
+                        title,
+                        news_date,
+                        link,
+                        describe
+                });
+            }
+            rs.close();
+            statement.close();
+        } catch (Exception e) {
+            Common.console("getExcludedTitlesWords error: " + e.getMessage());
+        }
     }
 
     // Список слов с переводом

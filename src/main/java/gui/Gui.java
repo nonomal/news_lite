@@ -259,10 +259,15 @@ public class Gui extends JFrame {
                     int row = tableForAnalysis.convertRowIndexToModel(tableForAnalysis.rowAtPoint(new Point(e.getX(), e.getY())));
                     int col = tableForAnalysis.columnAtPoint(new Point(e.getX(), e.getY()));
                     if (col == 0) {
-                        Gui.topKeyword.setText((String) tableForAnalysis.getModel().getValueAt(row, 0));
+                        if (model.getRowCount() > 0) model.setRowCount(0);
+                        String valueAt = (String) tableForAnalysis.getModel().getValueAt(row, 0);
+                        Gui.topKeyword.setText(valueAt);
                         jdbcQueries.removeFromTable("TITLES");
                         //searchBtnTop.doClick();
-                        new Thread(() -> search.mainSearch("top-ten")).start();
+                        //new Thread(() -> search.mainSearch("top-ten")).start();
+                        new Thread(() -> jdbcQueries.getNewsForTopTen(valueAt)).start();
+                        System.out.println(valueAt);
+
                         WAS_CLICK_IN_TABLE_FOR_ANALYSIS.set(true);
                     }
                 }
