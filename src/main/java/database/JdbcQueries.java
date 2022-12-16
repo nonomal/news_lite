@@ -158,17 +158,16 @@ public class JdbcQueries {
         }
     }
 
-    // Обновление настроек
-    public void updateSettings(String key, String value) {
+    public void addUser(String username, String password) {
         try {
-            String query = "UPDATE settings SET value = ? WHERE key = ?";
+            String query = "INSERT INTO users(username, password) VALUES (?, ?)";
             PreparedStatement statement = connection.prepareStatement(query);
-            statement.setString(1, value);
-            statement.setString(2, key);
+            statement.setString(1, username);
+            statement.setString(2, password);
             statement.executeUpdate();
             statement.close();
         } catch (Exception e) {
-            Common.console("updateSettings error: " + e.getMessage());
+            Common.console("addUser error: " + e.getMessage());
         }
     }
 
@@ -618,6 +617,20 @@ public class JdbcQueries {
         return countNews;
     }
 
+    // Обновление настроек
+    public void updateSettings(String key, String value) {
+        try {
+            String query = "UPDATE settings SET value = ? WHERE key = ?";
+            PreparedStatement statement = connection.prepareStatement(query);
+            statement.setString(1, value);
+            statement.setString(2, key);
+            statement.executeUpdate();
+            statement.close();
+        } catch (Exception e) {
+            Common.console("updateSettings error: " + e.getMessage());
+        }
+    }
+
     // обновление статуса чекбокса is_active для ресурсов SELECT id, source, link FROM rss_list where is_active = 1  ORDER BY id
     public void updateIsActiveCheckboxes(boolean check, String name, String type) {
         String query = null;
@@ -690,6 +703,5 @@ public class JdbcQueries {
         }
         return password;
     }
-
 
 }
