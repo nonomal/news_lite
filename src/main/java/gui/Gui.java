@@ -859,7 +859,11 @@ public class Gui extends JFrame {
         showRightClickMenu();
 
         // Username label
-        loginLabel = new JLabel();
+        if (Login.username != null) {
+            loginLabel = new JLabel("user: " + Login.username);
+        } else {
+            loginLabel = new JLabel();
+        }
         loginLabel.setEnabled(false);
         loginLabel.setBounds(881, 13, 180, 13);
         loginLabel.setFont(GUI_FONT);
