@@ -142,13 +142,14 @@ public class JdbcQueries {
     // вставка нового события
     public void addDate(String type, String description, int day, int month, int year) {
         try {
-            String query = "INSERT INTO dates(type, description, day, month, year) VALUES (?, ?, ?, ?, ?)";
+            String query = "INSERT INTO dates(type, description, day, month, year, user_id) VALUES (?, ?, ?, ?, ?, ?)";
             PreparedStatement statement = connection.prepareStatement(query);
             statement.setString(1, type);
             statement.setString(2, description);
             statement.setInt(3, day);
             statement.setInt(4, month);
             statement.setInt(5, year);
+            statement.setInt(6, userId);
             statement.executeUpdate();
             statement.close();
 
@@ -251,14 +252,18 @@ public class JdbcQueries {
     public List<Dates> getDates(int isActive) {
         List<Dates> dates = new ArrayList<>();
         try {
-            String query = "SELECT type, description, day, month, year, is_active FROM dates ORDER BY month, day";
+            String query = "SELECT type, description, day, month, year, is_active FROM dates " +
+                    "WHERE user_id = ? " +
+                    "ORDER BY month, day";
 
             if (isActive == 0) {
                 query = "SELECT type, description, day, month, year, is_active FROM dates " +
-                        "WHERE is_active = 1 ORDER BY month, day";
+                        "WHERE is_active = 1 AND user_id = ? ORDER BY month, day";
             }
 
             PreparedStatement statement = connection.prepareStatement(query);
+            statement.setInt(1, userId);
+
             ResultSet rs = statement.executeQuery();
             while (rs.next()) {
                 dates.add(new Dates(
@@ -509,12 +514,12 @@ public class JdbcQueries {
             } else if (activeWindow == 6) {
                 query = "DELETE FROM favorites WHERE title = ?";
             } else if (activeWindow == 7) {
-                query = "DELETE FROM dates WHERE type||' '||description = ?";
+                query = "DELETE FROM dates WHERE type||' '||description = ? AND main.dates.user_id = ?";
             }
 
             PreparedStatement statement = connection.prepareStatement(query);
             statement.setString(1, item);
-            if (activeWindow == 4 || activeWindow == 5) {
+            if (activeWindow == 4 || activeWindow == 5 | activeWindow == 7) {
                 statement.setInt(2, userId);
             }
             statement.executeUpdate();
@@ -656,11 +661,12 @@ public class JdbcQueries {
 
     public void updateIsActiveDates(boolean check, String type, String description) {
         try {
-            String query = "UPDATE dates SET is_active = ? WHERE type = ? and description = ?";
+            String query = "UPDATE dates SET is_active = ? WHERE type = ? and description = ? and main.dates.user_id = ?";
             PreparedStatement statement = connection.prepareStatement(query);
             statement.setBoolean(1, check);
             statement.setString(2, type);
             statement.setString(3, description);
+            statement.setInt(4, userId);
             statement.executeUpdate();
             statement.close();
         } catch (Exception e) {

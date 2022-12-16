@@ -24,7 +24,7 @@ public class Main {
             login();
         } else {
             /*
-              main.Main arguments for console search:
+              main arguments for console search:
               args1 = email
               args2 = interval in minutes
               args3 = keyword1, keyword2 ... argsN = search keywords
