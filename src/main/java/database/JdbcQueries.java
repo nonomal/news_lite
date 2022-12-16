@@ -114,8 +114,7 @@ public class JdbcQueries {
             statement.executeUpdate();
             statement.close();
         } catch (SQLException e) {
-            if (e.getMessage().contains("SQLITE_CONSTRAINT_UNIQUE")) {
-            } else {
+            if (!e.getMessage().contains("SQLITE_CONSTRAINT_UNIQUE")) {
                 Common.console("addAllTitlesToArchive error: " + e.getMessage());
             }
         }
@@ -125,9 +124,10 @@ public class JdbcQueries {
     public void addWordToExcludeTitles(String word) {
         if (word != null && word.length() > 0) {
             try {
-                String query = "INSERT INTO excluded_headlines(word) VALUES (?)";
+                String query = "INSERT INTO excluded_headlines(word, user_id) VALUES (?, ?)";
                 PreparedStatement statement = connection.prepareStatement(query);
                 statement.setString(1, word);
+                statement.setInt(2, userId);
                 statement.executeUpdate();
                 statement.close();
 
@@ -283,8 +283,9 @@ public class JdbcQueries {
     public List<Excluded> getExcludedTitlesWords() {
         List<Excluded> excludedWords = new ArrayList<>();
         try {
-            String query = "SELECT id, word FROM excluded_headlines  ORDER BY word";
+            String query = "SELECT id, word FROM excluded_headlines WHERE user_id = ? ORDER BY word";
             PreparedStatement statement = connection.prepareStatement(query);
+            statement.setInt(1, userId);
 
             ResultSet rs = statement.executeQuery();
             while (rs.next()) {
@@ -503,7 +504,7 @@ public class JdbcQueries {
             } else if (activeWindow == 3) {
                 query = "DELETE FROM exclude WHERE word = ?";
             } else if (activeWindow == 4) {
-                query = "DELETE FROM excluded_headlines WHERE word = ?";
+                query = "DELETE FROM excluded_headlines WHERE word = ? and user_id = ?";
             } else if (activeWindow == 5) {
                 query = "DELETE FROM keywords WHERE word = ? AND user_id = ?";
             } else if (activeWindow == 6) {
@@ -514,7 +515,7 @@ public class JdbcQueries {
 
             PreparedStatement statement = connection.prepareStatement(query);
             statement.setString(1, item);
-            if (activeWindow == 5) {
+            if (activeWindow == 4 || activeWindow == 5) {
                 statement.setInt(2, userId);
             }
             statement.executeUpdate();
@@ -673,7 +674,7 @@ public class JdbcQueries {
     }
 
     public String getUserHashPassword(String username) {
-       String password = "";
+        String password = "";
         try {
             String query = "SELECT password FROM users WHERE username = ?";
             PreparedStatement statement = connection.prepareStatement(query);
