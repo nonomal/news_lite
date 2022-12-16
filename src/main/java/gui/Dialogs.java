@@ -1,7 +1,7 @@
 package gui;
 
 import database.JdbcQueries;
-import main.Main;
+import main.Login;
 import model.*;
 import utils.Common;
 
@@ -445,7 +445,7 @@ public class Dialogs extends JDialog implements KeyListener {
         JdbcQueries jdbcQueries = new JdbcQueries();
         switch (name) {
             case "smi": {
-                java.util.List<Source> sources = jdbcQueries.getSources("all", Main.userId);
+                java.util.List<Source> sources = jdbcQueries.getSources("all", Login.userId);
                 for (Source s : sources) {
                     Dialogs.model.addRow(new Object[]{++id, s.getSource(), s.getIsActive()});
                 }

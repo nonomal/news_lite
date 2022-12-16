@@ -1053,7 +1053,7 @@ public class Gui extends JFrame {
         });
     }
 
-    private void animation(JButton exitBtn, ImageIcon off, ImageIcon on) {
+    public static void animation(JButton exitBtn, ImageIcon off, ImageIcon on) {
         exitBtn.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseEntered(MouseEvent e) {

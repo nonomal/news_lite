@@ -1,7 +1,7 @@
 package database;
 
 import gui.Gui;
-import main.Main;
+import main.Login;
 import model.*;
 import utils.Common;
 
@@ -15,7 +15,7 @@ import java.util.List;
 public class JdbcQueries {
     private final Connection connection = SQLite.connection;
     //private String user = Main.username;
-    private final int userId = Main.userId;
+    private final int userId = Login.userId;
 
     /* INSERT */
     // Вставка ключевого слова
@@ -580,6 +580,19 @@ public class JdbcQueries {
         }
     }
 
+    // Очистка данных любой передаваемой таблицы
+    public void removeFromUsers(String username) {
+        try {
+            String query = "DELETE FROM users where username = ?";
+            PreparedStatement statement = connection.prepareStatement(query);
+            statement.setString(1, username);
+            statement.executeUpdate();
+            statement.close();
+        } catch (Exception e) {
+            Common.console("deleteFromTable error: " + e.getMessage());
+        }
+    }
+
     /* DIFFERENT */
     // отсеивание ранее найденных заголовков при включённом чекбоксе
     public boolean isTitleExists(String title, String type) {
@@ -739,11 +752,43 @@ public class JdbcQueries {
                 "INSERT INTO rss_list (source, link, is_active, position, user_id) " +
                         "VALUES ('Эксперт', 'https://expert.ru/doc-list/rss/', 1, 2, ?)",
                 "INSERT INTO rss_list (source, link, is_active, position, user_id) " +
+                        "VALUES ('Lenta', 'https://lenta.ru/rss', 1, 3, ?)",
+                "INSERT INTO rss_list (source, link, is_active, position, user_id) " +
+                        "VALUES ('Гарант', 'http://rss.garant.ru/news/', 1, 4, ?)",
+                "INSERT INTO rss_list (source, link, is_active, position, user_id) " +
+                        "VALUES ('Life', 'https://life.ru/xml/feed.xml?hashtag=%D0%BD%D0%BE%D0%B2%D0%BE%D1%81%D1%82%D0%B8', 1, 5, ?)",
+                "INSERT INTO rss_list (source, link, is_active, position, user_id) " +
+                        "VALUES ('РБК', 'http://static.feed.rbc.ru/rbc/logical/footer/news.rss', 1, 6, ?)",
+                "INSERT INTO rss_list (source, link, is_active, position, user_id) " +
+                        "VALUES ('Газета.ру', 'https://www.gazeta.ru/export/rss/first.xml', 1, 7, ?)",
+                "INSERT INTO rss_list (source, link, is_active, position, user_id) " +
+                        "VALUES ('Популярная механика', 'https://www.popmech.ru/out/public-all.xml', 1, 8, ?)",
+                "INSERT INTO rss_list (source, link, is_active, position, user_id) " +
                         "VALUES ('Наука и жизнь', 'https://www.nkj.ru/rss/', 1, 9, ?)",
                 "INSERT INTO rss_list (source, link, is_active, position, user_id) " +
                         "VALUES ('C-Main', 'https://cnews.ru/inc/rss/news.xml', 1, 10, ?)",
                 "INSERT INTO rss_list (source, link, is_active, position, user_id) " +
+                        "VALUES ('Коммерсант', 'https://www.kommersant.ru/RSS/news.xml', 1, 11, ?)",
+                "INSERT INTO rss_list (source, link, is_active, position, user_id) " +
+                        "VALUES ('Esquire', 'https://esquire.ru/out/feedburner.xml', 0, 13, ?)",
+                "INSERT INTO rss_list (source, link, is_active, position, user_id) " +
+                        "VALUES ('Вести', 'https://www.vesti.ru/vesti.rss', 0, 15, ?)",
+                "INSERT INTO rss_list (source, link, is_active, position, user_id) " +
+                        "VALUES ('BBC (rus)', 'http://feeds.bbci.co.uk/russian/rss.xml', 1, 16, ?)",
+                "INSERT INTO rss_list (source, link, is_active, position, user_id) " +
+                        "VALUES ('BBC (eng)', 'http://feeds.bbci.co.uk/news/world/rss.xml', 1, 17, ?)",
+                "INSERT INTO rss_list (source, link, is_active, position, user_id) " +
+                        "VALUES ('Forbes', 'https://www.forbes.ru/newrss.xml', 0, 51, ?)",
+                "INSERT INTO rss_list (source, link, is_active, position, user_id) " +
+                        "VALUES ('Правительство РФ', 'http://government.ru/all/rss/', 0, 52, ?)",
+                "INSERT INTO rss_list (source, link, is_active, position, user_id) " +
+                        "VALUES ('Госдума РФ', 'http://duma.gov.ru/news/feed/', 0, 53, ?)",
+                "INSERT INTO rss_list (source, link, is_active, position, user_id) " +
+                        "VALUES ('Nasa', 'https://www.nasa.gov/rss/dyn/breaking_news.rss', 0, 54, ?)",
+                "INSERT INTO rss_list (source, link, is_active, position, user_id) " +
                         "VALUES ('Финам', 'https://www.finam.ru/analysis/conews/rsspoint', 0, 55, ?)",
+                "INSERT INTO rss_list (source, link, is_active, position, user_id) " +
+                        "VALUES ('Атон', 'https://www.agroinvestor.ru/feed/public-agronews.xml', 0, 56, ?)",
                 "INSERT INTO keywords (word, is_active, user_id) VALUES ('ипотек', 1, ?)",
                 "INSERT INTO keywords (word, is_active, user_id) VALUES ('выплат', 1, ?)",
                 "INSERT INTO keywords (word, is_active, user_id) VALUES ('бесплатн', 1, ?)",
