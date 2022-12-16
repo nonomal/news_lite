@@ -36,7 +36,6 @@ public class Main {
     private static void login() {
         JdbcQueries jdbcQueries = new JdbcQueries();
         String[] loginParams = showLoginDialog();
-
         int option = Integer.parseInt(loginParams[0]);
 
         if (option == 0) { //create user

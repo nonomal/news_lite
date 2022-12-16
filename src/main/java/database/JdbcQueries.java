@@ -716,11 +716,16 @@ public class JdbcQueries {
     public void initUser(int id) {
         System.out.println(id);
         String[] queries = {
-                "INSERT INTO rss_list (source, link, is_active, position, user_id) VALUES ('Mail.ru', 'https://news.mail.ru/rss/90/', 1, 1, ?)",
-                "INSERT INTO rss_list (source, link, is_active, position, user_id) VALUES ('Эксперт', 'https://expert.ru/doc-list/rss/', 1, 2, ?)",
-                "INSERT INTO rss_list (source, link, is_active, position, user_id) VALUES ('Наука и жизнь', 'https://www.nkj.ru/rss/', 1, 9, ?)",
-                "INSERT INTO rss_list (source, link, is_active, position, user_id) VALUES ('C-Main', 'https://cnews.ru/inc/rss/news.xml', 1, 10, ?)",
-                "INSERT INTO rss_list (source, link, is_active, position, user_id) VALUES ('Финам', 'https://www.finam.ru/analysis/conews/rsspoint', 0, 55, ?)",
+                "INSERT INTO rss_list (source, link, is_active, position, user_id) " +
+                        "VALUES ('Mail.ru', 'https://news.mail.ru/rss/90/', 1, 1, ?)",
+                "INSERT INTO rss_list (source, link, is_active, position, user_id) " +
+                        "VALUES ('Эксперт', 'https://expert.ru/doc-list/rss/', 1, 2, ?)",
+                "INSERT INTO rss_list (source, link, is_active, position, user_id) " +
+                        "VALUES ('Наука и жизнь', 'https://www.nkj.ru/rss/', 1, 9, ?)",
+                "INSERT INTO rss_list (source, link, is_active, position, user_id) " +
+                        "VALUES ('C-Main', 'https://cnews.ru/inc/rss/news.xml', 1, 10, ?)",
+                "INSERT INTO rss_list (source, link, is_active, position, user_id) " +
+                        "VALUES ('Финам', 'https://www.finam.ru/analysis/conews/rsspoint', 0, 55, ?)",
                 "INSERT INTO keywords (word, is_active, user_id) VALUES ('ипотек', 1, ?)",
                 "INSERT INTO keywords (word, is_active, user_id) VALUES ('выплат', 1, ?)",
                 "INSERT INTO keywords (word, is_active, user_id) VALUES ('бесплатн', 1, ?)",
@@ -757,18 +762,20 @@ public class JdbcQueries {
                 "INSERT INTO exclude (word, user_id) VALUES ('почти', ?)",
                 "INSERT INTO exclude (word, user_id) VALUES ('число', ?)",
                 "INSERT INTO exclude (word, user_id) VALUES ('чего', ?)",
-                "INSERT INTO exclude (word, user_id) VALUES ('й', ?)"
+                "INSERT INTO exclude (word, user_id) VALUES ('й', ?)",
+                "INSERT INTO dates (type, description, day, month, year, is_active, user_id) " +
+                        "VALUES ('Праздник', 'Международный женский день', 8, 3, -1, 1, ?)",
+                "INSERT INTO dates (type, description, day, month, year, is_active, user_id) " +
+                        "VALUES ('Праздник', 'День победы', 9, 5, 1945, 1, ?)"
         };
 
         try {
             PreparedStatement statement;
-
             for (String query : queries) {
                 statement = connection.prepareStatement(query);
                 statement.setInt(1, id);
                 statement.executeUpdate();
             }
-
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
