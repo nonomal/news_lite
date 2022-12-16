@@ -60,7 +60,6 @@ public class Login {
                 userId = jdbcQueries.getUserIdByUsername(username);
                 String password = loginParams[2];
                 String userHashPassword = jdbcQueries.getUserHashPassword(username);
-                Gui.loginLabel.setText("user: " + username);
 
                 // Password check
                 if (!password.equals(userHashPassword)) {
@@ -74,6 +73,7 @@ public class Login {
         } else {
             System.exit(0);
         }
+        Gui.loginLabel.setText("user: " + username);
     }
 
     /*

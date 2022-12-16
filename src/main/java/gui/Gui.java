@@ -858,7 +858,7 @@ public class Gui extends JFrame {
         showWebPagesIcons();
         showRightClickMenu();
 
-        //Input keyword
+        // Username label
         loginLabel = new JLabel();
         loginLabel.setEnabled(false);
         loginLabel.setBounds(881, 13, 180, 13);
@@ -879,7 +879,7 @@ public class Gui extends JFrame {
         this.setVisible(true);
     }
 
-    private void refreshGui() {
+    public void refreshGui() {
         // удалить старый frame
         this.dispose();
         // удаление иконки в трее

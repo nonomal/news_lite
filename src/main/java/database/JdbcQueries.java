@@ -211,11 +211,12 @@ public class JdbcQueries {
     // Настройки по ключу
     public String getSetting(String key) {
         String setting = null;
-        String query = "SELECT value FROM settings WHERE key = ?";
+        String query = "SELECT value FROM settings WHERE key = ? AND user_id = ?";
 
         try {
             PreparedStatement statement = connection.prepareStatement(query);
             statement.setString(1, key);
+            statement.setInt(2, Login.userId);
             ResultSet rs = statement.executeQuery();
 
             while (rs.next()) {
@@ -659,10 +660,11 @@ public class JdbcQueries {
     // Обновление настроек
     public void updateSettings(String key, String value) {
         try {
-            String query = "UPDATE settings SET value = ? WHERE key = ?";
+            String query = "UPDATE settings SET value = ? WHERE key = ? AND user_id = ?";
             PreparedStatement statement = connection.prepareStatement(query);
             statement.setString(1, value);
             statement.setString(2, key);
+            statement.setInt(3, Login.userId);
             statement.executeUpdate();
             statement.close();
         } catch (Exception e) {
@@ -827,7 +829,20 @@ public class JdbcQueries {
                 "INSERT INTO dates (type, description, day, month, year, is_active, user_id) " +
                         "VALUES ('Праздник', 'Международный женский день', 8, 3, -1, 1, ?)",
                 "INSERT INTO dates (type, description, day, month, year, is_active, user_id) " +
-                        "VALUES ('Праздник', 'День победы', 9, 5, 1945, 1, ?)"
+                        "VALUES ('Праздник', 'День победы', 9, 5, 1945, 1, ?)",
+                "INSERT INTO settings (key, value, user_id) VALUES ('email_to', '', ?)",
+                "INSERT INTO settings (key, value, user_id) VALUES ('email_from', '', ?)",
+                "INSERT INTO settings (key, value, user_id) VALUES ('from_pwd', '', ?)",
+                "INSERT INTO settings (key, value, user_id) VALUES ('transparency', '0.96', ?)",
+                "INSERT INTO settings (key, value, user_id) VALUES ('interval', '24h', ?)",
+                "INSERT INTO settings (key, value, user_id) VALUES ('onlyNewNews', 'true', ?)",
+                "INSERT INTO settings (key, value, user_id) VALUES ('autoSendMessage', 'false', ?)",
+                "INSERT INTO settings (key, value, user_id) VALUES ('font_size', '14', ?)",
+                "INSERT INTO settings (key, value, user_id) VALUES ('row_height', '28', ?)",
+                "INSERT INTO settings (key, value, user_id) VALUES ('font_color', '0,0,0', ?)",
+                "INSERT INTO settings (key, value, user_id) VALUES ('gui_color', '47,47,47', ?)",
+                "INSERT INTO settings (key, value, user_id) VALUES ('tables_color', '255,255,255', ?)",
+                "INSERT INTO settings (key, value, user_id) VALUES ('tables_alt_color', '237,237,237', ?)"
         };
 
         try {
