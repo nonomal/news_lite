@@ -60,7 +60,7 @@ public class ConsoleSearch {
                 sqlite.transaction("BEGIN TRANSACTION");
                 TableRow tableRow;
 
-                for (Source source : jdbcQueries.getSources("all", 0)) {
+                for (Source source : jdbcQueries.getSources("all")) {
                     try {
                         try {
                             if (isStop.get()) return;

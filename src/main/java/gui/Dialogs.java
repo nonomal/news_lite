@@ -1,7 +1,6 @@
 package gui;
 
 import database.JdbcQueries;
-import main.Login;
 import model.*;
 import utils.Common;
 
@@ -445,7 +444,7 @@ public class Dialogs extends JDialog implements KeyListener {
         JdbcQueries jdbcQueries = new JdbcQueries();
         switch (name) {
             case "smi": {
-                java.util.List<Source> sources = jdbcQueries.getSources("all", Login.userId);
+                java.util.List<Source> sources = jdbcQueries.getSources("all");
                 for (Source s : sources) {
                     Dialogs.model.addRow(new Object[]{++id, s.getSource(), s.getIsActive()});
                 }
@@ -461,7 +460,7 @@ public class Dialogs extends JDialog implements KeyListener {
                 break;
             }
             case "title-excl": {
-                java.util.List<Excluded> excludes = jdbcQueries.getExcludedTitlesWords(Login.userId);
+                java.util.List<Excluded> excludes = jdbcQueries.getExcludedTitlesWords();
 
                 for (Excluded excluded : excludes) {
                     Object[] row = new Object[]{++id, excluded.getWord()};

@@ -14,8 +14,6 @@ import java.util.List;
 
 public class JdbcQueries {
     private final Connection connection = SQLite.connection;
-    //private String user = Main.username;
-    private final int userId = Login.userId;
 
     /* INSERT */
     // Вставка ключевого слова
@@ -24,7 +22,7 @@ public class JdbcQueries {
             String query = "INSERT INTO keywords(word, user_id) VALUES (?, ?)";
             PreparedStatement statement = connection.prepareStatement(query);
             statement.setString(1, word);
-            statement.setInt(2, userId);
+            statement.setInt(2, Login.userId);
             statement.executeUpdate();
             statement.close();
 
@@ -42,7 +40,7 @@ public class JdbcQueries {
                 PreparedStatement statement = connection.prepareStatement(query);
                 statement.setString(1, source);
                 statement.setString(2, link);
-                statement.setInt(3, userId);
+                statement.setInt(3, Login.userId);
                 statement.executeUpdate();
                 statement.close();
 
@@ -61,7 +59,7 @@ public class JdbcQueries {
             String query = "INSERT INTO exclude(word, user_id) VALUES (?, ?)";
             PreparedStatement statement = connection.prepareStatement(query);
             statement.setString(1, word);
-            statement.setInt(2, userId);
+            statement.setInt(2, Login.userId);
             statement.executeUpdate();
             statement.close();
 
@@ -78,7 +76,7 @@ public class JdbcQueries {
             PreparedStatement statement = connection.prepareStatement(query);
             statement.setString(1, title);
             statement.setString(2, link);
-            statement.setInt(3, userId);
+            statement.setInt(3, Login.userId);
             statement.executeUpdate();
             statement.close();
 
@@ -130,7 +128,7 @@ public class JdbcQueries {
                 String query = "INSERT INTO excluded_headlines(word, user_id) VALUES (?, ?)";
                 PreparedStatement statement = connection.prepareStatement(query);
                 statement.setString(1, word);
-                statement.setInt(2, userId);
+                statement.setInt(2, Login.userId);
                 statement.executeUpdate();
                 statement.close();
 
@@ -152,7 +150,7 @@ public class JdbcQueries {
             statement.setInt(3, day);
             statement.setInt(4, month);
             statement.setInt(5, year);
-            statement.setInt(6, userId);
+            statement.setInt(6, Login.userId);
             statement.executeUpdate();
             statement.close();
 
@@ -177,7 +175,7 @@ public class JdbcQueries {
 
     /* SELECT */
     // Источники новостей
-    public List<Source> getSources(String type, int id) {
+    public List<Source> getSources(String type) {
         List<Source> sources = new ArrayList<>();
         try {
             String query = "SELECT id, source, link, is_active, position FROM rss_list " +
@@ -190,7 +188,7 @@ public class JdbcQueries {
             }
 
             PreparedStatement statement = connection.prepareStatement(query);
-            statement.setInt(1, id);
+            statement.setInt(1, Login.userId);
 
             ResultSet rs = statement.executeQuery();
             while (rs.next()) {
@@ -237,7 +235,7 @@ public class JdbcQueries {
         try {
             String query = "SELECT id, word FROM exclude WHERE user_id = ? ORDER BY word";
             PreparedStatement statement = connection.prepareStatement(query);
-            statement.setInt(1, userId);
+            statement.setInt(1, Login.userId);
 
             ResultSet rs = statement.executeQuery();
             while (rs.next()) {
@@ -267,7 +265,7 @@ public class JdbcQueries {
             }
 
             PreparedStatement statement = connection.prepareStatement(query);
-            statement.setInt(1, userId);
+            statement.setInt(1, Login.userId);
 
             ResultSet rs = statement.executeQuery();
             while (rs.next()) {
@@ -289,12 +287,12 @@ public class JdbcQueries {
     }
 
     // Список исключённые из поиска слов
-    public List<Excluded> getExcludedTitlesWords(int id) {
+    public List<Excluded> getExcludedTitlesWords() {
         List<Excluded> excludedWords = new ArrayList<>();
         try {
             String query = "SELECT id, word FROM excluded_headlines WHERE user_id = ? ORDER BY word";
             PreparedStatement statement = connection.prepareStatement(query);
-            statement.setInt(1, id);
+            statement.setInt(1, Login.userId);
 
             ResultSet rs = statement.executeQuery();
             while (rs.next()) {
@@ -337,7 +335,7 @@ public class JdbcQueries {
                         " and user_id = ? ORDER BY word";
             }
             PreparedStatement statement = connection.prepareStatement(query);
-            statement.setInt(1, userId);
+            statement.setInt(1, Login.userId);
 
             ResultSet rs = statement.executeQuery();
             while (rs.next()) {
@@ -363,7 +361,7 @@ public class JdbcQueries {
                     "WHERE word = ? AND user_id = ?)";
             PreparedStatement statement = connection.prepareStatement(query);
             statement.setString(1, word);
-            statement.setInt(2, userId);
+            statement.setInt(2, Login.userId);
 
             ResultSet rs = statement.executeQuery();
             while (rs.next()) {
@@ -383,7 +381,7 @@ public class JdbcQueries {
         try {
             String query = "SELECT title, link, add_date FROM favorites WHERE user_id = ? ORDER BY add_date";
             PreparedStatement statement = connection.prepareStatement(query);
-            statement.setInt(1, userId);
+            statement.setInt(1, Login.userId);
 
             ResultSet rs = statement.executeQuery();
             while (rs.next()) {
@@ -543,7 +541,7 @@ public class JdbcQueries {
 
             PreparedStatement statement = connection.prepareStatement(query);
             statement.setString(1, item);
-            statement.setInt(2, userId);
+            statement.setInt(2, Login.userId);
 
             statement.executeUpdate();
             statement.close();
@@ -685,7 +683,7 @@ public class JdbcQueries {
             PreparedStatement statement = connection.prepareStatement(query);
             statement.setBoolean(1, check);
             statement.setString(2, name);
-            statement.setInt(3, userId);
+            statement.setInt(3, Login.userId);
             statement.executeUpdate();
             statement.close();
         } catch (Exception e) {
@@ -700,7 +698,7 @@ public class JdbcQueries {
             statement.setBoolean(1, check);
             statement.setString(2, type);
             statement.setString(3, description);
-            statement.setInt(4, userId);
+            statement.setInt(4, Login.userId);
             statement.executeUpdate();
             statement.close();
         } catch (Exception e) {
