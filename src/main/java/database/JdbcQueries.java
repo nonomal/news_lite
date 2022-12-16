@@ -57,9 +57,10 @@ public class JdbcQueries {
     // Вставка слова для исключения из анализа частоты употребления слов
     public void addExcludedWord(String word) {
         try {
-            String query = "INSERT INTO exclude(word) VALUES (?)";
+            String query = "INSERT INTO exclude(word, user_id) VALUES (?, ?)";
             PreparedStatement statement = connection.prepareStatement(query);
             statement.setString(1, word);
+            statement.setInt(2, userId);
             statement.executeUpdate();
             statement.close();
 
@@ -231,8 +232,9 @@ public class JdbcQueries {
     public List<Excluded> getExcludedWords() {
         List<Excluded> excludedWords = new ArrayList<>();
         try {
-            String query = "SELECT id, word FROM exclude ORDER BY word";
+            String query = "SELECT id, word FROM exclude WHERE user_id = ? ORDER BY word";
             PreparedStatement statement = connection.prepareStatement(query);
+            statement.setInt(1, userId);
 
             ResultSet rs = statement.executeQuery();
             while (rs.next()) {
@@ -506,7 +508,7 @@ public class JdbcQueries {
             if (activeWindow == 2) {
                 query = "DELETE FROM rss_list WHERE source = ?";
             } else if (activeWindow == 3) {
-                query = "DELETE FROM exclude WHERE word = ?";
+                query = "DELETE FROM exclude WHERE word = ? and user_id = ?";
             } else if (activeWindow == 4) {
                 query = "DELETE FROM excluded_headlines WHERE word = ? and user_id = ?";
             } else if (activeWindow == 5) {
@@ -519,7 +521,7 @@ public class JdbcQueries {
 
             PreparedStatement statement = connection.prepareStatement(query);
             statement.setString(1, item);
-            if (activeWindow == 4 || activeWindow == 5 | activeWindow == 7) {
+            if (activeWindow == 3 ||activeWindow == 4 || activeWindow == 5 | activeWindow == 7) {
                 statement.setInt(2, userId);
             }
             statement.executeUpdate();

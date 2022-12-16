@@ -37,10 +37,11 @@ public class Search {
         isStop = new AtomicBoolean(false);
         isSearchNow = new AtomicBoolean(false);
         isSearchFinished = new AtomicBoolean(false);
-        excludedWordsFromAnalysis = jdbcQueries.getExcludedWordsFromAnalysis();
     }
 
     public void mainSearch(String searchType) {
+        excludedWordsFromAnalysis = jdbcQueries.getExcludedWordsFromAnalysis();
+
         if (!isSearchNow.get()) {
             boolean isWord = searchType.equals("word");
             boolean isWords = searchType.equals("words");
