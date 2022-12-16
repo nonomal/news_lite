@@ -38,10 +38,11 @@ public class JdbcQueries {
     public void addNewSource(String source, String link) {
         if (link.contains("/") && link.contains(".")) {
             try {
-                String query = "INSERT INTO rss_list(source, link, is_active) VALUES (?, ?, 1)";
+                String query = "INSERT INTO rss_list(source, link, is_active, user_id) VALUES (?, ?, 1, ?)";
                 PreparedStatement statement = connection.prepareStatement(query);
                 statement.setString(1, source);
                 statement.setString(2, link);
+                statement.setInt(3, userId);
                 statement.executeUpdate();
                 statement.close();
 
@@ -178,19 +179,20 @@ public class JdbcQueries {
     // Источники новостей
     public List<Source> getSources(String type) {
         List<Source> sources = new ArrayList<>();
-        String query = "SELECT id, source, link, is_active, position FROM rss_list " +
-                "WHERE is_active = 1 " +
-                "ORDER BY position";
-
-        if (type.equals("all")) {
-            query = "SELECT id, source, link, is_active, position FROM rss_list " +
-                    "ORDER BY is_active DESC, id";
-        }
-
         try {
-            PreparedStatement statement = connection.prepareStatement(query);
-            ResultSet rs = statement.executeQuery();
+            String query = "SELECT id, source, link, is_active, position FROM rss_list " +
+                    "WHERE is_active = 1 AND user_id = ? " +
+                    "ORDER BY position";
 
+            if (type.equals("all")) {
+                query = "SELECT id, source, link, is_active, position FROM rss_list WHERE user_id = ? " +
+                        "ORDER BY is_active DESC, id";
+            }
+
+            PreparedStatement statement = connection.prepareStatement(query);
+            statement.setInt(1, userId);
+
+            ResultSet rs = statement.executeQuery();
             while (rs.next()) {
                 sources.add(Source.builder()
                         .id(rs.getInt("id"))
@@ -508,7 +510,7 @@ public class JdbcQueries {
         try {
             String query = null;
             if (activeWindow == 2) {
-                query = "DELETE FROM rss_list WHERE source = ?";
+                query = "DELETE FROM rss_list WHERE source = ? and user_id = ?";
             } else if (activeWindow == 3) {
                 query = "DELETE FROM exclude WHERE word = ? and user_id = ?";
             } else if (activeWindow == 4) {
@@ -523,9 +525,8 @@ public class JdbcQueries {
 
             PreparedStatement statement = connection.prepareStatement(query);
             statement.setString(1, item);
-            if (activeWindow == 3 ||activeWindow == 4 || activeWindow == 5 || activeWindow == 6  || activeWindow == 7) {
-                statement.setInt(2, userId);
-            }
+            statement.setInt(2, userId);
+
             statement.executeUpdate();
             statement.close();
 
@@ -645,7 +646,7 @@ public class JdbcQueries {
         String query = null;
         try {
             if (type.equals("rss")) {
-                query = "UPDATE rss_list SET is_active = ? WHERE source = ?";
+                query = "UPDATE rss_list SET is_active = ? WHERE source = ? AND user_id = ?";
             } else if (type.equals("keywords")) {
                 query = "UPDATE keywords SET is_active = ? WHERE word = ? and user_id = ?";
             }
@@ -653,9 +654,7 @@ public class JdbcQueries {
             PreparedStatement statement = connection.prepareStatement(query);
             statement.setBoolean(1, check);
             statement.setString(2, name);
-            if (type.equals("keywords")) {
-                statement.setInt(3, userId);
-            }
+            statement.setInt(3, userId);
             statement.executeUpdate();
             statement.close();
         } catch (Exception e) {
