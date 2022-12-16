@@ -289,12 +289,12 @@ public class JdbcQueries {
     }
 
     // Список исключённые из поиска слов
-    public List<Excluded> getExcludedTitlesWords() {
+    public List<Excluded> getExcludedTitlesWords(int id) {
         List<Excluded> excludedWords = new ArrayList<>();
         try {
             String query = "SELECT id, word FROM excluded_headlines WHERE user_id = ? ORDER BY word";
             PreparedStatement statement = connection.prepareStatement(query);
-            statement.setInt(1, userId);
+            statement.setInt(1, id);
 
             ResultSet rs = statement.executeQuery();
             while (rs.next()) {

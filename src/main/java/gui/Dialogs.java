@@ -461,7 +461,7 @@ public class Dialogs extends JDialog implements KeyListener {
                 break;
             }
             case "title-excl": {
-                java.util.List<Excluded> excludes = jdbcQueries.getExcludedTitlesWords();
+                java.util.List<Excluded> excludes = jdbcQueries.getExcludedTitlesWords(Login.userId);
 
                 for (Excluded excluded : excludes) {
                     Object[] row = new Object[]{++id, excluded.getWord()};
