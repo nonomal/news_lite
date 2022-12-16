@@ -47,7 +47,7 @@ public class Main {
                     }
                 } else {
                     JOptionPane.showMessageDialog(null, "Incorrect password");
-                    showLoginDialog();
+                    login(args);
                 }
             } else {
                 JOptionPane.showMessageDialog(null, "User not found, set to default settings");
