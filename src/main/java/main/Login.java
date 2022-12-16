@@ -118,7 +118,9 @@ public class Login {
                 Icons.LOGO_ICON, menu, menu[2]);
 
         options[0] = String.valueOf(option);
-        options[1] = usersCombobox.getSelectedItem().toString();
+        if (usersCombobox.getSelectedItem() != null) {
+            options[1] = usersCombobox.getSelectedItem().toString();
+        }
         options[2] = Common.getHash(new String(passwordField.getPassword()));
 
         return options;
