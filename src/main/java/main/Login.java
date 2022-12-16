@@ -37,12 +37,13 @@ public class Login {
                     Icons.LIST_BUTTON_ICON, menu, menu[0]);
 
             String pwd = Common.getHash(new String(passwordField.getPassword()));
-            if (action == 0 && user.getText().length() >= 3) {
+            int length = user.getText().length();
+            if (action == 0 && length >= 3 && length <= 10) {
                 jdbcQueries.addUser(user.getText(), pwd);
                 login();
                 jdbcQueries.initUser(userId);
-            } else if (action == 0 && user.getText().length() < 3) {
-                JOptionPane.showMessageDialog(null, "The minimum username length is 3 chars");
+            } else if (action == 0 && (user.getText().length() < 3 || user.getText().length() > 10)) {
+                JOptionPane.showMessageDialog(null, "The username length between 3 and 10 chars");
                 login();
             } else {
                 login();
