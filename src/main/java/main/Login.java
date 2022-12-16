@@ -51,6 +51,7 @@ public class Login {
         } else if (option == 1) {
             username = "default";
             userId = 0;
+            Gui.loginLabel.setText("user: default");
             // ok
         } else if (option == 2) {
             username = loginParams[1];
@@ -58,6 +59,7 @@ public class Login {
                 userId = jdbcQueries.getUserIdByUsername(username);
                 String password = loginParams[2];
                 String userHashPassword = jdbcQueries.getUserHashPassword(username);
+                Gui.loginLabel.setText("user: " + username);
 
                 // Password check
                 if (!password.equals(userHashPassword)) {

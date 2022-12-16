@@ -63,7 +63,7 @@ public class Gui extends JFrame {
     public static JTextArea consoleTextArea;
     public static JComboBox<String> newsInterval;
     public static JLabel labelSum, lblLogSourceSqlite, appInfo, excludedTitlesLabel, favoritesLabel,
-            excludedLabel, datesLabel;
+            excludedLabel, datesLabel, loginLabel;
     public static JButton searchBtnTop, searchBtnBottom, stopBtnTop, stopBtnBottom, sendCurrentResultsToEmail, smiBtn,
             anotherBtn, btnShowKeywordsList;
     public static Checkbox autoUpdateNewsTop, autoUpdateNewsBottom, autoSendMessage, onlyNewNews;
@@ -858,6 +858,14 @@ public class Gui extends JFrame {
 
         showWebPagesIcons();
         showRightClickMenu();
+
+        //Input keyword
+        loginLabel = new JLabel();
+        loginLabel.setBounds(1100, 502, 180, 13);
+        loginLabel.setFont(GUI_FONT);
+        loginLabel.setForeground(new Color(255, 255, 153));
+        loginLabel.setBackground(new Color(240, 255, 240));
+        getContentPane().add(loginLabel);
 
         this.setVisible(true);
     }
