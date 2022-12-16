@@ -1,6 +1,7 @@
 package database;
 
 import gui.Gui;
+import main.Main;
 import model.*;
 import utils.Common;
 
@@ -13,14 +14,17 @@ import java.util.List;
 
 public class JdbcQueries {
     private final Connection connection = SQLite.connection;
+    //private String user = Main.username;
+    private final int userId = Main.userId;
 
     /* INSERT */
     // Вставка ключевого слова
     public void addKeyword(String word) {
         try {
-            String query = "INSERT INTO keywords(word) VALUES (?)";
+            String query = "INSERT INTO keywords(word, user_id) VALUES (?, ?)";
             PreparedStatement statement = connection.prepareStatement(query);
             statement.setString(1, word);
+            statement.setInt(2, userId);
             statement.executeUpdate();
             statement.close();
 
@@ -298,12 +302,14 @@ public class JdbcQueries {
     public List<Keyword> getKeywords(int isActive) {
         List<Keyword> keywords = new ArrayList<>();
         try {
-            String query = "SELECT word, is_active FROM keywords ORDER BY is_active DESC, word";
+            String query = "SELECT word, is_active FROM keywords WHERE user_id = ? ORDER BY is_active DESC, word";
 
             if (isActive == 0 || isActive == 1) {
-                query = "SELECT word, is_active FROM keywords WHERE is_active = " + isActive + " ORDER BY word";
+                query = "SELECT word, is_active FROM keywords WHERE is_active = " + isActive +
+                        " and user_id = ? ORDER BY word";
             }
             PreparedStatement statement = connection.prepareStatement(query);
+            statement.setInt(1, userId);
 
             ResultSet rs = statement.executeQuery();
             while (rs.next()) {
@@ -325,9 +331,11 @@ public class JdbcQueries {
     public boolean isKeywordExists(String word) {
         int isExists = 0;
         try {
-            String query = "SELECT MAX(1) FROM keywords WHERE exists (select word from keywords where word = ?)";
+            String query = "SELECT MAX(1) FROM keywords WHERE exists (SELECT word FROM keywords " +
+                    "WHERE word = ? AND user_id = ?)";
             PreparedStatement statement = connection.prepareStatement(query);
             statement.setString(1, word);
+            statement.setInt(2, userId);
 
             ResultSet rs = statement.executeQuery();
             while (rs.next()) {
@@ -497,7 +505,7 @@ public class JdbcQueries {
             } else if (activeWindow == 4) {
                 query = "DELETE FROM excluded_headlines WHERE word = ?";
             } else if (activeWindow == 5) {
-                query = "DELETE FROM keywords WHERE word = ?";
+                query = "DELETE FROM keywords WHERE word = ? AND user_id = ?";
             } else if (activeWindow == 6) {
                 query = "DELETE FROM favorites WHERE title = ?";
             } else if (activeWindow == 7) {
@@ -506,6 +514,9 @@ public class JdbcQueries {
 
             PreparedStatement statement = connection.prepareStatement(query);
             statement.setString(1, item);
+            if (activeWindow == 5) {
+                statement.setInt(2, userId);
+            }
             statement.executeUpdate();
             statement.close();
 
@@ -565,6 +576,28 @@ public class JdbcQueries {
         return isExists == 1;
     }
 
+    // отсеивание ранее найденных заголовков при включённом чекбоксе
+    public boolean isUserExists(String username) {
+        int isExists = 0;
+        try {
+            String query = "SELECT 1 FROM users " +
+                    "WHERE EXISTS (SELECT username FROM users t WHERE username = ?)";
+            PreparedStatement statement = connection.prepareStatement(query);
+            statement.setString(1, username);
+
+            ResultSet rs = statement.executeQuery();
+            while (rs.next()) {
+                isExists = rs.getInt(1);
+            }
+            rs.close();
+            statement.close();
+
+        } catch (Exception e) {
+            Common.console("isUserExists error: " + e.getMessage());
+        }
+        return isExists == 1;
+    }
+
     // новостей в архиве всего
     public int archiveNewsCount() {
         int countNews = 0;
@@ -591,12 +624,15 @@ public class JdbcQueries {
             if (type.equals("rss")) {
                 query = "UPDATE rss_list SET is_active = ? WHERE source = ?";
             } else if (type.equals("keywords")) {
-                query = "UPDATE keywords SET is_active = ? WHERE word = ?";
+                query = "UPDATE keywords SET is_active = ? WHERE word = ? and user_id = ?";
             }
 
             PreparedStatement statement = connection.prepareStatement(query);
             statement.setBoolean(1, check);
             statement.setString(2, name);
+            if (type.equals("keywords")) {
+                statement.setInt(3, userId);
+            }
             statement.executeUpdate();
             statement.close();
         } catch (Exception e) {
@@ -617,4 +653,42 @@ public class JdbcQueries {
             Common.console("updateIsActiveStatus error: " + e.getMessage());
         }
     }
+
+    public int getUserIdByUsername(String username) {
+        int id = 0;
+        try {
+            String query = "SELECT id FROM users WHERE username = ?";
+            PreparedStatement statement = connection.prepareStatement(query);
+            statement.setString(1, username);
+
+            ResultSet resultSet = statement.executeQuery();
+            resultSet.next();
+            id = resultSet.getInt("id");
+
+            statement.close();
+        } catch (Exception e) {
+            Common.console("getUserHashPassword error: " + e.getMessage());
+        }
+        return id;
+    }
+
+    public String getUserHashPassword(String username) {
+       String password = "";
+        try {
+            String query = "SELECT password FROM users WHERE username = ?";
+            PreparedStatement statement = connection.prepareStatement(query);
+            statement.setString(1, username);
+
+            ResultSet resultSet = statement.executeQuery();
+            resultSet.next();
+            password = resultSet.getString("password");
+
+            statement.close();
+        } catch (Exception e) {
+            Common.console("getUserHashPassword error: " + e.getMessage());
+        }
+        return password;
+    }
+
+
 }

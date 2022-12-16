@@ -225,8 +225,10 @@ public class Search {
                         .sorted(Collections.reverseOrder())
                         .collect(Collectors.toList());
 
-                int i = 1;
+                // delete animation row
                 Gui.model.removeRow(0);
+
+                int i = 1;
                 for (TableRow row : list) {
                     Gui.model.addRow(new Object[]{
                             i++,
@@ -273,8 +275,6 @@ public class Search {
                 if (Gui.autoSendMessage.getState() && (Gui.model.getRowCount() > 0) && headlinesList.size() > 0) {
                     Gui.sendCurrentResultsToEmail.doClick();
                 }
-
-                //jdbcQueries.removeDuplicates();
 
                 Gui.WAS_CLICK_IN_TABLE_FOR_ANALYSIS.set(false);
 
