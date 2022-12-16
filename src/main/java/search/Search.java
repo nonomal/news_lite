@@ -75,7 +75,6 @@ public class Search {
             try {
                 TableRow tableRow;
                 List<Excluded> excludedTitles = jdbcQueries.getExcludedTitlesWords(Login.userId);
-                System.out.println(excludedTitles.size());
                 List<Source> sourcesList = jdbcQueries.getSources("active", Login.userId);
                 sqLite.transaction("BEGIN TRANSACTION");
 
