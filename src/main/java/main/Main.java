@@ -39,8 +39,7 @@ public class Main {
 
         int option = Integer.parseInt(loginParams[0]);
 
-        if (option == 0) {
-
+        if (option == 0) { //create user
             JPanel panel = new JPanel();
             panel.setLayout(new GridLayout(2, 2, 0, 5));
             JLabel userLabel = new JLabel("Username");
@@ -57,7 +56,7 @@ public class Main {
                     JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE,
                     Icons.LOGO_ICON, menu, menu[0]);
 
-            String pwd = Common.getHash(new String(passwordField.getPassword()).intern());
+            String pwd = Common.getHash(new String(passwordField.getPassword()));
             if (action == 0 && user.getText().length() >= 3) {
                 jdbcQueries.addUser(user.getText(), pwd);
                 login();

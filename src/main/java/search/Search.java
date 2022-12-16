@@ -5,6 +5,7 @@ import database.JdbcQueries;
 import database.SQLite;
 import gui.Gui;
 import gui.buttons.Icons;
+import main.Main;
 import model.Excluded;
 import model.Keyword;
 import model.Source;
@@ -74,7 +75,7 @@ public class Search {
             try {
                 TableRow tableRow;
                 List<Excluded> excludedTitles = jdbcQueries.getExcludedTitlesWords();
-                List<Source> sourcesList = jdbcQueries.getSources("active");
+                List<Source> sourcesList = jdbcQueries.getSources("active", Main.userId);
                 sqLite.transaction("BEGIN TRANSACTION");
 
                 // search animation

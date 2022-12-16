@@ -6,6 +6,7 @@ import database.SQLite;
 import email.EmailManager;
 import exception.IncorrectEmail;
 import gui.Gui;
+import main.Main;
 import model.Source;
 import model.TableRow;
 import utils.Common;
@@ -60,7 +61,7 @@ public class ConsoleSearch {
                 sqlite.transaction("BEGIN TRANSACTION");
                 TableRow tableRow;
 
-                for (Source source : jdbcQueries.getSources("active")) {
+                for (Source source : jdbcQueries.getSources("active", Main.userId)) {
                     try {
                         try {
                             if (isStop.get()) return;

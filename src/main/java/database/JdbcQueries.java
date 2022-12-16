@@ -177,7 +177,7 @@ public class JdbcQueries {
 
     /* SELECT */
     // Источники новостей
-    public List<Source> getSources(String type) {
+    public List<Source> getSources(String type, int id) {
         List<Source> sources = new ArrayList<>();
         try {
             String query = "SELECT id, source, link, is_active, position FROM rss_list " +
@@ -190,7 +190,8 @@ public class JdbcQueries {
             }
 
             PreparedStatement statement = connection.prepareStatement(query);
-            statement.setInt(1, userId);
+            System.out.println(id);
+            statement.setInt(1, id);
 
             ResultSet rs = statement.executeQuery();
             while (rs.next()) {
