@@ -12,7 +12,7 @@ public class Login {
     public static int userId;
     public static String username;
 
-    protected void login() {
+    public void login() {
         JdbcQueries jdbcQueries = new JdbcQueries();
         String[] loginParams = showLoginDialog();
 

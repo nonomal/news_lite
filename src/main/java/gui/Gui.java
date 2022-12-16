@@ -6,6 +6,7 @@ import email.EmailManager;
 import gui.buttons.Icons;
 import gui.buttons.SetButton;
 import gui.checkboxes.SetCheckbox;
+import main.Login;
 import search.Search;
 import utils.*;
 
@@ -859,11 +860,21 @@ public class Gui extends JFrame {
 
         //Input keyword
         loginLabel = new JLabel();
+        loginLabel.setEnabled(false);
         loginLabel.setBounds(881, 13, 180, 13);
         loginLabel.setFont(GUI_FONT);
         loginLabel.setForeground(new Color(255, 255, 153));
         loginLabel.setBackground(new Color(240, 255, 240));
         getContentPane().add(loginLabel);
+        loginLabel.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                if (e.getButton() == MouseEvent.BUTTON1) {
+                    new Login().login();
+                }
+            }
+        });
+        animation(loginLabel);
 
         this.setVisible(true);
     }
@@ -1107,6 +1118,24 @@ public class Gui extends JFrame {
             public void mouseClicked(MouseEvent e) {
                 if (e.getButton() == MouseEvent.BUTTON1) {
                     openPage(url);
+                }
+            }
+        });
+    }
+
+    private void animation(JLabel label) {
+        label.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                if (!label.isEnabled()) {
+                    label.setEnabled(true);
+                }
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+                if (label.isEnabled()) {
+                    label.setEnabled(false);
                 }
             }
         });
