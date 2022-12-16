@@ -190,7 +190,6 @@ public class JdbcQueries {
             }
 
             PreparedStatement statement = connection.prepareStatement(query);
-            System.out.println(id);
             statement.setInt(1, id);
 
             ResultSet rs = statement.executeQuery();
@@ -712,6 +711,67 @@ public class JdbcQueries {
             Common.console("getUserHashPassword error: " + e.getMessage());
         }
         return password;
+    }
+
+    public void initUser(int id) {
+        System.out.println(id);
+        String[] queries = {
+                "INSERT INTO rss_list (source, link, is_active, position, user_id) VALUES ('Mail.ru', 'https://news.mail.ru/rss/90/', 1, 1, ?)",
+                "INSERT INTO rss_list (source, link, is_active, position, user_id) VALUES ('Эксперт', 'https://expert.ru/doc-list/rss/', 1, 2, ?)",
+                "INSERT INTO rss_list (source, link, is_active, position, user_id) VALUES ('Наука и жизнь', 'https://www.nkj.ru/rss/', 1, 9, ?)",
+                "INSERT INTO rss_list (source, link, is_active, position, user_id) VALUES ('C-Main', 'https://cnews.ru/inc/rss/news.xml', 1, 10, ?)",
+                "INSERT INTO rss_list (source, link, is_active, position, user_id) VALUES ('Финам', 'https://www.finam.ru/analysis/conews/rsspoint', 0, 55, ?)",
+                "INSERT INTO keywords (word, is_active, user_id) VALUES ('ипотек', 1, ?)",
+                "INSERT INTO keywords (word, is_active, user_id) VALUES ('выплат', 1, ?)",
+                "INSERT INTO keywords (word, is_active, user_id) VALUES ('бесплатн', 1, ?)",
+                "INSERT INTO keywords (word, is_active, user_id) VALUES ('льгот', 1, ?)",
+                "INSERT INTO excluded_headlines (word, user_id) VALUES ('covid', ?)",
+                "INSERT INTO excluded_headlines (word, user_id) VALUES ('коронав', ?)",
+                "INSERT INTO exclude (word, user_id) VALUES ('января', ?)",
+                "INSERT INTO exclude (word, user_id) VALUES ('февраля', ?)",
+                "INSERT INTO exclude (word, user_id) VALUES ('марта', ?)",
+                "INSERT INTO exclude (word, user_id) VALUES ('апреля', ?)",
+                "INSERT INTO exclude (word, user_id) VALUES ('мая', ?)",
+                "INSERT INTO exclude (word, user_id) VALUES ('июня', ?)",
+                "INSERT INTO exclude (word, user_id) VALUES ('июля', ?)",
+                "INSERT INTO exclude (word, user_id) VALUES ('августа', ?)",
+                "INSERT INTO exclude (word, user_id) VALUES ('сентября', ?)",
+                "INSERT INTO exclude (word, user_id) VALUES ('октября', ?)",
+                "INSERT INTO exclude (word, user_id) VALUES ('ноября', ?)",
+                "INSERT INTO exclude (word, user_id) VALUES ('декабря', ?)",
+                "INSERT INTO exclude (word, user_id) VALUES ('год', ?)",
+                "INSERT INTO exclude (word, user_id) VALUES ('года', ?)",
+                "INSERT INTO exclude (word, user_id) VALUES ('году', ?)",
+                "INSERT INTO exclude (word, user_id) VALUES ('изза', ?)",
+                "INSERT INTO exclude (word, user_id) VALUES ('r', ?)",
+                "INSERT INTO exclude (word, user_id) VALUES ('pr', ?)",
+                "INSERT INTO exclude (word, user_id) VALUES ('это', ?)",
+                "INSERT INTO exclude (word, user_id) VALUES ('этот', ?)",
+                "INSERT INTO exclude (word, user_id) VALUES ('этой', ?)",
+                "INSERT INTO exclude (word, user_id) VALUES ('этого', ?)",
+                "INSERT INTO exclude (word, user_id) VALUES ('котором', ?)",
+                "INSERT INTO exclude (word, user_id) VALUES ('которого', ?)",
+                "INSERT INTO exclude (word, user_id) VALUES ('месяц', ?)",
+                "INSERT INTO exclude (word, user_id) VALUES ('месяца', ?)",
+                "INSERT INTO exclude (word, user_id) VALUES ('днем', ?)",
+                "INSERT INTO exclude (word, user_id) VALUES ('почти', ?)",
+                "INSERT INTO exclude (word, user_id) VALUES ('число', ?)",
+                "INSERT INTO exclude (word, user_id) VALUES ('чего', ?)",
+                "INSERT INTO exclude (word, user_id) VALUES ('й', ?)"
+        };
+
+        try {
+            PreparedStatement statement;
+
+            for (String query : queries) {
+                statement = connection.prepareStatement(query);
+                statement.setInt(1, id);
+                statement.executeUpdate();
+            }
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
 }

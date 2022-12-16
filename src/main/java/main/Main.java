@@ -60,6 +60,7 @@ public class Main {
             if (action == 0 && user.getText().length() >= 3) {
                 jdbcQueries.addUser(user.getText(), pwd);
                 login();
+                jdbcQueries.initUser(userId);
             } else if (action == 0 && user.getText().length() < 3) {
                 JOptionPane.showMessageDialog(null, "The minimum username length is 3 chars");
                 login();
