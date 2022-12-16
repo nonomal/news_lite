@@ -73,10 +73,11 @@ public class JdbcQueries {
     // Вставка избранных заголовков
     public void addFavoriteTitle(String title, String link) {
         try {
-            String query = "INSERT INTO favorites(title, link) VALUES (?, ?)";
+            String query = "INSERT INTO favorites(title, link, user_id) VALUES (?, ?, ?)";
             PreparedStatement statement = connection.prepareStatement(query);
             statement.setString(1, title);
             statement.setString(2, link);
+            statement.setInt(3, userId);
             statement.executeUpdate();
             statement.close();
 
@@ -360,8 +361,9 @@ public class JdbcQueries {
     public List<Favorite> getFavorites() {
         List<Favorite> favorites = new ArrayList<>();
         try {
-            String query = "SELECT title, link, add_date FROM favorites ORDER BY add_date";
+            String query = "SELECT title, link, add_date FROM favorites WHERE user_id = ? ORDER BY add_date";
             PreparedStatement statement = connection.prepareStatement(query);
+            statement.setInt(1, userId);
 
             ResultSet rs = statement.executeQuery();
             while (rs.next()) {
@@ -514,14 +516,14 @@ public class JdbcQueries {
             } else if (activeWindow == 5) {
                 query = "DELETE FROM keywords WHERE word = ? AND user_id = ?";
             } else if (activeWindow == 6) {
-                query = "DELETE FROM favorites WHERE title = ?";
+                query = "DELETE FROM favorites WHERE title = ? AND user_id = ?";
             } else if (activeWindow == 7) {
                 query = "DELETE FROM dates WHERE type||' '||description = ? AND main.dates.user_id = ?";
             }
 
             PreparedStatement statement = connection.prepareStatement(query);
             statement.setString(1, item);
-            if (activeWindow == 3 ||activeWindow == 4 || activeWindow == 5 | activeWindow == 7) {
+            if (activeWindow == 3 ||activeWindow == 4 || activeWindow == 5 || activeWindow == 6  || activeWindow == 7) {
                 statement.setInt(2, userId);
             }
             statement.executeUpdate();
