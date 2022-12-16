@@ -745,7 +745,6 @@ public class JdbcQueries {
     }
 
     public void initUser(int id) {
-        System.out.println(id);
         String[] queries = {
                 "INSERT INTO rss_list (source, link, is_active, position, user_id) " +
                         "VALUES ('Mail.ru', 'https://news.mail.ru/rss/90/', 1, 1, ?)",
