@@ -36,6 +36,7 @@ public class Main {
     private static void login() {
         JdbcQueries jdbcQueries = new JdbcQueries();
         String[] loginParams = showLoginDialog();
+
         int option = Integer.parseInt(loginParams[0]);
 
         if (option == 0) { //create user
@@ -98,16 +99,18 @@ public class Main {
      login[2] = password
     */
     private static String[] showLoginDialog() {
+        JdbcQueries jdbcQueries = new JdbcQueries();
         String[] options = new String[3];
 
         JPanel panel = new JPanel();
         panel.setLayout(new GridLayout(2, 2, 0, 5));
         JLabel userLabel = new JLabel("Username");
-        JTextField user = new JTextField("avandy", 3); // avandy default
+        JComboBox<Object> usersCombobox = new JComboBox<>(jdbcQueries.getAllUsers().toArray());
         JLabel passwordLabel = new JLabel("Password");
         JPasswordField passwordField = new JPasswordField(3);
+
         panel.add(userLabel);
-        panel.add(user);
+        panel.add(usersCombobox);
         panel.add(passwordLabel);
         panel.add(passwordField);
 
@@ -117,7 +120,7 @@ public class Main {
                 Icons.LOGO_ICON, menu, menu[2]);
 
         options[0] = String.valueOf(option);
-        options[1] = user.getText();
+        options[1] = usersCombobox.getSelectedItem().toString();
         options[2] = Common.getHash(new String(passwordField.getPassword()));
 
         return options;

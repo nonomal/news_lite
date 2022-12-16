@@ -308,6 +308,24 @@ public class JdbcQueries {
         return excludedWords;
     }
 
+    public List<String> getAllUsers() {
+        List<String> users = new ArrayList<>();
+        try {
+            String query = "SELECT username FROM users WHERE username != 'default' ORDER BY id";
+            PreparedStatement statement = connection.prepareStatement(query);
+
+            ResultSet rs = statement.executeQuery();
+            while (rs.next()) {
+                users.add(rs.getString("username"));
+            }
+            rs.close();
+            statement.close();
+        } catch (Exception e) {
+            Common.console("getAllUsers error: " + e.getMessage());
+        }
+        return users;
+    }
+
     // Список ключевых слов для поиска (0 - не активные, 1 - активные, 2 - все)
     public List<Keyword> getKeywords(int isActive) {
         List<Keyword> keywords = new ArrayList<>();
