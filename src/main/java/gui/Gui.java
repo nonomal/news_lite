@@ -263,8 +263,6 @@ public class Gui extends JFrame {
                         String valueAt = (String) tableForAnalysis.getModel().getValueAt(row, 0);
                         Gui.topKeyword.setText(valueAt);
                         jdbcQueries.removeFromTable("TITLES");
-                        //searchBtnTop.doClick();
-                        //new Thread(() -> search.mainSearch("top-ten")).start();
                         new Thread(() -> jdbcQueries.getNewsForTopTen(valueAt)).start();
                         WAS_CLICK_IN_TABLE_FOR_ANALYSIS.set(true);
                     }
