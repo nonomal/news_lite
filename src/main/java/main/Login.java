@@ -66,6 +66,7 @@ public class Login {
                     JOptionPane.showMessageDialog(null, "Incorrect password");
                     login();
                 }
+                //new Gui().refreshGui();
             } else {
                 JOptionPane.showMessageDialog(null, "User not found");
                 login();
