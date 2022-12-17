@@ -30,7 +30,7 @@ public class DatabaseTest {
 
     @Test
     public void shouldFindAndSendResultsToEmail() {
-        String[] args = {"rps_project@mail.ru", "r5arXbTcutVqaJepse56", "rps_project@mail.ru", "60", "а", "е"};
+        String[] args = {"rps_project@mail.ru", "", "rps_project@mail.ru", "60", "а", "е"};
         Main.main(args);
     }
 
