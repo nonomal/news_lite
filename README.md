@@ -44,7 +44,7 @@ For the application to work on a PC, Java must be installed: https://www.java.co
 
 *Windows PowerShell:*
 
-        java -jar .\news.jar user@mail.ru 180 москв хлеб балаших
+        java -jar ./news.jar from@mail.ru from_password to@mail.ru 160 world russia fifa
         
 ![image](https://user-images.githubusercontent.com/45883640/188851087-8cdc2147-59f9-4d1e-8a3d-242adb972f41.png)
 

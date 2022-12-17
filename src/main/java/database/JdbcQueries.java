@@ -185,10 +185,16 @@ public class JdbcQueries {
             if (type.equals("all")) {
                 query = "SELECT id, source, link, is_active, position FROM rss_list WHERE user_id = ? " +
                         "ORDER BY is_active DESC, id";
+            } else if (type.equals("console")) {
+                query = "SELECT id, source, link, is_active, position FROM rss_list WHERE user_id = ?";
             }
 
             PreparedStatement statement = connection.prepareStatement(query);
-            statement.setInt(1, Login.userId);
+            if (type.equals("console")) {
+                statement.setInt(1, 0);
+            } else {
+                statement.setInt(1, Login.userId);
+            }
 
             ResultSet rs = statement.executeQuery();
             while (rs.next()) {

@@ -29,7 +29,9 @@ public class ConsoleSearch {
     private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("dd.MMM HH:mm", Locale.ENGLISH);
     public static final ArrayList<String> dataForEmail = new ArrayList<>();
     public static final AtomicBoolean IS_CONSOLE_SEARCH = new AtomicBoolean(false);
-    public static String sendEmailToFromConsole;
+    public static String sendEmailToConsole;
+    public static String sendEmailFromConsole;
+    public static String sendEmailFromPwdConsole;
     public static int minutesIntervalConsole;
 
     public ConsoleSearch() {
@@ -40,14 +42,24 @@ public class ConsoleSearch {
         isSearchFinished = new AtomicBoolean(false);
     }
 
+    /*
+      java -jar ./news.jar from@mail.ru from_password to@mail.ru 160 world russia fifa
+      main arguments for console search:
+      args1 = email from
+      args2 = email from pwd
+      args3 = email to
+      args4 = interval in minutes
+      args5 = keyword1, keyword2 ... argsN = search keywords
+    */
     public void searchByConsole(String[] args) {
         IS_CONSOLE_SEARCH.set(true);
-        sendEmailToFromConsole = args[0];
-        if (!sendEmailToFromConsole.contains("@")) {
+        sendEmailFromConsole = args[0];
+        sendEmailFromPwdConsole = args[1];
+        sendEmailToConsole = args[2];
+        if (!sendEmailToConsole.contains("@")) {
             throw new IncorrectEmail("incorrect e-mail");
         }
-
-        minutesIntervalConsole = Integer.parseInt(args[1]);
+        minutesIntervalConsole = Integer.parseInt(args[3]);
         System.out.println(Arrays.toString(args));
 
         if (!isSearchNow.get()) {
@@ -60,7 +72,7 @@ public class ConsoleSearch {
                 sqlite.transaction("BEGIN TRANSACTION");
                 TableRow tableRow;
 
-                for (Source source : jdbcQueries.getSources("all")) {
+                for (Source source : jdbcQueries.getSources("console")) {
                     try {
                         try {
                             if (isStop.get()) return;
@@ -80,7 +92,8 @@ public class ConsoleSearch {
                                         entry.getLink());
 
                                 for (String arg : args) {
-                                    if (arg.equals(args[0]) || arg.equals(args[1]))
+                                    if (arg.equals(args[0]) || arg.equals(args[1]) || arg.equals(args[2])
+                                            || arg.equals(args[3]))
                                         continue;
 
                                     if (tableRow.getTitle().toLowerCase().contains(arg.toLowerCase())
@@ -128,7 +141,6 @@ public class ConsoleSearch {
                 } else {
                     System.out.println("news headlines not found");
                 }
-                //jdbcQueries.removeDuplicates();
                 Gui.WAS_CLICK_IN_TABLE_FOR_ANALYSIS.set(false);
 
             } catch (Exception e) {
