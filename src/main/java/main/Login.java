@@ -11,15 +11,28 @@ import java.awt.*;
 public class Login {
     public static int userId;
     public static String username;
+    private final JdbcQueries jdbcQueries = new JdbcQueries();
+    JComboBox<Object> usersCombobox = new JComboBox<>(jdbcQueries.getAllUsers().toArray());
 
     public void login() {
-        JdbcQueries jdbcQueries = new JdbcQueries();
         String[] loginParams = showLoginDialog();
-
         int option = Integer.parseInt(loginParams[0]);
 
-        // create user
+        // remove user
         if (option == 0) {
+            String[] opt = new String[]{"yes", "no"};
+            int action = JOptionPane.showOptionDialog(null, "Are you confirming user deletion?",
+                    "Remove user", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE,
+                    Icons.TRANSLATOR_BUTTON_ICON, opt, opt[1]);
+            System.out.println(usersCombobox.getSelectedItem().toString());
+            if (action == 0) {
+                jdbcQueries.removeFromUsers(usersCombobox.getSelectedItem().toString());
+                System.out.println("removed: " + usersCombobox.getSelectedItem().toString());
+                usersCombobox = new JComboBox<>(jdbcQueries.getAllUsers().toArray());
+                login();
+            }
+            // create user
+        } else if (option == 1) {
             JPanel panel = new JPanel();
             panel.setLayout(new GridLayout(2, 2, 0, 5));
             JLabel userLabel = new JLabel("Username");
@@ -40,20 +53,16 @@ public class Login {
             int length = user.getText().length();
             if (action == 0 && length >= 3 && length <= 10) {
                 jdbcQueries.addUser(user.getText(), pwd);
+                usersCombobox = new JComboBox<>(jdbcQueries.getAllUsers().toArray());
                 login();
-                jdbcQueries.initUser(userId);
+                jdbcQueries.initUser();
             } else if (action == 0 && (user.getText().length() < 3 || user.getText().length() > 10)) {
                 JOptionPane.showMessageDialog(null, "The username length between 3 and 10 chars");
                 login();
             } else {
                 login();
             }
-            // default user
-        } else if (option == 1) {
-            username = "default";
-            userId = 0;
-            Gui.loginLabel.setText("user: default");
-            // ok
+            // Enter
         } else if (option == 2) {
             username = loginParams[1];
             if (jdbcQueries.isUserExists(username)) {
@@ -66,7 +75,13 @@ public class Login {
                     JOptionPane.showMessageDialog(null, "Incorrect password");
                     login();
                 }
-                //new Gui().refreshGui();
+                // remove old UI data
+                if (Gui.model.getRowCount() > 0) Gui.model.setRowCount(0);
+                if (Gui.modelForAnalysis.getRowCount() > 0) Gui.modelForAnalysis.setRowCount(0);
+                Gui.labelSum.setText("");
+                Gui.sendCurrentResultsToEmail.setVisible(false);
+                Gui.consoleTextArea.setText("");
+                Common.console("Hello, " + Login.username + "!");
             } else {
                 JOptionPane.showMessageDialog(null, "User not found");
                 login();
@@ -78,45 +93,27 @@ public class Login {
     }
 
     /*
-     login[0] = Create user, Default user, Ok
+     login[0] = "Remove", "Create", "Enter"
      login[1] = username
      login[2] = password
     */
     private String[] showLoginDialog() {
-        JdbcQueries jdbcQueries = new JdbcQueries();
         String[] options = new String[3];
 
         JPanel panel = new JPanel();
         panel.setLayout(new GridLayout(2, 2, 5, 5));
         JLabel userLabel = new JLabel("Username");
-        JComboBox<Object> usersCombobox = new JComboBox<>(jdbcQueries.getAllUsers().toArray());
 
-        // Удаление пользователя
-        JButton removeUserButton = new JButton(Icons.DELETE_UNIT);
-        removeUserButton.setHorizontalAlignment(SwingConstants.LEFT);
-        removeUserButton.setContentAreaFilled(false);
-        removeUserButton.addActionListener(x -> {
-            String[] opt = new String[]{"yes", "no"};
-            int action = JOptionPane.showOptionDialog(null, "Are you confirming user deletion?",
-                    "Remove user", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE,
-                    Icons.TRANSLATOR_BUTTON_ICON, opt, opt[1]);
-
-            if (action == 0) {
-                jdbcQueries.removeFromUsers(usersCombobox.getSelectedItem().toString());
-            }
-
-        });
-        Gui.animation(removeUserButton, Icons.EXIT_BUTTON_ICON, Icons.WHEN_MOUSE_ON_EXIT_BUTTON_ICON);
 
         JLabel passwordLabel = new JLabel("Password");
         JPasswordField passwordField = new JPasswordField(3);
         panel.add(userLabel);
         panel.add(usersCombobox);
-        panel.add(removeUserButton);
+        //panel.add(removeUserButton);
         panel.add(passwordLabel);
         panel.add(passwordField);
 
-        String[] menu = new String[]{"add user", "default", "ok"};
+        String[] menu = new String[]{"Remove", "Create", "Enter"};
         int option = JOptionPane.showOptionDialog(null, panel, "Login",
                 JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE,
                 Icons.LOGO_ICON, menu, menu[2]);

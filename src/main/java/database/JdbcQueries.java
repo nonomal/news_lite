@@ -744,115 +744,35 @@ public class JdbcQueries {
         return password;
     }
 
-    public void initUser(int id) {
-        String[] queries = {
-                "INSERT INTO rss_list (source, link, is_active, position, user_id) " +
-                        "VALUES ('Mail.ru', 'https://news.mail.ru/rss/90/', 1, 1, ?)",
-                "INSERT INTO rss_list (source, link, is_active, position, user_id) " +
-                        "VALUES ('Эксперт', 'https://expert.ru/doc-list/rss/', 1, 2, ?)",
-                "INSERT INTO rss_list (source, link, is_active, position, user_id) " +
-                        "VALUES ('Lenta', 'https://lenta.ru/rss', 1, 3, ?)",
-                "INSERT INTO rss_list (source, link, is_active, position, user_id) " +
-                        "VALUES ('Гарант', 'http://rss.garant.ru/news/', 1, 4, ?)",
-                "INSERT INTO rss_list (source, link, is_active, position, user_id) " +
-                        "VALUES ('Life', 'https://life.ru/xml/feed.xml?hashtag=%D0%BD%D0%BE%D0%B2%D0%BE%D1%81%D1%82%D0%B8', 1, 5, ?)",
-                "INSERT INTO rss_list (source, link, is_active, position, user_id) " +
-                        "VALUES ('РБК', 'http://static.feed.rbc.ru/rbc/logical/footer/news.rss', 1, 6, ?)",
-                "INSERT INTO rss_list (source, link, is_active, position, user_id) " +
-                        "VALUES ('Газета.ру', 'https://www.gazeta.ru/export/rss/first.xml', 1, 7, ?)",
-                "INSERT INTO rss_list (source, link, is_active, position, user_id) " +
-                        "VALUES ('Популярная механика', 'https://www.popmech.ru/out/public-all.xml', 1, 8, ?)",
-                "INSERT INTO rss_list (source, link, is_active, position, user_id) " +
-                        "VALUES ('Наука и жизнь', 'https://www.nkj.ru/rss/', 1, 9, ?)",
-                "INSERT INTO rss_list (source, link, is_active, position, user_id) " +
-                        "VALUES ('C-Main', 'https://cnews.ru/inc/rss/news.xml', 1, 10, ?)",
-                "INSERT INTO rss_list (source, link, is_active, position, user_id) " +
-                        "VALUES ('Коммерсант', 'https://www.kommersant.ru/RSS/news.xml', 1, 11, ?)",
-                "INSERT INTO rss_list (source, link, is_active, position, user_id) " +
-                        "VALUES ('Esquire', 'https://esquire.ru/out/feedburner.xml', 0, 13, ?)",
-                "INSERT INTO rss_list (source, link, is_active, position, user_id) " +
-                        "VALUES ('Вести', 'https://www.vesti.ru/vesti.rss', 0, 15, ?)",
-                "INSERT INTO rss_list (source, link, is_active, position, user_id) " +
-                        "VALUES ('BBC (rus)', 'http://feeds.bbci.co.uk/russian/rss.xml', 1, 16, ?)",
-                "INSERT INTO rss_list (source, link, is_active, position, user_id) " +
-                        "VALUES ('BBC (eng)', 'http://feeds.bbci.co.uk/news/world/rss.xml', 1, 17, ?)",
-                "INSERT INTO rss_list (source, link, is_active, position, user_id) " +
-                        "VALUES ('Forbes', 'https://www.forbes.ru/newrss.xml', 0, 51, ?)",
-                "INSERT INTO rss_list (source, link, is_active, position, user_id) " +
-                        "VALUES ('Правительство РФ', 'http://government.ru/all/rss/', 0, 52, ?)",
-                "INSERT INTO rss_list (source, link, is_active, position, user_id) " +
-                        "VALUES ('Госдума РФ', 'http://duma.gov.ru/news/feed/', 0, 53, ?)",
-                "INSERT INTO rss_list (source, link, is_active, position, user_id) " +
-                        "VALUES ('Nasa', 'https://www.nasa.gov/rss/dyn/breaking_news.rss', 0, 54, ?)",
-                "INSERT INTO rss_list (source, link, is_active, position, user_id) " +
-                        "VALUES ('Финам', 'https://www.finam.ru/analysis/conews/rsspoint', 0, 55, ?)",
-                "INSERT INTO rss_list (source, link, is_active, position, user_id) " +
-                        "VALUES ('Атон', 'https://www.agroinvestor.ru/feed/public-agronews.xml', 0, 56, ?)",
-                "INSERT INTO keywords (word, is_active, user_id) VALUES ('ипотек', 1, ?)",
-                "INSERT INTO keywords (word, is_active, user_id) VALUES ('выплат', 1, ?)",
-                "INSERT INTO keywords (word, is_active, user_id) VALUES ('бесплатн', 1, ?)",
-                "INSERT INTO keywords (word, is_active, user_id) VALUES ('льгот', 1, ?)",
-                "INSERT INTO excluded_headlines (word, user_id) VALUES ('covid', ?)",
-                "INSERT INTO excluded_headlines (word, user_id) VALUES ('коронав', ?)",
-                "INSERT INTO exclude (word, user_id) VALUES ('января', ?)",
-                "INSERT INTO exclude (word, user_id) VALUES ('февраля', ?)",
-                "INSERT INTO exclude (word, user_id) VALUES ('марта', ?)",
-                "INSERT INTO exclude (word, user_id) VALUES ('апреля', ?)",
-                "INSERT INTO exclude (word, user_id) VALUES ('мая', ?)",
-                "INSERT INTO exclude (word, user_id) VALUES ('июня', ?)",
-                "INSERT INTO exclude (word, user_id) VALUES ('июля', ?)",
-                "INSERT INTO exclude (word, user_id) VALUES ('августа', ?)",
-                "INSERT INTO exclude (word, user_id) VALUES ('сентября', ?)",
-                "INSERT INTO exclude (word, user_id) VALUES ('октября', ?)",
-                "INSERT INTO exclude (word, user_id) VALUES ('ноября', ?)",
-                "INSERT INTO exclude (word, user_id) VALUES ('декабря', ?)",
-                "INSERT INTO exclude (word, user_id) VALUES ('год', ?)",
-                "INSERT INTO exclude (word, user_id) VALUES ('года', ?)",
-                "INSERT INTO exclude (word, user_id) VALUES ('году', ?)",
-                "INSERT INTO exclude (word, user_id) VALUES ('изза', ?)",
-                "INSERT INTO exclude (word, user_id) VALUES ('r', ?)",
-                "INSERT INTO exclude (word, user_id) VALUES ('pr', ?)",
-                "INSERT INTO exclude (word, user_id) VALUES ('это', ?)",
-                "INSERT INTO exclude (word, user_id) VALUES ('этот', ?)",
-                "INSERT INTO exclude (word, user_id) VALUES ('этой', ?)",
-                "INSERT INTO exclude (word, user_id) VALUES ('этого', ?)",
-                "INSERT INTO exclude (word, user_id) VALUES ('котором', ?)",
-                "INSERT INTO exclude (word, user_id) VALUES ('которого', ?)",
-                "INSERT INTO exclude (word, user_id) VALUES ('месяц', ?)",
-                "INSERT INTO exclude (word, user_id) VALUES ('месяца', ?)",
-                "INSERT INTO exclude (word, user_id) VALUES ('днем', ?)",
-                "INSERT INTO exclude (word, user_id) VALUES ('почти', ?)",
-                "INSERT INTO exclude (word, user_id) VALUES ('число', ?)",
-                "INSERT INTO exclude (word, user_id) VALUES ('чего', ?)",
-                "INSERT INTO exclude (word, user_id) VALUES ('й', ?)",
-                "INSERT INTO dates (type, description, day, month, year, is_active, user_id) " +
-                        "VALUES ('Праздник', 'Международный женский день', 8, 3, -1, 1, ?)",
-                "INSERT INTO dates (type, description, day, month, year, is_active, user_id) " +
-                        "VALUES ('Праздник', 'День победы', 9, 5, 1945, 1, ?)",
-                "INSERT INTO settings (key, value, user_id) VALUES ('email_to', '', ?)",
-                "INSERT INTO settings (key, value, user_id) VALUES ('email_from', '', ?)",
-                "INSERT INTO settings (key, value, user_id) VALUES ('from_pwd', '', ?)",
-                "INSERT INTO settings (key, value, user_id) VALUES ('transparency', '0.96', ?)",
-                "INSERT INTO settings (key, value, user_id) VALUES ('interval', '24h', ?)",
-                "INSERT INTO settings (key, value, user_id) VALUES ('onlyNewNews', 'true', ?)",
-                "INSERT INTO settings (key, value, user_id) VALUES ('autoSendMessage', 'false', ?)",
-                "INSERT INTO settings (key, value, user_id) VALUES ('font_size', '14', ?)",
-                "INSERT INTO settings (key, value, user_id) VALUES ('row_height', '28', ?)",
-                "INSERT INTO settings (key, value, user_id) VALUES ('font_color', '0,0,0', ?)",
-                "INSERT INTO settings (key, value, user_id) VALUES ('gui_color', '47,47,47', ?)",
-                "INSERT INTO settings (key, value, user_id) VALUES ('tables_color', '255,255,255', ?)",
-                "INSERT INTO settings (key, value, user_id) VALUES ('tables_alt_color', '237,237,237', ?)"
-        };
+    public List<String> getInitQueries() {
+        List<String> queries = new ArrayList<>();
+        try {
+            String query = "SELECT query FROM main.init_data";
+            PreparedStatement statement = connection.prepareStatement(query);
 
+            ResultSet rs = statement.executeQuery();
+            while (rs.next()) {
+                queries.add(rs.getString("query"));
+            }
+            rs.close();
+            statement.close();
+        } catch (Exception e) {
+            Common.console("getInitQueries error: " + e.getMessage());
+        }
+        return queries;
+    }
+
+    public void initUser() {
+        List<String> queries = getInitQueries();
         try {
             PreparedStatement statement;
             for (String query : queries) {
                 statement = connection.prepareStatement(query);
-                statement.setInt(1, id);
+                statement.setInt(1, Login.userId);
                 statement.executeUpdate();
             }
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            Common.console("initUser error: " + e.getMessage());
         }
     }
 
