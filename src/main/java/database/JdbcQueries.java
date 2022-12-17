@@ -686,7 +686,7 @@ public class JdbcQueries {
         }
     }
 
-    // обновление статуса чекбокса is_active для ресурсов SELECT id, source, link FROM rss_list where is_active = 1  ORDER BY id
+    // обновление статуса чекбокса
     public void updateIsActiveCheckboxes(boolean check, String name, String type) {
         String query = null;
         try {
