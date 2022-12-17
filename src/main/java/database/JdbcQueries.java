@@ -581,12 +581,26 @@ public class JdbcQueries {
 
     // Очистка данных любой передаваемой таблицы
     public void removeFromUsers(String username) {
+        int userId = getUserIdByUsername(username);
         try {
-            String query = "DELETE FROM users where username = ?";
-            PreparedStatement statement = connection.prepareStatement(query);
-            statement.setString(1, username);
-            statement.executeUpdate();
-            statement.close();
+            // "on delete cascade" doesn't work
+            String [] removeCascade = {
+                    "DELETE FROM dates WHERE user_id = ?",
+                    "DELETE FROM exclude WHERE user_id = ?",
+                    "DELETE FROM excluded_headlines WHERE user_id = ?",
+                    "DELETE FROM favorites WHERE user_id = ?",
+                    "DELETE FROM keywords WHERE user_id = ?",
+                    "DELETE FROM rss_list WHERE user_id = ?",
+                    "DELETE FROM settings WHERE user_id = ?",
+                    "DELETE FROM users where id = ?"
+            };
+
+            for (String query : removeCascade) {
+                PreparedStatement statement = connection.prepareStatement(query);
+                statement.setInt(1, userId);
+                statement.executeUpdate();
+                statement.close();
+            }
         } catch (Exception e) {
             Common.console("deleteFromTable error: " + e.getMessage());
         }

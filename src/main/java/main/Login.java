@@ -24,10 +24,10 @@ public class Login {
             int action = JOptionPane.showOptionDialog(null, "Are you confirming user deletion?",
                     "Remove user", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE,
                     Icons.TRANSLATOR_BUTTON_ICON, opt, opt[1]);
-            System.out.println(usersCombobox.getSelectedItem().toString());
             if (action == 0) {
-                jdbcQueries.removeFromUsers(usersCombobox.getSelectedItem().toString());
-                System.out.println("removed: " + usersCombobox.getSelectedItem().toString());
+                String user = usersCombobox.getSelectedItem().toString();
+                jdbcQueries.removeFromUsers(user);
+                Common.console("User removed: " + user);
                 usersCombobox = new JComboBox<>(jdbcQueries.getAllUsers().toArray());
                 login();
             }
