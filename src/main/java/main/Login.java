@@ -58,7 +58,6 @@ public class Login {
                 newUser = user.getText();
                 System.out.println(newUser);
                 login();
-                jdbcQueries.initUser();
             } else if (action == 0 && (user.getText().length() < 3 || user.getText().length() > 10)) {
                 JOptionPane.showMessageDialog(null, "The username length between 3 and 10 chars");
                 login();
@@ -67,6 +66,8 @@ public class Login {
             }
             // Enter
         } else if (option == 2) {
+            if (newUser != null) jdbcQueries.initUser();
+
             username = loginParams[1];
             if (jdbcQueries.isUserExists(username)) {
                 userId = jdbcQueries.getUserIdByUsername(username);
