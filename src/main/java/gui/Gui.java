@@ -874,7 +874,10 @@ public class Gui extends JFrame {
             @Override
             public void mouseClicked(MouseEvent e) {
                 if (e.getButton() == MouseEvent.BUTTON1) {
+                    dispose();
                     new Login().login();
+                    Common.showGui();
+                    loginLabel.setText("user: " + Login.username);
                 }
             }
         });

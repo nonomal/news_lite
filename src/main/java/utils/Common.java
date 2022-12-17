@@ -36,7 +36,7 @@ public class Common {
     public Color tablesAltColor;
 
     public void showGui() {
-        setGuiTheme();
+        //setGuiTheme();
 
         Gui gui = new Gui();
         Runnable runnable = () -> {

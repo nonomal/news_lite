@@ -12,9 +12,10 @@ public class Main {
         new SQLite().openConnection();
 
         if (args.length == 0) {
+            Common.setGuiTheme();
+            new Login().login();
             Common.showGui();
             new Reminder().remind();
-            new Login().login();
         } else {
             /*
               main arguments for console search:

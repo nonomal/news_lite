@@ -1,7 +1,6 @@
 package main;
 
 import database.JdbcQueries;
-import gui.Gui;
 import gui.buttons.Icons;
 import utils.Common;
 
@@ -81,12 +80,12 @@ public class Login {
                     login();
                 }
                 // remove old UI data
-                if (Gui.model.getRowCount() > 0) Gui.model.setRowCount(0);
-                if (Gui.modelForAnalysis.getRowCount() > 0) Gui.modelForAnalysis.setRowCount(0);
-                Gui.labelSum.setText("");
-                Gui.sendCurrentResultsToEmail.setVisible(false);
-                Gui.consoleTextArea.setText("");
-                Common.console("Hello, " + Login.username + "!");
+//                if (Gui.model.getRowCount() > 0) Gui.model.setRowCount(0);
+//                if (Gui.modelForAnalysis.getRowCount() > 0) Gui.modelForAnalysis.setRowCount(0);
+//                Gui.labelSum.setText("");
+//                Gui.sendCurrentResultsToEmail.setVisible(false);
+//                Gui.consoleTextArea.setText("");
+//                Common.console("Hello, " + Login.username + "!");
             } else {
                 JOptionPane.showMessageDialog(null, "User not found");
                 login();
@@ -94,7 +93,6 @@ public class Login {
         } else {
             System.exit(0);
         }
-        Gui.loginLabel.setText("user: " + username);
     }
 
     /*
