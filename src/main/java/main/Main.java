@@ -1,5 +1,6 @@
 package main;
 
+import com.formdev.flatlaf.intellijthemes.FlatHiberbeeDarkIJTheme;
 import database.SQLite;
 import search.ConsoleSearch;
 import utils.Common;
@@ -12,7 +13,7 @@ public class Main {
         new SQLite().openConnection();
 
         if (args.length == 0) {
-            Common.setGuiTheme();
+            FlatHiberbeeDarkIJTheme.setup();
             new Login().login();
             Common.showGui();
             new Reminder().remind();
