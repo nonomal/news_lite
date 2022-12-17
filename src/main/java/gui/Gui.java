@@ -791,7 +791,7 @@ public class Gui extends JFrame {
             settingsPanel.setLayout(new GridLayout(11, 1, 0, 5));
             settingsPanel.add(new JLabel("Email from"));
             settingsPanel.add(emailFrom);
-            settingsPanel.add(new JLabel("Email from password"));
+            settingsPanel.add(new JLabel("Email password"));
             settingsPanel.add(emailFromPwd);
             settingsPanel.add(new JLabel("Email to"));
             settingsPanel.add(emailTo);
