@@ -11,6 +11,7 @@ import java.awt.*;
 public class Login {
     public static int userId;
     public static String username;
+    private String newUser;
     private final JdbcQueries jdbcQueries = new JdbcQueries();
     JComboBox<Object> usersCombobox = new JComboBox<>(jdbcQueries.getAllUsers().toArray());
 
@@ -54,6 +55,8 @@ public class Login {
             if (action == 0 && length >= 3 && length <= 10) {
                 jdbcQueries.addUser(user.getText(), pwd);
                 usersCombobox = new JComboBox<>(jdbcQueries.getAllUsers().toArray());
+                newUser = user.getText();
+                System.out.println(newUser);
                 login();
                 jdbcQueries.initUser();
             } else if (action == 0 && (user.getText().length() < 3 || user.getText().length() > 10)) {
@@ -103,15 +106,15 @@ public class Login {
         JPanel panel = new JPanel();
         panel.setLayout(new GridLayout(2, 2, 5, 5));
         JLabel userLabel = new JLabel("Username");
-
-
         JLabel passwordLabel = new JLabel("Password");
         JPasswordField passwordField = new JPasswordField(3);
         panel.add(userLabel);
         panel.add(usersCombobox);
-        //panel.add(removeUserButton);
         panel.add(passwordLabel);
         panel.add(passwordField);
+
+        // after create user
+        if (newUser != null) usersCombobox.setSelectedItem(newUser);
 
         String[] menu = new String[]{"Remove", "Create", "Enter"};
         int option = JOptionPane.showOptionDialog(null, panel, "Login",
