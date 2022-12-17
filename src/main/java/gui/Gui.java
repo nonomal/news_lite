@@ -861,6 +861,7 @@ public class Gui extends JFrame {
         // Username label
         if (Login.username != null) {
             loginLabel = new JLabel("user: " + Login.username);
+            Common.console("Hello, " + Login.username + "!");
         } else {
             loginLabel = new JLabel();
         }
@@ -879,6 +880,8 @@ public class Gui extends JFrame {
                     new Login().login();
                     Common.showGui();
                     loginLabel.setText("user: " + Login.username);
+                    Gui.consoleTextArea.setText("");
+                    Common.console("Hello, " + Login.username + "!");
                 }
             }
         });

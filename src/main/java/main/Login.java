@@ -79,13 +79,6 @@ public class Login {
                     JOptionPane.showMessageDialog(null, "Incorrect password");
                     login();
                 }
-                // remove old UI data
-//                if (Gui.model.getRowCount() > 0) Gui.model.setRowCount(0);
-//                if (Gui.modelForAnalysis.getRowCount() > 0) Gui.modelForAnalysis.setRowCount(0);
-//                Gui.labelSum.setText("");
-//                Gui.sendCurrentResultsToEmail.setVisible(false);
-//                Gui.consoleTextArea.setText("");
-//                Common.console("Hello, " + Login.username + "!");
             } else {
                 JOptionPane.showMessageDialog(null, "User not found");
                 login();
