@@ -13,8 +13,8 @@ import java.nio.charset.StandardCharsets;
 public class Translator {
 
     public String translate(String langFrom, String langTo, String text) {
-        StringBuilder response;
-        String scriptUrl = new JdbcQueries().getSetting("translate-url");
+        StringBuilder response = null;
+        String scriptUrl = "https://script.google.com/macros/s/AKfycby5Oh70-SremozUCw4uZl6EopFwkqRCXU4PkuPOYjpcIFWwojpHUq2lQoVia896Doy7fg/exec";
         try {
             String urlStr = scriptUrl +
                     "?q=" + URLEncoder.encode(text, "UTF-8") +
@@ -31,7 +31,7 @@ public class Translator {
             }
             in.close();
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            Common.console("Error translate: " + e.getMessage());
         }
         return response.toString();
     }
