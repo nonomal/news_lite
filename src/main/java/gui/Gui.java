@@ -876,7 +876,13 @@ public class Gui extends JFrame {
             public void mouseClicked(MouseEvent e) {
                 if (e.getButton() == MouseEvent.BUTTON1) {
                     Common.saveState();
+                    // удалить старый frame
                     dispose();
+                    // удаление иконки в трее
+                    TrayIcon[] trayIcons = systemTray.getTrayIcons();
+                    for (TrayIcon t : trayIcons) {
+                        systemTray.remove(t);
+                    }
                     new Login().login();
                     Common.showGui();
                     loginLabel.setText("user: " + Login.username);
