@@ -316,7 +316,7 @@ public class JdbcQueries {
     public List<String> getAllUsers() {
         List<String> users = new ArrayList<>();
         try {
-            String query = "SELECT username FROM users WHERE username != 'default' ORDER BY id";
+            String query = "SELECT username FROM users WHERE id != 0 ORDER BY id";
             PreparedStatement statement = connection.prepareStatement(query);
 
             ResultSet rs = statement.executeQuery();
