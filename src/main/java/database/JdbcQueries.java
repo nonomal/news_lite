@@ -594,13 +594,14 @@ public class JdbcQueries {
                     "DELETE FROM settings WHERE user_id = ?",
                     "DELETE FROM users where id = ?"
             };
-
+            connection.setAutoCommit(false);
             for (String query : removeCascade) {
                 PreparedStatement statement = connection.prepareStatement(query);
                 statement.setInt(1, userId);
                 statement.executeUpdate();
                 statement.close();
             }
+            connection.setAutoCommit(true);
         } catch (Exception e) {
             Common.console("deleteFromTable error: " + e.getMessage());
         }
@@ -779,12 +780,14 @@ public class JdbcQueries {
     public void initUser() {
         List<String> queries = getInitQueries();
         try {
+            connection.setAutoCommit(false);
             PreparedStatement statement;
             for (String query : queries) {
                 statement = connection.prepareStatement(query);
                 statement.setInt(1, Login.userId);
                 statement.executeUpdate();
             }
+            connection.setAutoCommit(true);
         } catch (SQLException e) {
             Common.console("initUser error: " + e.getMessage());
         }
