@@ -762,7 +762,7 @@ public class JdbcQueries {
     public List<String> getInitQueries() {
         List<String> queries = new ArrayList<>();
         try {
-            String query = "SELECT query FROM main.init_data";
+            String query = "SELECT query FROM init_data";
             PreparedStatement statement = connection.prepareStatement(query);
 
             ResultSet rs = statement.executeQuery();

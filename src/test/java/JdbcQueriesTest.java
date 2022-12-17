@@ -1,7 +1,6 @@
 import database.JdbcQueries;
 import database.SQLite;
 import model.Excluded;
-import model.Favorite;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -32,8 +31,8 @@ public class JdbcQueriesTest {
     }
 
     @Test
-    public void shouldGetFavorites() {
-        List<Favorite> excluded = jdbcQueries.getFavorites();
+    public void shouldGetRandomWords() {
+        List<String> excluded = jdbcQueries.getRandomWords();
         Assertions.assertTrue(excluded.size() > 0);
     }
 
