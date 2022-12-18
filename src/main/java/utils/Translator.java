@@ -1,7 +1,5 @@
 package utils;
 
-import database.JdbcQueries;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -31,7 +29,7 @@ public class Translator {
             }
             in.close();
         } catch (IOException e) {
-            Common.console("Error translate: " + e.getMessage());
+            Common.console("translate error: " + e.getMessage());
         }
         return response.toString();
     }

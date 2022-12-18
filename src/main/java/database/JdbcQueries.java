@@ -26,7 +26,7 @@ public class JdbcQueries {
             statement.executeUpdate();
             statement.close();
 
-            Common.console("\"" + word + "\" добавлено в список ключевых слов");
+            Common.console("\"" + word + "\" added to keyword list");
         } catch (Exception e) {
             Common.console("addKeyword error: " + e.getMessage());
         }
@@ -49,7 +49,7 @@ public class JdbcQueries {
                 Common.console("addNewSource error: " + e.getMessage());
             }
         } else {
-            Common.console("Enter a valid URL");
+            Common.console("enter a valid URL");
         }
     }
 
@@ -131,8 +131,7 @@ public class JdbcQueries {
                 statement.setInt(2, Login.userId);
                 statement.executeUpdate();
                 statement.close();
-
-                Common.console("\"" + word + "\" excluded from search");
+                Common.console("the word \"" + word + "\" is excluded from heading search");
             } catch (SQLException ignored) {
             } catch (Exception e) {
                 Common.console("addWordToExcludeTitles error: " + e.getMessage());
@@ -154,7 +153,7 @@ public class JdbcQueries {
             statement.executeUpdate();
             statement.close();
 
-            Common.console("Событие добавлено: " + type + " " + description);
+            Common.console("event added: " + type + " " + description);
         } catch (Exception e) {
             Common.console("addDate error: " + e.getMessage());
         }
@@ -553,7 +552,7 @@ public class JdbcQueries {
             statement.executeUpdate();
             statement.close();
 
-            Common.console("Удалён элемент: " + item);
+            Common.console("item deleted: " + item);
         } catch (Exception e) {
             Common.console("removeItem error: " + e.getMessage());
         }

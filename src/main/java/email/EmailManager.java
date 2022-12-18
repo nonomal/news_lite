@@ -48,7 +48,7 @@ public class EmailManager {
                 Search.isSearchFinished.set(true);
                 Gui.progressBar.setValue(100);
             } catch (AuthenticationFailedException e) {
-                Common.console("Неверный пароль или почта");
+                Common.console("wrong password or email");
                 Common.IS_SENDING.set(true);
                 Search.isSearchFinished.set(true);
                 Gui.progressBar.setValue(100);

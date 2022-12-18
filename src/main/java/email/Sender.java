@@ -1,7 +1,5 @@
 package email;
 
-import utils.Common;
-
 import javax.mail.*;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
@@ -59,8 +57,6 @@ public class Sender {
             case "rambler.ru":
                 smtp = "smtp.rambler.ru";
                 break;
-            default:
-                Common.console("only from Mail.ru, Gmail, Yandex, Yahoo, Rambler");
         }
         return smtp;
     }

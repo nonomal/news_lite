@@ -20,20 +20,20 @@ public class Reminder {
 
         for (Dates date : new JdbcQueries().getDates(0)) {
             if (date.getMonth() == month && date.getDay() == day) {
-                if (date.getType().equals("День Рождения") && date.getYear() != 0) {
-                    Common.console("Сегодня: " + date.getDescription() + " исполняется " +
-                            (year - date.getYear()));
+                if (date.getType().equals("Birthday") && date.getYear() != 0) {
+                    Common.console("Today: " + date.getDescription() + " is " +
+                            (year - date.getYear()) + " years old!");
                 } else {
-                    Common.console("Сегодня: " + date.getType() + " - " + date.getDescription());
+                    Common.console("Today: " + date.getType() + " - " + date.getDescription());
                 }
             }
 
             if (date.getMonth() == monthTomorrow && date.getDay() == dayTomorrow) {
-                if (date.getType().equals("День Рождения") && date.getYear() != 0) {
-                    Common.console("Завтра: " + date.getDescription() + " исполняется " +
-                            (yearTomorrow - date.getYear()));
+                if (date.getType().equals("Birthday") && date.getYear() != 0) {
+                    Common.console("Tomorrow: " + date.getDescription() + " will be " +
+                            (yearTomorrow - date.getYear()) + " years old!");
                 } else {
-                    Common.console("Завтра: " + date.getType() + " - " + date.getDescription());
+                    Common.console("Tomorrow: " + date.getType() + " - " + date.getDescription());
                 }
             }
         }

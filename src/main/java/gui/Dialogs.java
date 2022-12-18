@@ -257,7 +257,7 @@ public class Dialogs extends JDialog implements KeyListener {
                             this.setVisible(false);
                             new Dialogs("keywordsDialog");
                         } else {
-                            Common.console("Слово уже есть в списке");
+                            Common.console("the word is already on the list");
                         }
                     }
                 });
@@ -382,9 +382,9 @@ public class Dialogs extends JDialog implements KeyListener {
                 scrollPane.setViewportView(table);
 
                 // Панель добавления даты
-                String[] dateTypes = {"День Рождения", "Событие", "Праздник", "Разное"};
-                String[] months = {"Января", "Февраля", "Марта", "Апреля", "Мая", "Июня", "Июля",
-                        "Августа", "Сентября", "Октября", "Ноября", "Декабря"};
+                String[] dateTypes = {"Birthday", "Event", "Holiday"};
+                String[] months = {"January", "February", "March", "April", "May", "June", "July",
+                        "August", "September", "October", "November", "December"};
                 Integer[] days = new Integer[31];
                 for (int i = 0; i < days.length; i++) {
                     days[i] = i + 1;
@@ -422,7 +422,7 @@ public class Dialogs extends JDialog implements KeyListener {
                         this.setVisible(false);
                         new Dialogs("datesDialog");
                     } else {
-                        Common.console("Укажите описание даты");
+                        Common.console("enter a description for the date");
                     }
                 });
 
