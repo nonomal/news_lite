@@ -14,8 +14,10 @@ For the application to work on a PC, Java must be installed: https://www.java.co
 
 ----
 **Program features:**
-- manual search for titles by one word (all news are displayed with an empty field)
-- manual search by keywords (at the bottom of the application and without dropping titles)
+- multi-user application
+- manual search for titles by one word (empty field - all news are displayed without excluded news headlines)
+- manual search by keywords (at the bottom of the application is keyword search without excluding news headlines)
+- search by double-clicking on a word in the top-10 table of the entire news archive for all time
 - automatic search every 60 seconds (by setting the checkbox)
 - sending the search result to e-mail (+ the ability to choose the automatic sending of results after each search)
 - export results to Excel
@@ -38,9 +40,9 @@ For the application to work on a PC, Java must be installed: https://www.java.co
 
 *Example: jar is laid out on a server where Linux is installed and a command is specified in crontab to call the program around the clock. No news will be missed! Here is the command that I indicated (parameter No. 1 - email from, 2 - email from password, 3 - email to, 4 - the interval (the moment of the call minus 1440 minutes (day), then several keywords separated by a space. That is, every day at 10:30 am I receive all the news for the day by the specified words + I keep a log of the program):*
 
-        java -jar ./news.jar from@mail.ru from_password to@mail.ru 160 world russia fifa
+        java -jar ./news.jar from@mail.ru from_password to@mail.ru 1440 гамак fisu адмирал
         
-![image](https://user-images.githubusercontent.com/45883640/188851087-8cdc2147-59f9-4d1e-8a3d-242adb972f41.png)
+![shell](https://user-images.githubusercontent.com/45883640/208294229-9cf81835-2d8a-4ac0-a047-d09c3a9462da.png)
 
 ----
 *Mail settings must be specified in the settings when using the GUI
@@ -49,8 +51,7 @@ For the application to work on a PC, Java must be installed: https://www.java.co
 
 Message example:
 
-![email](https://user-images.githubusercontent.com/45883640/199978551-366c6a72-1285-4648-b446-32ca0b12b009.png)
-
+![mail](https://user-images.githubusercontent.com/45883640/208294272-ca727395-76c1-46de-aea1-b68db29801de.png)
 
 Initial path to program files
 
