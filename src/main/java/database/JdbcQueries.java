@@ -386,7 +386,7 @@ public class JdbcQueries {
     public boolean isUserExists(String username) {
         int isExists = 0;
         try {
-            String query = "SELECT MAX(1) FROM main.users WHERE exists (SELECT id FROM users WHERE username = ?)";
+            String query = "SELECT MAX(1) FROM users WHERE exists (SELECT id FROM users WHERE username = ?)";
             PreparedStatement statement = connection.prepareStatement(query);
             statement.setString(1, username);
 
@@ -794,6 +794,19 @@ public class JdbcQueries {
             connection.setAutoCommit(true);
         } catch (SQLException e) {
             Common.console("initUser error: " + e.getMessage());
+        }
+    }
+
+    public void updateUserPassword(int id, String newPassword) {
+        try {
+            String query = "UPDATE users SET password = ? WHERE id = ?";
+            PreparedStatement statement = connection.prepareStatement(query);
+            statement.setString(1, newPassword);
+            statement.setInt(2, id);
+            statement.executeUpdate();
+            statement.close();
+        } catch (Exception e) {
+            Common.console("updateUserPassword error: " + e.getMessage());
         }
     }
 

@@ -866,6 +866,7 @@ public class Gui extends JFrame {
             loginLabel = new JLabel();
         }
         loginLabel.setEnabled(false);
+        loginLabel.setToolTipText("right click - change password");
         loginLabel.setBounds(881, 13, 180, 13);
         loginLabel.setFont(GUI_FONT);
         loginLabel.setForeground(new Color(255, 255, 153));
@@ -889,6 +890,45 @@ public class Gui extends JFrame {
                     Gui.consoleTextArea.setText("");
                     Common.console("Hello, " + Login.username + "!");
                     new Reminder().remind();
+                    // user password change dialog
+                } else if (e.getButton() == MouseEvent.BUTTON3) {
+                    JPanel panel = new JPanel();
+                    panel.setLayout(new GridLayout(3, 2, 5, 5));
+                    JLabel oldPwd = new JLabel("Old password");
+                    JPasswordField oldPwdField = new JPasswordField(3);
+                    JLabel newPwd = new JLabel("New password");
+                    JPasswordField newPwdField = new JPasswordField(3);
+                    JLabel repeatPwd = new JLabel("Repeat password");
+                    JPasswordField repeatPwdField = new JPasswordField(3);
+                    panel.add(oldPwd);
+                    panel.add(oldPwdField);
+                    panel.add(newPwd);
+                    panel.add(newPwdField);
+                    panel.add(repeatPwd);
+                    panel.add(repeatPwdField);
+
+                    String[] menu = new String[]{"Cancel", "Ok"};
+                    int option = JOptionPane.showOptionDialog(null, panel, "Change password",
+                            JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE,
+                            Icons.LOGO_ICON, menu, menu[1]);
+
+                    if (option == 1) {
+                        String oldPwdString = Common.getHash(new String(oldPwdField.getPassword()));
+                        String newPwdString = Common.getHash(new String(newPwdField.getPassword()));
+                        String repeatPwdString = Common.getHash(new String(repeatPwdField.getPassword()));
+
+                        if (!Objects.equals(oldPwdString, jdbcQueries.getUserHashPassword(Login.username))) {
+                            JOptionPane.showMessageDialog(null, "Old password is incorrect!");
+                        }
+
+                        if (!Objects.equals(newPwdString, repeatPwdString)) {
+                            JOptionPane.showMessageDialog(null, "Passwords doesn't match");
+                        }
+
+                        jdbcQueries.updateUserPassword(Login.userId, newPwdString);
+                        Common.console("user password changed");
+                    }
+
                 }
             }
         });
