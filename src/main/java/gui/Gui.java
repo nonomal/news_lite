@@ -918,11 +918,21 @@ public class Gui extends JFrame {
                         String repeatPwdString = Common.getHash(new String(repeatPwdField.getPassword()));
 
                         if (!Objects.equals(oldPwdString, jdbcQueries.getUserHashPassword(Login.username))) {
-                            JOptionPane.showMessageDialog(null, "Old password is incorrect!");
+                            JOptionPane.showMessageDialog(null,
+                                    "Old password is incorrect!");
+                            return;
+                        }
+
+                        if (Objects.equals(oldPwdString, newPwdString)) {
+                            JOptionPane.showMessageDialog(null,
+                                    "The new password is the same as the old one");
+                            return;
                         }
 
                         if (!Objects.equals(newPwdString, repeatPwdString)) {
-                            JOptionPane.showMessageDialog(null, "Passwords doesn't match");
+                            JOptionPane.showMessageDialog(null,
+                                    "Passwords doesn't match");
+                            return;
                         }
 
                         jdbcQueries.updateUserPassword(Login.userId, newPwdString);
