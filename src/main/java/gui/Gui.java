@@ -888,6 +888,7 @@ public class Gui extends JFrame {
                     loginLabel.setText("user: " + Login.username);
                     Gui.consoleTextArea.setText("");
                     Common.console("Hello, " + Login.username + "!");
+                    new Reminder().remind();
                 }
             }
         });
