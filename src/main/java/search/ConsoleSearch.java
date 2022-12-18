@@ -14,7 +14,6 @@ import utils.Parser;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Date;
 import java.util.Locale;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -60,7 +59,6 @@ public class ConsoleSearch {
             throw new IncorrectEmail("incorrect e-mail");
         }
         minutesIntervalConsole = Integer.parseInt(args[3]);
-        System.out.println(Arrays.toString(args));
 
         if (!isSearchNow.get()) {
             dataForEmail.clear();
