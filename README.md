@@ -51,7 +51,7 @@ For the application to work on a PC, Java must be installed: https://www.java.co
 
 Message example:
 
-![mail](https://user-images.githubusercontent.com/45883640/208294272-ca727395-76c1-46de-aea1-b68db29801de.png)
+![image](https://user-images.githubusercontent.com/45883640/208294666-e3bd4846-e712-4c46-b017-5416a0cd5dc6.png)
 
 Initial path to program files
 
