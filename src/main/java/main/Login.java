@@ -20,15 +20,19 @@ public class Login {
 
         // remove user
         if (option == 0) {
-            String[] opt = new String[]{"yes", "no"};
-            int action = JOptionPane.showOptionDialog(null, "Are you confirming user deletion?",
-                    "Remove user", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE,
-                    Icons.TRANSLATOR_BUTTON_ICON, opt, opt[1]);
-            if (action == 0) {
-                String user = usersCombobox.getSelectedItem().toString();
-                jdbcQueries.removeFromUsers(user);
-                //Common.console("User removed: " + user);
-                usersCombobox = new JComboBox<>(jdbcQueries.getAllUsers().toArray());
+            if (usersCombobox.getSelectedItem() != null){
+                String[] opt = new String[]{"yes", "no"};
+                int action = JOptionPane.showOptionDialog(null, "Are you confirming user deletion?",
+                        "Remove user", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE,
+                        Icons.TRANSLATOR_BUTTON_ICON, opt, opt[1]);
+                if (action == 0) {
+                    String user = usersCombobox.getSelectedItem().toString();
+                    jdbcQueries.removeFromUsers(user);
+                    usersCombobox = new JComboBox<>(jdbcQueries.getAllUsers().toArray());
+                    login();
+                }
+            } else {
+                JOptionPane.showMessageDialog(null, "There is no user to delete");
                 login();
             }
             // create user
@@ -51,19 +55,23 @@ public class Login {
 
             String pwd = Common.getHash(new String(passwordField.getPassword()));
             int length = user.getText().length();
-            if (action == 0 && length >= 3 && length <= 10) {
-                jdbcQueries.addUser(user.getText(), pwd);
-                usersCombobox = new JComboBox<>(jdbcQueries.getAllUsers().toArray());
-                newUser = user.getText();
-                System.out.println(newUser);
-                login();
-                if (newUser != null) jdbcQueries.initUser();
-            } else if (action == 0 && (user.getText().length() < 3 || user.getText().length() > 10)) {
-                JOptionPane.showMessageDialog(null, "The username length between 3 and 10 chars");
-                login();
-            } else {
-                login();
-            }
+             if (!jdbcQueries.isUserExists(user.getText())) {
+                 if (action == 0 && length >= 3 && length <= 10) {
+                     jdbcQueries.addUser(user.getText(), pwd);
+                     usersCombobox = new JComboBox<>(jdbcQueries.getAllUsers().toArray());
+                     newUser = user.getText();
+                     login();
+                     if (newUser != null) jdbcQueries.initUser();
+                 } else if (action == 0 && (user.getText().length() < 3 || user.getText().length() > 10)) {
+                     JOptionPane.showMessageDialog(null, "The username length between 3 and 10 chars");
+                     login();
+                 } else {
+                     login();
+                 }
+             } else {
+                 JOptionPane.showMessageDialog(null, "User exists!");
+                 login();
+             }
             // Enter
         } else if (option == 2) {
             //if (newUser != null) jdbcQueries.initUser();

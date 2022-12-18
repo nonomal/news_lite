@@ -168,7 +168,9 @@ public class JdbcQueries {
             statement.executeUpdate();
             statement.close();
         } catch (Exception e) {
-            Common.console("addUser error: " + e.getMessage());
+            if (!e.getMessage().contains("SQLITE_CONSTRAINT_UNIQUE")) {
+                Common.console("addAllTitlesToArchive error: " + e.getMessage());
+            }
         }
     }
 
@@ -368,6 +370,25 @@ public class JdbcQueries {
             PreparedStatement statement = connection.prepareStatement(query);
             statement.setString(1, word);
             statement.setInt(2, Login.userId);
+
+            ResultSet rs = statement.executeQuery();
+            while (rs.next()) {
+                isExists = rs.getInt(1);
+            }
+
+            statement.close();
+        } catch (Exception e) {
+            Common.console("isKeywordExists error: " + e.getMessage());
+        }
+        return isExists == 1;
+    }
+
+    public boolean isUserExists(String username) {
+        int isExists = 0;
+        try {
+            String query = "SELECT MAX(1) FROM main.users WHERE exists (SELECT id FROM users WHERE username = ?)";
+            PreparedStatement statement = connection.prepareStatement(query);
+            statement.setString(1, username);
 
             ResultSet rs = statement.executeQuery();
             while (rs.next()) {
@@ -632,28 +653,6 @@ public class JdbcQueries {
 
         } catch (Exception e) {
             Common.console("isTitleExists error: " + e.getMessage());
-        }
-        return isExists == 1;
-    }
-
-    // отсеивание ранее найденных заголовков при включённом чекбоксе
-    public boolean isUserExists(String username) {
-        int isExists = 0;
-        try {
-            String query = "SELECT 1 FROM users " +
-                    "WHERE EXISTS (SELECT username FROM users t WHERE username = ?)";
-            PreparedStatement statement = connection.prepareStatement(query);
-            statement.setString(1, username);
-
-            ResultSet rs = statement.executeQuery();
-            while (rs.next()) {
-                isExists = rs.getInt(1);
-            }
-            rs.close();
-            statement.close();
-
-        } catch (Exception e) {
-            Common.console("isUserExists error: " + e.getMessage());
         }
         return isExists == 1;
     }
