@@ -217,7 +217,7 @@ public class JdbcQueries {
     // Настройки по ключу
     public String getSetting(String key) {
         String setting = null;
-        String query = "SELECT value FROM settings WHERE key = ? AND user_id = ?";
+        String query = "SELECT value FROM settings WHERE key = ? AND (user_id IS NULL OR user_id = ?)";
 
         try {
             PreparedStatement statement = connection.prepareStatement(query);

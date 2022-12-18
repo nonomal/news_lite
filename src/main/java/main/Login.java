@@ -27,7 +27,7 @@ public class Login {
             if (action == 0) {
                 String user = usersCombobox.getSelectedItem().toString();
                 jdbcQueries.removeFromUsers(user);
-                Common.console("User removed: " + user);
+                //Common.console("User removed: " + user);
                 usersCombobox = new JComboBox<>(jdbcQueries.getAllUsers().toArray());
                 login();
             }

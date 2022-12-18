@@ -913,7 +913,12 @@ public class Gui extends JFrame {
         int webHeight = 18;
         int webWidth = 18;
 
-        String urlTradingView = "https://www.tradingview.com/";
+        String urlTradingView = jdbcQueries.getSetting("url-trading");
+        String urlTranslator = jdbcQueries.getSetting("url-translator");
+        String urlMaps = jdbcQueries.getSetting("url-maps");
+        String urlYandex = jdbcQueries.getSetting("url-search");
+        String urlGithub = jdbcQueries.getSetting("url-git");
+
         JLabel tradingView = new JLabel("trading");
         tradingView.setToolTipText(urlTradingView);
         tradingView.setIcon(Icons.TRADING_BUTTON_ICON);
@@ -923,7 +928,6 @@ public class Gui extends JFrame {
         getContentPane().add(tradingView);
         animation(tradingView, urlTradingView);
 
-        String urlTranslator = "https://translate.google.com/";
         JLabel translator = new JLabel();
         translator.setIcon(Icons.TRANSLATOR_BUTTON_ICON);
         translator.setToolTipText(urlTranslator);
@@ -933,7 +937,6 @@ public class Gui extends JFrame {
         getContentPane().add(translator);
         animation(translator, urlTranslator);
 
-        String urlMaps = "https://yandex.ru/maps";
         JLabel maps = new JLabel("maps");
         maps.setIcon(Icons.MAPS_BUTTON_ICON);
         maps.setToolTipText(urlMaps);
@@ -943,7 +946,6 @@ public class Gui extends JFrame {
         getContentPane().add(maps);
         animation(maps, urlMaps);
 
-        String urlYandex = "https://ya.ru/";
         JLabel yandex = new JLabel();
         yandex.setIcon(Icons.YANDEX_BUTTON_ICON);
         yandex.setToolTipText(urlYandex);
@@ -953,7 +955,6 @@ public class Gui extends JFrame {
         getContentPane().add(yandex);
         animation(yandex, urlYandex);
 
-        String urlGithub = "https://github.com/mrprogre";
         JLabel github = new JLabel();
         github.setIcon(Icons.GITHUB_BUTTON_ICON);
         github.setToolTipText(urlGithub);
