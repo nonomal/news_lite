@@ -28,6 +28,9 @@ public class EmailManager {
         if (!ConsoleSearch.IS_CONSOLE_SEARCH.get()) {
             if (!emailFrom.contains("@")||!emailTo.contains("@")) {
                 Common.console("incorrect e-mail");
+                Common.IS_SENDING.set(true);
+                Search.isSearchFinished.set(true);
+                Gui.progressBar.setValue(100);
                 return;
             }
 
