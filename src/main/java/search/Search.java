@@ -81,7 +81,7 @@ public class Search {
                 new Thread(Common::fillProgressLine).start();
                 Gui.model.addRow(new Object[]{});
 
-                StringBuilder processString = new StringBuilder("[");
+                StringBuilder processString = new StringBuilder("[#");
                 for (int i = 1; i < sourcesList.size(); i++) {
                     processString.append(". ");
                 }
