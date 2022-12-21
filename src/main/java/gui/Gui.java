@@ -175,8 +175,8 @@ public class Gui extends JFrame {
         table.getColumnModel().getColumn(1).setPreferredWidth(100);
         table.getColumnModel().getColumn(1).setMaxWidth(180);
         table.getColumnModel().getColumn(2).setPreferredWidth(490);
-        table.getColumnModel().getColumn(3).setPreferredWidth(98);
-        table.getColumnModel().getColumn(3).setMaxWidth(98);
+        table.getColumnModel().getColumn(3).setPreferredWidth(105);
+        table.getColumnModel().getColumn(3).setMaxWidth(130);
         table.removeColumn(table.getColumnModel().getColumn(5)); // Скрыть описание заголовка
         table.removeColumn(table.getColumnModel().getColumn(4)); // Скрыть ссылку заголовка
 
