@@ -1059,18 +1059,18 @@ public class Gui extends JFrame {
     private void setNewUrl(String key) {
         JPanel panel = new JPanel();
         panel.setLayout(new GridLayout(1, 1, 0, 0));
-        JLabel label = new JLabel("New url");
+        JLabel label = new JLabel("New: " + key);
         JTextField newUrl = new JTextField();
         panel.add(label);
         panel.add(newUrl);
 
         String[] menu = new String[]{"Cancel", "Update"};
-        int option = JOptionPane.showOptionDialog(null, panel, "Change url",
+        int option = JOptionPane.showOptionDialog(null, panel, "Change: " + key,
                 JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE,
                 Icons.LOGO_ICON, menu, menu[1]);
         if (option == 1) {
             jdbcQueries.updateSettings(key, newUrl.getText());
-            Common.console("url " + key + " changed to " + newUrl.getText());
+            Common.console(key + " changed to " + newUrl.getText());
         }
     }
 
