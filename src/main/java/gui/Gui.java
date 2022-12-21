@@ -978,6 +978,14 @@ public class Gui extends JFrame {
         tradingView.setBounds(webX, webY, webWidth, webHeight);
         getContentPane().add(tradingView);
         animation(tradingView, urlTradingView);
+        tradingView.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                if (e.getButton() == MouseEvent.BUTTON3) {
+                    setNewUrl("url-trading");
+                }
+            }
+        });
 
         JLabel translator = new JLabel();
         translator.setIcon(Icons.TRANSLATOR_BUTTON_ICON);
@@ -987,6 +995,14 @@ public class Gui extends JFrame {
         translator.setBounds(webX + 24, webY, webWidth, webHeight);
         getContentPane().add(translator);
         animation(translator, urlTranslator);
+        translator.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                if (e.getButton() == MouseEvent.BUTTON3) {
+                    setNewUrl("url-translator");
+                }
+            }
+        });
 
         JLabel maps = new JLabel("maps");
         maps.setIcon(Icons.MAPS_BUTTON_ICON);
@@ -996,6 +1012,14 @@ public class Gui extends JFrame {
         maps.setBounds(webX + 48, webY, webWidth, webHeight);
         getContentPane().add(maps);
         animation(maps, urlMaps);
+        maps.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                if (e.getButton() == MouseEvent.BUTTON3) {
+                    setNewUrl("url-maps");
+                }
+            }
+        });
 
         JLabel yandex = new JLabel();
         yandex.setIcon(Icons.YANDEX_BUTTON_ICON);
@@ -1005,6 +1029,14 @@ public class Gui extends JFrame {
         yandex.setBounds(webX + 72, webY, webWidth, webHeight);
         getContentPane().add(yandex);
         animation(yandex, urlYandex);
+        yandex.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                if (e.getButton() == MouseEvent.BUTTON3) {
+                    setNewUrl("url-search");
+                }
+            }
+        });
 
         JLabel github = new JLabel();
         github.setIcon(Icons.GITHUB_BUTTON_ICON);
@@ -1014,6 +1046,32 @@ public class Gui extends JFrame {
         github.setBounds(webX + 96, webY, webWidth, webHeight);
         getContentPane().add(github);
         animation(github, urlGithub);
+        github.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                if (e.getButton() == MouseEvent.BUTTON3) {
+                    setNewUrl("url-git");
+                }
+            }
+        });
+    }
+
+    private void setNewUrl(String key) {
+        JPanel panel = new JPanel();
+        panel.setLayout(new GridLayout(1, 1, 0, 0));
+        JLabel label = new JLabel("New url");
+        JTextField newUrl = new JTextField();
+        panel.add(label);
+        panel.add(newUrl);
+
+        String[] menu = new String[]{"Cancel", "Update"};
+        int option = JOptionPane.showOptionDialog(null, panel, "Change url",
+                JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE,
+                Icons.LOGO_ICON, menu, menu[1]);
+        if (option == 1) {
+            jdbcQueries.updateSettings(key, newUrl.getText());
+            Common.console("url " + key + " changed to " + newUrl.getText());
+        }
     }
 
     private void showRightClickMenu() {
