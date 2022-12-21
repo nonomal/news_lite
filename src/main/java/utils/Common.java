@@ -132,6 +132,7 @@ public class Common {
         Gui.onlyNewNews.setState(Boolean.parseBoolean(jdbcQueries.getSetting("onlyNewNews")));
         Gui.autoSendMessage.setState(Boolean.parseBoolean(jdbcQueries.getSetting("autoSendMessage")));
         Gui.isOnlyLastNews = Gui.onlyNewNews.getState();
+        Gui.consoleTextArea.setBackground(tablesColor);
     }
 
     // Получить путь к базе данных (в config.txt можно поменять путь к БД)
