@@ -18,81 +18,88 @@ public class Login {
         String[] loginParams = showLoginDialog();
         int option = Integer.parseInt(loginParams[0]);
 
-        // remove user
         if (option == 0) {
-            if (usersCombobox.getSelectedItem() != null){
-                String[] opt = new String[]{"yes", "no"};
-                int action = JOptionPane.showOptionDialog(null, "Are you confirming user deletion?",
-                        "Remove user", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE,
-                        Icons.TRANSLATOR_BUTTON_ICON, opt, opt[1]);
-                if (action == 0) {
-                    String user = usersCombobox.getSelectedItem().toString();
-                    jdbcQueries.removeFromUsers(user);
-                    usersCombobox = new JComboBox<>(jdbcQueries.getAllUsers().toArray());
-                    login();
-                }
-            } else {
-                JOptionPane.showMessageDialog(null, "There is no user to delete");
-                login();
-            }
-            // create user
+            removeUser();
         } else if (option == 1) {
-            JPanel panel = new JPanel();
-            panel.setLayout(new GridLayout(2, 2, 0, 5));
-            JLabel userLabel = new JLabel("Username");
-            JTextField user = new JTextField();
-            JLabel passwordLabel = new JLabel("Password");
-            JPasswordField passwordField = new JPasswordField();
-            panel.add(userLabel);
-            panel.add(user);
-            panel.add(passwordLabel);
-            panel.add(passwordField);
-
-            String[] menu = new String[]{"add", "cancel"};
-            int action = JOptionPane.showOptionDialog(null, panel, "Add user",
-                    JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE,
-                    Icons.LIST_BUTTON_ICON, menu, menu[0]);
-
-            String pwd = Common.getHash(new String(passwordField.getPassword()));
-            int length = user.getText().length();
-             if (!jdbcQueries.isUserExists(user.getText())) {
-                 if (action == 0 && length >= 3 && length <= 10) {
-                     jdbcQueries.addUser(user.getText(), pwd);
-                     usersCombobox = new JComboBox<>(jdbcQueries.getAllUsers().toArray());
-                     newUser = user.getText();
-                     login();
-                     if (newUser != null) jdbcQueries.initUser();
-                 } else if (action == 0 && (user.getText().length() < 3 || user.getText().length() > 10)) {
-                     JOptionPane.showMessageDialog(null, "The username length between 3 and 10 chars");
-                     login();
-                 } else {
-                     login();
-                 }
-             } else {
-                 JOptionPane.showMessageDialog(null, "User exists!");
-                 login();
-             }
-            // Enter
+            createUser();
         } else if (option == 2) {
-            //if (newUser != null) jdbcQueries.initUser();
+            enter(loginParams);
+        } else {
+            System.exit(0);
+        }
+    }
 
-            username = loginParams[1];
-            if (jdbcQueries.isUserExists(username)) {
-                userId = jdbcQueries.getUserIdByUsername(username);
-                String password = loginParams[2];
-                String userHashPassword = jdbcQueries.getUserHashPassword(username);
-
-                // Password check
-                if (!password.equals(userHashPassword)) {
-                    JOptionPane.showMessageDialog(null, "Incorrect password");
-                    login();
-                }
-            } else {
-                JOptionPane.showMessageDialog(null, "User not found");
+    private void removeUser() {
+        if (usersCombobox.getSelectedItem() != null){
+            String[] opt = new String[]{"yes", "no"};
+            int action = JOptionPane.showOptionDialog(null, "Are you confirming user deletion?",
+                    "Remove user", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE,
+                    Icons.TRANSLATOR_BUTTON_ICON, opt, opt[1]);
+            if (action == 0) {
+                String user = usersCombobox.getSelectedItem().toString();
+                jdbcQueries.removeFromUsers(user);
+                usersCombobox = new JComboBox<>(jdbcQueries.getAllUsers().toArray());
                 login();
             }
         } else {
-            System.exit(0);
+            JOptionPane.showMessageDialog(null, "There is no user to delete");
+            login();
+        }
+    }
+
+    private void createUser() {
+        JPanel panel = new JPanel();
+        panel.setLayout(new GridLayout(2, 2, 0, 5));
+        JLabel userLabel = new JLabel("Username");
+        JTextField user = new JTextField();
+        JLabel passwordLabel = new JLabel("Password");
+        JPasswordField passwordField = new JPasswordField();
+        panel.add(userLabel);
+        panel.add(user);
+        panel.add(passwordLabel);
+        panel.add(passwordField);
+
+        String[] menu = new String[]{"add", "cancel"};
+        int action = JOptionPane.showOptionDialog(null, panel, "Add user",
+                JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE,
+                Icons.LIST_BUTTON_ICON, menu, menu[0]);
+
+        String pwd = Common.getHash(new String(passwordField.getPassword()));
+        int length = user.getText().length();
+        if (!jdbcQueries.isUserExists(user.getText())) {
+            if (action == 0 && length >= 3 && length <= 10) {
+                jdbcQueries.addUser(user.getText(), pwd);
+                usersCombobox = new JComboBox<>(jdbcQueries.getAllUsers().toArray());
+                newUser = user.getText();
+                login();
+                if (newUser != null) jdbcQueries.initUser();
+            } else if (action == 0 && (user.getText().length() < 3 || user.getText().length() > 10)) {
+                JOptionPane.showMessageDialog(null, "The username length between 3 and 10 chars");
+                login();
+            } else {
+                login();
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "User exists!");
+            login();
+        }
+    }
+
+    private void enter(String[] loginParams) {
+        username = loginParams[1];
+        if (jdbcQueries.isUserExists(username)) {
+            userId = jdbcQueries.getUserIdByUsername(username);
+            String password = loginParams[2];
+            String userHashPassword = jdbcQueries.getUserHashPassword(username);
+
+            // Password check
+            if (!password.equals(userHashPassword)) {
+                JOptionPane.showMessageDialog(null, "Incorrect password");
+                login();
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "User not found");
+            login();
         }
     }
 
