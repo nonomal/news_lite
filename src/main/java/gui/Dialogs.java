@@ -41,7 +41,7 @@ public class Dialogs extends JDialog implements KeyListener {
             case "sourcesDialog": {
                 this.setBounds(0, 0, 250, 308);
                 this.setTitle("Sources");
-                this.setLocationRelativeTo(Gui.smiBtn);
+                this.setLocationRelativeTo(Gui.labelSum);
 
                 Object[] columns = {"Pos", "Source", "", " "};
                 model = new DefaultTableModel(new Object[][]{
@@ -106,7 +106,7 @@ public class Dialogs extends JDialog implements KeyListener {
             case "excludedFromAnalysisDialog": {
                 this.setBounds(0, 0, 250, 306);
                 this.setTitle("Excluded from analysis");
-                this.setLocationRelativeTo(Gui.excludedLabel);
+                this.setLocationRelativeTo(Gui.labelSum);
                 Object[] columns = {"Num", "Word", "Del"};
                 model = new DefaultTableModel(new Object[][]{
                 }, columns) {
@@ -148,7 +148,7 @@ public class Dialogs extends JDialog implements KeyListener {
             case "excludedTitlesByWordsDialog": {
                 this.setBounds(0, 0, 250, 298);
                 this.setTitle("Excluded headlines");
-                this.setLocationRelativeTo(Gui.excludedTitlesLabel);
+                this.setLocationRelativeTo(Gui.scrollPane);
 
                 Object[] columns = {"Num", "Word", "Del"};
                 model = new DefaultTableModel(new Object[][]{
@@ -207,7 +207,7 @@ public class Dialogs extends JDialog implements KeyListener {
             case "keywordsDialog": {
                 this.setBounds(0, 0, 250, 298);
                 this.setTitle("Keywords");
-                this.setLocationRelativeTo(Gui.btnShowKeywordsList);
+                this.setLocationRelativeTo(Gui.scrollPane);
 
                 Object[] columns = {"Pos", "Keyword", "", " "};
                 model = new DefaultTableModel(new Object[][]{
@@ -272,7 +272,7 @@ public class Dialogs extends JDialog implements KeyListener {
             case "favoriteTitlesDialog": {
                 this.setBounds(0, 0, 800, 400);
                 this.setTitle("Favorites");
-                this.setLocationRelativeTo(Gui.favoritesLabel);
+                this.setLocationRelativeTo(Gui.scrollPane);
 
                 Object[] columns = {"", "title", "added", "link", " "};
                 model = new DefaultTableModel(new Object[][]{
@@ -336,7 +336,7 @@ public class Dialogs extends JDialog implements KeyListener {
             case "datesDialog": {
                 this.setBounds(600, 200, 600, 338);
                 this.setTitle("Dates");
-                this.setLocationRelativeTo(Gui.datesLabel);
+                this.setLocationRelativeTo(Gui.scrollPane);
                 Object[] columns = {"Type", "Description", "Day", "Month", "Year", "", "Del"};
                 model = new DefaultTableModel(new Object[][]{
                 }, columns) {

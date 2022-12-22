@@ -817,7 +817,7 @@ public class Gui extends JFrame {
                     "Path to database:", pathToDatabase
             };
 
-            int result = JOptionPane.showConfirmDialog(settingsDirectoryBtn, newSource,
+            int result = JOptionPane.showConfirmDialog(labelSum, newSource,
                     "Settings", JOptionPane.OK_CANCEL_OPTION, JOptionPane.INFORMATION_MESSAGE);
             if (result == JOptionPane.OK_OPTION) {
                 jdbcQueries.updateSettings("email_to", emailTo.getText());
