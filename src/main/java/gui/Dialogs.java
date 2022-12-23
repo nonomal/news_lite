@@ -35,6 +35,7 @@ public class Dialogs extends JDialog implements KeyListener {
         JScrollPane scrollPane = new JScrollPane();
         this.getContentPane().setLayout(new BorderLayout(0, 0));
         this.addKeyListener(this);
+        this.setAlwaysOnTop(true);
         Container container = getContentPane();
 
         switch (name) {
@@ -148,7 +149,8 @@ public class Dialogs extends JDialog implements KeyListener {
             case "excludedTitlesByWordsDialog": {
                 this.setBounds(0, 0, 250, 298);
                 this.setTitle("Excluded headlines");
-                this.setLocationRelativeTo(Gui.scrollPane);
+                this.setAlwaysOnTop(false);
+                this.setLocationRelativeTo(Gui.excludedTitlesLabel);
 
                 Object[] columns = {"Num", "Word", "Del"};
                 model = new DefaultTableModel(new Object[][]{
