@@ -10,7 +10,6 @@ import java.awt.*;
 public class Login {
     public static int userId;
     public static String username;
-    private String newUser;
     private final JdbcQueries jdbcQueries = new JdbcQueries();
     JComboBox<Object> usersCombobox = new JComboBox<>(jdbcQueries.getAllUsers().toArray());
 
@@ -30,7 +29,7 @@ public class Login {
     }
 
     private void removeUser() {
-        if (usersCombobox.getSelectedItem() != null){
+        if (usersCombobox.getSelectedItem() != null) {
             String[] opt = new String[]{"yes", "no"};
             int action = JOptionPane.showOptionDialog(null, "Are you confirming user deletion?",
                     "Remove user", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE,
@@ -70,13 +69,9 @@ public class Login {
             if (action == 0 && length >= 3 && length <= 10) {
                 jdbcQueries.addUser(user.getText(), pwd);
                 usersCombobox = new JComboBox<>(jdbcQueries.getAllUsers().toArray());
-                newUser = user.getText();
-
-                if (newUser != null) {
-                    username = newUser;
-                    userId = jdbcQueries.getUserIdByUsername(username);
-                    jdbcQueries.initUser();
-                }
+                username = user.getText();
+                userId = jdbcQueries.getUserIdByUsername(username);
+                jdbcQueries.initUser();
             } else if (action == 0 && (user.getText().length() < 3 || user.getText().length() > 10)) {
                 JOptionPane.showMessageDialog(null, "The username length between 3 and 10 chars");
                 login();
@@ -87,6 +82,7 @@ public class Login {
             JOptionPane.showMessageDialog(null, "User exists!");
             login();
         }
+
     }
 
     private void enter(String[] loginParams) {
@@ -124,9 +120,6 @@ public class Login {
         panel.add(usersCombobox);
         panel.add(passwordLabel);
         panel.add(passwordField);
-
-        // after create user
-        if (newUser != null) usersCombobox.setSelectedItem(newUser);
 
         String[] menu = new String[]{"Remove", "Create", "Enter"};
         int option = JOptionPane.showOptionDialog(null, panel, "Login",
