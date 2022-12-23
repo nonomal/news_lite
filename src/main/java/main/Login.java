@@ -71,8 +71,12 @@ public class Login {
                 jdbcQueries.addUser(user.getText(), pwd);
                 usersCombobox = new JComboBox<>(jdbcQueries.getAllUsers().toArray());
                 newUser = user.getText();
-                login();
-                if (newUser != null) jdbcQueries.initUser();
+
+                if (newUser != null) {
+                    username = newUser;
+                    userId = jdbcQueries.getUserIdByUsername(username);
+                    jdbcQueries.initUser();
+                }
             } else if (action == 0 && (user.getText().length() < 3 || user.getText().length() > 10)) {
                 JOptionPane.showMessageDialog(null, "The username length between 3 and 10 chars");
                 login();
