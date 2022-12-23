@@ -127,11 +127,7 @@ public class Search {
                                     }
 
                                     // вставка всех без исключения новостей в архив
-                                    jdbcQueries.addAllTitlesToArchive(title,
-                                            pubDate.toString(),
-                                            tableRow.getLink(),
-                                            tableRow.getSource(),
-                                            tableRow.getDescribe());
+                                    saveToArchive(tableRow, title, pubDate);
 
                                     if (isTopTen) {
                                         if (dateDiff != 0) {
@@ -179,6 +175,7 @@ public class Search {
                                         int dateDiff = Common.compareDatesOnly(new Date(), pubDate);
 
                                         if (dateDiff != 0) {
+                                            saveToArchive(tableRow, title, pubDate);
                                             searchProcess(tableRow, searchType);
                                             getTopTenData(tableRow);
                                         }
@@ -290,6 +287,14 @@ public class Search {
                 isStop.set(true);
             }
         }
+    }
+
+    private void saveToArchive(TableRow tableRow, String title, Date pubDate) {
+        jdbcQueries.addAllTitlesToArchive(title,
+                pubDate.toString(),
+                tableRow.getLink(),
+                tableRow.getSource(),
+                tableRow.getDescribe());
     }
 
     private void searchProcess(TableRow tableRow, String searchType) {
