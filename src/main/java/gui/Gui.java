@@ -959,7 +959,7 @@ public class Gui extends JFrame {
     }
 
     private void showWebPagesIcons() {
-        int webX = 758;
+        int webX = 734;
         int webY = 547;
         int webHeight = 18;
         int webWidth = 18;
@@ -968,6 +968,7 @@ public class Gui extends JFrame {
         String urlTranslator = jdbcQueries.getSetting("url-translator");
         String urlMaps = jdbcQueries.getSetting("url-maps");
         String urlYandex = jdbcQueries.getSetting("url-search");
+        String urlFavorite = jdbcQueries.getSetting("url-favorite");
         String urlGithub = jdbcQueries.getSetting("url-git");
 
         JLabel tradingView = new JLabel("trading");
@@ -1022,7 +1023,7 @@ public class Gui extends JFrame {
         });
 
         JLabel yandex = new JLabel();
-        yandex.setIcon(Icons.YANDEX_BUTTON_ICON);
+        yandex.setIcon(Icons.SEARCH_KEYWORDS_ICON); //Icons.STAR_ICON
         yandex.setToolTipText(urlYandex);
         yandex.setEnabled(false);
         yandex.setFont(GUI_FONT_BOLD);
@@ -1038,12 +1039,29 @@ public class Gui extends JFrame {
             }
         });
 
+        JLabel favoriteUrl = new JLabel();
+        favoriteUrl.setIcon(Icons.STAR_ICON);
+        favoriteUrl.setToolTipText(urlFavorite);
+        favoriteUrl.setEnabled(false);
+        favoriteUrl.setFont(GUI_FONT_BOLD);
+        favoriteUrl.setBounds(webX + 96, webY, webWidth, webHeight);
+        getContentPane().add(favoriteUrl);
+        animation(favoriteUrl, urlFavorite);
+        favoriteUrl.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                if (e.getButton() == MouseEvent.BUTTON3) {
+                    setNewUrl("url-favorite");
+                }
+            }
+        });
+
         JLabel github = new JLabel();
         github.setIcon(Icons.GITHUB_BUTTON_ICON);
         github.setToolTipText(urlGithub);
         github.setEnabled(false);
         github.setFont(GUI_FONT_BOLD);
-        github.setBounds(webX + 96, webY, webWidth, webHeight);
+        github.setBounds(webX + 120, webY, webWidth, webHeight);
         getContentPane().add(github);
         animation(github, urlGithub);
         github.addMouseListener(new MouseAdapter() {
