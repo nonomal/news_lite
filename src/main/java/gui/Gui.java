@@ -867,7 +867,7 @@ public class Gui extends JFrame {
         }
         loginLabel.setEnabled(false);
         loginLabel.setToolTipText("right click - change password");
-        loginLabel.setBounds(881, 13, 180, 13);
+        loginLabel.setBounds(881, 13, 110, 13);
         loginLabel.setFont(GUI_FONT);
         loginLabel.setForeground(new Color(255, 255, 153));
         loginLabel.setBackground(new Color(240, 255, 240));
