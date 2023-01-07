@@ -532,7 +532,7 @@ public class JdbcQueries {
     public List<String> getExcludedWordsFromAnalysis() {
         List<String> words = new ArrayList<>();
         try {
-            String query = "SELECT word FROM all_titles_to_exclude";
+            String query = "SELECT word FROM exclude";
             PreparedStatement statement = connection.prepareStatement(query);
 
             ResultSet rs = statement.executeQuery();
